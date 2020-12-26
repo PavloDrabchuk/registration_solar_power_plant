@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>All users</h3>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Surname</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getSurname()}"></td>
+    </tr>
+</table>
+
+<h5><a href="/new">New User</a></h5>
+<hr/>
+
+<h3>All SolarPlants</h3>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+    </tr>
+    <tr th:each="solarPowerPlant : ${solarPowerPlants}">
+        <td th:utext="${solarPowerPlant.getId()}"></td>
+        <td th:utext="${solarPowerPlant.getName()}"></td>
+        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
+    </tr>
+</table>
+
+<h5><a href="/newSolarPowerPlant">New Solar power plant</a></h5>
+
+</body>
+</html>
