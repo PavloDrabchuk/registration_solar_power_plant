@@ -14,9 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
         return new BCryptPasswordEncoder();
     }
     public void addViewControllers(ViewControllerRegistry registry) {
-        /*registry.addViewController("/home").setViewName("home");
-        registry.addViewController("/").setViewName("home");
-        registry.addViewController("/uploadForm").setViewName("uploadForm");*/
+        registry.addViewController("/home").setViewName("home");
+        registry.addViewController("/").setViewName("index");
+        /*registry.addViewController("/uploadForm").setViewName("uploadForm");*/
         registry.addViewController("/login").setViewName("login");
         //registry.addViewController("/admin").setViewName("admin");
     }

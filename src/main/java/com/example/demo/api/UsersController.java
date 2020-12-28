@@ -47,8 +47,9 @@ public class UsersController {
         return modelAndView;
     }*/
 
-    @GetMapping
+    @GetMapping(path="/home")
     public ModelAndView getSolarPowerPlantsByUsername() {
+        System.out.println("getSolarPowerPlantsByUsername");
         //Model model=new Model("getall");
 
         /*List<User> userList=new ArrayList<>();
@@ -60,7 +61,7 @@ public class UsersController {
         User user = usersService.getUserByUsername(username);
 
 
-        ModelAndView modelAndView = new ModelAndView("index");
+        ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("users", usersService.getAllUsers());
         modelAndView.addObject("solarPowerPlants",solarPowerPlantService.getAllSolarPowerPlants());
         modelAndView.addObject("solarPowerPlantsByUser",solarPowerPlantService.getSolarPowerPlantsByUser(user));
@@ -71,6 +72,7 @@ public class UsersController {
 
     @GetMapping(path = "/id={id}")
     public User getUserById(@PathVariable("id") Integer id) {
+        System.out.println("getUserById");
         return usersService.getUserById(id).orElse(null);
     }
 
@@ -87,12 +89,14 @@ public class UsersController {
 
     @PostMapping(path="/add")
     public String addUser(@ModelAttribute("user") User user){
+        System.out.println("addUser");
         usersService.addUser(user);
         return "redirect:/";
     }
 
     @GetMapping("/new")
     public String newCustomerForm(Map<String, Object> model) {
+        System.out.println("newCustomerForm");
         User user = new User();
         model.put("user", user);
         return "add_user";

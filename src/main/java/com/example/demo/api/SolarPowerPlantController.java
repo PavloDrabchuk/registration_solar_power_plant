@@ -30,6 +30,8 @@ public class SolarPowerPlantController {
 
     @PostMapping(path="/addSolarPowerPlant")
     public String addSolarPowerPlant(@ModelAttribute("solarPowerPlant") SolarPowerPlant solarPowerPlant){
+        System.out.println("addSolarPowerPlant");
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
 
@@ -45,6 +47,8 @@ public class SolarPowerPlantController {
 
     @GetMapping("/newSolarPowerPlant")
     public String newSolarPowerPlant(Map<String, Object> model) {
+        System.out.println("newSolarPowerPlant");
+
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
         model.put("solarPowerPlant", solarPowerPlant);
         return "add_solar_power_plant";

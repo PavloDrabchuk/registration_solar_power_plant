@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+
+
+
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Вийти"/>
+</form>
+
+<h3>All users</h3>
+
+<h4 th:text="${name}"></h4>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Surname</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getSurname()}"></td>
+    </tr>
+</table>
+
+<h5><a href="/new">New User</a></h5>
+<hr/>
+
+<h3>All SolarPlants</h3>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+    </tr>
+    <tr th:each="solarPowerPlant : ${solarPowerPlants}">
+        <td th:utext="${solarPowerPlant.getId()}"></td>
+        <td th:utext="${solarPowerPlant.getName()}"></td>
+        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
+    </tr>
+</table>
+
+<h5><a href="/newSolarPowerPlant">New Solar power plant</a></h5>
+
+<!--<h5><a href="/sign-in">sign-in</a></h5>-->
+
+<h3>Users SolarPlants</h3>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+    </tr>
+    <tr th:each="solarPowerPlant : ${solarPowerPlantsByUser}">
+        <td th:utext="${solarPowerPlant.getId()}"></td>
+        <td th:utext="${solarPowerPlant.getName()}"></td>
+        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
+    </tr>
+</table>
+
+
+</body>
+</html>
