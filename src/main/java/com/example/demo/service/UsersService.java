@@ -3,14 +3,19 @@ package com.example.demo.service;
 import com.example.demo.dao.UsersDao;
 import com.example.demo.dao.UsersRepository;
 import com.example.demo.model.User;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.Optional;
 
 @Service
-public class UsersService {
+public class UsersService implements UserDetailsService {
     private final UsersDao usersDao;
     private final UsersRepository usersRepository;
 
@@ -39,5 +44,13 @@ public class UsersService {
     public void addUser(User user){
         //usersRepository.save(new User(user.getName(), user.getSurname()));
         usersRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        final Optional<User> optionalUser = usersRepository.findByUsername(username);
+
+        return (UserDetails) optionalUser.orElseThrow(() -> new UsernameNotFoundException(MessageFormat.format("User with username: {0} cannot be found.", username)));
+
     }
 }
