@@ -27,4 +27,8 @@ public class SolarPowerPlantService {
     public Iterable<SolarPowerPlant> getAllSolarPowerPlants(){
         return solarPowerPlantRepository.findAll();
     }
+
+    public Iterable<SolarPowerPlant> getSolarPowerPlantsByUser(User user){
+        return solarPowerPlantRepository.findAllByUser(user);
+    }
 }

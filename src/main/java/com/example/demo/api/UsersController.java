@@ -26,8 +26,29 @@ public class UsersController {
     }
 
 
-    @GetMapping
+    /*@GetMapping
     public ModelAndView getAllUsers() {
+        //Model model=new Model("getall");
+
+//        List<User> userList=new ArrayList<>();
+//        userList.add(new User(1,"Name1","Surname1"));
+//        userList.add(new User(2,"Name2","Surname2"));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        User user = usersService.getUserByUsername(username);
+
+
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("users", usersService.getAllUsers());
+        modelAndView.addObject("solarPowerPlants",solarPowerPlantService.getAllSolarPowerPlants());
+        modelAndView.addObject("name",username);
+        //return usersService.getAllUsers();
+        return modelAndView;
+    }*/
+
+    @GetMapping
+    public ModelAndView getSolarPowerPlantsByUsername() {
         //Model model=new Model("getall");
 
         /*List<User> userList=new ArrayList<>();
@@ -42,6 +63,7 @@ public class UsersController {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("users", usersService.getAllUsers());
         modelAndView.addObject("solarPowerPlants",solarPowerPlantService.getAllSolarPowerPlants());
+        modelAndView.addObject("solarPowerPlantsByUser",solarPowerPlantService.getSolarPowerPlantsByUser(user));
         modelAndView.addObject("name",username);
         //return usersService.getAllUsers();
         return modelAndView;
