@@ -9,15 +9,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
 import java.util.Optional;
 
 @Service
-public class UsersService implements UserDetailsService {
+public class UsersService {
     private final UsersDao usersDao;
     private final UsersRepository usersRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UsersService(@Qualifier("fakeDao") UsersDao usersDao,
@@ -43,14 +46,15 @@ public class UsersService implements UserDetailsService {
 
     public void addUser(User user){
         //usersRepository.save(new User(user.getName(), user.getSurname()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
 
-    @Override
+    /*@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<User> optionalUser = usersRepository.findByUsername(username);
 
         return (UserDetails) optionalUser.orElseThrow(() -> new UsernameNotFoundException(MessageFormat.format("User with username: {0} cannot be found.", username)));
 
-    }
+    }*/
 }

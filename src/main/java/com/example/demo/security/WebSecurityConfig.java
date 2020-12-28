@@ -4,6 +4,7 @@ import com.example.demo.service.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,9 +22,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    //private final UsersService usersService;
+    @Qualifier("myUserDetailsService")
+    @Autowired
+    private final UserDetailsService userDetailsService;
 
-    //private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /*@Autowired
     public WebSecurityConfig (UsersService usersService,BCryptPasswordEncoder bCryptPasswordEncoder){
@@ -46,19 +51,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.userDetailsService(usersService)
-                .passwordEncoder(bCryptPasswordEncoder);*/
+
         auth.inMemoryAuthentication()
-                .withUser("PavloDrabchuk").password(passwordEncoder().encode("qwerty123")).roles("USER")
+                .withUser("PavloDrabchuk").password(bCryptPasswordEncoder.encode("qwerty123")).roles("USER")
                 .and()
-                .withUser("user2").password(passwordEncoder().encode("user2Pass")).roles("USER")
+                .withUser("user2").password(bCryptPasswordEncoder.encode("user2Pass")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
+                .withUser("admin").password(bCryptPasswordEncoder.encode("adminPass")).roles("ADMIN");
+
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
+    /*@Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
 
 }

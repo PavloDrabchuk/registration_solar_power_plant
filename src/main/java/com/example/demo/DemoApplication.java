@@ -1,8 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.dao.UsersRepository;
-import com.example.demo.model.User;
-import com.example.demo.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +19,7 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
-        UserRole.USER,false,false));
+/*usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
+        UserRole.USER,false,false));*/
     }
 }

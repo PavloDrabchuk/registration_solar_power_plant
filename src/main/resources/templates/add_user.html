@@ -12,6 +12,8 @@
 <form action="add" th:action="@{/add}" th:object="${user}" method="post">
     <p>name: <input type="text" th:field="*{name}" /></p>
     <p>surname: <input type="text" th:field="*{surname}" /></p>
+    <p>username: <input type="text" th:field="*{username}" /></p>
+    <p>password: <input type="text" th:field="*{password}" /></p>
     <p><input type="submit" value="add" /> <input type="reset" value="Reset" /></p>
 </form>
 
