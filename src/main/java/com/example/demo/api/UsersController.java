@@ -4,6 +4,8 @@ import com.example.demo.model.User;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,11 +25,7 @@ public class UsersController {
         this.solarPowerPlantService=solarPowerPlantService;
     }
 
-    /*@GetMapping
-    public List<User> getAllUsers(){
 
-        return usersService.getAllUsers();
-    }*/
     @GetMapping
     public ModelAndView getAllUsers() {
         //Model model=new Model("getall");
@@ -36,10 +34,15 @@ public class UsersController {
         userList.add(new User(1,"Name1","Surname1"));
         userList.add(new User(2,"Name2","Surname2"));*/
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        User user = usersService.getUserByUsername(username);
+
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("users", usersService.getAllUsers());
         modelAndView.addObject("solarPowerPlants",solarPowerPlantService.getAllSolarPowerPlants());
+        modelAndView.addObject("name",username);
         //return usersService.getAllUsers();
         return modelAndView;
     }

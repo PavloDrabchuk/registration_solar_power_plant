@@ -50,6 +50,10 @@ public class UsersService {
         usersRepository.save(user);
     }
 
+    public User getUserByUsername(String username){
+        return usersRepository.findByUsername(username);
+    }
+
     /*@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<User> optionalUser = usersRepository.findByUsername(username);
