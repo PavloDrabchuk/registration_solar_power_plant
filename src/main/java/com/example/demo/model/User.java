@@ -22,19 +22,26 @@ public class User {
     private String surname;
     private String password;
 
-    @ManyToMany
-    private Set<UserRole> roles;
+    //@ManyToMany
+    //private Set<UserRole> roles;
 
-    public User(@JsonProperty("login") String username,
+
+    //@Builder.Default
+    //private UserRoles userRole = UserRoles.USER;
+
+    @ManyToOne
+    private UserRole userRole;
+
+    public User(@JsonProperty("username") String username,
                 @JsonProperty("name") String name,
                 @JsonProperty("surname") String surname,
                 @JsonProperty("password") String password,
-                @JsonProperty("userRole") Set<UserRole> roles) {
+                @JsonProperty("userRole") UserRole userRole) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password=password;
-        this.roles=roles;
+        this.userRole=userRole;
     }
 
     public User() {
@@ -80,11 +87,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<UserRole> getRoles() {
-        return roles;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 }

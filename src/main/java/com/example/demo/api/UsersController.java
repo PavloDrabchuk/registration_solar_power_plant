@@ -1,7 +1,10 @@
 package com.example.demo.api;
 
+import com.example.demo.dao.UserRoleRepository;
 import com.example.demo.model.User;
+import com.example.demo.model.UserRole;
 import com.example.demo.service.SolarPowerPlantService;
+import com.example.demo.service.UserRoleService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,12 +20,15 @@ public class UsersController {
 
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
+    private final UserRoleService userRoleService;
 
     @Autowired
     public UsersController(UsersService usersService,
-                           SolarPowerPlantService solarPowerPlantService) {
+                           SolarPowerPlantService solarPowerPlantService,
+                           UserRoleService userRoleService) {
         this.usersService = usersService;
-        this.solarPowerPlantService=solarPowerPlantService;
+        this.solarPowerPlantService = solarPowerPlantService;
+        this.userRoleService = userRoleService;
     }
 
 
@@ -47,7 +53,7 @@ public class UsersController {
         return modelAndView;
     }*/
 
-    @GetMapping(path="/home")
+    @GetMapping(path = "/home")
     public ModelAndView getSolarPowerPlantsByUsername() {
         System.out.println("getSolarPowerPlantsByUsername");
         //Model model=new Model("getall");
@@ -63,9 +69,9 @@ public class UsersController {
 
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("users", usersService.getAllUsers());
-        modelAndView.addObject("solarPowerPlants",solarPowerPlantService.getAllSolarPowerPlants());
-        modelAndView.addObject("solarPowerPlantsByUser",solarPowerPlantService.getSolarPowerPlantsByUser(user));
-        modelAndView.addObject("name",username);
+        modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
+        modelAndView.addObject("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user));
+        modelAndView.addObject("name", username);
         //return usersService.getAllUsers();
         return modelAndView;
     }
@@ -87,11 +93,13 @@ public class UsersController {
         return "redirect:/";
     }*/
 
-    @PostMapping(path="/add")
-    public String addUser(@ModelAttribute("user") User user){
+    @PostMapping(path = "/add")
+    public String addUser(@ModelAttribute("user") User user) {
         System.out.println("addUser");
+        UserRole userRole = userRoleService.getUserRole("USER");
+        user.setUserRole(userRole);
         usersService.addUser(user);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/new")

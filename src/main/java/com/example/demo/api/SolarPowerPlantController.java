@@ -42,7 +42,7 @@ public class SolarPowerPlantController {
         solarPowerPlant.setUser(user);
 
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/newSolarPowerPlant")
