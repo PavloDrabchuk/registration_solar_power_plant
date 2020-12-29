@@ -39,15 +39,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/","/index").permitAll()
-                .antMatchers("/sign-up/**",/* "/login/**",*/"/home/**","/add_user/**","/add_solar_power_plant/**")
+                .antMatchers("/","/index","/add_user/**","/new","/add").permitAll()
+                .antMatchers("/sign-up/**",/* "/login/**",*/"/home/**","/add_solar_power_plant/**")
                 .hasAnyAuthority("USER","ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();;
     }
 
     @Autowired

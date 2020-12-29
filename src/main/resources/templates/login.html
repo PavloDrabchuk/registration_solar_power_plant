@@ -4,6 +4,14 @@
     <title>Spring Boot User Authentication</title>
 </head>
 <body>
+
+<div th:if="${param.error}">
+    Ви ввели неправильний логіп або пароль.
+</div>
+<div th:if="${param.logout}">
+    Ви вийшли з свого аккаунту.
+</div>
+
 <form role="form" th:action="@{/login}" th:method="post">
     <lable>Username</lable>
     <input type="text" id="username" name="username">

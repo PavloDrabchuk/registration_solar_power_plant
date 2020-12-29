@@ -53,6 +53,14 @@ public class UsersController {
         return modelAndView;
     }*/
 
+    @GetMapping
+    public String redirectToAccessPages(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        return (username=="anonymousUser") ? "index" : "redirect:/home";
+
+    }
+
     @GetMapping(path = "/home")
     public ModelAndView getSolarPowerPlantsByUsername() {
         System.out.println("getSolarPowerPlantsByUsername");
