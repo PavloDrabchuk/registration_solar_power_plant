@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -102,12 +105,19 @@ public class UsersController {
     }*/
 
     @PostMapping(path = "/add")
-    public String addUser(@ModelAttribute("user") User user) {
-        System.out.println("addUser");
-        UserRole userRole = userRoleService.getUserRole("USER");
-        user.setUserRole(userRole);
-        usersService.addUser(user);
-        return "redirect:/home";
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("BINDING RESULT ERROR");
+            return "add_user";
+        } else {
+
+            System.out.println("addUser");
+            UserRole userRole = userRoleService.getUserRole("USER");
+            user.setUserRole(userRole);
+            usersService.addUser(user);
+            return "redirect:/success_user_registration";
+        }
     }
 
     @GetMapping("/new")
@@ -116,6 +126,13 @@ public class UsersController {
         User user = new User();
         model.put("user", user);
         return "add_user";
+    }
+
+    @GetMapping(path="/success_user_registration")
+    public String successUserRegistration(Model model){
+        model.addAttribute("email","emailll");
+        System.out.println("successUserRegistration");
+        return "success_user_registration";
     }
 
     /*@GetMapping("/sign-in")

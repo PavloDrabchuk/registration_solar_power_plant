@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Дякуємо за реєстрацію!</h2>
+<h3>Підтвердіть реєстрацію, перейшовши за посиланням, яке знаходить у вказаній електронній пошті: {e-mail}!</h3>
+<p style="color: brown;" th:if="${email}" th:text="${email}">Name Error</p>
+<h2>Натисніть <a th:href="@{/login}">сюди</a>, щоб ввійти.</h2>
+<h2><a th:href="@{/}">Перейти на головну</a></h2>
+
+
+</body>
+</html>
