@@ -6,6 +6,8 @@ import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SolarPowerPlantService {
     private final SolarPowerPlantRepository solarPowerPlantRepository;
@@ -30,5 +32,9 @@ public class SolarPowerPlantService {
 
     public Iterable<SolarPowerPlant> getSolarPowerPlantsByUser(User user){
         return solarPowerPlantRepository.findAllByUser(user);
+    }
+
+    public Optional<SolarPowerPlant> getSolarPowerPlantById(Integer id){
+        return  solarPowerPlantRepository.findById(id);
     }
 }

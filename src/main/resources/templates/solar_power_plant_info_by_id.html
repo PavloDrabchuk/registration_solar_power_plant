@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Spring Boot User Authentication</title>
+</head>
+<body>
+
+<h3>Solar Plant By Id</h3>
+
+<table border="1px">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>City</th>
+    </tr>
+    <tr>
+        <td th:text="${solarPowerPlant.get().getId()}"></td>
+        <td th:utext="${solarPowerPlant.get().getName()}"></td>
+        <td th:utext="${solarPowerPlant.get().getLocation().getCity()}"></td>
+    </tr>
+
+</table>
+
+</body>
+</html>

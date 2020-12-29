@@ -42,6 +42,7 @@
         <td th:utext="${solarPowerPlant.getId()}"></td>
         <td th:utext="${solarPowerPlant.getName()}"></td>
         <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
+
     </tr>
 </table>
 
@@ -56,11 +57,13 @@
         <th>Id</th>
         <th>Name</th>
         <th>City</th>
+        <th>Url</th>
     </tr>
     <tr th:each="solarPowerPlant : ${solarPowerPlantsByUser}">
         <td th:utext="${solarPowerPlant.getId()}"></td>
         <td th:utext="${solarPowerPlant.getName()}"></td>
         <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
+        <td><a th:href="${'/view/'+solarPowerPlant.getId()}" th:text="${solarPowerPlant.getName()}"></a></td>
     </tr>
 </table>
 
