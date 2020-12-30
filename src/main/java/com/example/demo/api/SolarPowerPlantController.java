@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,11 +50,11 @@ public class SolarPowerPlantController {
     }
 
     @GetMapping("/newSolarPowerPlant")
-    public String newSolarPowerPlant(Map<String, Object> model) {
+    public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
 
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
-        model.put("solarPowerPlant", solarPowerPlant);
+        model.addAttribute("solarPowerPlant", solarPowerPlant);
         return "add_solar_power_plant";
     }
 

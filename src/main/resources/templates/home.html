@@ -10,7 +10,7 @@
     <input type="submit" value="Вийти"/>
 </form>
 
-<h3>All users</h3>
+<!--<h3>All users</h3>
 
 <h4 th:text="${name}"></h4>
 
@@ -28,9 +28,9 @@
 </table>
 
 <h5><a href="/new">New User</a></h5>
-<hr/>
+<hr/>-->
 
-<h3>All SolarPlants</h3>
+<!--<h3>All SolarPlants</h3>
 
 <table border="1">
     <tr>
@@ -44,7 +44,7 @@
         <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
 
     </tr>
-</table>
+</table>-->
 
 <h5><a href="/newSolarPowerPlant">New Solar power plant</a></h5>
 
@@ -66,6 +66,8 @@
         <td><a th:href="${'/view/'+solarPowerPlant.getId()}" th:text="${solarPowerPlant.getName()}"></a></td>
     </tr>
 </table>
+
+<h3 th:if="${adminAccess}"><a href="/admin">Admin</a></h3>
 
 
 </body>

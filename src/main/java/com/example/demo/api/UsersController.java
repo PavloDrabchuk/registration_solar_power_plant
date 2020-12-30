@@ -60,7 +60,7 @@ public class UsersController {
     public String redirectToAccessPages(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        return (username=="anonymousUser") ? "index" : "redirect:/home";
+        return (username.equals("anonymousUser")) ? "index" : "redirect:/home";
 
     }
 
@@ -77,12 +77,20 @@ public class UsersController {
         String username = auth.getName();//get logged in username
         User user = usersService.getUserByUsername(username);
 
+        String userRole=user.getUserRole().getName();
+
 
         ModelAndView modelAndView = new ModelAndView("home");
-        modelAndView.addObject("users", usersService.getAllUsers());
-        modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
+        //modelAndView.addObject("users", usersService.getAllUsers());
+        //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
         modelAndView.addObject("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user));
         modelAndView.addObject("name", username);
+
+        if(userRole.equals("ADMIN")){
+            modelAndView.addObject("adminAccess","admin");
+            System.out.println("admin access");
+        }
+
         //return usersService.getAllUsers();
         return modelAndView;
     }
@@ -121,10 +129,10 @@ public class UsersController {
     }
 
     @GetMapping("/new")
-    public String newCustomerForm(Map<String, Object> model) {
+    public String newCustomerForm(Model model) {
         System.out.println("newCustomerForm");
         User user = new User();
-        model.put("user", user);
+        model.addAttribute("user", user);
         return "add_user";
     }
 
