@@ -15,7 +15,14 @@
 <h1>Form</h1>
 <form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}" method="post">
     <p>name: <input type="text" th:field="*{name}" /></p>
+    <p>number: <input type="number" min="1" value="1" th:field="*{number}" /></p>
+<h4>Location</h4>
+    <p>location.country: <input type="text" th:field="*{location.country}" /></p>
     <p>location.city: <input type="text" th:field="*{location.city}" /></p>
+    <p>location.street: <input type="text" th:field="*{location.street}" /></p>
+
+    <p>location.longitude: <input type="number" min="-180" max="180" step="0.00000001" th:field="*{location.longitude}" /></p>
+    <p>location.latitude: <input type="number" min="-90" max="90" step="0.00000001" th:field="*{location.latitude}" /></p>
 <!--    <p>surname: <input type="text" th:field="*{surname}" /></p>-->
     <p><input type="submit" value="addSolarPlant" /> <input type="reset" value="Reset" /></p>
 </form>
