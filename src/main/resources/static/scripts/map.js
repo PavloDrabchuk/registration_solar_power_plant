@@ -19,6 +19,8 @@ layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
 map.addLayer(layerMapnik);
 layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
 map.addLayer(layerCycleMap);
+
+
 layerMarkers = new OpenLayers.Layer.Markers("Markers");
 map.addLayer(layerMarkers);
 
@@ -34,7 +36,28 @@ let lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection
 let size = new OpenLayers.Size(21, 25);
 let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
 let icon = new OpenLayers.Icon('https://www.openstreetmap.org/openlayers/img/marker.png', size, offset);
-layerMarkers.addMarker(new OpenLayers.Marker(lonLat, icon));
+
+let marker= new OpenLayers.Marker(lonLat, icon);
+
+layerMarkers.addMarker(marker);
+
+marker.events.register("click", marker, function(e){
+    popup = new OpenLayers.Popup.FramedCloud("chicken",
+        marker.lonlat,
+        new OpenLayers.Size(200, 200),
+        "example popup",
+        null, true);
+
+    map.addPopup(popup);
+});
+
+/*var marker1 = new khtml.maplib.overlay.Marker({
+    position: new khtml.maplib.LatLng(-25.363882,131.044922),
+    map: map,
+    title:"static marker"
+});*/
+
+
 
 map.setCenter(lonLat, zoom);
 

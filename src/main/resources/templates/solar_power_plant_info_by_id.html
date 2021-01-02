@@ -4,6 +4,7 @@
     <title>Spring Boot User Authentication</title>
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+<!--    <script type="text/javascript" src="http://maplib.khtml.org/khtml.maplib/khtml_all.js"> </script>-->
 <!--    <script src="/scripts/map.js"></script>-->
 </head>
 <body>
@@ -32,8 +33,8 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-    let lat = /*[[${solarPowerPlant.get().getLocation().getLongitude}]]*/ '30.0';
-    let lon = /*[[${solarPowerPlant.get().getLocation().getLatitude}]]*/ '20.0';
+    let lat = /*[[${solarPowerPlant.get().getLocation().getLongitude}]]*/ '0.0';
+    let lon = /*[[${solarPowerPlant.get().getLocation().getLatitude}]]*/ '0.0';
     /*]]>*/
 </script>
 
