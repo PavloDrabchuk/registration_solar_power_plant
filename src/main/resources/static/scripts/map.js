@@ -40,17 +40,26 @@ let icon = new OpenLayers.Icon('https://www.openstreetmap.org/openlayers/img/mar
 let marker= new OpenLayers.Marker(lonLat, icon);
 
 layerMarkers.addMarker(marker);
-
-marker.events.register("click", marker, function(e){
+//click, mouseover, mouseout
+marker.events.register("mousedown", marker, function(e){
     popup = new OpenLayers.Popup.FramedCloud("chicken",
         marker.lonlat,
         new OpenLayers.Size(200, 200),
         "example popup",
         null, true);
 
+/*popupId=5;
+    var popup = new OpenLayers.Popup.AnchoredBubble(popupId, marker.lonlat,
+        new OpenLayers.Size(200,20),
+        "Hello World ... "+popupId,
+        null, true,closePopUp());*/
+
     map.addPopup(popup);
 });
 
+/*function closePopUp(){
+    this.hide();
+}*/
 /*var marker1 = new khtml.maplib.overlay.Marker({
     position: new khtml.maplib.LatLng(-25.363882,131.044922),
     map: map,
