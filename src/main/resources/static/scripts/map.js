@@ -1,5 +1,5 @@
 
-let map = new OpenLayers.Map("mapBlock", {
+/*let map = new OpenLayers.Map("mapBlock", {
     controls: [
         new OpenLayers.Control.Navigation(),
         new OpenLayers.Control.PanZoomBar(),
@@ -11,6 +11,19 @@ let map = new OpenLayers.Map("mapBlock", {
     //units: 'm',
     projection: new OpenLayers.Projection("EPSG:900913"),
     displayProjection: new OpenLayers.Projection("EPSG:4326")
+});*/
+
+var map = new ol.Map({
+    target: 'mapBlock',
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+    ],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([37.41, 8.82]),
+        zoom: 4
+    })
 });
 
 // Define the map layer
@@ -40,13 +53,14 @@ let icon = new OpenLayers.Icon('https://www.openstreetmap.org/openlayers/img/mar
 let marker= new OpenLayers.Marker(lonLat, icon);
 
 layerMarkers.addMarker(marker);
+let popup = new OpenLayers.Popup.FramedCloud("chicken",
+    marker.lonlat,
+    new OpenLayers.Size(200, 200),
+    "example popup",
+    null, true);
+
 //click, mouseover, mouseout
-marker.events.register("mousedown", marker, function(e){
-    popup = new OpenLayers.Popup.FramedCloud("chicken",
-        marker.lonlat,
-        new OpenLayers.Size(200, 200),
-        "example popup",
-        null, true);
+marker.events.register("mouseover", marker, function(e){
 
 /*popupId=5;
     var popup = new OpenLayers.Popup.AnchoredBubble(popupId, marker.lonlat,
@@ -55,6 +69,10 @@ marker.events.register("mousedown", marker, function(e){
         null, true,closePopUp());*/
 
     map.addPopup(popup);
+});
+
+marker.events.register("mouseout", marker, function(e){
+    map.removePopup(popup);
 });
 
 /*function closePopUp(){
