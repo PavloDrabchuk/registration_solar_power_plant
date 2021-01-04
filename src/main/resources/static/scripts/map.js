@@ -13,18 +13,111 @@
     displayProjection: new OpenLayers.Projection("EPSG:4326")
 });*/
 
-var map = new ol.Map({
-    target: 'mapBlock',
+//import Map from ;
+
+var iconFeature = new ol.Feature({
+    geometry: new ol.geom.Point([0, 0]),
+    name: 'Null Island',
+    population: 4000,
+    rainfall: 500,
+});
+
+var iconStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+    }),
+});
+
+iconFeature.setStyle(iconStyle);
+
+var vectorSource = new ol.source.Vector({
+    features: [iconFeature],
+});
+
+var vectorLayer = new ol.layer.Vector({
+    source: vectorSource,
+});
+
+
+let map = new ol.Map({
+    target:  document.getElementById('mapBlock'),
+
     layers: [
         new ol.layer.Tile({
             source: new ol.source.OSM()
-        })
+        }),vectorLayer
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 4
+        center: ol.proj.fromLonLat([0,0]),
+        zoom: 12
     })
 });
+
+var element = document.getElementById('popup');
+var content = document.getElementById('popup-content');
+
+var popup = new ol.Overlay({
+    element: element,
+    positioning: 'bottom-center',
+    stopEvent: false,
+    offset: [0, -50],
+});
+map.addOverlay(popup);
+
+/*// display popup on click
+map.on('click', function (evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        return feature;
+    });
+    if (feature) {
+        var coordinates = feature.getGeometry().getCoordinates();
+        popup.setPosition(coordinates);
+        $(element).popover({
+            placement: 'top',
+            html: true,
+            content: feature.get('name'),
+        });
+        $(element).popover('show');
+    } else {
+        $(element).popover('dispose');
+    }
+});*/
+// display popup on click
+map.on('singleclick', function(evt) {
+    var coordinate = evt.coordinate;
+
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        return feature;
+    });
+if(feature) {
+    content.innerHTML = '<p>Test poput</p>';
+    popup.setPosition(coordinate);
+}
+});
+
+// change mouse cursor when over marker
+/*map.on('pointermove', function (e) {
+    if (e.dragging) {
+        $(element).popover('dispose');
+        return;
+    }
+    var pixel = map.getEventPixel(e.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+});*/
+
+map.on("pointermove", function (evt) {
+    var hit = this.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+        return true;
+    });
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+});
+
+
+/*
 
 // Define the map layer
 // Here we use a predefined layer that will be kept up to date with URL changes
@@ -62,11 +155,11 @@ let popup = new OpenLayers.Popup.FramedCloud("chicken",
 //click, mouseover, mouseout
 marker.events.register("mouseover", marker, function(e){
 
-/*popupId=5;
+/!*popupId=5;
     var popup = new OpenLayers.Popup.AnchoredBubble(popupId, marker.lonlat,
         new OpenLayers.Size(200,20),
         "Hello World ... "+popupId,
-        null, true,closePopUp());*/
+        null, true,closePopUp());*!/
 
     map.addPopup(popup);
 });
@@ -75,16 +168,17 @@ marker.events.register("mouseout", marker, function(e){
     map.removePopup(popup);
 });
 
-/*function closePopUp(){
+/!*function closePopUp(){
     this.hide();
-}*/
-/*var marker1 = new khtml.maplib.overlay.Marker({
+}*!/
+/!*var marker1 = new khtml.maplib.overlay.Marker({
     position: new khtml.maplib.LatLng(-25.363882,131.044922),
     map: map,
     title:"static marker"
-});*/
+});*!/
 
 
 
 map.setCenter(lonLat, zoom);
+*/
 
