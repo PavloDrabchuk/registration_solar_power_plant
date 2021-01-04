@@ -67,7 +67,7 @@ var popup = new ol.Overlay({
 });
 map.addOverlay(popup);
 
-/*// display popup on click
+// display popup on click
 map.on('click', function (evt) {
     var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
         return feature;
@@ -78,13 +78,18 @@ map.on('click', function (evt) {
         $(element).popover({
             placement: 'top',
             html: true,
-            content: feature.get('name'),
+            content: '<div class="ttt"><h1>first</h1>' +
+                '<p>test</p></div>',
+
         });
         $(element).popover('show');
     } else {
         $(element).popover('dispose');
     }
-});*/
+});
+
+
+/*
 // display popup on click
 map.on('singleclick', function(evt) {
     var coordinate = evt.coordinate;
@@ -96,10 +101,10 @@ if(feature) {
     content.innerHTML = '<p>Test poput</p>';
     popup.setPosition(coordinate);
 }
-});
+});*/
 
 // change mouse cursor when over marker
-/*map.on('pointermove', function (e) {
+map.on('pointermove', function (e) {
     if (e.dragging) {
         $(element).popover('dispose');
         return;
@@ -107,14 +112,14 @@ if(feature) {
     var pixel = map.getEventPixel(e.originalEvent);
     var hit = map.hasFeatureAtPixel(pixel);
     map.getTarget().style.cursor = hit ? 'pointer' : '';
-});*/
+});
 
-map.on("pointermove", function (evt) {
+/*map.on("pointermove", function (evt) {
     var hit = this.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
         return true;
     });
     map.getTarget().style.cursor = hit ? 'pointer' : '';
-});
+});*/
 
 
 /*
