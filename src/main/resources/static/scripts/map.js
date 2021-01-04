@@ -1,4 +1,3 @@
-
 /*let map = new OpenLayers.Map("mapBlock", {
     controls: [
         new OpenLayers.Control.Navigation(),
@@ -16,7 +15,7 @@
 //import Map from ;
 
 var iconFeature = new ol.Feature({
-    geometry: new ol.geom.Point([0, 0]),
+    geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat])),
     name: 'Null Island',
     population: 4000,
     rainfall: 500,
@@ -43,15 +42,15 @@ var vectorLayer = new ol.layer.Vector({
 
 
 let map = new ol.Map({
-    target:  document.getElementById('mapBlock'),
+    target: document.getElementById('mapBlock'),
 
     layers: [
         new ol.layer.Tile({
             source: new ol.source.OSM()
-        }),vectorLayer
+        }), vectorLayer
     ],
     view: new ol.View({
-        center: ol.proj.fromLonLat([0,0]),
+        center: ol.proj.fromLonLat([lon, lat]),
         zoom: 12
     })
 });
@@ -74,12 +73,13 @@ map.on('click', function (evt) {
     });
     if (feature) {
         var coordinates = feature.getGeometry().getCoordinates();
-        popup.setPosition(coordinates);
+        popup.setPosition(ol.proj.fromLonLat([lon, lat]));
         $(element).popover({
             placement: 'top',
             html: true,
-            content: '<div class="ttt"><h1>first</h1>' +
-                '<p>test</p></div>',
+            content: '<div class="popup">' +
+                '<h3 class="popup-title">Title</h3>' +
+                '<p class="popup-content">popup-content</p></div>',
 
         });
         $(element).popover('show');
@@ -105,7 +105,9 @@ if(feature) {
 
 // change mouse cursor when over marker
 map.on('pointermove', function (e) {
-    if (e.dragging) {
+    console.log("e: "+e.type);
+    if (e.dragging ) {
+
         $(element).popover('dispose');
         return;
     }
@@ -113,6 +115,26 @@ map.on('pointermove', function (e) {
     var hit = map.hasFeatureAtPixel(pixel);
     map.getTarget().style.cursor = hit ? 'pointer' : '';
 });
+
+map.on('move', function (e) {
+    console.log("-- e: "+e);
+    /*if (e.dragging ) {
+        console.log("e: "+e);
+        $(element).popover('dispose');
+        return;
+    }
+    var pixel = map.getEventPixel(e.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';*/
+});
+
+/*map.on("moveend", function(e){
+    // event actions
+    console.log("qwerty");
+    var pixel = map.getEventPixel(e.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+});*/
 
 /*map.on("pointermove", function (evt) {
     var hit = this.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
