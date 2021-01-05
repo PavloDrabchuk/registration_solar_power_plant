@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.dao.UserRoleRepository;
+import com.example.demo.model.ConfirmationCode;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRole;
 import com.example.demo.service.SolarPowerPlantService;
@@ -61,7 +62,6 @@ public class UsersController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return (username.equals("anonymousUser")) ? "index" : "redirect:/home";
-
     }
 
     @GetMapping(path = "/home")
@@ -127,8 +127,26 @@ public class UsersController {
             user.setLocked(false);
             System.out.println("activated: "+user.getActivated());
             usersService.addUser(user);
-            return "redirect:/success_user_registration";
+            return "redirect:/confirm_registration";
         }
+    }
+
+    @GetMapping(path="/confirm_registration")
+    public String confirmUserRegistration(Model model){
+        model.addAttribute("email","emailll");
+        System.out.println("confirmUserRegistration");
+        return "confirm_registration";
+    }
+
+
+
+    @PostMapping(path = "/confirmRegistration")
+    public String confirmRegistration(@Valid @ModelAttribute("confirmationCode") ConfirmationCode confirmationCode) {
+
+            System.out.println("confirmRegistration");
+
+            return "redirect:/success_user_registration";
+
     }
 
     @GetMapping("/new")

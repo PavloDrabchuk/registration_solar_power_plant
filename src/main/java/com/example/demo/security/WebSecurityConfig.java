@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/","/index","/add_user/**","/new","/add","/success_user_registration")
+                .antMatchers("/","/index","/add_user/**","/new","/add","/success_user_registration","/confirm_registration")
                 .permitAll()
                 .antMatchers("/admin")
                 .hasAuthority("ADMIN")
