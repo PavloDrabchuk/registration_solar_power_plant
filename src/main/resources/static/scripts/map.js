@@ -22,7 +22,6 @@
 
 //import Map from ;
 
-
 //import Map from '/modules/ol/Map';
 
 let iconFeature = new ol.Feature({
@@ -30,6 +29,17 @@ let iconFeature = new ol.Feature({
     name: 'Null Island',
     population: 4000,
     rainfall: 500,
+    desc:'first',
+    type:'click'
+});
+
+let iconFeature2 = new ol.Feature({
+    geometry: new ol.geom.Point(ol.proj.fromLonLat([lon+0.05, lat+0.05])),
+    name: 'Null Island2',
+    population: 4000,
+    rainfall: 500,
+    desc:'second',
+    type:'click'
 });
 
 let iconStyle = new ol.style.Style({
@@ -37,14 +47,16 @@ let iconStyle = new ol.style.Style({
         anchor: [0.5, 46],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+        //src: 'https://openlayers.org/en/latest/examples/data/icon.png',
+        src: '/images/icons/icon.png',
     }),
 });
 
 iconFeature.setStyle(iconStyle);
+iconFeature2.setStyle(iconStyle);
 
 let vectorSource = new ol.source.Vector({
-    features: [iconFeature],
+    features: [iconFeature, iconFeature2],
 });
 
 let vectorLayer = new ol.layer.Vector({
@@ -62,12 +74,15 @@ let map = new ol.Map({
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([lon, lat]),
-        zoom: 12
+        zoom: 16,
+        minZoom: 2,
+        maxZoom: 19
     })
 });
 
 const element = document.getElementById('popup');
 const content = document.getElementById('popup-content');
+
 
 const popup = new ol.Overlay({
     element: element,
@@ -79,17 +94,18 @@ map.addOverlay(popup);
 
 // display popup on click
 map.on('click', function (evt) {
-    const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
-        return feature;
+    const feature = map.forEachFeatureAtPixel(evt.pixel, function (ft) {
+        return ft;
     });
-    if (feature) {
+    console.log("popup1: "+ evt.pixel+" feature: "+feature);
+    if (feature && feature.get('type')==='click') {
         //const coordinates = feature.getGeometry().getCoordinates();
         popup.setPosition(ol.proj.fromLonLat([lon, lat]));
         $(element).popover({
             placement: 'top',
             html: true,
             content: '<div class="popup">' +
-                '<h3 class="popup-title">Title</h3>' +
+                '<h3 class="popup-title">'+feature.get('desc')+'</h3>' +
                 '<p class="popup-content">popup-content</p></div>',
 
         });
@@ -129,6 +145,74 @@ map.on('pointermove', function (e) {
 map.on('movestart', function (e) {
     $(element).popover('dispose');
 });
+
+//**********************************************//
+
+/*const element2 = document.getElementById('popup2');
+const content2 = document.getElementById('popup-content2');
+
+
+const popup2 = new ol.Overlay({
+    element: element2,
+    positioning: 'bottom-center',
+    stopEvent: false,
+    offset: [0, -50],
+});
+map.addOverlay(popup2);
+
+// display popup on click
+map.on('click', function (evt) {
+    const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        return feature;
+    });
+    console.log("popup2");
+    if (feature) {
+        //const coordinates = feature.getGeometry().getCoordinates();
+        popup2.setPosition(ol.proj.fromLonLat([lon+0.05, lat+0.05]));
+        $(element2).popover({
+            placement: 'top',
+            html: true,
+            content: '<div class="popup">' +
+                '<h3 class="popup-title">Title2</h3>' +
+                '<p class="popup-content">popup-2</p></div>',
+
+        });
+        $(element2).popover('show');
+    } else {
+        $(element2).popover('dispose');
+    }
+});
+
+
+/!*
+// display popup on click
+map.on('singleclick', function(evt) {
+    var coordinate = evt.coordinate;
+
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        return feature;
+    });
+if(feature) {
+    content.innerHTML = '<p>Test poput</p>';
+    popup.setPosition(coordinate);
+}
+});*!/
+
+// change mouse cursor when over marker
+map.on('pointermove', function (e) {
+    // console.log("e: "+e.type);
+    if (e.dragging ) {
+        $(element).popover('dispose');
+        return;
+    }
+    const pixel = map.getEventPixel(e.originalEvent);
+    const hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+});
+
+map.on('movestart', function (e) {
+    $(element2).popover('dispose');
+});*/
 
 /*map.on("moveend", function(e){
     // event actions

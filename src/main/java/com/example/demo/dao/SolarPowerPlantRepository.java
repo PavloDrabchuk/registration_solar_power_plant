@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface SolarPowerPlantRepository extends CrudRepository<SolarPowerPlant,Integer> {
+public interface SolarPowerPlantRepository extends CrudRepository<SolarPowerPlant,Long> {
     Iterable<SolarPowerPlant> findAllByUser(User user);
-    Optional<SolarPowerPlant> findById(Integer id);
+    Optional<SolarPowerPlant> findById(Long id);
 }

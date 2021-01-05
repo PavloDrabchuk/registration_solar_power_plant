@@ -59,7 +59,7 @@ public class SolarPowerPlantController {
     }
 
     @GetMapping(path = "/view/{id}")
-    public ModelAndView getSolarPowerPlantsById(@PathVariable("id") Integer id) {
+    public ModelAndView getSolarPowerPlantsById(@PathVariable("id") Long id) {
         System.out.println("getSolarPowerPlantsById");
         //Model model=new Model("getall");
 

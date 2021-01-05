@@ -34,7 +34,7 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.findAllByUser(user);
     }
 
-    public Optional<SolarPowerPlant> getSolarPowerPlantById(Integer id){
+    public Optional<SolarPowerPlant> getSolarPowerPlantById(Long id){
         return  solarPowerPlantRepository.findById(id);
     }
 }

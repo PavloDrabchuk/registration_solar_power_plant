@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 public class SolarPowerPlant {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -28,11 +28,11 @@ public class SolarPowerPlant {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -123,6 +123,9 @@ public class UsersController {
             System.out.println("addUser");
             UserRole userRole = userRoleService.getUserRole("USER");
             user.setUserRole(userRole);
+            user.setActivated(false);
+            user.setLocked(false);
+            System.out.println("activated: "+user.getActivated());
             usersService.addUser(user);
             return "redirect:/success_user_registration";
         }

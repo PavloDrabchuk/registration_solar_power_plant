@@ -17,18 +17,22 @@ import java.util.Set;
 //@Table(name="user", catalog = "registration_system")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String username;
 
     @NotNull(message = "Введіть ім'я")
     @NotEmpty(message = "Заповніть поле")
     private String name;
     private String surname;
+    private String email;
     private String password;
 
     @Transient
     private String passwordConfirm;
+
+    private Boolean activated;
+    private Boolean locked;
 
     public String getPasswordConfirm() {
         return passwordConfirm;
@@ -51,22 +55,26 @@ public class User {
                 @JsonProperty("name") String name,
                 @JsonProperty("surname") String surname,
                 @JsonProperty("password") String password,
-                @JsonProperty("userRole") UserRole userRole) {
+                @JsonProperty("userRole") UserRole userRole,
+                @JsonProperty("email") String email) {
         this.username = username;
         this.name = name;
         this.surname = surname;
-        this.password=password;
-        this.userRole=userRole;
+        this.password = password;
+        this.userRole = userRole;
+        //this.activated=false;
+        //this.locked=false;
+        this.email=email;
     }
 
     public User() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -108,5 +116,29 @@ public class User {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public Boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
