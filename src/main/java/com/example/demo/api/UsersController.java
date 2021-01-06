@@ -127,11 +127,11 @@ public class UsersController {
             user.setLocked(false);
             System.out.println("activated: "+user.getActivated());
             usersService.addUser(user);
-            return "redirect:/confirm_registration";
+            return "redirect:/success_user_registration";
         }
     }
 
-    @GetMapping(path="/confirm_registration")
+    /*@GetMapping(path="/confirm_registration")
     public String confirmUserRegistration(Model model){
         model.addAttribute("email","emailll");
         System.out.println("confirmUserRegistration");
@@ -147,7 +147,7 @@ public class UsersController {
 
             return "redirect:/success_user_registration";
 
-    }
+    }*/
 
     @GetMapping("/new")
     public String newCustomerForm(Model model) {
