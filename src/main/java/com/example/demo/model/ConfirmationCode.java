@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class ConfirmationCode {
@@ -13,12 +14,12 @@ public class ConfirmationCode {
     @OneToOne
     private User user;
     private String confirmationCode;
-    private LocalDate dateOfCreation;
+    private LocalDateTime dateTimeOfCreation;
 
-    public ConfirmationCode(User user, String confirmationCode, LocalDate dateOfCreation) {
+    public ConfirmationCode(User user, String confirmationCode) {
         this.user=user;
         this.confirmationCode = confirmationCode;
-        this.dateOfCreation = LocalDate.now();
+        this.dateTimeOfCreation = LocalDateTime.now();
     }
 
     public ConfirmationCode() {
@@ -49,11 +50,11 @@ public class ConfirmationCode {
         this.confirmationCode = confirmationCode;
     }
 
-    public LocalDate getDateOfCreation() {
-        return dateOfCreation;
+    public LocalDateTime getDateOfCreation() {
+        return dateTimeOfCreation;
     }
 
-    public void setDateOfCreation(LocalDate dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
+    public void setDateTimeOfCreation(LocalDateTime dateTimeOfCreation) {
+        this.dateTimeOfCreation = dateTimeOfCreation;
     }
 }

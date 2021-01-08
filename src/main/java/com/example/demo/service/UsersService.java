@@ -6,6 +6,7 @@ import com.example.demo.model.User;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,14 +20,19 @@ import java.util.Optional;
 public class UsersService {
     private final UsersDao usersDao;
     private final UsersRepository usersRepository;
+
+    private final EmailSenderService emailSenderService;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UsersService(@Qualifier("fakeDao") UsersDao usersDao,
-    UsersRepository usersRepository){
+    UsersRepository usersRepository,
+                        EmailSenderService emailSenderService){
         this.usersDao=usersDao;
         this.usersRepository=usersRepository;
+        this.emailSenderService=emailSenderService;
     }
 
     public Optional<User> getUserById(Integer id){
@@ -61,4 +67,13 @@ public class UsersService {
         return (UserDetails) optionalUser.orElseThrow(() -> new UsernameNotFoundException(MessageFormat.format("User with username: {0} cannot be found.", username)));
 
     }*/
+
+    public void sendMailWithConfirmationCode(String email, String confirmationCode){
+        SimpleMailMessage confirmationMessage=new SimpleMailMessage();
+        confirmationMessage.setTo(email);
+        confirmationMessage.setSubject("Confirmation mail");
+        confirmationMessage.setText("Please: http://localhost:8080/confirm/"+confirmationCode);
+
+        emailSenderService.sendEmail(confirmationMessage);
+    }
 }

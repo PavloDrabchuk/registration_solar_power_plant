@@ -34,8 +34,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
 
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
-        System.out.println("access: "+user.getUserRole().getName());
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRoles().toString()));
+        System.out.println("access: "+user.getUserRoles().toString());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }

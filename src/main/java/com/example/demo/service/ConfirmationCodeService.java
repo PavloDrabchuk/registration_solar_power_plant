@@ -15,7 +15,7 @@ public class ConfirmationCodeService {
         this.confirmationCodeRepository=confirmationCodeRepository;
     }
 
-    public void createConfirmationCode(ConfirmationCode confirmationCode){
+    public void saveConfirmationCode(ConfirmationCode confirmationCode){
         confirmationCodeRepository.save(confirmationCode);
     }
 

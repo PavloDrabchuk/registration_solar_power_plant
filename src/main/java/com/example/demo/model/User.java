@@ -48,20 +48,20 @@ public class User {
     //@Builder.Default
     //private UserRoles userRole = UserRoles.USER;
 
-    @ManyToOne
-    private UserRole userRole;
+    //@ManyToOne
+    private UserRoles userRoles;
 
     public User(@JsonProperty("username") String username,
                 @JsonProperty("name") String name,
                 @JsonProperty("surname") String surname,
                 @JsonProperty("password") String password,
-                @JsonProperty("userRole") UserRole userRole,
+                @JsonProperty("userRoles") UserRoles userRoles,
                 @JsonProperty("email") String email) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
-        this.userRole = userRole;
+        this.userRoles = userRoles;
         //this.activated=false;
         //this.locked=false;
         this.email=email;
@@ -110,12 +110,20 @@ public class User {
         this.password = password;
     }
 
-    public UserRole getUserRole() {
+   /* public UserRole getUserRole() {
         return userRole;
     }
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }*/
+
+    public UserRoles getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(UserRoles userRoles) {
+        this.userRoles = userRoles;
     }
 
     public Boolean getActivated() {
