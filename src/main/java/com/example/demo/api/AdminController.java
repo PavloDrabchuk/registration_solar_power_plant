@@ -32,11 +32,12 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         User user = usersService.getUserByUsername(username);
 
-        if(!user.getUserRoles().toString().equals("ADMIN")){
-            return "home";
-        } else{
+        if (user.getUserRoles().toString().equals("ADMIN")) {
             model.addAttribute("users", usersService.getAllUsers());
             return "admin_page";
+        } else {
+            //model.addAttribute("users", usersService.getAllUsers());
+            return "home";
         }
 
 

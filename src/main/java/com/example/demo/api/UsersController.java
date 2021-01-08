@@ -1,9 +1,7 @@
 package com.example.demo.api;
 
-import com.example.demo.dao.UserRoleRepository;
 import com.example.demo.model.ConfirmationCode;
 import com.example.demo.model.User;
-import com.example.demo.model.UserRole;
 import com.example.demo.model.UserRoles;
 import com.example.demo.service.ConfirmationCodeService;
 import com.example.demo.service.SolarPowerPlantService;
@@ -12,14 +10,14 @@ import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -31,6 +29,9 @@ public class UsersController {
     private final ConfirmationCodeService confirmationCodeService;
 
     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
     public UsersController(UsersService usersService,
                            SolarPowerPlantService solarPowerPlantService,
                            UserRoleService userRoleService,
@@ -38,7 +39,7 @@ public class UsersController {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.userRoleService = userRoleService;
-        this.confirmationCodeService=confirmationCodeService;
+        this.confirmationCodeService = confirmationCodeService;
     }
 
 
@@ -146,20 +147,21 @@ public class UsersController {
 
             System.out.println("addUser");
             //UserRole userRole = userRoleService.getUserRole("USER");
-            user.setUserRoles(UserRoles.ADMIN);
+            user.setUserRoles(UserRoles.USER);
             user.setActivated(false);
             user.setLocked(false);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             System.out.println("activated: " + user.getActivated());
-            usersService.addUser(user);
+            usersService.saveUser(user);
 //відправляємо посилання активації
             UUID uuid = UUID.randomUUID();
-            String stringConfirmationCode=uuid.toString()+"-"+user.getUsername();
-            System.out.println("confirmationCode: "+stringConfirmationCode);
+            String stringConfirmationCode = uuid.toString() + "_" + user.getUsername();
+            System.out.println("confirmationCode: " + stringConfirmationCode);
 
-            ConfirmationCode confirmationCode=new ConfirmationCode(user,stringConfirmationCode);
+            ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode);
             confirmationCodeService.saveConfirmationCode(confirmationCode);
 
-usersService.sendMailWithConfirmationCode(user.getEmail(),confirmationCode.getConfirmationCode());
+            usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());
             System.out.println("--- --- ---");
 
             return "redirect:/success_user_registration";
@@ -174,19 +176,18 @@ usersService.sendMailWithConfirmationCode(user.getEmail(),confirmationCode.getCo
     }
 
 
-
     @PostMapping(path = "/confirmRegistration")
     public String confirmRegistration(@Valid @ModelAttribute("confirmationCode") ConfirmationCode confirmationCode, Model model) {
 
-            System.out.println("confirmRegistration");
+        System.out.println("confirmRegistration");
 
-            if("confirmationCode.getConfirmationCode()".equals("1234")){
-                model.addAttribute("okMessage","Реєстрацію аккаунту підтверджено.");
-            } else {
-                model.addAttribute("errorMessage","Код підтвердження недійсний.");
-            }
+        if ("confirmationCode.getConfirmationCode()".equals("1234")) {
+            model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
+        } else {
+            model.addAttribute("errorMessage", "Код підтвердження недійсний.");
+        }
 
-            return "success_user_registration_confirmed";
+        return "success_user_registration_confirmed";
 
     }
 
@@ -209,4 +210,23 @@ usersService.sendMailWithConfirmationCode(user.getEmail(),confirmationCode.getCo
     String signIn() {
         return "login";
     }*/
+
+    @GetMapping(path = "/confirm/{confirmationCode}_{username}")
+    public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
+                                @PathVariable("username") String username,
+                                Model model) {
+        System.out.println("CCode: " + confirmationCode);
+        System.out.println("U: " + username);
+
+        Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode + "_" + username);
+        if (confirmationResult.isPresent()) {
+            User user=usersService.getUserByUsername(username);
+            user.setActivated(true);
+            usersService.saveUser(user);
+            model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
+        } else {
+            model.addAttribute("errorMessage", "Код підтвердження недійсний.");
+        }
+        return "success_user_registration_confirmed";
+    }
 }

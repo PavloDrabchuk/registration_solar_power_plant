@@ -50,9 +50,10 @@ public class UsersService {
         return  usersDao.addUser(user);
     }*/
 
-    public void addUser(User user){
+    public void saveUser(User user){
         //usersRepository.save(new User(user.getName(), user.getSurname()));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
 
