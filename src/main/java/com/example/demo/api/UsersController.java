@@ -137,6 +137,11 @@ public class UsersController {
         return "redirect:/";
     }*/
 
+    @GetMapping(path="/add")
+    public String redirectToNew(){
+        return "redirect:/new";
+    }
+
     @PostMapping(path = "/add")
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
 
@@ -164,7 +169,7 @@ public class UsersController {
             usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());
             System.out.println("--- --- ---");
 
-            return "redirect:/success_user_registration";
+            return "success_user_registration";
         }
     }
 
@@ -199,12 +204,12 @@ public class UsersController {
         return "add_user";
     }
 
-    @GetMapping(path = "/success_user_registration")
+    /*@GetMapping(path = "/success_user_registration")
     public String successUserRegistration(Model model) {
         model.addAttribute("email", "emailll");
         System.out.println("successUserRegistration");
         return "success_user_registration";
-    }
+    }*/
 
     /*@GetMapping("/sign-in")
     String signIn() {
