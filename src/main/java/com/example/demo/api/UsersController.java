@@ -137,8 +137,8 @@ public class UsersController {
         return "redirect:/";
     }*/
 
-    @GetMapping(path="/add")
-    public String redirectToNew(){
+    @GetMapping(path = "/add")
+    public String redirectToNew() {
         return "redirect:/new";
     }
 
@@ -158,15 +158,18 @@ public class UsersController {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             System.out.println("activated: " + user.getActivated());
             usersService.saveUser(user);
-//відправляємо посилання активації
-            UUID uuid = UUID.randomUUID();
-            String stringConfirmationCode = uuid.toString() + "_" + user.getUsername();
+
+            //відправляємо посилання активації
+            confirmationCodeService.sendConfirmationCode(user);
+            /*UUID uuid = UUID.randomUUID();
+            String stringConfirmationCode = uuid.toString();
             System.out.println("confirmationCode: " + stringConfirmationCode);
 
             ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode);
             confirmationCodeService.saveConfirmationCode(confirmationCode);
 
-            usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());
+            usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());*/
+
             System.out.println("--- --- ---");
 
             return "success_user_registration";
@@ -218,14 +221,18 @@ public class UsersController {
 
     @GetMapping(path = "/confirm/{confirmationCode}_{username}")
     public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
-                                @PathVariable("username") String username,
-                                Model model) {
+                                  @PathVariable("username") String username,
+                                  Model model) {
         System.out.println("CCode: " + confirmationCode);
         System.out.println("U: " + username);
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode + "_" + username);
-        if (confirmationResult.isPresent()) {
-            User user=usersService.getUserByUsername(username);
+
+
+        if (confirmationResult.isPresent() && confirmationResult.get().getValid()) {
+            confirmationResult.get().setValid(false);
+            confirmationCodeService.saveConfirmationCode(confirmationResult.get());
+            User user = usersService.getUserByUsername(username);
             user.setActivated(true);
             usersService.saveUser(user);
             model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
@@ -233,5 +240,49 @@ public class UsersController {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
         }
         return "success_user_registration_confirmed";
+    }
+
+    @PostMapping(path = "/sendConfirmationCodeAgain")
+    public String sendConfirmationCodeAgain(Model model) {
+        System.out.println("sendConfirmationCodeAgain");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        User user = usersService.getUserByUsername(username);
+
+        //зроби деактивацію всіх активних кодів для користувача
+
+        confirmationCodeService.deactivateConfirmationCodesByUser(user);
+
+        //відправляємо посилання активації
+        confirmationCodeService.sendConfirmationCode(user);
+        /*UUID uuid = UUID.randomUUID();
+        String stringConfirmationCode = uuid.toString();
+        System.out.println("confirmationCode: " + stringConfirmationCode);
+
+        ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode);
+        confirmationCodeService.saveConfirmationCode(confirmationCode);
+
+        usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());*/
+
+        model.addAttribute("sendingCodeMessage", "Посилання успішно відправлено ще раз на вказаний e-mail: {email}");
+
+        return "confirm_registration";
+    }
+
+    @GetMapping(path = "/profile")
+    public String goToProfilePage(Model model){
+        System.out.println("goToProfilePage");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        User user = usersService.getUserByUsername(username);
+
+        model.addAttribute("userInformation",user);
+
+        Boolean accountStatus=user.getActivated();
+        model.addAttribute("accountStatus",accountStatus ? "Активований" : "Не активовний");
+
+        return "profile";
     }
 }

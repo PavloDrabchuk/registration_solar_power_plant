@@ -7,12 +7,22 @@
 </head>
 <body>
 
-<h3>Підтвердіть реєстрацію, ввівши код, який є у листі, який надіслано на електронну пошту: {e-mail}!</h3>
+<h3>Для завершення реєстрації перейдіть за посиланням, яке є у листі, який надіслано на електронну пошту: {e-mail}!</h3>
 
-<form action="confirmRegistration"  th:action="@{/confirmRegistration}" th:method="post" th:object="${confirmationCode}">
+<!--<form action="confirmRegistration"  th:action="@{/confirmRegistration}" th:method="post" th:object="${confirmationCode}">
     <label>Enter confirmation code</label><input type="text" maxlength="8">
     <input type="submit">
+</form>-->
+
+
+<form th:action="@{/sendConfirmationCodeAgain}" method="post">
+    <input type="submit" value="Надіслати ще раз"/>
 </form>
+
+<h2 th:if="${sendingCodeMessage}">
+    <div th:text="${sendingCodeMessage}">
+    </div>
+</h2>
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Вийти"/>

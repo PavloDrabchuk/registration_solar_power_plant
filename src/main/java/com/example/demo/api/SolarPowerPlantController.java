@@ -59,7 +59,7 @@ public class SolarPowerPlantController {
     }
 
     @GetMapping(path = "/view/{id}")
-    public ModelAndView getSolarPowerPlantsById(@PathVariable("id") Long id) {
+    public String getSolarPowerPlantsById(@PathVariable("id") Long id, Model model) {
         System.out.println("getSolarPowerPlantsById");
         //Model model=new Model("getall");
 
@@ -75,12 +75,12 @@ public class SolarPowerPlantController {
 
         System.out.println(" -- id: "+solarPowerPlant.get().getId());
 
-        ModelAndView modelAndView = new ModelAndView("solar_power_plant_info_by_id");
+        //ModelAndView modelAndView = new ModelAndView("solar_power_plant_info_by_id");
         //modelAndView.addObject("users", usersService.getAllUsers());
         //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
-        modelAndView.addObject("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantById(id));
+        model.addAttribute("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantById(id));
         //modelAndView.addObject("name", username);
         //return usersService.getAllUsers();
-        return modelAndView;
+        return "solar_power_plant_info_by_id";
     }
 }

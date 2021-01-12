@@ -14,10 +14,12 @@ public class ConfirmationCode {
     @OneToOne
     private User user;
     private String confirmationCode;
+    private Boolean valid;
     private LocalDateTime dateTimeOfCreation;
 
     public ConfirmationCode(User user, String confirmationCode) {
         this.user=user;
+        this.valid=true;
         this.confirmationCode = confirmationCode;
         this.dateTimeOfCreation = LocalDateTime.now();
     }
@@ -56,5 +58,13 @@ public class ConfirmationCode {
 
     public void setDateTimeOfCreation(LocalDateTime dateTimeOfCreation) {
         this.dateTimeOfCreation = dateTimeOfCreation;
+    }
+
+    public Boolean getValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
     }
 }
