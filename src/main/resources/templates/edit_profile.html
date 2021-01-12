@@ -11,18 +11,20 @@
     <input type="submit" value="Вийти"/>
 </form>
 
+<form action="updateProfileInfo" th:action="@{/updateProfileInfo}" th:object="${updatedUserInfo}" method="post">
+
 <table border="1" cellspacing="0">
     <tr>
-    <th>Профіль</th>
-        <th align="right"><a th:href="@{/edit_profile}">Редагувати</a></th>
+        <th>Профіль</th>
+        <th align="right" colspan="2"></th>
     </tr>
     <tr>
         <td>Прізвище</td>
-        <td th:text="${userInformation.getSurname()}"></td>
+        <td> <input placeholder="Введіть прізвище" th:value="${userInformation.getSurname()}"  ></td>
     </tr>
     <tr>
         <td>Ім'я</td>
-        <td th:text="${userInformation.getName()}"></td>
+        <td> <input placeholder="Введіть ім'я" th:value="${userInformation.getName()}" th:field="*{name}"></td>
     </tr>
     <tr>
         <td>По батькові</td>
@@ -60,7 +62,9 @@
 
 </table>
 
+    <input type="submit" value="Зберегти"/>
 
+</form>
 
 
 </body>

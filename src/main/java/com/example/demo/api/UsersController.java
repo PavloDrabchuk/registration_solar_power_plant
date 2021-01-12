@@ -285,4 +285,31 @@ public class UsersController {
 
         return "profile";
     }
+
+    @GetMapping(path="/edit_profile")
+    public String editProfileInfo(Model model){
+        System.out.println("editProfileInfo");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        User user = usersService.getUserByUsername(username);
+
+        model.addAttribute("userInformation",user);
+
+        Boolean accountStatus=user.getActivated();
+        model.addAttribute("accountStatus",accountStatus ? "Активований" : "Не активовний");
+
+        return "edit_profile";
+    }
+
+    @PostMapping(path="/updateProfileInfo")
+    public String updateProfileInfo(@Valid @ModelAttribute("updatedUserInfo") User updateUserInfo){
+
+        System.out.println("updateProfileInfo");
+
+        usersService.saveUser(updateUserInfo);
+
+        return "redirect:/profile";
+    }
+
 }
