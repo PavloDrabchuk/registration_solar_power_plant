@@ -73,11 +73,13 @@ public class UsersService {
     public void sendMailWithConfirmationCode(String email, String confirmationCode, TypesConfirmationCode typeConfirmationCode){
         SimpleMailMessage confirmationMessage=new SimpleMailMessage();
         confirmationMessage.setTo(email);
-        confirmationMessage.setSubject("Confirmation mail");
+
 
         if(typeConfirmationCode.name().equals("confirmRegistration")) {
-            confirmationMessage.setText("Please: http://localhost:8080/confirm/" + confirmationCode);
+            confirmationMessage.setSubject("Confirmation mail");
+            confirmationMessage.setText("<html><body><h1>header</h1> Please: http://localhost:8080/confirm/" + confirmationCode+"</body></html>");
         } else if(typeConfirmationCode.name().equals("recoverPassword")){
+            confirmationMessage.setSubject("Recover password mail");
             confirmationMessage.setText("Please: http://localhost:8080/recover/" + confirmationCode);
         }
 

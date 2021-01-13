@@ -363,27 +363,34 @@ public class UsersController {
             user.setActivated(true);
             usersService.saveUser(user);*/
             model.addAttribute("recoverSignalOK", "Введіть новий пароль.");
-            String password="",passwordAgain="";
+            model.addAttribute("username",confirmationResult.get().getUser().getUsername());
+            model.addAttribute("confirmationCode",confirmationCode);
+            /*String password="",passwordAgain="";
 
             ArrayList<String> updatePassword=new ArrayList<>();
             updatePassword.add(password);
             updatePassword.add(passwordAgain);
 
-            model.addAttribute("updatePassword", updatePassword);
+            model.addAttribute("updatePassword", updatePassword);*/
         } else {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
         }
         return "recover_password";
     }
 
-    @PostMapping(path="/updatePassword")
+    @PostMapping(path = "/recover/{confirmationCode}")
     public String updatePassword(@Valid @ModelAttribute("updatePassword") ArrayList<String> updatePassword,
+                                 //@RequestParam(value="username",required = false) String username,
+                                // @RequestParam("username") String username1,
+                                 @PathVariable("confirmationCode") String confirmationCode,
                                  @RequestParam("password") String password,
                                  @RequestParam("passwordAgain") String passwordAgain,
                                  Model model){
         //model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
         model.addAttribute("updatePasswordOK","Пароль успішно змінено");
 
+        //System.out.println("username1: "+username1);
+        System.out.println("Confirmation code: "+confirmationCode);
         System.out.println("password: "+password);
         System.out.println("passwordAgain: "+passwordAgain);
         //User user=usersService.getUserByUsername(recoverInformation.getUsername());
