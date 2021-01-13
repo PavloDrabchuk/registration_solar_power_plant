@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public class SolarPowerPlantController {
     }
 
     @PostMapping(path="/addSolarPowerPlant")
-    public String addSolarPowerPlant(@ModelAttribute("solarPowerPlant") SolarPowerPlant solarPowerPlant){
+    public String addSolarPowerPlant(@Valid  @ModelAttribute("solarPowerPlant") SolarPowerPlant solarPowerPlant){
         System.out.println("addSolarPowerPlant");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

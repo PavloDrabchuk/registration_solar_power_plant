@@ -271,45 +271,51 @@ public class UsersController {
     }
 
     @GetMapping(path = "/profile")
-    public String goToProfilePage(Model model){
+    public String goToProfilePage(Model model) {
         System.out.println("goToProfilePage");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         User user = usersService.getUserByUsername(username);
 
-        model.addAttribute("userInformation",user);
+        model.addAttribute("userInformation", user);
 
-        Boolean accountStatus=user.getActivated();
-        model.addAttribute("accountStatus",accountStatus ? "Активований" : "Не активовний");
+        Boolean accountStatus = user.getActivated();
+        model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
         return "profile";
     }
 
-    @GetMapping(path="/edit_profile")
-    public String editProfileInfo(Model model){
+    @GetMapping(path = "/edit_profile")
+    public String editProfileInfo(Model model) {
         System.out.println("editProfileInfo");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         User user = usersService.getUserByUsername(username);
 
-        model.addAttribute("userInformation",user);
+        model.addAttribute("userInformation", user);
 
-        Boolean accountStatus=user.getActivated();
-        model.addAttribute("accountStatus",accountStatus ? "Активований" : "Не активовний");
+        Boolean accountStatus = user.getActivated();
+        model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
         return "edit_profile";
     }
 
-    @PostMapping(path="/updateProfileInfo")
-    public String updateProfileInfo(@Valid @ModelAttribute("updatedUserInfo") User updateUserInfo){
+    @PostMapping(path = "/updateProfileInfo")
+    public String updateProfileInfo(@Valid @ModelAttribute("userInformation") User updatedUserInfo, BindingResult bindingResult) {
 
         System.out.println("updateProfileInfo");
 
-        usersService.saveUser(updateUserInfo);
+        if (bindingResult.hasErrors()) {
+            System.out.println("BINDING RESULT ERROR");
+            return "edit_profile";
+        } else {
 
-        return "redirect:/profile";
+            usersService.saveUser(updatedUserInfo);
+
+            return "redirect:/profile";
+        }
     }
 
 }

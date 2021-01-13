@@ -11,56 +11,68 @@
     <input type="submit" value="Вийти"/>
 </form>
 
-<form action="updateProfileInfo" th:action="@{/updateProfileInfo}" th:object="${updatedUserInfo}" method="post">
+<form action="updateProfileInfo" th:action="@{/updateProfileInfo}" th:object="${userInformation}" method="post">
 
-<table border="1" cellspacing="0">
-    <tr>
-        <th>Профіль</th>
-        <th align="right" colspan="2"></th>
-    </tr>
-    <tr>
-        <td>Прізвище</td>
-        <td> <input placeholder="Введіть прізвище" th:value="${userInformation.getSurname()}"  ></td>
-    </tr>
-    <tr>
-        <td>Ім'я</td>
-        <td> <input placeholder="Введіть ім'я" th:value="${userInformation.getName()}" th:field="*{name}"></td>
-    </tr>
-    <tr>
-        <td>По батькові</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td style="background-color: #7b98bc"></td>
-        <td style="background-color: #7b98bc"></td>
-    </tr>
+    <table border="1" cellspacing="0">
+        <tr>
+            <th>Профіль</th>
+            <th align="right" colspan="2"></th>
+        </tr>
+        <tr>
+            <td>Прізвище</td>
+            <td>
+                <input placeholder="Введіть прізвище"
+                       th:value="${userInformation.getSurname()}" th:field="*{surname}">
 
-    <tr>
-        <td>Ім'я користувача</td>
-        <td th:text="${userInformation.getUsername()}"></td>
-    </tr>
+                <!-- <input th:if="${#strings.length(userInformation.getSurname())==0}" placeholder="Введіть прізвище" th:value="${userInformation.getSurname()}" th:field="*{surname}" >-->
+                <!-- <div th:unless="${#strings.length(userInformation.getSurname())!=0}" th:text="${userInformation.getSurname()}" ></div>-->
+            </td>
+        </tr>
+        <tr>
+            <td>Ім'я</td>
+            <td>
+                <input placeholder="Введіть ім'я"
+                       th:value="${userInformation.getName()}" th:field="*{name}">
 
-    <tr>
-        <td>E-mail</td>
-        <td th:text="${userInformation.getEmail()}"></td>
-    </tr>
+                <!-- <input th:if="${#strings.length(userInformation.getName())==0}" placeholder="Введіть ім'я" th:value="${userInformation.getName()}" th:field="*{name}">-->
+                <!-- <div th:unless="${#strings.length(userInformation.getName())!=0}" th:text="${userInformation.getName()}" ></div>-->
+            </td>
+        </tr>
+        <tr>
+            <td>По батькові</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="background-color: #7b98bc"></td>
+            <td style="background-color: #7b98bc"></td>
+        </tr>
 
-    <tr>
-        <td>Моб. телефон</td>
-        <td><input placeholder="Введіть моб. телефон" th:value="${userInformation.getEmail()}"></td>
-    </tr>
+        <tr>
+            <td>Ім'я користувача</td>
+            <td th:text="${userInformation.getUsername()}" th:field="*{username}"></td>
+        </tr>
 
-    <tr>
-        <td style="background-color: #7b98bc"></td>
-        <td style="background-color: #7b98bc"></td>
-    </tr>
+        <tr>
+            <td>E-mail</td>
+            <td th:text="${userInformation.getEmail()}" th:field="*{email}"></td>
+        </tr>
 
-    <tr>
-        <td>Статус аккаунту</td>
-        <td th:text="${accountStatus}"></td>
-    </tr>
+        <tr>
+            <td>Моб. телефон</td>
+            <td><input placeholder="Введіть моб. телефон" th:value="${userInformation.getEmail()}"></td>
+        </tr>
 
-</table>
+        <tr>
+            <td style="background-color: #7b98bc"></td>
+            <td style="background-color: #7b98bc"></td>
+        </tr>
+
+        <tr>
+            <td>Статус аккаунту</td>
+            <td th:text="${accountStatus}"></td>
+        </tr>
+
+    </table>
 
     <input type="submit" value="Зберегти"/>
 
