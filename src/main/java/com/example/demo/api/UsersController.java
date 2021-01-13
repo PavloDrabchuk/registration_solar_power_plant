@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -362,9 +363,35 @@ public class UsersController {
             user.setActivated(true);
             usersService.saveUser(user);*/
             model.addAttribute("recoverSignalOK", "Введіть новий пароль.");
+            String password="",passwordAgain="";
+
+            ArrayList<String> updatePassword=new ArrayList<>();
+            updatePassword.add(password);
+            updatePassword.add(passwordAgain);
+
+            model.addAttribute("updatePassword", updatePassword);
         } else {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
         }
+        return "recover_password";
+    }
+
+    @PostMapping(path="/updatePassword")
+    public String updatePassword(@Valid @ModelAttribute("updatePassword") ArrayList<String> updatePassword,
+                                 @RequestParam("password") String password,
+                                 @RequestParam("passwordAgain") String passwordAgain,
+                                 Model model){
+        //model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
+        model.addAttribute("updatePasswordOK","Пароль успішно змінено");
+
+        System.out.println("password: "+password);
+        System.out.println("passwordAgain: "+passwordAgain);
+        //User user=usersService.getUserByUsername(recoverInformation.getUsername());
+
+        System.out.println("************************");
+
+        //confirmationCodeService.sendConfirmationCode(user,TypesConfirmationCode.recoverPassword);
+
         return "recover_password";
     }
 
