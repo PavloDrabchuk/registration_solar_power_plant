@@ -388,12 +388,18 @@ public class UsersController {
                                  Model model){
         //model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
         model.addAttribute("updatePasswordOK","Пароль успішно змінено");
-
+Optional<ConfirmationCode> confirmationCodeResult=confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
+User user=confirmationCodeResult.get().getUser();
         //System.out.println("username1: "+username1);
         System.out.println("Confirmation code: "+confirmationCode);
         System.out.println("password: "+password);
         System.out.println("passwordAgain: "+passwordAgain);
         //User user=usersService.getUserByUsername(recoverInformation.getUsername());
+
+        if(password.equals(passwordAgain)){
+            user.setPassword(bCryptPasswordEncoder.encode(password));
+            usersService.saveUser(user);
+        }
 
         System.out.println("************************");
 
