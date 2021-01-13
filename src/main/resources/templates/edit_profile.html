@@ -49,17 +49,17 @@
 
         <tr>
             <td>Ім'я користувача</td>
-            <td th:text="${userInformation.getUsername()}" th:field="*{username}"></td>
+            <td th:text="${userInformation.getUsername()}" ></td>
         </tr>
 
         <tr>
             <td>E-mail</td>
-            <td th:text="${userInformation.getEmail()}" th:field="*{email}"></td>
+            <td th:text="${userInformation.getEmail()}" ></td>
         </tr>
 
         <tr>
             <td>Моб. телефон</td>
-            <td><input placeholder="Введіть моб. телефон" th:value="${userInformation.getEmail()}"></td>
+            <td><input placeholder="Введіть моб. телефон" th:value="${userInformation.getMobilePhoneNumber()}" th:field="*{mobilePhoneNumber}"></td>
         </tr>
 
         <tr>

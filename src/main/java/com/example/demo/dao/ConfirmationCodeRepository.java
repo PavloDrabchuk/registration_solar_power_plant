@@ -13,4 +13,6 @@ Optional<ConfirmationCode> findConfirmationCodeByConfirmationCode(String confirm
     Iterable<ConfirmationCode> findAll();
 
     Iterable<ConfirmationCode> findAllByUser(User user);
+
+
 }

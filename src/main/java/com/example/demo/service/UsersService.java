@@ -77,4 +77,12 @@ public class UsersService {
 
         emailSenderService.sendEmail(confirmationMessage);
     }
+
+    public void updateUserInformation(User user, User updatedUserInfo){
+        user.setName(updatedUserInfo.getName());
+        user.setSurname(updatedUserInfo.getSurname());
+        user.setMobilePhoneNumber(updatedUserInfo.getMobilePhoneNumber());
+
+        saveUser(user);
+    }
 }

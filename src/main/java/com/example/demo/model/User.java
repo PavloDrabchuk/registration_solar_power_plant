@@ -27,6 +27,7 @@ public class User {
     private String surname;
     private String email;
     private String password;
+    private String mobilePhoneNumber;
 
     @Transient
     private String passwordConfirm;
@@ -56,7 +57,8 @@ public class User {
                 @JsonProperty("surname") String surname,
                 @JsonProperty("password") String password,
                 @JsonProperty("userRoles") UserRoles userRoles,
-                @JsonProperty("email") String email) {
+                @JsonProperty("email") String email,
+                @JsonProperty("mobilePhoneNumber") String mobilePhoneNumber) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -64,7 +66,8 @@ public class User {
         this.userRoles = userRoles;
         //this.activated=false;
         //this.locked=false;
-        this.email=email;
+        this.email = email;
+        this.mobilePhoneNumber = mobilePhoneNumber;
     }
 
     public User() {
@@ -148,5 +151,26 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public void getStringInfo() {
+        System.out.println("\nUser info: \n" +
+                "id: " + id +
+                "\nusername: " + username +
+                "\nname: " + name +
+                "\nsurname: " + surname +
+                "\npassword: " + password +
+                "\nemail: " + email +
+                "\nuserRoles: " + userRoles +
+                "\nmobilePhoneNumber: " + mobilePhoneNumber);
+    }
+
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
+    }
+
+    public void setMobilePhoneNumber(String mobilePhoneNumber) {
+        this.mobilePhoneNumber = mobilePhoneNumber;
     }
 }

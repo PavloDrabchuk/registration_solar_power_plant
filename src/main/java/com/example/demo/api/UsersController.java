@@ -219,20 +219,21 @@ public class UsersController {
         return "login";
     }*/
 
-    @GetMapping(path = "/confirm/{confirmationCode}_{username}")
+    @GetMapping(path = "/confirm/{confirmationCode}")
     public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
-                                  @PathVariable("username") String username,
+                                  //@PathVariable("username") String username,
                                   Model model) {
         System.out.println("CCode: " + confirmationCode);
-        System.out.println("U: " + username);
+        //System.out.println("U: " + username);
 
-        Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode + "_" + username);
+        Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
 
         if (confirmationResult.isPresent() && confirmationResult.get().getValid()) {
             confirmationResult.get().setValid(false);
             confirmationCodeService.saveConfirmationCode(confirmationResult.get());
-            User user = usersService.getUserByUsername(username);
+            //User user = usersService.getUserByUsername(username);
+            User user=confirmationResult.get().getUser();
             user.setActivated(true);
             usersService.saveUser(user);
             model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
@@ -312,7 +313,15 @@ public class UsersController {
             return "edit_profile";
         } else {
 
-            usersService.saveUser(updatedUserInfo);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();//get logged in username
+            User user = usersService.getUserByUsername(username);
+
+            //updatedUserInfo.getStringInfo();
+
+            usersService.updateUserInformation(user,updatedUserInfo);
+
+            //usersService.saveUser(updatedUserInfo);
 
             return "redirect:/profile";
         }
