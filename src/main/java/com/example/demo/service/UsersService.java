@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.UsersDao;
 import com.example.demo.dao.UsersRepository;
+import com.example.demo.model.TypesConfirmationCode;
 import com.example.demo.model.User;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +70,16 @@ public class UsersService {
 
     }*/
 
-    public void sendMailWithConfirmationCode(String email, String confirmationCode){
+    public void sendMailWithConfirmationCode(String email, String confirmationCode, TypesConfirmationCode typeConfirmationCode){
         SimpleMailMessage confirmationMessage=new SimpleMailMessage();
         confirmationMessage.setTo(email);
         confirmationMessage.setSubject("Confirmation mail");
-        confirmationMessage.setText("Please: http://localhost:8080/confirm/"+confirmationCode);
+
+        if(typeConfirmationCode.name().equals("confirmRegistration")) {
+            confirmationMessage.setText("Please: http://localhost:8080/confirm/" + confirmationCode);
+        } else if(typeConfirmationCode.name().equals("recoverPassword")){
+            confirmationMessage.setText("Please: http://localhost:8080/recover/" + confirmationCode);
+        }
 
         emailSenderService.sendEmail(confirmationMessage);
     }

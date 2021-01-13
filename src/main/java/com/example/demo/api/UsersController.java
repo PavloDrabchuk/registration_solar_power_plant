@@ -1,8 +1,6 @@
 package com.example.demo.api;
 
-import com.example.demo.model.ConfirmationCode;
-import com.example.demo.model.User;
-import com.example.demo.model.UserRoles;
+import com.example.demo.model.*;
 import com.example.demo.service.ConfirmationCodeService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UserRoleService;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 public class UsersController {
@@ -160,7 +157,7 @@ public class UsersController {
             usersService.saveUser(user);
 
             //відправляємо посилання активації
-            confirmationCodeService.sendConfirmationCode(user);
+            confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
             /*UUID uuid = UUID.randomUUID();
             String stringConfirmationCode = uuid.toString();
             System.out.println("confirmationCode: " + stringConfirmationCode);
@@ -256,7 +253,7 @@ public class UsersController {
         confirmationCodeService.deactivateConfirmationCodesByUser(user);
 
         //відправляємо посилання активації
-        confirmationCodeService.sendConfirmationCode(user);
+        confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
         /*UUID uuid = UUID.randomUUID();
         String stringConfirmationCode = uuid.toString();
         System.out.println("confirmationCode: " + stringConfirmationCode);
@@ -325,6 +322,50 @@ public class UsersController {
 
             return "redirect:/profile";
         }
+    }
+
+    @GetMapping(path = "/recover_password")
+    public String recoverPasswordRequest(Model model) {
+        //model.addAttribute("email", "emailll");
+        PasswordRecoverInformation recoverInformation=new PasswordRecoverInformation();
+
+        model.addAttribute("recoverInformation", recoverInformation);
+        System.out.println("recoverPassword");
+        return "recover_password";
+    }
+
+    @PostMapping(path="/recoverPassword")
+    public String sendResetPasswordMail(@Valid @ModelAttribute("recoverInformation") PasswordRecoverInformation recoverInformation, Model model){
+        model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
+
+        User user=usersService.getUserByUsername(recoverInformation.getUsername());
+
+        confirmationCodeService.sendConfirmationCode(user,TypesConfirmationCode.recoverPassword);
+
+        return "recover_password";
+    }
+
+    @GetMapping(path = "/recover/{confirmationCode}")
+    public String recoverPassword(@PathVariable("confirmationCode") String confirmationCode,
+                                  //@PathVariable("username") String username,
+                                  Model model) {
+        System.out.println("CCode: " + confirmationCode);
+        //System.out.println("U: " + username);
+
+        Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
+
+        if (confirmationResult.isPresent() && confirmationResult.get().getValid()) {
+            confirmationResult.get().setValid(false);
+            confirmationCodeService.saveConfirmationCode(confirmationResult.get());
+            //User user = usersService.getUserByUsername(username);
+            /*User user=confirmationResult.get().getUser();
+            user.setActivated(true);
+            usersService.saveUser(user);*/
+            model.addAttribute("recoverSignalOK", "Введіть новий пароль.");
+        } else {
+            model.addAttribute("errorMessage", "Код підтвердження недійсний.");
+        }
+        return "recover_password";
     }
 
 }

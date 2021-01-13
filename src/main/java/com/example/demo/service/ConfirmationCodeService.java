@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.ConfirmationCodeRepository;
 import com.example.demo.model.ConfirmationCode;
+import com.example.demo.model.TypesConfirmationCode;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,16 +30,16 @@ public class ConfirmationCodeService {
         return confirmationCodeRepository.findConfirmationCodeByConfirmationCode(confirmationCode);
     }
 
-    public void sendConfirmationCode(User user){
+    public void sendConfirmationCode(User user, TypesConfirmationCode typeConfirmationCode){
         //відправляємо посилання активації
         UUID uuid = UUID.randomUUID();
         String stringConfirmationCode = uuid.toString();
         System.out.println("confirmationCode: " + stringConfirmationCode);
 
-        ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode);
+        ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode,typeConfirmationCode);
         saveConfirmationCode(confirmationCode);
 
-        usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());
+        usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode(), typeConfirmationCode);
         System.out.println("----- - - -- - - - - - -- - - - - ");
     }
 

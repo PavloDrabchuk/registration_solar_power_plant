@@ -15,12 +15,14 @@ public class ConfirmationCode {
     private User user;
     private String confirmationCode;
     private Boolean valid;
+    private TypesConfirmationCode typeConfirmationCode;
     private LocalDateTime dateTimeOfCreation;
 
-    public ConfirmationCode(User user, String confirmationCode) {
+    public ConfirmationCode(User user, String confirmationCode, TypesConfirmationCode typeConfirmationCode) {
         this.user=user;
         this.valid=true;
         this.confirmationCode = confirmationCode;
+        this.typeConfirmationCode=typeConfirmationCode;
         this.dateTimeOfCreation = LocalDateTime.now();
     }
 
@@ -66,5 +68,13 @@ public class ConfirmationCode {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
+    }
+
+    public TypesConfirmationCode getTypeConfirmationCode() {
+        return typeConfirmationCode;
+    }
+
+    public void setTypeConfirmationCode(TypesConfirmationCode typeConfirmationCode) {
+        this.typeConfirmationCode = typeConfirmationCode;
     }
 }
