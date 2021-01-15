@@ -89,20 +89,20 @@ public class UsersController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);
 
-        if (user.getActivated()) {
+        if (user.get().getActivated()) {
             //User user = usersService.getUserByUsername(username);
-            System.out.println("status:" + user.getActivated());
+            System.out.println("status:" + user.get().getActivated());
             //return user.getActivated()==true ? "redirect:/home" : "redirect:/confirm_registration";
 
-            String userRole = user.getUserRoles().toString();
+            String userRole = user.get().getUserRoles().toString();
 
 
             // ModelAndView modelAndView = new ModelAndView("home");
             //modelAndView.addObject("users", usersService.getAllUsers());
             //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
-            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user));
+            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
             model.addAttribute("name", username);
 
             if (userRole.equals("ADMIN")) {
@@ -231,7 +231,7 @@ public class UsersController {
             confirmationResult.get().setValid(false);
             confirmationCodeService.saveConfirmationCode(confirmationResult.get());
             //User user = usersService.getUserByUsername(username);
-            User user=confirmationResult.get().getUser();
+            User user = confirmationResult.get().getUser();
             user.setActivated(true);
             usersService.saveUser(user);
             model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
@@ -247,14 +247,14 @@ public class UsersController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);
 
         //зроби деактивацію всіх активних кодів для користувача
 
-        confirmationCodeService.deactivateConfirmationCodesByUser(user);
+        confirmationCodeService.deactivateConfirmationCodesByUser(user.get());
 
         //відправляємо посилання активації
-        confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
+        confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.confirmRegistration);
         /*UUID uuid = UUID.randomUUID();
         String stringConfirmationCode = uuid.toString();
         System.out.println("confirmationCode: " + stringConfirmationCode);
@@ -275,11 +275,11 @@ public class UsersController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);
 
         model.addAttribute("userInformation", user);
 
-        Boolean accountStatus = user.getActivated();
+        Boolean accountStatus = user.get().getActivated();
         model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
         return "profile";
@@ -291,11 +291,11 @@ public class UsersController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);
 
         model.addAttribute("userInformation", user);
 
-        Boolean accountStatus = user.getActivated();
+        Boolean accountStatus = user.get().getActivated();
         model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
         return "edit_profile";
@@ -313,11 +313,11 @@ public class UsersController {
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();//get logged in username
-            User user = usersService.getUserByUsername(username);
+            Optional<User> user = usersService.getUserByUsername(username);
 
             //updatedUserInfo.getStringInfo();
 
-            usersService.updateUserInformation(user,updatedUserInfo);
+            usersService.updateUserInformation(user.get(), updatedUserInfo);
 
             //usersService.saveUser(updatedUserInfo);
 
@@ -328,21 +328,26 @@ public class UsersController {
     @GetMapping(path = "/recover_password")
     public String recoverPasswordRequest(Model model) {
         //model.addAttribute("email", "emailll");
-        PasswordRecoverInformation recoverInformation=new PasswordRecoverInformation();
+        PasswordRecoverInformation recoverInformation = new PasswordRecoverInformation();
 
         model.addAttribute("recoverInformation", recoverInformation);
         System.out.println("recoverPassword");
         return "recover_password";
     }
 
-    @PostMapping(path="/recoverPassword")
-    public String sendResetPasswordMail(@Valid @ModelAttribute("recoverInformation") PasswordRecoverInformation recoverInformation, Model model){
-        model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
+    @PostMapping(path = "/recoverPassword")
+    public String sendResetPasswordMail(@Valid @ModelAttribute("recoverInformation") PasswordRecoverInformation recoverInformation, Model model) {
 
-        User user=usersService.getUserByUsername(recoverInformation.getUsername());
 
-        confirmationCodeService.sendConfirmationCode(user,TypesConfirmationCode.recoverPassword);
+        Optional<User> user = usersService.getUserByUsername(recoverInformation.getUsername());
+        if (user.isPresent() && user.get().getEmail().equals(recoverInformation.getEmail())) {
+//if(user.get().getEmail()==recoverInformation.getEmail())
 
+            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.recoverPassword);
+            model.addAttribute("sendMessageOK", "Повідомлення для відновлення паролю надіслано на вказаний email: " + recoverInformation.getEmail() + ".");
+        } else {
+            model.addAttribute("sendMessageERROR", "Повідомлення не надіслано. Перевірте правильність даних.");
+        }
         return "recover_password";
     }
 
@@ -363,8 +368,8 @@ public class UsersController {
             user.setActivated(true);
             usersService.saveUser(user);*/
             model.addAttribute("recoverSignalOK", "Введіть новий пароль.");
-            model.addAttribute("username",confirmationResult.get().getUser().getUsername());
-            model.addAttribute("confirmationCode",confirmationCode);
+            model.addAttribute("username", confirmationResult.get().getUser().getUsername());
+            model.addAttribute("confirmationCode", confirmationCode);
             /*String password="",passwordAgain="";
 
             ArrayList<String> updatePassword=new ArrayList<>();
@@ -381,24 +386,28 @@ public class UsersController {
     @PostMapping(path = "/recover/{confirmationCode}")
     public String updatePassword(@Valid @ModelAttribute("updatePassword") ArrayList<String> updatePassword,
                                  //@RequestParam(value="username",required = false) String username,
-                                // @RequestParam("username") String username1,
+                                 // @RequestParam("username") String username1,
                                  @PathVariable("confirmationCode") String confirmationCode,
                                  @RequestParam("password") String password,
                                  @RequestParam("passwordAgain") String passwordAgain,
-                                 Model model){
+                                 Model model) {
         //model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
-        model.addAttribute("updatePasswordOK","Пароль успішно змінено");
-Optional<ConfirmationCode> confirmationCodeResult=confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
-User user=confirmationCodeResult.get().getUser();
+        //model.addAttribute("updatePassword", "updatePassword");
+        Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
+        User user = confirmationCodeResult.get().getUser();
         //System.out.println("username1: "+username1);
-        System.out.println("Confirmation code: "+confirmationCode);
-        System.out.println("password: "+password);
-        System.out.println("passwordAgain: "+passwordAgain);
+        System.out.println("Confirmation code: " + confirmationCode);
+        System.out.println("password: " + password);
+        System.out.println("passwordAgain: " + passwordAgain);
         //User user=usersService.getUserByUsername(recoverInformation.getUsername());
 
-        if(password.equals(passwordAgain)){
+        if (password.equals(passwordAgain)) {
             user.setPassword(bCryptPasswordEncoder.encode(password));
             usersService.saveUser(user);
+            System.out.println("password are equals");
+            model.addAttribute("updatePasswordOK","Пароль успішно змінено.");
+        } else{
+            model.addAttribute("updatePasswordERROR","Паролі не співпадають.");
         }
 
         System.out.println("************************");

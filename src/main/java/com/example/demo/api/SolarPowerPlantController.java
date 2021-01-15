@@ -40,11 +40,11 @@ public class SolarPowerPlantController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
 
-        User user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);
 
-        System.out.println("username: "+username+" \n userId: "+user.getId());
+        System.out.println("username: "+username+" \n userId: "+user.get().getId());
 
-        solarPowerPlant.setUser(user);
+        solarPowerPlant.setUser(user.get());
 
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
         return "redirect:/home";

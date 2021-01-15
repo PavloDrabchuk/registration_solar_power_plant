@@ -58,7 +58,7 @@ public class UsersService {
         usersRepository.save(user);
     }
 
-    public User getUserByUsername(String username){
+    public Optional<User> getUserByUsername(String username){
         return usersRepository.findByUsername(username);
     }
 

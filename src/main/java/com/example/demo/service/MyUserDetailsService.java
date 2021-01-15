@@ -24,8 +24,8 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-        User user = usersRepository.findByUsername(username);
-        if (user == null) throw new UsernameNotFoundException(username);
+        Optional<User> user = usersRepository.findByUsername(username);
+        if (user.isEmpty()) throw new UsernameNotFoundException(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         /*for (UserRole role : user.getUserRole()){
@@ -34,9 +34,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
 
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRoles().toString()));
-        System.out.println("access: "+user.getUserRoles().toString());
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.get().getUserRoles().toString()));
+        System.out.println("access: "+user.get().getUserRoles().toString());
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), grantedAuthorities);
     }
 }

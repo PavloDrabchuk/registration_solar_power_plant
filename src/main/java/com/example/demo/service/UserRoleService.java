@@ -6,6 +6,8 @@ import com.example.demo.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserRoleService {
     private final UserRoleRepository userRoleRepository;
@@ -15,7 +17,7 @@ public class UserRoleService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    public UserRole getUserRole(String name) {
+    public Optional<UserRole> getUserRole(String name) {
         return userRoleRepository.findByName(name);
     }
 }
