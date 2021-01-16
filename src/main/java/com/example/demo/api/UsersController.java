@@ -5,6 +5,7 @@ import com.example.demo.service.ConfirmationCodeService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UserRoleService;
 import com.example.demo.service.UsersService;
+import com.example.demo.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -25,6 +28,7 @@ public class UsersController {
     private final SolarPowerPlantService solarPowerPlantService;
     private final UserRoleService userRoleService;
     private final ConfirmationCodeService confirmationCodeService;
+    private final UserValidator userValidator;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -33,11 +37,13 @@ public class UsersController {
     public UsersController(UsersService usersService,
                            SolarPowerPlantService solarPowerPlantService,
                            UserRoleService userRoleService,
-                           ConfirmationCodeService confirmationCodeService) {
+                           ConfirmationCodeService confirmationCodeService,
+                           UserValidator userValidator) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.userRoleService = userRoleService;
         this.confirmationCodeService = confirmationCodeService;
+        this.userValidator = userValidator;
     }
 
 
@@ -141,24 +147,48 @@ public class UsersController {
     }
 
     @PostMapping(path = "/add")
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String addUser(@Valid @ModelAttribute("user") User user/*, BindingResult bindingResult*/,Model model) {
+
+        int countErrors=0;
+       /* userValidator.validate(user,bindingResult);
 
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
             return "add_user";
-        } else {
+        } else {*/
+        if("123"!="123"){
+            model.addAttribute("qwe","azxs");
+            return "add_user";
+        }
 
-            System.out.println("addUser");
-            //UserRole userRole = userRoleService.getUserRole("USER");
-            user.setUserRoles(UserRoles.USER);
-            user.setActivated(false);
-            user.setLocked(false);
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            System.out.println("activated: " + user.getActivated());
-            usersService.saveUser(user);
+        if(usersService.getUserByUsername(user.getUsername()).isPresent()){
+            countErrors++;
+            model.addAttribute("duplicateUser","Користувач з таким іменем уже існує.");
+        }
 
-            //відправляємо посилання активації
-            confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
+        if(usersService.getUserByEmail(user.getEmail()).isPresent()){
+            countErrors++;
+            model.addAttribute("duplicateEmail","Введена електронна адреса вже використовується.");
+        }
+
+        if(countErrors!=0){
+            return "add_user";
+        }
+
+
+        System.out.println("addUser");
+        //UserRole userRole = userRoleService.getUserRole("USER");
+        user.setUserRoles(UserRoles.USER);
+        user.setActivated(false);
+        user.setLocked(false);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setDateTimeOfCreation(LocalDateTime.now());
+        System.out.println("activated: " + user.getActivated());
+        usersService.saveUser(user);
+        System.out.println("time: "+LocalDateTime.now());
+
+        //відправляємо посилання активації
+        confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
             /*UUID uuid = UUID.randomUUID();
             String stringConfirmationCode = uuid.toString();
             System.out.println("confirmationCode: " + stringConfirmationCode);
@@ -168,10 +198,11 @@ public class UsersController {
 
             usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());*/
 
-            System.out.println("--- --- ---");
+        System.out.println("--- --- ---");
+        model.addAttribute("email",user.getEmail());
 
-            return "success_user_registration";
-        }
+        return "success_user_registration";
+        // }
     }
 
     @GetMapping(path = "/confirm_registration")
@@ -276,12 +307,12 @@ public class UsersController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
+        if (user.isPresent()) {
+            model.addAttribute("userInformation", user.get());
 
-        model.addAttribute("userInformation", user);
-
-        Boolean accountStatus = user.get().getActivated();
-        model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
-
+            Boolean accountStatus = user.get().getActivated();
+            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
+        }
         return "profile";
     }
 
@@ -293,11 +324,12 @@ public class UsersController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
-        model.addAttribute("userInformation", user);
+        if (user.isPresent()) {
+            model.addAttribute("userInformation", user.get());
 
-        Boolean accountStatus = user.get().getActivated();
-        model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
-
+            Boolean accountStatus = user.get().getActivated();
+            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
+        }
         return "edit_profile";
     }
 
@@ -405,9 +437,9 @@ public class UsersController {
             user.setPassword(bCryptPasswordEncoder.encode(password));
             usersService.saveUser(user);
             System.out.println("password are equals");
-            model.addAttribute("updatePasswordOK","Пароль успішно змінено.");
-        } else{
-            model.addAttribute("updatePasswordERROR","Паролі не співпадають.");
+            model.addAttribute("updatePasswordOK", "Пароль успішно змінено.");
+        } else {
+            model.addAttribute("updatePasswordERROR", "Паролі не співпадають.");
         }
 
         System.out.println("************************");

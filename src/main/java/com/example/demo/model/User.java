@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -21,8 +23,8 @@ public class User {
     private Long id;
     private String username;
 
-    @NotNull(message = "Введіть ім'я")
-    @NotEmpty(message = "Заповніть поле")
+    // @NotNull(message = "Введіть ім'я")
+    // @NotEmpty(message = "Заповніть поле")
     private String name;
     private String surname;
     private String email;
@@ -34,6 +36,8 @@ public class User {
 
     private Boolean activated;
     private Boolean locked;
+
+    private LocalDateTime dateTimeOfCreation;
 
     public String getPasswordConfirm() {
         return passwordConfirm;
@@ -68,6 +72,7 @@ public class User {
         //this.locked=false;
         this.email = email;
         this.mobilePhoneNumber = mobilePhoneNumber;
+        this.dateTimeOfCreation=LocalDateTime.now(ZoneId.of("UTC"));
     }
 
     public User() {
@@ -172,5 +177,13 @@ public class User {
 
     public void setMobilePhoneNumber(String mobilePhoneNumber) {
         this.mobilePhoneNumber = mobilePhoneNumber;
+    }
+
+    public LocalDateTime getDateTimeOfCreation() {
+        return dateTimeOfCreation;
+    }
+
+    public void setDateTimeOfCreation(LocalDateTime dateTimeOfCreation) {
+        this.dateTimeOfCreation = dateTimeOfCreation;
     }
 }

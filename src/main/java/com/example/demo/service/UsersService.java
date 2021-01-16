@@ -62,6 +62,10 @@ public class UsersService {
         return usersRepository.findByUsername(username);
     }
 
+    public Optional<User> getUserByEmail(String email){
+        return usersRepository.findByEmail(email);
+    }
+
     /*@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<User> optionalUser = usersRepository.findByUsername(username);

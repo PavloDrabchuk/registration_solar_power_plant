@@ -3,6 +3,7 @@ package com.example.demo.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 public class ConfirmationCode {
@@ -23,7 +24,7 @@ public class ConfirmationCode {
         this.valid=true;
         this.confirmationCode = confirmationCode;
         this.typeConfirmationCode=typeConfirmationCode;
-        this.dateTimeOfCreation = LocalDateTime.now();
+        this.dateTimeOfCreation = LocalDateTime.now(ZoneId.of("UTC+02:00"));
     }
 
     public ConfirmationCode() {
