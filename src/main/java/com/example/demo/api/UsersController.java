@@ -309,6 +309,7 @@ public class UsersController {
         Optional<User> user = usersService.getUserByUsername(username);
         if (user.isPresent()) {
             model.addAttribute("userInformation", user.get());
+            System.out.println("time: "+user.get().getDateTimeOfCreation());
 
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
@@ -365,6 +366,11 @@ public class UsersController {
         model.addAttribute("recoverInformation", recoverInformation);
         System.out.println("recoverPassword");
         return "recover_password";
+    }
+
+    @GetMapping(path="recoverPassword")
+    public String redirectToRecoverPasswordPage(){
+        return "redirect:/recover_password";
     }
 
     @PostMapping(path = "/recoverPassword")
