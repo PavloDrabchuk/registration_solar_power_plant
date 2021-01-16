@@ -12,6 +12,21 @@
         console.log("click");
         return false;
     }
+
+    function checkMatchingPasswords() {
+        console.log(document.getElementById("password").value);
+        console.log(document.getElementById("password_confirm").value);
+        const password = document.getElementById("password").value;
+        const passwordConfirm = document.getElementById("password_confirm").value;
+
+        /*if(password!==passwordConfirm){
+            document.getElementById("matching_passwords").innerText="Паролі не співпадають.";
+            console.log("Паролі не співпадають.");
+        }*/
+        if (passwordConfirm !== "" && passwordConfirm !=="") {
+            document.getElementById("matching_passwords").innerText = password !== passwordConfirm ? "Паролі не співпадають." : "";
+        }
+    }
 </script>
 
 
@@ -25,13 +40,20 @@
 
     <!--<p>surname: <input type="text" th:field="*{surname}"/></p>-->
 
-    <p>username: <input type="text" th:field="*{username}"/> <div th:if="${duplicateUser}" th:text="${duplicateUser}"></div></p>
+    <p>username: <input type="text" th:field="*{username}"/>
+    <div th:if="${duplicateUser}" th:text="${duplicateUser}"></div>
+    </p>
 
 
-    <p>e-mail: <input type="text" th:field="*{email}"/> <div th:if="${duplicateEmail}" th:text="${duplicateEmail}"></div></p>
+    <p>e-mail: <input type="text" th:field="*{email}"/>
+    <div th:if="${duplicateEmail}" th:text="${duplicateEmail}"></div>
+    </p>
 
-    <p>password: <input type="text" th:field="*{password}"/></p>
-    <p>password confirm: <input type="text" th:field="*{passwordConfirm}"></p>
+    <p>password: <input type="text" th:field="*{password}" id="password" onblur="checkMatchingPasswords()"/></p>
+    <p>password confirm: <input type="text" th:field="*{passwordConfirm}" id="password_confirm"
+                                onblur="checkMatchingPasswords()"/></p>
+
+    <div id="matching_passwords"></div>
 
     <td th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">Name Error</td>
 
