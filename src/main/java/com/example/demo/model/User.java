@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -21,12 +22,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
     private String username;
 
     // @NotNull(message = "Введіть ім'я")
     // @NotEmpty(message = "Заповніть поле")
     private String name;
     private String surname;
+
+    @Email(message = "Введіть правильну адресу електронної пошти")
     private String email;
     private String password;
     private String mobilePhoneNumber;

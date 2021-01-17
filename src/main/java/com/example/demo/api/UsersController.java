@@ -147,15 +147,15 @@ public class UsersController {
     }
 
     @PostMapping(path = "/add")
-    public String addUser(@Valid @ModelAttribute("user") User user/*, BindingResult bindingResult*/,Model model) {
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,Model model) {
 
         int countErrors=0;
-       /* userValidator.validate(user,bindingResult);
+       /* userValidator.validate(user,bindingResult);*/
 
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
             return "add_user";
-        } else {*/
+        } else {
         if("123"!="123"){
             model.addAttribute("qwe","azxs");
             return "add_user";
@@ -202,7 +202,7 @@ public class UsersController {
         model.addAttribute("email",user.getEmail());
 
         return "success_user_registration";
-        // }
+         }
     }
 
     @GetMapping(path = "/confirm_registration")

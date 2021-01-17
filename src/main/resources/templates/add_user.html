@@ -23,9 +23,44 @@
             document.getElementById("matching_passwords").innerText="Паролі не співпадають.";
             console.log("Паролі не співпадають.");
         }*/
-        if (passwordConfirm !== "" && passwordConfirm !=="") {
+        if (password !== "" && passwordConfirm !== "") {
             document.getElementById("matching_passwords").innerText = password !== passwordConfirm ? "Паролі не співпадають." : "";
         }
+    }
+
+    function checkFields() {
+        let countErrors = 0;
+
+        const username = document.getElementById("username").value,
+            email = document.getElementById("email").value,
+            password = document.getElementById("password").value,
+            passwordConfirm = document.getElementById("password_confirm").value;
+
+        if (username.length === 0) {
+            countErrors++;
+            document.getElementById("username_error").innerText="Введіть ім'я користувача.";
+        } else {
+            document.getElementById("username_error").innerText="";
+        }
+        if (email.length === 0) {
+            countErrors++;
+            document.getElementById("email_error").innerText="Введіть адресу електронної пошти.";
+        } else {
+            document.getElementById("email_error").innerText="";
+        }
+
+        if (password.length === 0) {
+            countErrors++;
+            document.getElementById("password_error").innerText="Введіть пароль";
+        } else {
+            document.getElementById("password_error").innerText="";
+        }
+
+        if(password!==passwordConfirm){
+            countErrors++;
+        }
+
+        return countErrors === 0;
     }
 </script>
 
@@ -40,24 +75,30 @@
 
     <!--<p>surname: <input type="text" th:field="*{surname}"/></p>-->
 
-    <p>username: <input type="text" th:field="*{username}"/>
+    <p>username: <input type="text" th:field="*{username}" id="username"/>
     <div th:if="${duplicateUser}" th:text="${duplicateUser}"></div>
+    <div id="username_error"></div>
     </p>
 
 
-    <p>e-mail: <input type="text" th:field="*{email}"/>
+    <p>e-mail: <input type="email" th:field="*{email}" id="email"/>
     <div th:if="${duplicateEmail}" th:text="${duplicateEmail}"></div>
+    <div id="email_error"></div>
+    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</td>
     </p>
 
     <p>password: <input type="text" th:field="*{password}" id="password" onblur="checkMatchingPasswords()"/></p>
+    <div id="password_error"></div>
+
     <p>password confirm: <input type="text" th:field="*{passwordConfirm}" id="password_confirm"
                                 onblur="checkMatchingPasswords()"/></p>
 
     <div id="matching_passwords"></div>
 
+
     <td th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">Name Error</td>
 
-    <p><input type="submit" value="add" onclick="/*return*/ g()"/> <input type="reset" value="Reset"/></p>
+    <p><input type="submit" value="add" onclick="return checkFields()"/> <input type="reset" value="Reset"/></p>
 </form>
 
 <div th:if="${qwe}">
