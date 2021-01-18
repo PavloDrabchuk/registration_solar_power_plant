@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.dao.ConfirmationCodeRepository;
 import com.example.demo.dao.UsersRepository;
+import com.example.demo.service.ConfirmationCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,8 +12,14 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 public class DemoApplication implements CommandLineRunner {
-@Autowired
+    @Autowired
     private   UsersRepository usersRepository;
+
+private final ConfirmationCodeService confirmationCodeService;
+
+    public DemoApplication(ConfirmationCodeService confirmationCodeService) {
+        this.confirmationCodeService = confirmationCodeService;
+    }
 
 
     public static void main(String[] args) {
@@ -23,5 +31,6 @@ public class DemoApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 /*usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
         UserRole.USER,false,false));*/
+        confirmationCodeService.deactivateOverdueCodes();
     }
 }

@@ -5,8 +5,11 @@ import com.example.demo.model.ConfirmationCode;
 import com.example.demo.model.TypesConfirmationCode;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,7 +53,19 @@ public class ConfirmationCodeService {
             confirmationCode.setValid(false);
             confirmationCodeRepository.save(confirmationCode);
         }
+    }
 
+    @Async
+    public void deactivateOverdueCodes(){
+
+        List<ConfirmationCode> confirmationCodeList=confirmationCodeRepository.findByDateTimeOfCreationBefore(LocalDateTime.now().plusHours(1));
+        System.out.println("local date time + 1 hour: "+LocalDateTime.now().plusMinutes(20));
+        /*for(int i=0;i<100;i++) {
+            System.out.println("deactivate");
+        }*/
+        for(ConfirmationCode confirmationCode:confirmationCodeList){
+            System.out.println("code: "+confirmationCode.getConfirmationCode());
+        }
     }
 
 

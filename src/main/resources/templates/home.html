@@ -52,8 +52,8 @@
 <!--<h5><a href="/sign-in">sign-in</a></h5>-->
 
 <h3>Users SolarPlants</h3>
-
-<table border="1">
+<div th:if="${not #lists.isEmpty(solarPowerPlantsByUser)}">
+<table  border="1">
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -67,7 +67,7 @@
         <td><a th:href="${'/view/'+solarPowerPlant.getId()}" th:text="${solarPowerPlant.getName()}"></a></td>
     </tr>
 </table>
-
+</div>
 <h3 th:if="${adminAccess}"><a href="/admin">Admin</a></h3>
 
 <a href="/profile">Профіль</a>
