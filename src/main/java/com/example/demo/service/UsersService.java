@@ -4,7 +4,14 @@ import com.example.demo.dao.UsersDao;
 import com.example.demo.dao.UsersRepository;
 import com.example.demo.model.TypesConfirmationCode;
 import com.example.demo.model.User;
+
+
+//import org.json.simple.parser.JSONParser;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -18,10 +25,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -105,8 +111,8 @@ public class UsersService {
         saveUser(user);
     }
 
-    public  String getFileContent(String filePath) throws IOException {
-        ApplicationContext appContext =
+    public  void getFileContent(String filePath) throws IOException {
+        /*ApplicationContext appContext =
                 new ClassPathXmlApplicationContext(new String[] {});
 
         Resource resource = appContext.getResource(filePath);
@@ -127,6 +133,35 @@ public class UsersService {
                 e.printStackTrace();
             }
         }
-        return sb.toString();
+        return sb.toString();*/
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object obj = parser.parse(new FileReader(filePath));
+
+            JSONObject jsonObject =  (JSONObject) obj;
+
+            String name = (String) jsonObject.get("results");
+            System.out.println(name);
+
+            /*String city = (String) jsonObject.get("city");
+            System.out.println(city);
+
+            String job = (String) jsonObject.get("job");
+            System.out.println(job);*/
+
+            // loop array
+            /*JSONArray cars = (JSONArray) jsonObject.get("cars");
+            Iterator<String> iterator = cars.iterator();
+            while (iterator.hasNext()) {
+                System.out.println(iterator.next());
+            }*/
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

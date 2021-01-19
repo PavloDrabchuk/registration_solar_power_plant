@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>403 - Forbidden</title>
+</head>
+<body>
+
+<h2>403 - forbidden</h2>
+
+<p>
+    Forbidden
+</p>
+
+<!--/*@thymesVar id="error" type="java.lang.String"*/-->
+<p th:text="${error}">Error Info</p>
+
+<!--/*@thymesVar id="status" type="java.lang.String"*/-->
+<p th:text="${status}">Status</p>
+
+</body>
+</html>

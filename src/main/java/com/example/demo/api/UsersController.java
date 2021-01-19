@@ -100,13 +100,16 @@ public class UsersController {
 
         if (user.get().getActivated()) {
 
-            try {
-                String text = usersService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
-                System.out.println(" >> text: "+text);
+           /* try {
+               ///  usersService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
+
+
+                 // usersService.getFileContent("https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?types=poi&access_token=pk.eyJ1IjoicGF2bG9kcmFiY2h1ayIsImEiOiJja2szd24xYjkweGpjMnBxb2Q3ZzJsdmdoIn0.1jXBFC1tf6SJfQB6CsiVSg");
+                //System.out.println(" >> text: "+text);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+*/
 
             //User user = usersService.getUserByUsername(username);
             System.out.println("status:" + user.get().getActivated());
