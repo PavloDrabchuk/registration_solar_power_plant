@@ -1,7 +1,9 @@
 package com.example.demo.api;
 
+import com.example.demo.model.Location;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
+import com.example.demo.service.LocationService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,17 +27,20 @@ public class SolarPowerPlantController {
 
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
+    private final LocationService locationService;
 
 
     @Autowired
     public SolarPowerPlantController(UsersService usersService,
-            SolarPowerPlantService solarPowerPlantService){
-        this.usersService=usersService;
-        this.solarPowerPlantService=solarPowerPlantService;
+                                     SolarPowerPlantService solarPowerPlantService,
+                                     LocationService locationService) {
+        this.usersService = usersService;
+        this.solarPowerPlantService = solarPowerPlantService;
+        this.locationService = locationService;
     }
 
-    @PostMapping(path="/addSolarPowerPlant")
-    public String addSolarPowerPlant(@Valid  @ModelAttribute("solarPowerPlant") SolarPowerPlant solarPowerPlant){
+    @PostMapping(path = "/addSolarPowerPlant")
+    public String addSolarPowerPlant(@Valid @ModelAttribute("solarPowerPlant") SolarPowerPlant solarPowerPlant) throws IOException {
         System.out.println("addSolarPowerPlant");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -42,9 +48,12 @@ public class SolarPowerPlantController {
 
         Optional<User> user = usersService.getUserByUsername(username);
 
-        System.out.println("username: "+username+" \n userId: "+user.get().getId());
+        System.out.println("username: " + username + " \n userId: " + user.get().getId());
 
         solarPowerPlant.setUser(user.get());
+
+        //solarPowerPlant.getLocation().createLonLatCoordinates(solarPowerPlant.getLocation());
+locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
 
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
         return "redirect:/home";
@@ -72,9 +81,9 @@ public class SolarPowerPlantController {
         String username = auth.getName();//get logged in username
         User user = usersService.getUserByUsername(username);*/
 
-        Optional<SolarPowerPlant> solarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(id);
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
 
-        System.out.println(" -- id: "+solarPowerPlant.get().getId());
+        System.out.println(" -- id: " + solarPowerPlant.get().getId());
 
         //ModelAndView modelAndView = new ModelAndView("solar_power_plant_info_by_id");
         //modelAndView.addObject("users", usersService.getAllUsers());

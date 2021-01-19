@@ -1,9 +1,16 @@
 package com.example.demo.model;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Entity
 public class Location {
@@ -76,4 +83,7 @@ public class Location {
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
+
+
+
 }

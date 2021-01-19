@@ -1,10 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.model.*;
-import com.example.demo.service.ConfirmationCodeService;
-import com.example.demo.service.SolarPowerPlantService;
-import com.example.demo.service.UserRoleService;
-import com.example.demo.service.UsersService;
+import com.example.demo.service.*;
 import com.example.demo.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,6 +26,7 @@ public class UsersController {
     private final SolarPowerPlantService solarPowerPlantService;
     private final UserRoleService userRoleService;
     private final ConfirmationCodeService confirmationCodeService;
+    private final LocationService locationService;
     private final UserValidator userValidator;
 
     @Autowired
@@ -39,12 +37,14 @@ public class UsersController {
                            SolarPowerPlantService solarPowerPlantService,
                            UserRoleService userRoleService,
                            ConfirmationCodeService confirmationCodeService,
-                           UserValidator userValidator) {
+                           UserValidator userValidator,
+                           LocationService locationService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.userRoleService = userRoleService;
         this.confirmationCodeService = confirmationCodeService;
         this.userValidator = userValidator;
+        this.locationService=locationService;
     }
 
 
@@ -100,16 +100,18 @@ public class UsersController {
 
         if (user.get().getActivated()) {
 
-           /* try {
-               ///  usersService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
+            //try {
+               /// String text=  locationService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
 
+               ///  System.out.println(" >> text: "+text);
+                //{"lat":([0-9.-]+),"lng":([0-9.-]+)}
 
                  // usersService.getFileContent("https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?types=poi&access_token=pk.eyJ1IjoicGF2bG9kcmFiY2h1ayIsImEiOiJja2szd24xYjkweGpjMnBxb2Q3ZzJsdmdoIn0.1jXBFC1tf6SJfQB6CsiVSg");
                 //System.out.println(" >> text: "+text);
-            } catch (IOException e) {
+            /*} catch (IOException e) {
                 e.printStackTrace();
-            }
-*/
+            }*/
+
 
             //User user = usersService.getUserByUsername(username);
             System.out.println("status:" + user.get().getActivated());

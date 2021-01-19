@@ -111,57 +111,5 @@ public class UsersService {
         saveUser(user);
     }
 
-    public  void getFileContent(String filePath) throws IOException {
-        /*ApplicationContext appContext =
-                new ClassPathXmlApplicationContext(new String[] {});
 
-        Resource resource = appContext.getResource(filePath);
-
-        StringBuilder sb = new StringBuilder();
-        BufferedReader br = null;
-        try{
-            br = new BufferedReader(
-                    new InputStreamReader(resource.getInputStream(), "UTF-8"));
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-        }finally {
-            if(br != null) try {
-                br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();*/
-        JSONParser parser = new JSONParser();
-
-        try {
-            Object obj = parser.parse(new FileReader(filePath));
-
-            JSONObject jsonObject =  (JSONObject) obj;
-
-            String name = (String) jsonObject.get("results");
-            System.out.println(name);
-
-            /*String city = (String) jsonObject.get("city");
-            System.out.println(city);
-
-            String job = (String) jsonObject.get("job");
-            System.out.println(job);*/
-
-            // loop array
-            /*JSONArray cars = (JSONArray) jsonObject.get("cars");
-            Iterator<String> iterator = cars.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }*/
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
 }
