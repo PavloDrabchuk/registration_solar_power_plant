@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -98,6 +99,15 @@ public class UsersController {
         Optional<User> user = usersService.getUserByUsername(username);
 
         if (user.get().getActivated()) {
+
+            try {
+                String text = usersService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
+                System.out.println(" >> text: "+text);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             //User user = usersService.getUserByUsername(username);
             System.out.println("status:" + user.get().getActivated());
             //return user.getActivated()==true ? "redirect:/home" : "redirect:/confirm_registration";

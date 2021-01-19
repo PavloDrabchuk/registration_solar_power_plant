@@ -7,6 +7,10 @@ import com.example.demo.model.User;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +18,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.MessageFormat;
 import java.util.Optional;
 
@@ -96,5 +103,30 @@ public class UsersService {
         user.setMobilePhoneNumber(updatedUserInfo.getMobilePhoneNumber());
 
         saveUser(user);
+    }
+
+    public  String getFileContent(String filePath) throws IOException {
+        ApplicationContext appContext =
+                new ClassPathXmlApplicationContext(new String[] {});
+
+        Resource resource = appContext.getResource(filePath);
+
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = null;
+        try{
+            br = new BufferedReader(
+                    new InputStreamReader(resource.getInputStream(), "UTF-8"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        }finally {
+            if(br != null) try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 }
