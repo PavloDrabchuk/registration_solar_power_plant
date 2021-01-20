@@ -6,6 +6,8 @@ import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,11 +15,11 @@ public class SolarPowerPlantService {
     private final SolarPowerPlantRepository solarPowerPlantRepository;
 
     @Autowired
-    public SolarPowerPlantService(SolarPowerPlantRepository solarPowerPlantRepository){
-        this.solarPowerPlantRepository=solarPowerPlantRepository;
+    public SolarPowerPlantService(SolarPowerPlantRepository solarPowerPlantRepository) {
+        this.solarPowerPlantRepository = solarPowerPlantRepository;
     }
 
-    public void addSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+    public void addSolarPowerPlant(SolarPowerPlant solarPowerPlant) {
         /*solarPowerPlantRepository.save(new SolarPowerPlant(
                 solarPowerPlant.getName(),
                 solarPowerPlant.getLocation(),
@@ -26,15 +28,32 @@ public class SolarPowerPlantService {
         solarPowerPlantRepository.save(solarPowerPlant);
     }
 
-    public Iterable<SolarPowerPlant> getAllSolarPowerPlants(){
-        return solarPowerPlantRepository.findAll();
+    public List<SolarPowerPlant> getAllSolarPowerPlants() {
+        return (List<SolarPowerPlant>) solarPowerPlantRepository.findAll();
     }
 
-    public Iterable<SolarPowerPlant> getSolarPowerPlantsByUser(User user){
+    public Iterable<SolarPowerPlant> getSolarPowerPlantsByUser(User user) {
         return solarPowerPlantRepository.findAllByUser(user);
     }
 
-    public Optional<SolarPowerPlant> getSolarPowerPlantById(Long id){
-        return  solarPowerPlantRepository.findById(id);
+    public Optional<SolarPowerPlant> getSolarPowerPlantById(Long id) {
+        return solarPowerPlantRepository.findById(id);
     }
+
+    public List<String> getNumPagesList() {
+        double limitTracksId = 2;
+
+        //List<String> listTrackId = tracksRepository.getListTrackId();
+        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
+        List<String> pageNumList = new ArrayList<>();
+        for (int i = 1; i <= ((int) Math.ceil(getAllSolarPowerPlants().size() / limitTracksId)); i++) {
+            pageNumList.add(Integer.toString(i));
+        }
+        return pageNumList;
+    }
+
+    public List<SolarPowerPlant> getSolarPowerPlantByUserForPage(int offset,int limit){
+        return solarPowerPlantRepository.getListSolarPowerPlantForPage(offset,limit);
+    }
+
 }

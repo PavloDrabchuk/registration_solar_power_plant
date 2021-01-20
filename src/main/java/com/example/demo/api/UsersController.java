@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -85,9 +86,9 @@ public class UsersController {
 
 
     @GetMapping(path = "/home")
-    public String getSolarPowerPlantsByUsername(Model model) {
+    public String getSolarPowerPlantsByUsername(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
 
-        System.out.println("getSolarPowerPlantsByUsername");
+        System.out.println("getSolarPowerPlantsByUsername, page: "+page);
         //Model model=new Model("getall");
 
         /*List<User> userList=new ArrayList<>();
@@ -123,8 +124,16 @@ public class UsersController {
             // ModelAndView modelAndView = new ModelAndView("home");
             //modelAndView.addObject("users", usersService.getAllUsers());
             //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
-            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
+
+            double limitSolarPowerPlant = 2;
+            //model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
+            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage((Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
+
             model.addAttribute("name", username);
+
+            List<String> pageNumList = solarPowerPlantService.getNumPagesList();
+
+            model.addAttribute("numPages", pageNumList);
 
             if (userRole.equals("ADMIN")) {
                 model.addAttribute("adminAccess", "admin");

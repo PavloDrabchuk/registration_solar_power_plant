@@ -31,7 +31,7 @@ private final ConfirmationCodeService confirmationCodeService;
     public void run(String... args) throws Exception {
 /*usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
         UserRole.USER,false,false));*/
-        confirmationCodeService.deactivateOverdueCodes();
+        // confirmationCodeService.deactivateOverdueCodes();
 
       //  https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false
     }

@@ -67,6 +67,9 @@
         <td><a th:href="${'/view/'+solarPowerPlant.getId()}" th:text="${solarPowerPlant.getName()}"></a></td>
     </tr>
 </table>
+    <form action="/home" method="get">
+        <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
+    </form>
 </div>
 <h3 th:if="${adminAccess}"><a href="/admin">Admin</a></h3>
 
