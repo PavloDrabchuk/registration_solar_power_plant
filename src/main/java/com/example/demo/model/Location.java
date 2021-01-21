@@ -18,16 +18,20 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String country;
+    private Region region;
     private String city;
     private String street;
+    private String number;
 
     private Double longitude;
     private Double latitude;
 
-    public Location(String country, String city, String street, Double longitude, Double latitude) {
+    public Location(String country, Region region,  String city, String street, String number, Double longitude, Double latitude) {
         this.country = country;
+        this.region=region;
         this.city = city;
         this.street = street;
+        this.number=number;
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -84,6 +88,19 @@ public class Location {
         this.latitude = latitude;
     }
 
+    public Region getRegion() {
+        return region;
+    }
 
+    public void setRegion(Region region) {
+        this.region = region;
+    }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 }

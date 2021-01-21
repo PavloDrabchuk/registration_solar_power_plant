@@ -40,13 +40,13 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.findById(id);
     }
 
-    public List<String> getNumPagesList() {
-        double limitTracksId = 2;
+    public List<String> getNumPagesList(double limit) {
+        //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
         //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
         List<String> pageNumList = new ArrayList<>();
-        for (int i = 1; i <= ((int) Math.ceil(getAllSolarPowerPlants().size() / limitTracksId)); i++) {
+        for (int i = 1; i <= ((int) Math.ceil(getAllSolarPowerPlants().size() / limit)); i++) {
             pageNumList.add(Integer.toString(i));
         }
         return pageNumList;

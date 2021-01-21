@@ -100,7 +100,7 @@ public class UsersController {
         Optional<User> user = usersService.getUserByUsername(username);
 
         if (user.get().getActivated()) {
-
+            double limitSolarPowerPlant = 4;
             //try {
                /// String text=  locationService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
 
@@ -125,13 +125,13 @@ public class UsersController {
             //modelAndView.addObject("users", usersService.getAllUsers());
             //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
 
-            double limitSolarPowerPlant = 2;
+
             //model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
             model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage((Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
 
             model.addAttribute("name", username);
 
-            List<String> pageNumList = solarPowerPlantService.getNumPagesList();
+            List<String> pageNumList = solarPowerPlantService.getNumPagesList(limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
 

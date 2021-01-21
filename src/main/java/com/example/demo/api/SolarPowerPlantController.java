@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.model.Location;
+import com.example.demo.model.Region;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
 import com.example.demo.service.LocationService;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,6 +54,8 @@ public class SolarPowerPlantController {
 
         solarPowerPlant.setUser(user.get());
 
+        System.out.println("Region: "+solarPowerPlant.getLocation().getRegion().getName());
+
         //solarPowerPlant.getLocation().createLonLatCoordinates(solarPowerPlant.getLocation());
 locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
 
@@ -65,6 +69,12 @@ locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
 
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
         model.addAttribute("solarPowerPlant", solarPowerPlant);
+        /*ArrayList<>
+        for (Region region : Region.values()) {
+            System.out.println(region.getName());
+
+        }*/
+        model.addAttribute("regions",Region.values());
         return "add_solar_power_plant";
     }
 

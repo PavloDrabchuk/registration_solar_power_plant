@@ -12,15 +12,15 @@ public class SolarPowerPlant {
     @OneToOne(cascade = {CascadeType.ALL})
     private Location location;
 
-    private int number;
+    private int quantity;
 
     @ManyToOne
     private User user;
 
-    public SolarPowerPlant(String name, Location location, int number, User user) {
+    public SolarPowerPlant(String name, Location location, int quantity, User user) {
         this.name = name;
         this.location = location;
-        this.number = number;
+        this.quantity = quantity;
         this.user = user;
     }
 
@@ -52,12 +52,12 @@ public class SolarPowerPlant {
         this.location = location;
     }
 
-    public int getNumber() {
-        return number;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public User getUser() {
