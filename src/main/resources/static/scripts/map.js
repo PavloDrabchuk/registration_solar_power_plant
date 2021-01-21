@@ -26,21 +26,21 @@
 
 let iconFeature = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat([lon, lat])),
-    name: 'Null Island',
+    name: solarPowerPlantName,
     population: 4000,
     rainfall: 500,
-    desc:'first',
+    desc:solarPowerPlantName,
     type:'click'
 });
 
-let iconFeature2 = new ol.Feature({
+/*let iconFeature2 = new ol.Feature({
     geometry: new ol.geom.Point(ol.proj.fromLonLat([lon+0.05, lat+0.05])),
     name: 'Null Island2',
     population: 4000,
     rainfall: 500,
     desc:'second',
     type:'click'
-});
+});*/
 
 let iconStyle = new ol.style.Style({
     image: new ol.style.Icon({
@@ -53,10 +53,10 @@ let iconStyle = new ol.style.Style({
 });
 
 iconFeature.setStyle(iconStyle);
-iconFeature2.setStyle(iconStyle);
+//iconFeature2.setStyle(iconStyle);
 
 let vectorSource = new ol.source.Vector({
-    features: [iconFeature, iconFeature2],
+    features: [iconFeature/*, iconFeature2*/],
 });
 
 let vectorLayer = new ol.layer.Vector({
@@ -106,8 +106,7 @@ map.on('click', function (evt) {
             html: true,
             content: '<div class="popup">' +
                 '<h3 class="popup-title">'+feature.get('desc')+'</h3>' +
-                '<p class="popup-content">popup-content</p></div>',
-
+                '<p class="popup-content">Короткі дані</p></div>',
         });
         $(element).popover('show');
     } else {
