@@ -48,7 +48,8 @@ public class LocationService {
         final int MAX_RESULTS = 1;
         String filePathFirstPart = "http://www.mapquestapi.com/geocoding/v1/address?key=" + KEY +
                 "&outFormat=" + OUT_FORMAT + "&maxResults=" + MAX_RESULTS + "&location=";
-        String filePathSecondPart= UriUtils.encodePath(location.getStreet() + "," + location.getCity() + "," + location.getCountry(), "UTF-8");
+        String filePathSecondPart= UriUtils.encodePath(location.getStreet() +" "+location.getNumber() +"," +
+                location.getCity() + "," +location.getRegion().getName()+" область,"+ location.getCountry(), "UTF-8");
        String filePath=filePathFirstPart+filePathSecondPart;
 
         System.out.println(" --> filePath: " + filePath);

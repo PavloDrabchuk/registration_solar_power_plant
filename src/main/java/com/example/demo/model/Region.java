@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 public enum Region {
-   // Київська, ІваноФранківська, Львівська
     Kyiv("Київська"),
     IvanoFrankivsk("Івано-Франківська"),
     Lviv("Львівська");

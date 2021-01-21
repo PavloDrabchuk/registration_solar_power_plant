@@ -49,16 +49,16 @@ public class SolarPowerPlantController {
         String username = auth.getName();//get logged in username
 
         Optional<User> user = usersService.getUserByUsername(username);
+if(user.isPresent()) {
+    System.out.println("username: " + username + " \n userId: " + user.get().getId());
 
-        System.out.println("username: " + username + " \n userId: " + user.get().getId());
-
-        solarPowerPlant.setUser(user.get());
-
+    solarPowerPlant.setUser(user.get());
+}
         System.out.println("Region: "+solarPowerPlant.getLocation().getRegion().getName());
 
         //solarPowerPlant.getLocation().createLonLatCoordinates(solarPowerPlant.getLocation());
 locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
-
+solarPowerPlant.getLocation().setCountry("Україна");
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
         return "redirect:/home";
     }

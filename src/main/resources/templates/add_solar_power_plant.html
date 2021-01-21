@@ -21,9 +21,9 @@
 
 
 <!--        <input type="text" th:field="*{location.region}"/></p>-->
-    <select >
+    <select th:field="*{location.region}">
 <!--        <option th:value="*{location.region.Kyiv.getName()}">Київська</option>-->
-        <option th:each="region : ${regions}" th:name="${region.getName()}" th:utext="${region.getName()}"></option>
+        <option th:each="region : ${regions}" th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
 <!--        <option>Івано-Франківська</option>-->
     </select>
     <p>Місто/Населений пункт: <input type="text" th:field="*{location.city}"/></p>
