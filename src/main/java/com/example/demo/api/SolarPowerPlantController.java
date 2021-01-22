@@ -65,9 +65,22 @@ solarPowerPlant.getLocation().setCountry("Україна");
 
     @PostMapping(path="/solarPowerPlant/delete/{id}")
     public String deleteSolarPowerPlant(@PathVariable("id") Long id,Model model){
-        solarPowerPlantService.deleteSolarPowerPlant(id);
+        Optional<SolarPowerPlant> solarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(id);
+        if(solarPowerPlant.isPresent()){
+        solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
-        return "solar_power_plant_info_by_id";
+        model.addAttribute("deletedSolarPowerPlantOK","Успішно видалено!");
+
+        return "solar_power_plant_info_by_id";}
+        else {
+            return "redirect:/home";
+        }
+    }
+
+    @GetMapping(path="/solarPowerPlant/delete/{id}")
+    public String redirectToSolarPowerPlantPage(@PathVariable("id") Long id,Model model){
+
+        return "redirect:/home";
     }
 
     @GetMapping("/newSolarPowerPlant")

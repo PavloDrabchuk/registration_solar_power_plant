@@ -56,8 +56,8 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.getListSolarPowerPlantForPage(offset,limit);
     }
 
-    public void deleteSolarPowerPlant(Long id){
-        solarPowerPlantRepository.deleteById(id);
+    public void deleteSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+        solarPowerPlantRepository.delete(solarPowerPlant);
     }
 
 }
