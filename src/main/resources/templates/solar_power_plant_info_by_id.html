@@ -10,15 +10,17 @@
         import * as ol from "../modules/ol";
     </script>-->
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css"
+          type="text/css">
 
-<!--    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>-->
-<!--    <script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>-->
+    <!--    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>-->
+    <!--    <script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>-->
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
-<!--    <script type="text/javascript" src="http://maplib.khtml.org/khtml.maplib/khtml_all.js"> </script>-->
-<!--    <script src="/scripts/map.js"></script>-->
-<!--    <script src="https://unpkg.com/elm-pep"></script>-->
-<!--    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL,TextDecoder"></script>-->
+    <!--    <script type="text/javascript" src="http://maplib.khtml.org/khtml.maplib/khtml_all.js"> </script>-->
+    <!--    <script src="/scripts/map.js"></script>-->
+    <!--    <script src="https://unpkg.com/elm-pep"></script>-->
+    <!--    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL,TextDecoder"></script>-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/styles/solarPowerPlantPageStyle.css">
@@ -28,49 +30,54 @@
 </head>
 <body>
 
-<h3>Solar Plant By Id</h3>
+<div th:if="${notFoundSolarPowerPlant}" th:value="${notFoundSolarPowerPlant}"
+     th:utext="${notFoundSolarPowerPlant}"></div>
+<div th:if="not ${notFoundSolarPowerPlant}">
+    <h3>Solar Plant By Id</h3>
 
 
-<table border="1px">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>City</th>
-    </tr>
-    <tr>
-        <td th:text="${solarPowerPlant.get().getId()}"></td>
-        <td th:utext="${solarPowerPlant.get().getName()}"></td>
-        <td th:utext="${solarPowerPlant.get().getLocation().getCity()}"></td>
+    <table border="1px">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>City</th>
+        </tr>
+        <tr>
+            <td th:text="${solarPowerPlant.get().getId()}"></td>
+            <td th:utext="${solarPowerPlant.get().getName()}"></td>
+            <td th:utext="${solarPowerPlant.get().getLocation().getCity()}"></td>
 
-    </tr>
+        </tr>
 
-</table>
+    </table>
 
-<div  id="mapBlock" class="mapBlock">
-    <div id="popup" class="ol-popup">
-        <div id="popup-content"></div>
+    <div id="mapBlock" class="mapBlock">
+        <div id="popup" class="ol-popup">
+            <div id="popup-content"></div>
+        </div>
+        <!--<div id="popup2" class="ol-popup">
+            <div id="popup-content2"></div>
+        </div>-->
     </div>
-    <!--<div id="popup2" class="ol-popup">
-        <div id="popup-content2"></div>
-    </div>-->
+
+    <p id="ttt">ttyy</p>
+
+    <script th:inline="javascript">
+
+        /*<![CDATA[*/
+        let lat = /*[[${solarPowerPlant.get().getLocation().getLongitude}]]*/ '0.0';
+        let lon = /*[[${solarPowerPlant.get().getLocation().getLatitude}]]*/ '0.0';
+        let solarPowerPlantName = /*[[${solarPowerPlant.get().getName()}]]*/ 'Не знайдено';
+        /*]]>*/
+    </script>
+
+    <script type="text/javascript" src="/scripts/map.js"></script>
+
+    <form th:action="@{'/solarPowerPlant/delete/' +${solarPowerPlant.get().getId()}}" method="post">
+        <input type="submit" value="Видалити">
+    </form>
 </div>
-
-<p id="ttt">ttyy</p>
-
-<script th:inline="javascript">
-
-    /*<![CDATA[*/
-    let lat = /*[[${solarPowerPlant.get().getLocation().getLongitude}]]*/ '0.0';
-    let lon = /*[[${solarPowerPlant.get().getLocation().getLatitude}]]*/ '0.0';
-    let solarPowerPlantName= /*[[${solarPowerPlant.get().getName()}]]*/ 'Не знайдено';
-    /*]]>*/
-</script>
-
-<script type="text/javascript" src="/scripts/map.js"></script>
-
 <a href="/home">Повернутись</a>
-
-
 
 
 </body>

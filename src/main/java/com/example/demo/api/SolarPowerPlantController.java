@@ -63,6 +63,13 @@ solarPowerPlant.getLocation().setCountry("Україна");
         return "redirect:/home";
     }
 
+    @PostMapping(path="/solarPowerPlant/delete/{id}")
+    public String deleteSolarPowerPlant(@PathVariable("id") Long id,Model model){
+        solarPowerPlantService.deleteSolarPowerPlant(id);
+
+        return "solar_power_plant_info_by_id";
+    }
+
     @GetMapping("/newSolarPowerPlant")
     public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
@@ -93,12 +100,16 @@ solarPowerPlant.getLocation().setCountry("Україна");
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
 
-        System.out.println(" -- id: " + solarPowerPlant.get().getId());
+        //System.out.println(" -- id: " + solarPowerPlant.get().getId());
 
         //ModelAndView modelAndView = new ModelAndView("solar_power_plant_info_by_id");
         //modelAndView.addObject("users", usersService.getAllUsers());
         //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
-        model.addAttribute("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantById(id));
+        if(solarPowerPlant.isPresent()) {
+            model.addAttribute("solarPowerPlant", solarPowerPlant);
+        } else {
+            model.addAttribute("notFoundSolarPowerPlant","Сонячну станцію не знайдено");
+        }
         //modelAndView.addObject("name", username);
         //return usersService.getAllUsers();
         return "solar_power_plant_info_by_id";
