@@ -6,6 +6,43 @@
 </head>
 <body>
 
+<script>
+    function checkFields() {
+        let countErrors = 0;
+
+        const name = document.getElementById("name").value;
+           /* email = document.getElementById("email").value,
+            password = document.getElementById("password").value,
+            passwordConfirm = document.getElementById("password_confirm").value;*/
+
+        if (name.length === 0) {
+            countErrors++;
+            document.getElementById("name_error").innerText="Введіть назву.";
+        } else {
+            document.getElementById("name_error").innerText="";
+        }
+        /*if (email.length === 0) {
+            countErrors++;
+            document.getElementById("email_error").innerText="Введіть адресу електронної пошти.";
+        } else {
+            document.getElementById("email_error").innerText="";
+        }
+
+        if (password.length === 0) {
+            countErrors++;
+            document.getElementById("password_error").innerText="Введіть пароль";
+        } else {
+            document.getElementById("password_error").innerText="";
+        }
+
+        if(password!==passwordConfirm){
+            countErrors++;
+        }*/
+
+        return countErrors === 0;
+    }
+</script>
+
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Вийти"/>
 </form>
@@ -14,15 +51,13 @@
 
 <h1>Form</h1>
 <form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}" method="post">
-    <p>name: <input type="text" th:field="*{name}"/></p>
+    <p>name: <input type="text" th:field="*{name}" id="name"/></p>
+    <div id="name_error"></div>
     <p>quantity: <input type="number" min="1" value="1" th:field="*{quantity}"/></p>
     <h4>Location</h4>
     <p>Область:
 
-
-<!--        <input type="text" th:field="*{location.region}"/></p>-->
     <select th:field="*{location.region}">
-<!--        <option th:value="*{location.region.Kyiv.getName()}">Київська</option>-->
         <option th:each="region : ${regions}" th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
 <!--        <option>Івано-Франківська</option>-->
     </select>
@@ -30,20 +65,9 @@
     <p>Вулиця: <input type="text" th:field="*{location.street}"/></p>
     <p>Номер: <input type="text" th:field="*{location.number}"/></p>
 
-    <!--    <p>location.longitude: <input type="number" min="-180" max="180" step="0.00000001" th:field="*{location.longitude}" /></p>-->
-    <!--    <p>location.latitude: <input type="number" min="-90" max="90" step="0.00000001" th:field="*{location.latitude}" /></p>-->
-
-    <!--    <p>surname: <input type="text" th:field="*{surname}" /></p>-->
-    <p><input type="submit" value="addSolarPlant"/> <input type="reset" value="Reset"/></p>
+    <p><input type="submit" value="addSolarPlant" onclick="return checkFields()"/> <input type="reset" value="Reset"/></p>
 </form>
 
-<!--
-https://www.mapquestapi.com/geocoding/v1/address?key=KEY&inFormat=kvp&outFormat=json&location=+%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F+%D0%93%D1%80%D1%83%D1%88%D0%B5%D0%B2%D1%81%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE+21%2C+%D0%86%D0%B2%D0%B0%D0%BD%D0%BE-%D1%84%D1%80%D0%B0%D0%BD%D0%BA%D1%96%D0%B2%D1%81%D1%8C%D0%BA%2C+%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0&thumbMaps=true&maxResults=1
--->
-
-<!--
-http://www.mapquestapi.com/search/v3/prediction?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&limit=5&language=ua&collection=adminArea,address&q=%D0%86%D0%B2%D0%B0%D0%BD%D0%BE
--->
 
 <hr/>
 </body>

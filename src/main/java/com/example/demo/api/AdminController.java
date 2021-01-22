@@ -24,11 +24,6 @@ public class AdminController {
     @GetMapping(path = "/admin")
     public String getAllUsers(Model model) {
         System.out.println("getAllUsers");
-        //Model model=new Model("getall");
-
-        /*List<User> userList=new ArrayList<>();
-        userList.add(new User(1,"Name1","Surname1"));
-        userList.add(new User(2,"Name2","Surname2"));*/
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
@@ -38,30 +33,7 @@ public class AdminController {
             model.addAttribute("users", usersService.getAllUsers());
             return "admin_page";
         } else {
-            //model.addAttribute("users", usersService.getAllUsers());
             return "home";
         }
-
-
-        /*ModelAndView modelAndView = new ModelAndView("admin_page");
-        modelAndView.addObject("users", usersService.getAllUsers());
-
-        //return usersService.getAllUsers();
-        return modelAndView;*/
     }
-
-    /*@GetMapping(path = "/admin")
-    public String redirectToPageByAccess() {
-        System.out.println("redirectToPageByAccess");
-        //Model model=new Model("getall");
-
-
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);
-
-        return !user.getUserRole().getName().equals("ADMIN") ? "home" : "admin_page";
-
-    }*/
 }

@@ -9,12 +9,6 @@
 
 <h3>Для завершення реєстрації перейдіть за посиланням, яке є у листі, який надіслано на електронну пошту: {e-mail}!</h3>
 
-<!--<form action="confirmRegistration"  th:action="@{/confirmRegistration}" th:method="post" th:object="${confirmationCode}">
-    <label>Enter confirmation code</label><input type="text" maxlength="8">
-    <input type="submit">
-</form>-->
-
-
 <form th:action="@{/sendConfirmationCodeAgain}" method="post">
     <input type="submit" value="Надіслати ще раз"/>
 </form>

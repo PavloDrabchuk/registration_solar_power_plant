@@ -56,7 +56,6 @@ if(user.isPresent()) {
 }
         System.out.println("Region: "+solarPowerPlant.getLocation().getRegion().getName());
 
-        //solarPowerPlant.getLocation().createLonLatCoordinates(solarPowerPlant.getLocation());
 locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
 solarPowerPlant.getLocation().setCountry("Україна");
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
@@ -89,11 +88,7 @@ solarPowerPlant.getLocation().setCountry("Україна");
 
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
         model.addAttribute("solarPowerPlant", solarPowerPlant);
-        /*ArrayList<>
-        for (Region region : Region.values()) {
-            System.out.println(region.getName());
 
-        }*/
         model.addAttribute("regions",Region.values());
         return "add_solar_power_plant";
     }
@@ -101,30 +96,15 @@ solarPowerPlant.getLocation().setCountry("Україна");
     @GetMapping(path = "/view/{id}")
     public String getSolarPowerPlantsById(@PathVariable("id") Long id, Model model) {
         System.out.println("getSolarPowerPlantsById");
-        //Model model=new Model("getall");
-
-        /*List<User> userList=new ArrayList<>();
-        userList.add(new User(1,"Name1","Surname1"));
-        userList.add(new User(2,"Name2","Surname2"));*/
-
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);*/
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
 
-        //System.out.println(" -- id: " + solarPowerPlant.get().getId());
-
-        //ModelAndView modelAndView = new ModelAndView("solar_power_plant_info_by_id");
-        //modelAndView.addObject("users", usersService.getAllUsers());
-        //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
         if(solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
         } else {
             model.addAttribute("notFoundSolarPowerPlant","Сонячну станцію не знайдено");
         }
-        //modelAndView.addObject("name", username);
-        //return usersService.getAllUsers();
+
         return "solar_power_plant_info_by_id";
     }
 }

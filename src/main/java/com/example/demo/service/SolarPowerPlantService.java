@@ -32,28 +32,28 @@ public class SolarPowerPlantService {
         return (List<SolarPowerPlant>) solarPowerPlantRepository.findAll();
     }
 
-    public Iterable<SolarPowerPlant> getSolarPowerPlantsByUser(User user) {
-        return solarPowerPlantRepository.findAllByUser(user);
+    public List<SolarPowerPlant> getSolarPowerPlantsByUser(User user) {
+        return (List<SolarPowerPlant>) solarPowerPlantRepository.findAllByUser(user);
     }
 
     public Optional<SolarPowerPlant> getSolarPowerPlantById(Long id) {
         return solarPowerPlantRepository.findById(id);
     }
 
-    public List<String> getNumPagesList(double limit) {
+    public List<String> getNumPagesList(User user,double limit) {
         //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
         //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
         List<String> pageNumList = new ArrayList<>();
-        for (int i = 1; i <= ((int) Math.ceil(getAllSolarPowerPlants().size() / limit)); i++) {
+        for (int i = 1; i <= ((int) Math.ceil(getSolarPowerPlantsByUser(user).size() / limit)); i++) {
             pageNumList.add(Integer.toString(i));
         }
         return pageNumList;
     }
 
-    public List<SolarPowerPlant> getSolarPowerPlantByUserForPage(int offset,int limit){
-        return solarPowerPlantRepository.getListSolarPowerPlantForPage(offset,limit);
+    public List<SolarPowerPlant> getSolarPowerPlantByUserForPage(Long id, int offset,int limit){
+        return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset,limit);
     }
 
     public void deleteSolarPowerPlant(SolarPowerPlant solarPowerPlant){

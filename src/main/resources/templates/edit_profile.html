@@ -23,9 +23,6 @@
             <td>
                 <input placeholder="Введіть прізвище"
                        th:value="${userInformation.getSurname()}" th:field="*{surname}">
-
-                <!-- <input th:if="${#strings.length(userInformation.getSurname())==0}" placeholder="Введіть прізвище" th:value="${userInformation.getSurname()}" th:field="*{surname}" >-->
-                <!-- <div th:unless="${#strings.length(userInformation.getSurname())!=0}" th:text="${userInformation.getSurname()}" ></div>-->
             </td>
         </tr>
         <tr>
@@ -33,10 +30,7 @@
             <td>
                 <input placeholder="Введіть ім'я"
                        th:value="${userInformation.getName()}" th:field="*{name}">
-
-                <!-- <input th:if="${#strings.length(userInformation.getName())==0}" placeholder="Введіть ім'я" th:value="${userInformation.getName()}" th:field="*{name}">-->
-                <!-- <div th:unless="${#strings.length(userInformation.getName())!=0}" th:text="${userInformation.getName()}" ></div>-->
-            </td>
+     </td>
         </tr>
         <tr>
             <td>По батькові</td>

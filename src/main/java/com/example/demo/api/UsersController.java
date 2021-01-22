@@ -49,38 +49,11 @@ public class UsersController {
     }
 
 
-    /*@GetMapping
-    public ModelAndView getAllUsers() {
-        //Model model=new Model("getall");
-
-//        List<User> userList=new ArrayList<>();
-//        userList.add(new User(1,"Name1","Surname1"));
-//        userList.add(new User(2,"Name2","Surname2"));
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
-        User user = usersService.getUserByUsername(username);
-
-
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("users", usersService.getAllUsers());
-        modelAndView.addObject("solarPowerPlants",solarPowerPlantService.getAllSolarPowerPlants());
-        modelAndView.addObject("name",username);
-        //return usersService.getAllUsers();
-        return modelAndView;
-    }*/
-
     @GetMapping
     public String redirectToAccessPages() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        /*if (!username.equals("anonymousUser")) {
-            User user = usersService.getUserByUsername(username);
-            System.out.println("status:" + user.getActivated());
-            return user.getActivated()==true ? "redirect:/home" : "redirect:/confirm_registration";
-        } else{
-            return "index";
-        }*/
+
         return (username.equals("anonymousUser")) ? "index" : "redirect:/home";
     }
 
@@ -89,49 +62,23 @@ public class UsersController {
     public String getSolarPowerPlantsByUsername(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
 
         System.out.println("getSolarPowerPlantsByUsername, page: "+page);
-        //Model model=new Model("getall");
-
-        /*List<User> userList=new ArrayList<>();
-        userList.add(new User(1,"Name1","Surname1"));
-        userList.add(new User(2,"Name2","Surname2"));*/
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
-        if (user.get().getActivated()) {
+        if (user.isPresent() && user.get().getActivated()) {
             double limitSolarPowerPlant = 4;
-            //try {
-               /// String text=  locationService.getFileContent("https://www.mapquestapi.com/geocoding/v1/address?key=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92&inFormat=kvp&outFormat=json&location=Denver%2C+CO&thumbMaps=false");
 
-               ///  System.out.println(" >> text: "+text);
-                //{"lat":([0-9.-]+),"lng":([0-9.-]+)}
-
-                 // usersService.getFileContent("https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?types=poi&access_token=pk.eyJ1IjoicGF2bG9kcmFiY2h1ayIsImEiOiJja2szd24xYjkweGpjMnBxb2Q3ZzJsdmdoIn0.1jXBFC1tf6SJfQB6CsiVSg");
-                //System.out.println(" >> text: "+text);
-            /*} catch (IOException e) {
-                e.printStackTrace();
-            }*/
-
-
-            //User user = usersService.getUserByUsername(username);
             System.out.println("status:" + user.get().getActivated());
-            //return user.getActivated()==true ? "redirect:/home" : "redirect:/confirm_registration";
 
             String userRole = user.get().getUserRoles().toString();
 
-
-            // ModelAndView modelAndView = new ModelAndView("home");
-            //modelAndView.addObject("users", usersService.getAllUsers());
-            //modelAndView.addObject("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
-
-
-            //model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
-            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage((Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
+            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage(user.get().getId(),(Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
 
             model.addAttribute("name", username);
 
-            List<String> pageNumList = solarPowerPlantService.getNumPagesList(limitSolarPowerPlant);
+            List<String> pageNumList = solarPowerPlantService.getNumPagesList(user.get(),limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
 
@@ -140,8 +87,6 @@ public class UsersController {
                 System.out.println("admin access");
             }
 
-            //return usersService.getAllUsers();
-            //return modelAndView;
             return "home";
         } else {
             return "confirm_registration";
@@ -154,17 +99,6 @@ public class UsersController {
         return usersService.getUserById(id).orElse(null);
     }
 
-    /*@PostMapping
-    public void addUser(@Valid @NotNull @RequestBody User user) {
-        usersService.addUser(user);
-    }*/
-
-    /*@RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveCustomer(@ModelAttribute("customer") Customer customer) {
-        customerService.save(customer);
-        return "redirect:/";
-    }*/
-
     @GetMapping(path = "/add")
     public String redirectToNew() {
         return "redirect:/new";
@@ -174,16 +108,12 @@ public class UsersController {
     public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,Model model) {
 
         int countErrors=0;
-       /* userValidator.validate(user,bindingResult);*/
 
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
             return "add_user";
         } else {
-        if("123"!="123"){
-            model.addAttribute("qwe","azxs");
-            return "add_user";
-        }
+
 
         if(usersService.getUserByUsername(user.getUsername()).isPresent()){
             countErrors++;
@@ -201,7 +131,7 @@ public class UsersController {
 
 
         System.out.println("addUser");
-        //UserRole userRole = userRoleService.getUserRole("USER");
+
         user.setUserRoles(UserRoles.USER);
         user.setActivated(false);
         user.setLocked(false);
@@ -211,16 +141,8 @@ public class UsersController {
         usersService.saveUser(user);
         System.out.println("time: "+LocalDateTime.now());
 
-        //відправляємо посилання активації
+
         confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
-            /*UUID uuid = UUID.randomUUID();
-            String stringConfirmationCode = uuid.toString();
-            System.out.println("confirmationCode: " + stringConfirmationCode);
-
-            ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode);
-            confirmationCodeService.saveConfirmationCode(confirmationCode);
-
-            usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());*/
 
         System.out.println("--- --- ---");
         model.addAttribute("email",user.getEmail());
@@ -237,7 +159,7 @@ public class UsersController {
     }
 
 
-    @PostMapping(path = "/confirmRegistration")
+    /*@PostMapping(path = "/confirmRegistration")
     public String confirmRegistration(@Valid @ModelAttribute("confirmationCode") ConfirmationCode confirmationCode, Model model) {
 
         System.out.println("confirmRegistration");
@@ -250,7 +172,7 @@ public class UsersController {
 
         return "success_user_registration_confirmed";
 
-    }
+    }*/
 
     @GetMapping("/new")
     public String newCustomerForm(Model model) {
@@ -260,17 +182,7 @@ public class UsersController {
         return "add_user";
     }
 
-    /*@GetMapping(path = "/success_user_registration")
-    public String successUserRegistration(Model model) {
-        model.addAttribute("email", "emailll");
-        System.out.println("successUserRegistration");
-        return "success_user_registration";
-    }*/
 
-    /*@GetMapping("/sign-in")
-    String signIn() {
-        return "login";
-    }*/
 
     @GetMapping(path = "/confirm/{confirmationCode}")
     public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
@@ -301,23 +213,16 @@ public class UsersController {
         System.out.println("sendConfirmationCodeAgain");
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
+        String username = auth.getName();
         Optional<User> user = usersService.getUserByUsername(username);
 
-        //зроби деактивацію всіх активних кодів для користувача
+
 
         confirmationCodeService.deactivateConfirmationCodesByUser(user.get());
 
-        //відправляємо посилання активації
+
         confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.confirmRegistration);
-        /*UUID uuid = UUID.randomUUID();
-        String stringConfirmationCode = uuid.toString();
-        System.out.println("confirmationCode: " + stringConfirmationCode);
 
-        ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode);
-        confirmationCodeService.saveConfirmationCode(confirmationCode);
-
-        usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode());*/
 
         model.addAttribute("sendingCodeMessage", "Посилання успішно відправлено ще раз на вказаний e-mail: {email}");
 
@@ -372,11 +277,11 @@ public class UsersController {
             String username = auth.getName();//get logged in username
             Optional<User> user = usersService.getUserByUsername(username);
 
-            //updatedUserInfo.getStringInfo();
+
 
             usersService.updateUserInformation(user.get(), updatedUserInfo);
 
-            //usersService.saveUser(updatedUserInfo);
+
 
             return "redirect:/profile";
         }
@@ -384,7 +289,7 @@ public class UsersController {
 
     @GetMapping(path = "/recover_password")
     public String recoverPasswordRequest(Model model) {
-        //model.addAttribute("email", "emailll");
+
         PasswordRecoverInformation recoverInformation = new PasswordRecoverInformation();
 
         model.addAttribute("recoverInformation", recoverInformation);
@@ -403,7 +308,6 @@ public class UsersController {
 
         Optional<User> user = usersService.getUserByUsername(recoverInformation.getUsername());
         if (user.isPresent() && user.get().getEmail().equals(recoverInformation.getEmail())) {
-//if(user.get().getEmail()==recoverInformation.getEmail())
 
             confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.recoverPassword);
             model.addAttribute("sendMessageOK", "Повідомлення для відновлення паролю надіслано на вказаний email: " + recoverInformation.getEmail() + ".");
@@ -418,27 +322,17 @@ public class UsersController {
                                   //@PathVariable("username") String username,
                                   Model model) {
         System.out.println("CCode: " + confirmationCode);
-        //System.out.println("U: " + username);
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
         if (confirmationResult.isPresent() && confirmationResult.get().getValid()) {
             confirmationResult.get().setValid(false);
             confirmationCodeService.saveConfirmationCode(confirmationResult.get());
-            //User user = usersService.getUserByUsername(username);
-            /*User user=confirmationResult.get().getUser();
-            user.setActivated(true);
-            usersService.saveUser(user);*/
+
             model.addAttribute("recoverSignalOK", "Введіть новий пароль.");
             model.addAttribute("username", confirmationResult.get().getUser().getUsername());
             model.addAttribute("confirmationCode", confirmationCode);
-            /*String password="",passwordAgain="";
 
-            ArrayList<String> updatePassword=new ArrayList<>();
-            updatePassword.add(password);
-            updatePassword.add(passwordAgain);
-
-            model.addAttribute("updatePassword", updatePassword);*/
         } else {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
         }
@@ -447,21 +341,16 @@ public class UsersController {
 
     @PostMapping(path = "/recover/{confirmationCode}")
     public String updatePassword(@Valid @ModelAttribute("updatePassword") ArrayList<String> updatePassword,
-                                 //@RequestParam(value="username",required = false) String username,
-                                 // @RequestParam("username") String username1,
                                  @PathVariable("confirmationCode") String confirmationCode,
                                  @RequestParam("password") String password,
                                  @RequestParam("passwordAgain") String passwordAgain,
                                  Model model) {
-        //model.addAttribute("sendMessage","Повідомлення для відновлення паролю надіслано на вказаний email: "+recoverInformation.getEmail()+".");
-        //model.addAttribute("updatePassword", "updatePassword");
-        Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
+          Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
         User user = confirmationCodeResult.get().getUser();
-        //System.out.println("username1: "+username1);
-        System.out.println("Confirmation code: " + confirmationCode);
+
+          System.out.println("Confirmation code: " + confirmationCode);
         System.out.println("password: " + password);
         System.out.println("passwordAgain: " + passwordAgain);
-        //User user=usersService.getUserByUsername(recoverInformation.getUsername());
 
         if (password.equals(passwordAgain)) {
             user.setPassword(bCryptPasswordEncoder.encode(password));
@@ -474,7 +363,6 @@ public class UsersController {
 
         System.out.println("************************");
 
-        //confirmationCodeService.sendConfirmationCode(user,TypesConfirmationCode.recoverPassword);
 
         return "recover_password";
     }
