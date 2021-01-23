@@ -1,6 +1,7 @@
 package com.example.demo.api;
 
 import com.example.demo.model.User;
+import com.example.demo.model.UserRoles;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,7 +30,7 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
-        if (user.get().getUserRoles().toString().equals("ADMIN")) {
+        if (user.get().getUserRoles().toString().equals(UserRoles.ADMIN)) {
             model.addAttribute("users", usersService.getAllUsers());
             return "admin_page";
         } else {
