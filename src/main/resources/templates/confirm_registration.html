@@ -7,16 +7,17 @@
 </head>
 <body>
 
-<h3>Для завершення реєстрації перейдіть за посиланням, яке є у листі, який надіслано на електронну пошту: {e-mail}!</h3>
+<h3 th:utext="'Для завершення реєстрації перейдіть за посиланням, яке є у листі, який надіслано на електронну пошту: '+ ${email}+'!'"></h3>
 
 <form th:action="@{/sendConfirmationCodeAgain}" method="post">
     <input type="submit" value="Надіслати ще раз"/>
 </form>
 
-<h2 th:if="${sendingCodeMessage}">
-    <div th:text="${sendingCodeMessage}">
+<h3 th:if="${sendingCodeMessage}">
+    test
+    <div th:utext="${sendingCodeMessage}">
     </div>
-</h2>
+</h3>
 
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Вийти"/>

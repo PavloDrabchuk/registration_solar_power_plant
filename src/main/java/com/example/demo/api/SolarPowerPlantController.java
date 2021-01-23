@@ -49,35 +49,35 @@ public class SolarPowerPlantController {
         String username = auth.getName();//get logged in username
 
         Optional<User> user = usersService.getUserByUsername(username);
-if(user.isPresent()) {
-    System.out.println("username: " + username + " \n userId: " + user.get().getId());
+        if (user.isPresent()) {
+            System.out.println("username: " + username + " \n userId: " + user.get().getId());
 
-    solarPowerPlant.setUser(user.get());
-}
-        System.out.println("Region: "+solarPowerPlant.getLocation().getRegion().getName());
+            solarPowerPlant.setUser(user.get());
+        }
+        System.out.println("Region: " + solarPowerPlant.getLocation().getRegion().getName());
 
-locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
-solarPowerPlant.getLocation().setCountry("Україна");
+        locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
+        solarPowerPlant.getLocation().setCountry("Україна");
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
         return "redirect:/home";
     }
 
-    @PostMapping(path="/solarPowerPlant/delete/{id}")
-    public String deleteSolarPowerPlant(@PathVariable("id") Long id,Model model){
-        Optional<SolarPowerPlant> solarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(id);
-        if(solarPowerPlant.isPresent()){
-        solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
+    @PostMapping(path = "/solarPowerPlant/delete/{id}")
+    public String deleteSolarPowerPlant(@PathVariable("id") Long id, Model model) {
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
+        if (solarPowerPlant.isPresent()) {
+            solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
-        model.addAttribute("deletedSolarPowerPlantOK","Успішно видалено!");
+            model.addAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");
 
-        return "solar_power_plant_info_by_id";}
-        else {
+            return "solar_power_plant_info_by_id";
+        } else {
             return "redirect:/home";
         }
     }
 
-    @GetMapping(path="/solarPowerPlant/delete/{id}")
-    public String redirectToSolarPowerPlantPage(@PathVariable("id") Long id,Model model){
+    @GetMapping(path = "/solarPowerPlant/delete/{id}")
+    public String redirectToSolarPowerPlantPage(@PathVariable("id") Long id, Model model) {
 
         return "redirect:/home";
     }
@@ -89,7 +89,7 @@ solarPowerPlant.getLocation().setCountry("Україна");
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
         model.addAttribute("solarPowerPlant", solarPowerPlant);
 
-        model.addAttribute("regions",Region.values());
+        model.addAttribute("regions", Region.values());
         return "add_solar_power_plant";
     }
 
@@ -99,10 +99,10 @@ solarPowerPlant.getLocation().setCountry("Україна");
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
 
-        if(solarPowerPlant.isPresent()) {
+        if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
         } else {
-            model.addAttribute("notFoundSolarPowerPlant","Сонячну станцію не знайдено");
+            model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
 
         return "solar_power_plant_info_by_id";

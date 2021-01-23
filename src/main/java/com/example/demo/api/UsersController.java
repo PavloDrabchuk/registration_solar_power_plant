@@ -45,7 +45,7 @@ public class UsersController {
         this.userRoleService = userRoleService;
         this.confirmationCodeService = confirmationCodeService;
         this.userValidator = userValidator;
-        this.locationService=locationService;
+        this.locationService = locationService;
     }
 
 
@@ -61,7 +61,7 @@ public class UsersController {
     @GetMapping(path = "/home")
     public String getSolarPowerPlantsByUsername(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
 
-        System.out.println("getSolarPowerPlantsByUsername, page: "+page);
+        System.out.println("getSolarPowerPlantsByUsername, page: " + page);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
@@ -74,11 +74,11 @@ public class UsersController {
 
             String userRole = user.get().getUserRoles().toString();
 
-            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage(user.get().getId(),(Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
+            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage(user.get().getId(), (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
 
             model.addAttribute("name", username);
 
-            List<String> pageNumList = solarPowerPlantService.getNumPagesList(user.get(),limitSolarPowerPlant);
+            List<String> pageNumList = solarPowerPlantService.getNumPagesList(user.get(), limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
 
@@ -89,7 +89,7 @@ public class UsersController {
 
             return "home";
         } else {
-            return "confirm_registration";
+            return "redirect:/confirm_registration";
         }
     }
 
@@ -99,15 +99,15 @@ public class UsersController {
         return usersService.getUserById(id).orElse(null);
     }
 
-    @GetMapping(path = "/add")
+    @GetMapping(path = "/registration/success")
     public String redirectToNew() {
-        return "redirect:/new";
+        return "redirect:/registration";
     }
 
-    @PostMapping(path = "/add")
-    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult,Model model) {
+    @PostMapping(path = "/registration/success")
+    public String addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 
-        int countErrors=0;
+        int countErrors = 0;
 
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
@@ -115,73 +115,64 @@ public class UsersController {
         } else {
 
 
-        if(usersService.getUserByUsername(user.getUsername()).isPresent()){
-            countErrors++;
-            model.addAttribute("duplicateUser","Користувач з таким іменем уже існує.");
+            if (usersService.getUserByUsername(user.getUsername()).isPresent()) {
+                countErrors++;
+                model.addAttribute("duplicateUser", "Користувач з таким іменем уже існує.");
+            }
+
+            if (usersService.getUserByEmail(user.getEmail()).isPresent()) {
+                countErrors++;
+                model.addAttribute("duplicateEmail", "Введена електронна адреса вже використовується.");
+            }
+
+            if (countErrors != 0) {
+                return "add_user";
+            }
+
+
+            System.out.println("addUser");
+
+            user.setUserRoles(UserRoles.USER);
+            user.setActivated(false);
+            user.setLocked(false);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setDateTimeOfCreation(LocalDateTime.now());
+            System.out.println("activated: " + user.getActivated());
+            usersService.saveUser(user);
+            System.out.println("time: " + LocalDateTime.now());
+
+
+            confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
+
+            System.out.println("--- --- ---");
+            model.addAttribute("email", user.getEmail());
+
+            return "success_user_registration";
         }
-
-        if(usersService.getUserByEmail(user.getEmail()).isPresent()){
-            countErrors++;
-            model.addAttribute("duplicateEmail","Введена електронна адреса вже використовується.");
-        }
-
-        if(countErrors!=0){
-            return "add_user";
-        }
-
-
-        System.out.println("addUser");
-
-        user.setUserRoles(UserRoles.USER);
-        user.setActivated(false);
-        user.setLocked(false);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setDateTimeOfCreation(LocalDateTime.now());
-        System.out.println("activated: " + user.getActivated());
-        usersService.saveUser(user);
-        System.out.println("time: "+LocalDateTime.now());
-
-
-        confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
-
-        System.out.println("--- --- ---");
-        model.addAttribute("email",user.getEmail());
-
-        return "success_user_registration";
-         }
     }
 
     @GetMapping(path = "/confirm_registration")
     public String confirmUserRegistration(Model model) {
-        model.addAttribute("email", "emailll");
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> user = usersService.getUserByUsername(username);
+
+
+        user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
+
         System.out.println("confirmUserRegistration");
         return "confirm_registration";
     }
 
 
-    /*@PostMapping(path = "/confirmRegistration")
-    public String confirmRegistration(@Valid @ModelAttribute("confirmationCode") ConfirmationCode confirmationCode, Model model) {
-
-        System.out.println("confirmRegistration");
-
-        if ("confirmationCode.getConfirmationCode()".equals("1234")) {
-            model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
-        } else {
-            model.addAttribute("errorMessage", "Код підтвердження недійсний.");
-        }
-
-        return "success_user_registration_confirmed";
-
-    }*/
-
-    @GetMapping("/new")
+    @GetMapping("/registration")
     public String newCustomerForm(Model model) {
         System.out.println("newCustomerForm");
         User user = new User();
         model.addAttribute("user", user);
         return "add_user";
     }
-
 
 
     @GetMapping(path = "/confirm/{confirmationCode}")
@@ -212,19 +203,23 @@ public class UsersController {
     public String sendConfirmationCodeAgain(Model model) {
         System.out.println("sendConfirmationCodeAgain");
 
+        String sendingCodeMessage;
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Optional<User> user = usersService.getUserByUsername(username);
 
+        if (user.isPresent()) {
 
+            confirmationCodeService.deactivateConfirmationCodesByUser(user.get());
 
-        confirmationCodeService.deactivateConfirmationCodesByUser(user.get());
+            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.confirmRegistration);
 
-
-        confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.confirmRegistration);
-
-
-        model.addAttribute("sendingCodeMessage", "Посилання успішно відправлено ще раз на вказаний e-mail: {email}");
+            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail();
+        } else {
+            sendingCodeMessage = "Посилання не надіслано, спробуйте пізніше ще раз.";
+        }
+        model.addAttribute("sendingCodeMessage", sendingCodeMessage);
 
         return "confirm_registration";
     }
@@ -238,7 +233,7 @@ public class UsersController {
         Optional<User> user = usersService.getUserByUsername(username);
         if (user.isPresent()) {
             model.addAttribute("userInformation", user.get());
-            System.out.println("time: "+user.get().getDateTimeOfCreation());
+            System.out.println("time: " + user.get().getDateTimeOfCreation());
 
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
@@ -278,9 +273,7 @@ public class UsersController {
             Optional<User> user = usersService.getUserByUsername(username);
 
 
-
             usersService.updateUserInformation(user.get(), updatedUserInfo);
-
 
 
             return "redirect:/profile";
@@ -297,8 +290,8 @@ public class UsersController {
         return "recover_password";
     }
 
-    @GetMapping(path="recoverPassword")
-    public String redirectToRecoverPasswordPage(){
+    @GetMapping(path = "recoverPassword")
+    public String redirectToRecoverPasswordPage() {
         return "redirect:/recover_password";
     }
 
@@ -345,10 +338,10 @@ public class UsersController {
                                  @RequestParam("password") String password,
                                  @RequestParam("passwordAgain") String passwordAgain,
                                  Model model) {
-          Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
+        Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
         User user = confirmationCodeResult.get().getUser();
 
-          System.out.println("Confirmation code: " + confirmationCode);
+        System.out.println("Confirmation code: " + confirmationCode);
         System.out.println("password: " + password);
         System.out.println("passwordAgain: " + passwordAgain);
 

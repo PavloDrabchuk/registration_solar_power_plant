@@ -12,28 +12,30 @@
 </form>
 
 
-<h5><a href="/newSolarPowerPlant">New Solar power plant</a></h5>
-
 <h3>Users SolarPlants</h3>
 <div th:if="${not #lists.isEmpty(solarPowerPlantsByUser)}">
-<table  border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>City</th>
-        <th>Url</th>
-    </tr>
-    <tr th:each="solarPowerPlant : ${solarPowerPlantsByUser}">
-        <td th:utext="${solarPowerPlant.getId()}"></td>
-        <td th:utext="${solarPowerPlant.getName()}"></td>
-        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
-        <td><a th:href="${'/view/'+solarPowerPlant.getId()}" th:text="${solarPowerPlant.getName()}"></a></td>
-    </tr>
-</table>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Url</th>
+        </tr>
+        <tr th:each="solarPowerPlant : ${solarPowerPlantsByUser}">
+            <td th:utext="${solarPowerPlant.getId()}"></td>
+            <td th:utext="${solarPowerPlant.getName()}"></td>
+            <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
+            <td><a th:href="${'/view/'+solarPowerPlant.getId()}" th:text="${solarPowerPlant.getName()}"></a></td>
+        </tr>
+    </table>
+
     <form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">
         <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
     </form>
 </div>
+
+<h5><a href="/newSolarPowerPlant">New Solar power plant</a></h5>
+
 <h3 th:if="${adminAccess}"><a href="/admin">Admin</a></h3>
 
 <a href="/profile">Профіль</a>

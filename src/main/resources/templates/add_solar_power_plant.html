@@ -11,9 +11,6 @@
         let countErrors = 0;
 
         const name = document.getElementById("name").value;
-           /* email = document.getElementById("email").value,
-            password = document.getElementById("password").value,
-            passwordConfirm = document.getElementById("password_confirm").value;*/
 
         if (name.length === 0) {
             countErrors++;
@@ -21,23 +18,6 @@
         } else {
             document.getElementById("name_error").innerText="";
         }
-        /*if (email.length === 0) {
-            countErrors++;
-            document.getElementById("email_error").innerText="Введіть адресу електронної пошти.";
-        } else {
-            document.getElementById("email_error").innerText="";
-        }
-
-        if (password.length === 0) {
-            countErrors++;
-            document.getElementById("password_error").innerText="Введіть пароль";
-        } else {
-            document.getElementById("password_error").innerText="";
-        }
-
-        if(password!==passwordConfirm){
-            countErrors++;
-        }*/
 
         return countErrors === 0;
     }
@@ -47,9 +27,9 @@
     <input type="submit" value="Вийти"/>
 </form>
 
-<h1>Add new solar power plant</h1>
+<h3>Add new solar power plant</h3>
 
-<h1>Form</h1>
+<h3>Form</h3>
 <form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}" method="post">
     <p>name: <input type="text" th:field="*{name}" id="name"/></p>
     <div id="name_error"></div>

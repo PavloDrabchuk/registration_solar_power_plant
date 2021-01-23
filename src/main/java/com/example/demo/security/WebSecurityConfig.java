@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/","/index","/add_user/**","/new","/add","/confirm_registration","/success_user_registration","/confirm/**","/recover/**","/recover_password","/recoverPassword","/updatePassword")
+                .antMatchers("/","/index","/add_user/**","/new","/addUser","/registration/**","/confirm_registration","/success_user_registration","/confirm/**","/recover/**","/recover_password","/recoverPassword","/updatePassword")
                 .permitAll()
                 .antMatchers("/admin")
                 .hasAuthority("ADMIN")
@@ -64,7 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("user2").password(bCryptPasswordEncoder.encode("user2Pass")).roles("USER")
                 .and()
-                .withUser("admin").password(bCryptPasswordEncoder.encode("adminPass")).roles("ADMIN");
+                .withUser("admin").password(bCryptPasswordEncoder.encode("adminPass")).roles("ADMIN")
+                .and()
+                .withUser("admin1").password(bCryptPasswordEncoder.encode("admin")).authorities("ADMIN");
 
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);

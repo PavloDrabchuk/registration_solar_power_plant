@@ -7,12 +7,12 @@
 </head>
 <body>
 
-<h2 th:if="${okMessage}">
+<h3 th:if="${okMessage}">
     <div th:text="${okMessage}">
-</div></h2>
-<h2 th:if="${errorMessage}"><div th:text="${errorMessage}"></div> </h2>
+</div></h3>
+<h3 th:if="${errorMessage}"><div th:text="${errorMessage}"></div> </h3>
 
-<h2><a th:href="@{/}">Перейти на головну</a></h2>
+<h3><a th:href="@{/}">Перейти на головну</a></h3>
 
 </body>
 </html>
