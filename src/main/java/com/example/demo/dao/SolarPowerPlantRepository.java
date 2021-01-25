@@ -7,11 +7,14 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface SolarPowerPlantRepository extends CrudRepository<SolarPowerPlant, Long> {
     Iterable<SolarPowerPlant> findAllByUser(User user);
 
     Optional<SolarPowerPlant> findById(Long id);
+
+    Optional<SolarPowerPlant> findByStringId(String stringId);
 
     //List<SolarPowerPlant> find2ByUserAndIdBetween(User user, Long offset, Long limit);
 

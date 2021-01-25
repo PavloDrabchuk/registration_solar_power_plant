@@ -15,6 +15,7 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 //@Table(name="user", catalog = "registration_system")
@@ -22,6 +23,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
 
     private String username;
@@ -61,7 +63,8 @@ public class User {
     //@ManyToOne
     private UserRoles userRoles;
 
-    public User(@JsonProperty("username") String username,
+    public User(
+            @JsonProperty("username") String username,
                 @JsonProperty("name") String name,
                 @JsonProperty("surname") String surname,
                 @JsonProperty("password") String password,
@@ -82,6 +85,9 @@ public class User {
 
     public User() {
     }
+
+
+
 
     public Long getId() {
         return id;

@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("PavloDrabchuk").password(bCryptPasswordEncoder.encode("qwerty123")).roles("USER")
+                .withUser("nameSurname").password(bCryptPasswordEncoder.encode("qwerty123")).roles("USER")
                 .and()
                 .withUser("user2").password(bCryptPasswordEncoder.encode("user2Pass")).roles("USER")
                 .and()

@@ -1,12 +1,15 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class SolarPowerPlant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String stringId;
 
     private String name;
     @OneToOne(cascade = {CascadeType.ALL})
@@ -17,7 +20,8 @@ public class SolarPowerPlant {
     @ManyToOne
     private User user;
 
-    public SolarPowerPlant(String name, Location location, int quantity, User user) {
+    public SolarPowerPlant(String stringId,String name, Location location, int quantity, User user) {
+        this.stringId=stringId;
         this.name = name;
         this.location = location;
         this.quantity = quantity;
@@ -26,6 +30,14 @@ public class SolarPowerPlant {
 
     public SolarPowerPlant() {
 
+    }
+
+    public String getStringId() {
+        return stringId;
+    }
+
+    public void setStringId(String stringId) {
+        this.stringId = stringId;
     }
 
     public Long getId() {

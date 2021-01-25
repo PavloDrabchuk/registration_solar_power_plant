@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 public class SolarPowerPlantController {
@@ -63,8 +64,8 @@ public class SolarPowerPlantController {
     }
 
     @PostMapping(path = "/solarPowerPlant/delete/{id}")
-    public String deleteSolarPowerPlant(@PathVariable("id") Long id, Model model) {
-        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
+    public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model) {
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
             solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
@@ -94,13 +95,18 @@ public class SolarPowerPlantController {
     }
 
     @GetMapping(path = "/view/{id}")
-    public String getSolarPowerPlantsById(@PathVariable("id") Long id, Model model) {
-        System.out.println("getSolarPowerPlantsById");
+    public String getSolarPowerPlantsById(@PathVariable("id") String stringId, Model model) {
+        System.out.println("getSolarPowerPlantsById: "+stringId);
 
-        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(id);
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
+
+        Optional<SolarPowerPlant> solarPowerPlant1=solarPowerPlantService.getSolarPowerPlantById(1L);
+
+         // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
 
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
+
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class SolarPowerPlantService {
@@ -25,6 +26,17 @@ public class SolarPowerPlantService {
                 solarPowerPlant.getLocation(),
                 solarPowerPlant.getNumber(),
                 solarPowerPlant.getUser()));*/
+        String stringId;
+        Optional<SolarPowerPlant> solarPowerPlant1;
+
+
+        do {
+            stringId=UUID.randomUUID().toString();
+            solarPowerPlant1 = solarPowerPlantRepository.findByStringId(stringId);
+            System.out.println("stringId: "+stringId);
+        } while (solarPowerPlant1.isPresent());
+
+        solarPowerPlant.setStringId(stringId);
         solarPowerPlantRepository.save(solarPowerPlant);
     }
 
@@ -38,6 +50,10 @@ public class SolarPowerPlantService {
 
     public Optional<SolarPowerPlant> getSolarPowerPlantById(Long id) {
         return solarPowerPlantRepository.findById(id);
+    }
+
+    public Optional<SolarPowerPlant> getSolarPowerPlantByStringId(String stringId) {
+        return solarPowerPlantRepository.findByStringId(stringId);
     }
 
     public List<String> getNumPagesList(User user,double limit) {

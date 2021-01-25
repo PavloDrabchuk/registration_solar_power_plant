@@ -75,10 +75,10 @@
     <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</td>
     </p>
 
-    <p>password: <input type="text" th:field="*{password}" id="password" onblur="checkMatchingPasswords()"/></p>
+    <p>password: <input type="password" th:field="*{password}" id="password" onblur="checkMatchingPasswords()"/></p>
     <div id="password_error"></div>
 
-    <p>password confirm: <input type="text" th:field="*{passwordConfirm}" id="password_confirm"
+    <p>password confirm: <input type="password" th:field="*{passwordConfirm}" id="password_confirm"
                                 onblur="checkMatchingPasswords()"/></p>
 
     <div id="matching_passwords"></div>
