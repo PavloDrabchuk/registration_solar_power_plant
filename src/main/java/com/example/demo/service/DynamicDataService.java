@@ -41,11 +41,12 @@ public class DynamicDataService {
     }
 
     @Async
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 5*60*1000)
     public void saveDynamicData() {
-        System.out.println("save dynamic data");
+        System.out.println("\n\n save dynamic data: ");
         //dynamicDataRepository.save(dynamicData);
         for (DynamicData dynamicData : generateData()) {
+            System.out.println("  id: "+dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
         }
     }
