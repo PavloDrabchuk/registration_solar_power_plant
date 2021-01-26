@@ -241,7 +241,7 @@ public class UsersController {
         return "profile";
     }
 
-    @GetMapping(path = "/edit_profile")
+    @GetMapping(path = "/profile/edit")
     public String editProfileInfo(Model model) {
         System.out.println("editProfileInfo");
 
@@ -258,7 +258,7 @@ public class UsersController {
         return "edit_profile";
     }
 
-    @PostMapping(path = "/updateProfileInfo")
+    @PostMapping(path = "/profile/update")
     public String updateProfileInfo(@Valid @ModelAttribute("userInformation") User updatedUserInfo, BindingResult bindingResult) {
 
         System.out.println("updateProfileInfo");

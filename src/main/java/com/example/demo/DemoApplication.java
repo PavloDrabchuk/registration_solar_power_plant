@@ -2,7 +2,9 @@ package com.example.demo;
 
 import com.example.demo.dao.ConfirmationCodeRepository;
 import com.example.demo.dao.UsersRepository;
+import com.example.demo.model.DynamicData;
 import com.example.demo.service.ConfirmationCodeService;
+import com.example.demo.service.DynamicDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,10 +17,13 @@ public class DemoApplication implements CommandLineRunner {
     @Autowired
     private   UsersRepository usersRepository;
 
+    private final DynamicDataService dynamicDataService;
+
 private final ConfirmationCodeService confirmationCodeService;
 
-    public DemoApplication(ConfirmationCodeService confirmationCodeService) {
+    public DemoApplication(ConfirmationCodeService confirmationCodeService, DynamicDataService dynamicDataService) {
         this.confirmationCodeService = confirmationCodeService;
+        this.dynamicDataService=dynamicDataService;
     }
 
 
@@ -29,6 +34,7 @@ private final ConfirmationCodeService confirmationCodeService;
 
     @Override
     public void run(String... args) throws Exception {
+        dynamicDataService.saveDynamicData(new DynamicData());
 /*usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
         UserRole.USER,false,false));*/
         // confirmationCodeService.deactivateOverdueCodes();
