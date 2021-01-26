@@ -10,9 +10,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableAsync
+@EnableScheduling
 public class DemoApplication implements CommandLineRunner {
     @Autowired
     private   UsersRepository usersRepository;
@@ -34,7 +36,7 @@ private final ConfirmationCodeService confirmationCodeService;
 
     @Override
     public void run(String... args) throws Exception {
-        dynamicDataService.saveDynamicData(new DynamicData());
+        dynamicDataService.saveDynamicData();
 /*usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
         UserRole.USER,false,false));*/
         // confirmationCodeService.deactivateOverdueCodes();
