@@ -24,7 +24,7 @@ public class DynamicDataService {
         this.solarPowerPlantService = solarPowerPlantService;
     }
 
-    public List<DynamicData> generateData() {
+    private List<DynamicData> generateData() {
         List<DynamicData> generatedData = new ArrayList<>();
         List<SolarPowerPlant> solarPowerPlantList = solarPowerPlantService.getAllSolarPowerPlants();
 
@@ -33,7 +33,10 @@ public class DynamicDataService {
                 rightLimit = 100D;
 
         for (SolarPowerPlant solarPowerPlant : solarPowerPlantList) {
-            producedPower = leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);
+            // producedPower = leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);
+
+            producedPower=generateProducerPower();
+
             generatedData.add(new DynamicData(solarPowerPlant, producedPower, LocalDateTime.now()));
         }
 
@@ -49,6 +52,12 @@ public class DynamicDataService {
             System.out.println("  id: "+dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
         }
+    }
+
+    private double generateProducerPower(){
+        double producerPower=0;
+
+        return producerPower;
     }
 }
 
