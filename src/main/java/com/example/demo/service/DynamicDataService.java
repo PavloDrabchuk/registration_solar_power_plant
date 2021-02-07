@@ -61,7 +61,7 @@ public class DynamicDataService {
     }
 
     private double generateProducerPower(int month, int hour) {
-        double producerPower = 340;
+        double producerPower = 340.0/48.0; //якщо збирати дані раз в 30 хвилин
         producerPower *= monthlyCoefficient(month, 0.4, 1.02) * weatherCoefficient(month) * hourlyCoefficient(hour, month);
 
         /*
@@ -71,7 +71,7 @@ public class DynamicDataService {
 
         //ArrayList<Weather> weathers = new ArrayList<Weather>();
         //System.out.println("Arrays: "+Arrays.toString(Weather.values()));
-        System.out.println("Produced power: " + producerPower);
+        System.out.println("\nProduced power: " + producerPower);
 
         System.out.println("Monthly coefficient: " + monthlyCoefficient(month, 0.4, 1.02));
         System.out.println("Hourly coefficient: " + hourlyCoefficient(hour, month));
