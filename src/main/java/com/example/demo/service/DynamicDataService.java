@@ -40,7 +40,7 @@ public class DynamicDataService {
             // producedPower = leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);
             System.out.println("Month: " + localDateTime.getMonthValue());
 
-            producedPower = generateProducerPower(localDateTime.getMonthValue());
+            producedPower = generateProducerPower(localDateTime.getMonthValue(), localDateTime.getHour());
 
             generatedData.add(new DynamicData(solarPowerPlant, producedPower, localDateTime));
         }
@@ -60,9 +60,9 @@ public class DynamicDataService {
         System.out.println("\n\n\n");
     }
 
-    private double generateProducerPower(int month) {
+    private double generateProducerPower(int month, int hour) {
         double producerPower = 340;
-        producerPower *= monthlyCoefficient(month) * weatherCoefficient(month);
+        producerPower *= monthlyCoefficient(month, 0.4, 1.02) * weatherCoefficient(month) * hourlyCoefficient(hour, month);
 
         /*
         Months.values()[index]
@@ -73,15 +73,15 @@ public class DynamicDataService {
         //System.out.println("Arrays: "+Arrays.toString(Weather.values()));
         System.out.println("Produced power: " + producerPower);
 
-        System.out.println("Monthly coefficient: " + monthlyCoefficient(month));
+        System.out.println("Monthly coefficient: " + monthlyCoefficient(month, 0.4, 1.02));
+        System.out.println("Hourly coefficient: " + hourlyCoefficient(hour, month));
 
-        System.out.println("Weather coefficient: " + weatherCoefficient(month));
 
         return producerPower;
     }
 
-    private double monthlyCoefficient(int month) {
-        return ((Math.sin(0.4 * month - 1.02)) + 1) / 2;
+    private double monthlyCoefficient(int month, double firstCoefficient, double secondCoefficient) {
+        return ((Math.sin(firstCoefficient * month - secondCoefficient)) + 1) / 2;
     }
 
     private double weatherCoefficient(int month) {
@@ -90,9 +90,14 @@ public class DynamicDataService {
             weatherNumber = new Random().nextInt(Weather.values().length);
             //System.out.println("weatherNumber: "+weatherNumber+"  name: "+Weather.values()[weatherNumber].name());
         } while (month > 3 && month < 10 && Weather.values()[weatherNumber].name().equals("Snow"));
-
+        System.out.println("Weather coefficient: " + Weather.values()[weatherNumber].getCoefficient());
         //System.out.println("w n: " + weatherNumber);
         return Weather.values()[weatherNumber].getCoefficient();
+    }
+
+    private double hourlyCoefficient(int hour, int month) {
+        System.out.println("hour: " + hour);
+        return (hour >= 5 && hour <= 20) ? (((Math.sin(0.44 * hour + 2.3)) + 1) / 2) * monthlyCoefficient(month, 0.3, 0.25) : 0;
     }
 }
 
