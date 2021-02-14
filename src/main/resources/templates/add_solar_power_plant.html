@@ -33,7 +33,10 @@
 <form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}" method="post">
     <p>name: <input type="text" th:field="*{name}" id="name"/></p>
     <div id="name_error"></div>
-    <p>quantity: <input type="number" min="1" value="1" th:field="*{quantity}"/></p>
+    <h4>Static data</h4>
+<!--    <p>quantity: <input type="number" min="1" value="1" th:field="*{}"/></p>-->
+    <p>quantity: <input type="number" min="1" value="1" th:field="*{staticData.quantity}"></p>
+    <p>Date of installation <input type="date" th:field="*{staticData.installationDate}"></p>
     <h4>Location</h4>
     <p>Область:
 

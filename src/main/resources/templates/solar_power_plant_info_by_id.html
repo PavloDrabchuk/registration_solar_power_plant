@@ -67,7 +67,7 @@
 
     <script type="text/javascript" src="/scripts/map.js"></script>
 
-    <form th:action="@{'/solarPowerPlant/delete/' +${solarPowerPlant.get().getId()}}" method="post">
+    <form th:action="@{'/solarPowerPlant/delete/' +${solarPowerPlant.get().getStringId()}}" method="post">
         <input type="submit" value="Видалити">
     </form>
 </div>

@@ -12,19 +12,23 @@ public class SolarPowerPlant {
     private String stringId;
 
     private String name;
+
     @OneToOne(cascade = {CascadeType.ALL})
     private Location location;
 
-    private int quantity;
+    @OneToOne(cascade = {CascadeType.ALL})
+    private StaticData staticData;
+
+    //private int quantity;
 
     @ManyToOne
     private User user;
 
-    public SolarPowerPlant(String stringId,String name, Location location, int quantity, User user) {
+    public SolarPowerPlant(String stringId,String name, Location location, User user) {
         this.stringId=stringId;
         this.name = name;
         this.location = location;
-        this.quantity = quantity;
+        //this.quantity = quantity;
         this.user = user;
     }
 
@@ -64,12 +68,20 @@ public class SolarPowerPlant {
         this.location = location;
     }
 
-    public int getQuantity() {
+    /*public int getQuantity() {
         return quantity;
+    }*/
+
+    /*public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }*/
+
+    public StaticData getStaticData() {
+        return staticData;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setStaticData(StaticData staticData) {
+        this.staticData = staticData;
     }
 
     public User getUser() {

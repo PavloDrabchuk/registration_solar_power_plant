@@ -59,6 +59,8 @@ public class SolarPowerPlantController {
 
         locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
         solarPowerPlant.getLocation().setCountry("Україна");
+//        solarPowerPlant.getStaticData().setStringInstallationDate();
+        System.out.println("Installation date: "+solarPowerPlant.getStaticData().getInstallationDate());
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
         return "redirect:/home";
     }
@@ -67,6 +69,7 @@ public class SolarPowerPlantController {
     public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
+            System.out.println("Is present!: "+solarPowerPlant.get().getId());
             solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
             model.addAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");
