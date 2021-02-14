@@ -43,8 +43,41 @@
             ${solarPowerPlant.get().getLocation().getStreet()} + ', '+ ${solarPowerPlant.get().getLocation().getNumber()} "></td>
 
         </tr>
-
     </table>
+
+    <hr/>
+    <h3>Dynamic data between data</h3>
+    <form method="post">
+        <label> З:
+            <input type="date" name="startDate">
+        </label>
+        <label> до:
+            <input type="date" name="finishDate">
+        </label>
+
+        <input type="submit" value="Отримати дані" name="submit">
+    </form>
+    <hr/>
+
+    <h3>Dynamic data</h3>
+    <div th:if="${not #lists.isEmpty(dynamicData)}">
+        <table border="1">
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Produced power</th>
+                <th>SPP id</th>
+            </tr>
+            <tr th:each="data : ${dynamicData}">
+                <td th:utext="${data.getId()}"></td>
+                <td th:utext="${data.getCollectionDateTime()}"></td>
+                <td th:utext="${data.getProducedPower()}"></td>
+                <td th:utext="${data.getSolarPowerPlant().getId()}"></td>
+            </tr>
+        </table>
+
+
+    </div>
 
     <div id="mapBlock" class="mapBlock">
         <div id="popup" class="ol-popup">

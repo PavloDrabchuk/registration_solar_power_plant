@@ -4,6 +4,7 @@ import com.example.demo.model.Location;
 import com.example.demo.model.Region;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
+import com.example.demo.service.DynamicDataService;
 import com.example.demo.service.LocationService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
@@ -31,15 +32,18 @@ public class SolarPowerPlantController {
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
     private final LocationService locationService;
+    private final DynamicDataService dynamicDataService;
 
 
     @Autowired
     public SolarPowerPlantController(UsersService usersService,
                                      SolarPowerPlantService solarPowerPlantService,
-                                     LocationService locationService) {
+                                     LocationService locationService,
+                                     DynamicDataService dynamicDataService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.locationService = locationService;
+        this.dynamicDataService = dynamicDataService;
     }
 
     @PostMapping(path = "/addSolarPowerPlant")
@@ -60,7 +64,7 @@ public class SolarPowerPlantController {
         locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
         solarPowerPlant.getLocation().setCountry("Україна");
 //        solarPowerPlant.getStaticData().setStringInstallationDate();
-        System.out.println("Installation date: "+solarPowerPlant.getStaticData().getInstallationDate());
+        System.out.println("Installation date: " + solarPowerPlant.getStaticData().getInstallationDate());
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
         return "redirect:/home";
     }
@@ -69,7 +73,7 @@ public class SolarPowerPlantController {
     public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
-            System.out.println("Is present!: "+solarPowerPlant.get().getId());
+            System.out.println("Is present!: " + solarPowerPlant.get().getId());
             solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
             model.addAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");
@@ -99,16 +103,17 @@ public class SolarPowerPlantController {
 
     @GetMapping(path = "/view/{id}")
     public String getSolarPowerPlantsById(@PathVariable("id") String stringId, Model model) {
-        System.out.println("getSolarPowerPlantsById: "+stringId);
+        System.out.println("getSolarPowerPlantsById: " + stringId);
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
 
-        Optional<SolarPowerPlant> solarPowerPlant1=solarPowerPlantService.getSolarPowerPlantById(1L);
+        Optional<SolarPowerPlant> solarPowerPlant1 = solarPowerPlantService.getSolarPowerPlantById(1L);
 
-         // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
+        // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
 
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
+            model.addAttribute("dynamicData", dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get()));
 
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
