@@ -41,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/","/index","/add_user/**","/new","/addUser","/registration/**","/confirm_registration","/success_user_registration","/confirm/**","/recover/**","/recover_password","/recoverPassword","/updatePassword")
                 .permitAll()
+                .antMatchers("/styles/**").permitAll()
+                .antMatchers("/images/**").permitAll()
                 .antMatchers("/admin")
                 .hasAuthority("ADMIN")
                 .antMatchers("/sign-up/**",/* "/login/**",*/"/home/**","/add_solar_power_plant/**")

@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Spring Boot User Authentication</title>
+
+    <!--<link rel="stylesheet" href="/static/styles/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/static/styles/signin.css">-->
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/signin.css" th:href="@{/styles/signin.css}" />
+<!--    <link rel="stylesheet" type="text/css" media="all" href="/styles/nn.css" th:href="@{/styles/nn.css}" />-->
 </head>
 <body>
 
-<div th:if="${param.error}">
+<!--<div th:if="${param.error}">
     Ви ввели неправильний логіп або пароль.
 </div>
 <div th:if="${param.logout}">
@@ -15,16 +22,55 @@
 
 <form role="form" th:action="@{/login}" th:method="post">
     <lable>Username</lable>
-    <input type="text" id="username" name="username">
+    <input type="text" id="username1" name="username1">
 
     <lable>Password</lable>
-    <input type="password" id="password" name="password">
+    <input type="password" id="password1" name="password">
 
     <input type="submit">
 </form>
 
 <a th:href="@{/recover_password}">Забули пароль?</a>
 
-<h3><a th:href="@{/}">Перейти на головну</a></h3>
+<h3><a th:href="@{/}">Перейти на головну</a></h3>-->
+
+<!-- ============================== -->
+
+<div class="col-lg-4 col-md-7 col-sm-8 col-9 bg-form-signin">
+    <div class="form-signin ">
+        <form role="form" th:action="@{/login}" th:method="post">
+            <div class="text-center">
+                <img th:href="@{/}" class="mb-4 float-center" src="images/logo-social-sq.png" alt="" width="72" height="57">
+            </div>
+
+            <div th:if="${param.error}">
+                Ви ввели неправильний логіп або пароль.
+            </div>
+            <div th:if="${param.logout}">
+                Ви вийшли з свого аккаунту.
+            </div>
+
+            <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
+                   autofocus="">
+
+            <br/>
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password" required="">
+            <div class="btn-link mb-3">
+                <a th:href="@{/recover_password}">Забули пароль?</a>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+            <hr/>
+            <div class="text-center">
+                Don't you have account? <a href="#">Sign Up Here</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
