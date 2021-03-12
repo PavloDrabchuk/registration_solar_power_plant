@@ -64,11 +64,17 @@
 <!--<body data-new-gr-c-s-check-loaded="14.997.0" data-gr-ext-installed="">-->
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">Company name</a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
+            <a class="nav-link" th:href="@{/logout}">Sign out</a>
+
+            <!-- <form th:action="@{/logout}" method="post">
+ &lt;!&ndash;                <input class="nav-link" type="submit" value="Вийти"/>&ndash;&gt;
+                 <a class="nav-link" >Sign out</a>
+             </form>
+ -->
         </li>
     </ul>
 </nav>
@@ -245,7 +251,7 @@
                         </svg>
                         This week
                     </button>-->
-                    <button type="button" class="btn btn-success">Додати станцію</button>
+                    <button type="button" class="btn btn-success" href="/newSolarPowerPlant">Додати станцію</button>
                 </div>
             </div>
 
@@ -340,18 +346,25 @@
                     </li>
                 </ul>
             </nav>-->
-            <div class="text-center pagination-menu">
-                <form action="#" method="get">
+            <div th:if="${#lists.size(numPages)}> 1" class="text-center pagination-menu">
+                <form action="/home" method="get">
                     <nav>
-                        <input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                        <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
                         <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
                         <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
                         <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                               id="page4">
+                               id="page4">-->
+                        <input th:each="page : ${numPages}" th:value="${page}"
+                               th:name="page" th:id="${'page'+page}"
+                               class="btn btn-outline-success" type="submit">
                     </nav>
                 </form>
             </div>
 
+            <!--            -->
+            <!--<form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">
+                <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
+            </form>-->
 
             <!-- Footer -->
 
