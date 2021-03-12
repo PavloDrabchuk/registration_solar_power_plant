@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -63,6 +65,7 @@ public class SolarPowerPlantController {
 
         locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
         solarPowerPlant.getLocation().setCountry("Україна");
+        solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
 //        solarPowerPlant.getStaticData().setStringInstallationDate();
         System.out.println("Installation date: " + solarPowerPlant.getStaticData().getInstallationDate());
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);

@@ -26,12 +26,12 @@ public class Location {
     private Double longitude;
     private Double latitude;
 
-    public Location(String country, Region region,  String city, String street, String number, Double longitude, Double latitude) {
+    public Location(String country, Region region, String city, String street, String number, Double longitude, Double latitude) {
         this.country = country;
-        this.region=region;
+        this.region = region;
         this.city = city;
         this.street = street;
-        this.number=number;
+        this.number = number;
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -102,5 +102,9 @@ public class Location {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getStringLocation() {
+        return region.getName() + " область, " + city + ", вул. " + street + ", " + number;
     }
 }

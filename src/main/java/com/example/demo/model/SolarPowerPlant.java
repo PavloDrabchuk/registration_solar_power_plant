@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Entity
@@ -20,16 +23,18 @@ public class SolarPowerPlant {
     private StaticData staticData;
 
     //private int quantity;
+    private LocalDateTime registrationDateTime;
 
     @ManyToOne
     private User user;
 
-    public SolarPowerPlant(String stringId,String name, Location location, User user) {
-        this.stringId=stringId;
+    public SolarPowerPlant(String stringId, String name, Location location, User user) {
+        this.stringId = stringId;
         this.name = name;
         this.location = location;
         //this.quantity = quantity;
         this.user = user;
+        this.registrationDateTime = LocalDateTime.now(ZoneId.of("UTC"));
     }
 
     public SolarPowerPlant() {
@@ -91,5 +96,20 @@ public class SolarPowerPlant {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setRegistrationDateTime(LocalDateTime registrationDateTime) {
+        this.registrationDateTime = registrationDateTime;
+    }
+
+    public LocalDateTime getRegistrationDateTime() {
+        return registrationDateTime;
+    }
+
+    public String getStringRegistrationDateTime() {
+        return (registrationDateTime != null)
+                ? registrationDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                : null;
+    }
+
 }
 
