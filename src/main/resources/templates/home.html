@@ -20,6 +20,11 @@
     <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <title>Spring Security Example</title>
 </head>
 <body>
@@ -63,16 +68,16 @@
 
 <!--<body data-new-gr-c-s-check-loaded="14.997.0" data-gr-ext-installed="">-->
 <body>
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+<!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">Company name</a>
-<!--    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
+&lt;!&ndash;    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">&ndash;&gt;
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <form th:action="@{/logout}" method="post">
                 <input class="btn btn-secondary" type="submit" value="Sign out">
             </form>
         </li>
-        <!--<li class="nav-item text-nowrap">
+        &lt;!&ndash;<li class="nav-item text-nowrap">
             <a class="nav-link" th:href="@{/logout}">Sign out</a>
 
             &lt;!&ndash; <form th:action="@{/logout}" method="post">
@@ -81,8 +86,62 @@
              </form>
  &ndash;&gt;
 
-        </li>-->
+        </li>&ndash;&gt;
     </ul>
+</nav>-->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top flex-md-nowrap">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <!--<li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>-->
+        </ul>
+
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                Name Surname
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/profile">Профіль</a>
+                <!--                <a class="dropdown-item" href="#">Another action</a>-->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+
+            </div>
+        </div>
+        <div class="nav-item active">
+            <a class="nav-link" href="#">Профіль<span class="sr-only">(current)</span></a>
+        </div>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+            <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Вийти</button>
+        </form>
+    </div>
 </nav>
 
 <div class="container-fluid">
@@ -257,7 +316,15 @@
                         </svg>
                         This week
                     </button>-->
-                    <button type="button" class="btn btn-success" href="/newSolarPowerPlant">Додати станцію</button>
+<!--                    <a href="/newSolarPowerPlant" class="btn btn-success">Додати станцію</a>-->
+
+                    <button class="btn btn-success" onclick="document.location='/newSolarPowerPlant'">Додати станцію</button>
+
+
+
+<!-- <form action="/newSolarPowerPlant">
+                        <input type="submit" class="btn btn-success" value="Додати станцію"/>
+                    </form>-->
                 </div>
             </div>
 
