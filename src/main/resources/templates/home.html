@@ -81,7 +81,7 @@
         <div th:replace="~{user/dashboard/sidebar}"></div>
 
         <!-- Main -->
-        <div th:replace="~{user/dashboard/main}"></div>
+        <div th:replace="~{user/dashboard/main-content ::main-content(${solarPowerPlantsByUser}, ${numPages})}"></div>
 
 
 

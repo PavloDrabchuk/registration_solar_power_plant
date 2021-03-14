@@ -4,8 +4,11 @@
 
 <body>
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+
+<main th:fragment="main-content (solarPowerPlantsByUser, numPages)"
+      role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div th:fragment="main-content (solarPowerPlantsByUser, numPages)"
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Зареєстровані сонячні станції</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <!--<div class="btn-group mr-2">
@@ -72,10 +75,12 @@
                 <div class="card flex-md-row mb-4 box-shadow h-md-250">
                     <div class="card-body d-flex flex-column align-items-start">
                         <h5>
-                            <strong title="Від n панелей до z" class="d-inline-block  mb-2 badge badge-info">Середня</strong>
+                            <strong title="Від n панелей до z"
+                                    class="d-inline-block  mb-2 badge badge-info">Середня</strong>
                         </h5>
                         <h3 class="mb-0">
-                            <a class="text-dark" th:href="${'/view/'+solarPowerPlant.getStringId()}"
+                            <!--/*@thymesVar id="stringId" type="java.lang.String"*/-->
+                            <a class="text-dark" th:href="${'/view/'+ solarPowerPlant.stringId}"
                                th:utext="${solarPowerPlant.getName()}"></a>
                         </h3>
                         <div class="mb-1 text-muted" th:if="${solarPowerPlant.getStringRegistrationDateTime()}"

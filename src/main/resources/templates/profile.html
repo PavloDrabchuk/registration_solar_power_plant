@@ -3,65 +3,48 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
+
+    <!--    &lt;!&ndash;<link href="css/bootstrap.css" rel="stylesheet" >-->
+    <!--    <link href="css/main.css" rel="stylesheet">-->
+    <!--    <link href="css/banner.css" rel="stylesheet">&ndash;&gt;-->
+
+    <!--    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}"/>-->
+    <!--    <link rel="stylesheet" type="text/css" media="all" href="/styles/main.css" th:href="@{/styles/main.css}"/>-->
+    <!--    <link rel="stylesheet" type="text/css" media="all" href="/styles/banner.css" th:href="@{/styles/banner.css}"/>-->
+
+    <!--    <script src="js/bootstrap.js"></script>-->
+    <!--    <script src="js/main.js"></script>-->
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.min.css"
+          th:href="@{/styles/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <title>Spring Security Example</title>
 </head>
 <body>
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Вийти"/>
-</form>
+<!-- Navigation panel -->
 
-<table border="1" cellspacing="0">
-    <tr>
-    <th>Профіль</th>
-        <th align="right"><a th:href="@{/profile/edit}">Редагувати</a></th>
-    </tr>
-    <tr>
-        <td>Прізвище</td>
-        <td th:text="${userInformation.getSurname()}"></td>
-    </tr>
-    <tr>
-        <td>Ім'я</td>
-        <td th:text="${userInformation.getName()}"></td>
-    </tr>
-    <tr>
-        <td>По батькові</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td style="background-color: #7b98bc"></td>
-        <td style="background-color: #7b98bc"></td>
-    </tr>
-
-    <tr>
-        <td>Ім'я користувача</td>
-        <td th:text="${userInformation.getUsername()}"></td>
-    </tr>
-
-    <tr>
-        <td>E-mail</td>
-        <td th:text="${userInformation.getEmail()}"></td>
-    </tr>
-
-    <tr>
-        <td>Моб. телефон</td>
-        <td th:text="${userInformation.getMobilePhoneNumber()}"></td>
-    </tr>
-
-    <tr>
-        <td style="background-color: #7b98bc"></td>
-        <td style="background-color: #7b98bc"></td>
-    </tr>
-
-    <tr>
-        <td>Статус аккаунту</td>
-        <td th:text="${accountStatus}"></td>
-    </tr>
-
-</table>
+<div th:replace="~{user/dashboard/nav-panel}"></div>
 
 
+<div class="container-fluid">
+    <div class="row">
 
+        <!-- Sidebar -->
+        <div th:replace="~{user/dashboard/sidebar}"></div>
+
+        <!-- Main -->
+        <div th:replace="~{user/dashboard/profile ::main-content(${userInformation})}"></div>
+
+    </div>
+</div>
 
 </body>
 </html>
