@@ -13,9 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -255,7 +253,7 @@ public class UsersController {
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
         }
-        return "edit_profile";
+        return "edit-profile";
     }
 
     @PostMapping(path = "/profile/update")
@@ -265,7 +263,7 @@ public class UsersController {
 
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
-            return "edit_profile";
+            return "edit-profile";
         } else {
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();

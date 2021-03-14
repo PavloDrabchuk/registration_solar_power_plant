@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+
+<main th:fragment="main-content (userInformation, accountStatus)"
+      role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+    <form action="updateProfileInfo" th:action="@{/profile/update}" th:object="${userInformation}" method="post">
+
+        <table border="1" cellspacing="0">
+            <tr>
+                <th>Профіль</th>
+                <th align="right" colspan="2"></th>
+            </tr>
+            <tr>
+                <td>Прізвище</td>
+                <td>
+                    <input placeholder="Введіть прізвище"
+                           th:value="${userInformation.getSurname()}" th:field="*{surname}">
+                </td>
+            </tr>
+            <tr>
+                <td>Ім'я</td>
+                <td>
+                    <input placeholder="Введіть ім'я"
+                           th:value="${userInformation.getName()}" th:field="*{name}">
+                </td>
+            </tr>
+            <tr>
+                <td>По батькові</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="background-color: #7b98bc"></td>
+                <td style="background-color: #7b98bc"></td>
+            </tr>
+
+            <tr>
+                <td>Ім'я користувача</td>
+                <td th:text="${userInformation.getUsername()}"></td>
+            </tr>
+
+            <tr>
+                <td>E-mail</td>
+                <td th:text="${userInformation.getEmail()}"></td>
+            </tr>
+
+            <tr>
+                <td>Моб. телефон</td>
+                <td><input placeholder="Введіть моб. телефон" th:value="${userInformation.getMobilePhoneNumber()}"
+                           th:field="*{mobilePhoneNumber}"></td>
+            </tr>
+
+            <tr>
+                <td style="background-color: #7b98bc"></td>
+                <td style="background-color: #7b98bc"></td>
+            </tr>
+
+            <tr>
+                <td>Статус аккаунту</td>
+                <td th:text="${accountStatus}"></td>
+            </tr>
+
+        </table>
+
+        <input type="submit" value="Зберегти"/>
+
+    </form>
+
+</main>
+
+</body>
+
+</html>
