@@ -233,6 +233,7 @@ public class UsersController {
             model.addAttribute("userInformation", user.get());
             System.out.println("time: " + user.get().getDateTimeOfCreation());
 
+            user.get().getStringInfo();
             model.addAttribute("countOfRegisteredSolarStations",solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
 
             Boolean accountStatus = user.get().getActivated();

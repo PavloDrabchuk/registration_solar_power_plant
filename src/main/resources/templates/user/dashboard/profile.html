@@ -91,10 +91,22 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">П.І.Б.</h6>
                                 </div>
-                                <div th:text="${userInformation.getSurname()+' '+userInformation.getName()}"
+                                <!--<div th:text="${userInformation.getSurname()+' '+userInformation.getName()}"
+                                     class="col-sm-9 text-secondary">
+                                    Surname Name
+                                </div>-->
+
+                                <div th:if="${!#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"
+                                     th:text="${userInformation.getSurname()+' '+userInformation.getName()}"
                                      class="col-sm-9 text-secondary">
                                     Surname Name
                                 </div>
+
+                                <div th:if="${#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"
+                                     class="col-sm-9 text-secondary">
+                                    Дані відсутні.
+                                </div>
+
                             </div>
                             <hr>
                             <div class="row">
@@ -121,10 +133,18 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Мобільний телефон</h6>
                                 </div>
-                                <div th:text="${userInformation.getMobilePhoneNumber()}"
+<!--                                <div th:if="${userInformation.getMobilePhoneNumber() != '' or userInformation.getMobilePhoneNumber() != null}"-->
+                                <div th:if="${!#strings.isEmpty(userInformation.getMobilePhoneNumber())}"
+                                     th:text="${userInformation.getMobilePhoneNumber()}"
                                      class="col-sm-9 text-secondary">
                                     +380 088 123-45-67
                                 </div>
+<!--                                <div th:if="${userInformation.getMobilePhoneNumber() == '' or userInformation.getMobilePhoneNumber() == null}"-->
+                                <div th:if="${#strings.isEmpty(userInformation.getMobilePhoneNumber())}"
+                                     class="col-sm-9 text-secondary">
+                                    Дані відсутні.
+                                </div>
+
                             </div>
 
                         </div>
@@ -150,11 +170,11 @@
                                         <div th:if="${countOfRegisteredSolarStations > 0}"
                                              th:text="${countOfRegisteredSolarStations}"
                                              class="col-sm-9 text-secondary">
-                                            [88;Ще не зареєстровано жодної станції]
+                                            [88;Ще не зареєстровано жодної станції.]
                                         </div>
                                         <div th:if="${countOfRegisteredSolarStations <= 0}"
                                              class="col-sm-9 text-secondary">
-                                            Ще не зареєстровано жодної станції
+                                            Ще не зареєстровано жодної станції.
                                         </div>
                                     </div>
                                     <hr>
@@ -184,7 +204,8 @@
                                             <div th:case="'Не активований'">
                                                 <h5>
                                                     <strong th:text="${accountStatus}"
-                                                            class="d-inline-block  badge badge-danger">Не активований</strong>
+                                                            class="d-inline-block  badge badge-danger">Не
+                                                        активований</strong>
                                                 </h5>
                                             </div>
 
