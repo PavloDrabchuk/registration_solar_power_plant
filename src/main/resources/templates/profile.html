@@ -43,7 +43,8 @@
         <div th:replace="~{user/dashboard/sidebar}"></div>
 
         <!-- Main -->
-        <div th:replace="~{user/dashboard/profile ::main-content(${userInformation},${accountStatus})}"></div>
+        <div th:replace="~{user/dashboard/profile
+        ::main-content(${userInformation},${accountStatus}, ${countOfRegisteredSolarStations})}"></div>
 
     </div>
 </div>

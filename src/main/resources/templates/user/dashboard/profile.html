@@ -10,7 +10,7 @@
 <body>
 
 
-<main th:fragment="main-content (userInformation,accountStatus)"
+<main th:fragment="main-content (userInformation,accountStatus,countOfRegisteredSolarStations)"
       role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
     <!--<table border="1" cellspacing="0">
@@ -73,8 +73,7 @@
                                 <img src="/images/default-profile-image.png" alt="image"
                                      class="rounded-circle" width="100">
                                 <div class="mt-3">
-                                    <h4 th:text="${userInformation.getSurname()+' '+userInformation.getName()}">Surname
-                                        Name</h4>
+                                    <h4 th:text="${userInformation.getUsername()}">Username</h4>
                                     <form th:action="@{/profile/edit}" method="get">
                                         <input type="submit" class="btn btn-outline-success"
                                                value="Редагувати інформацію">
@@ -148,8 +147,14 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Зареєстровано станцій</h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">
+                                        <div th:if="${countOfRegisteredSolarStations > 0}"
+                                             th:text="${countOfRegisteredSolarStations}"
+                                             class="col-sm-9 text-secondary">
                                             [88;Ще не зареєстровано жодної станції]
+                                        </div>
+                                        <div th:if="${countOfRegisteredSolarStations <= 0}"
+                                             class="col-sm-9 text-secondary">
+                                            Ще не зареєстровано жодної станції
                                         </div>
                                     </div>
                                     <hr>
@@ -157,7 +162,8 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Дата реєстрації</h6>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">
+                                        <div th:text="${userInformation.getStringRegistrationDateTime()}"
+                                             class="col-sm-9 text-secondary">
                                             14.03.2021
                                         </div>
                                     </div>
@@ -166,13 +172,26 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Статус аккаунту</h6>
                                         </div>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-9" th:switch="${accountStatus}">
                                             <!-- <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>-->
                                             <!-- <div class="d-inline-block fs-5  badge badge-success">Активний</div>-->
-                                            <h5>
+                                            <div th:case="'Активований'">
+                                                <h5>
+                                                    <strong th:text="${accountStatus}"
+                                                            class="d-inline-block  badge badge-success">Активований</strong>
+                                                </h5>
+                                            </div>
+                                            <div th:case="'Не активований'">
+                                                <h5>
+                                                    <strong th:text="${accountStatus}"
+                                                            class="d-inline-block  badge badge-danger">Не активований</strong>
+                                                </h5>
+                                            </div>
+
+                                            <!--<h5>
                                                 <strong th:text="${accountStatus}"
                                                         class="d-inline-block  badge badge-success">Активний</strong>
-                                            </h5>
+                                            </h5>-->
                                         </div>
                                     </div>
 

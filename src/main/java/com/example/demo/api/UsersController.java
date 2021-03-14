@@ -233,8 +233,10 @@ public class UsersController {
             model.addAttribute("userInformation", user.get());
             System.out.println("time: " + user.get().getDateTimeOfCreation());
 
+            model.addAttribute("countOfRegisteredSolarStations",solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
+
             Boolean accountStatus = user.get().getActivated();
-            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
+            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
         }
         return "profile";
     }

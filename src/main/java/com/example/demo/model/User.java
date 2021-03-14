@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -196,5 +197,11 @@ public class User {
 
     public void setDateTimeOfCreation(LocalDateTime dateTimeOfCreation) {
         this.dateTimeOfCreation = dateTimeOfCreation;
+    }
+
+    public String getStringRegistrationDateTime() {
+        return (dateTimeOfCreation != null)
+                ? dateTimeOfCreation.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                : null;
     }
 }

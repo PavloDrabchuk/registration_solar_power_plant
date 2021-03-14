@@ -18,8 +18,9 @@ public interface SolarPowerPlantRepository extends CrudRepository<SolarPowerPlan
 
     //List<SolarPowerPlant> find2ByUserAndIdBetween(User user, Long offset, Long limit);
 
-
     @Query(value = "select * from solar_power_plant c where c.user_id = ?1 order by c.id limit ?2, ?3 ",
             nativeQuery = true)
     List<SolarPowerPlant> getListSolarPowerPlantForPage(Long id, int offset, int row_count);
+
+    Integer countAllByUser(User user);
 }

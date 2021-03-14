@@ -76,4 +76,8 @@ public class SolarPowerPlantService {
         solarPowerPlantRepository.delete(solarPowerPlant);
     }
 
+    public Integer getCountSolarPowerPlantByUser(User user){
+        return solarPowerPlantRepository.countAllByUser(user);
+    }
+
 }
