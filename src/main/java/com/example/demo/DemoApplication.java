@@ -36,7 +36,8 @@ private final ConfirmationCodeService confirmationCodeService;
 
     @Override
     public void run(String... args) throws Exception {
-        dynamicDataService.saveDynamicData();
+        //dynamicDataService.saveDynamicData();
+
 /*usersRepository.save(new User("username","name","surname","$10$NS9mwzj5sm9Vx5le/zoUeOBKjmsnPwyvme9c.mdyrpZOHQMSGlmcm",
         UserRole.USER,false,false));*/
         // confirmationCodeService.deactivateOverdueCodes();

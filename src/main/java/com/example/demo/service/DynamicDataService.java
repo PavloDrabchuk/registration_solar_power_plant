@@ -63,7 +63,7 @@ public class DynamicDataService {
     }
 
     @Async
-    @Scheduled(fixedRate = /*1000*60*1000*/ 8 * 1000 /*2 * 60 * 1000*/)
+    @Scheduled(fixedRate = /*1000*60*1000*/ 5 * 1000 /*2 * 60 * 1000*/)
     public void saveDynamicData() {
         System.out.println("\n\n save dynamic data: ");
         //dynamicDataRepository.save(dynamicData);

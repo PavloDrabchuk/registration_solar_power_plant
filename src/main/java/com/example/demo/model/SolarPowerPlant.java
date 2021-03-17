@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +22,9 @@ public class SolarPowerPlant {
 
     @OneToOne(cascade = {CascadeType.ALL})
     private StaticData staticData;
+
+    //@OneToMany(cascade = {CascadeType.ALL})
+    //private List<DynamicData> dynamicData;
 
     //private int quantity;
     private LocalDateTime registrationDateTime;

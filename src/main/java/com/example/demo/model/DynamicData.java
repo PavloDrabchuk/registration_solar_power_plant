@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -9,7 +13,9 @@ public class DynamicData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @Cascade(value = {  CascadeType.ALL })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private SolarPowerPlant solarPowerPlant;
 
     private Double producedPower;

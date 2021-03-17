@@ -15,7 +15,7 @@ public class StaticData {
 
     private Date installationDate;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @Transient
     private SolarPowerPlant solarPowerPlant;
 
