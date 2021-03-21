@@ -197,11 +197,43 @@ public class SolarPowerPlantController {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        } else{
+            System.out.println("File not found");
+            return "download-file-error";
         }
+        System.out.println("0=0=0=0=0=0=0=0=0");
 
         // ==========================
 
-        return "export-data";
+        //return "export-data";
+
+        //return "redirect:/view/"+id+"/data/export";
+        //return "redirect:/home";
+        return null;
+    }
+
+    @GetMapping(path = "/view/{id}/data/export")
+    public String getExportData(HttpServletRequest request,
+                              HttpServletResponse response, @PathVariable String id){
+        /*String fileName = "f.csv";
+        System.out.println("t-t-t-t-t-t-t");
+        String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
+        Path file = Paths.get("upload-dir/"+fileName);
+
+        if (Files.exists(file)) {
+            System.out.println("5-5-5-5-5-5-5");
+
+            response.setContentType("application/csv");
+            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+            try {
+                Files.copy(file, response.getOutputStream());
+                response.getOutputStream().flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }*/
+        System.out.println("ty=ty=ty=ty=ty");
+        return "redirect:/home";
     }
 
     public String convertToCSV(String[] data) {
