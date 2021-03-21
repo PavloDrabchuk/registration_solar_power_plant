@@ -13,16 +13,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -123,5 +121,50 @@ public class SolarPowerPlantController {
         }
 
         return "solar_power_plant_info_by_id";
+    }
+
+    @PostMapping(path = "/view/{id}/data")
+    public String getData(@PathVariable String id,
+                          @RequestParam(value = "startDate", defaultValue = "World") String startDate,
+                          @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
+                          Model model) {
+        model.addAttribute("info", startDate + " - " + finishDate + "\nid: " + id);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        model.addAttribute("startDate",startDate);
+        model.addAttribute("finishDate",finishDate);
+        model.addAttribute("id",id);
+
+        model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
+                LocalDateTime.parse(startDate + " 00:00", formatter),
+                LocalDateTime.parse(finishDate + " 00:00", formatter),
+                solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
+        return "data";
+    }
+
+    @PostMapping(path = "/view/{id}/data/export")
+    public String exportData(@PathVariable String id,
+                          @RequestParam(value = "startDate", defaultValue = "World") String startDate,
+                          @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
+                          @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
+                          Model model) {
+       /* model.addAttribute("info", startDate + " - " + finishDate + "\nid: " + id);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        model.addAttribute("startDate",startDate);
+        model.addAttribute("finishDate",finishDate);
+        model.addAttribute("id",id);
+
+        model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
+                LocalDateTime.parse(startDate + " 00:00", formatter),
+                LocalDateTime.parse(finishDate + " 00:00", formatter),
+                solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));*/
+
+        model.addAttribute("resultMessage","Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
+
+        model.addAttribute("fileFormat",fileFormat);
+        return "export-data";
     }
 }

@@ -47,7 +47,7 @@
 
     <hr/>
     <h3>Dynamic data between data</h3>
-    <form method="post">
+    <form th:action="@{'/view/' +${solarPowerPlant.get().getStringId()}+'/data'}" method="post">
         <label> З:
             <input type="date" name="startDate">
         </label>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>data</h1>
+<h1 th:utext="${info}"></h1>
+<!--<p th:text="${data}"></p>-->
+
+<form th:action="@{'/view/' +${id}+'/data/export'}" method="post">
+
+        <h4>Експорт даних</h4>
+    <input type="hidden" th:value="${startDate}" name="startDate">
+    <input type="hidden" th:value="${finishDate}" name="finishDate">
+
+        <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+            <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
+                    aria-label="Default select example" name="file-format">
+                <option value="csv">CSV</option>
+                <option value="xml">XML</option>
+                <option value="json">JSON</option>
+            </select>
+        </div>
+
+        <input type="submit" class="btn btn-success col-xl-3 col-lg-4 col-md-4 col-sm-4 col-4" value="Експортувати">
+
+
+</form>
+
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Date</th>
+        <th>Produced power</th>
+        <th>SPP id</th>
+    </tr>
+    <tr th:each="data1 : ${data}">
+        <td th:utext="${data1.getId()}"></td>
+        <td th:utext="${data1.getCollectionDateTime()}"></td>
+        <td th:utext="${data1.getProducedPower()}"></td>
+        <td th:utext="${data1.getSolarPowerPlant().getId()}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
