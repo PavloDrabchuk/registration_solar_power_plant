@@ -16,15 +16,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class SolarPowerPlantController {
@@ -132,9 +139,9 @@ public class SolarPowerPlantController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        model.addAttribute("startDate",startDate);
-        model.addAttribute("finishDate",finishDate);
-        model.addAttribute("id",id);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("finishDate", finishDate);
+        model.addAttribute("id", id);
 
         model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
                 LocalDateTime.parse(startDate + " 00:00", formatter),
@@ -145,26 +152,80 @@ public class SolarPowerPlantController {
 
     @PostMapping(path = "/view/{id}/data/export")
     public String exportData(@PathVariable String id,
-                          @RequestParam(value = "startDate", defaultValue = "World") String startDate,
-                          @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
-                          @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
-                          Model model) {
-       /* model.addAttribute("info", startDate + " - " + finishDate + "\nid: " + id);
+                             @RequestParam(value = "startDate", defaultValue = "World") String startDate,
+                             @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
+                             @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
+                             Model model,
+                             HttpServletRequest request,
+                             HttpServletResponse response) throws IOException {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        model.addAttribute("startDate",startDate);
-        model.addAttribute("finishDate",finishDate);
-        model.addAttribute("id",id);
+        model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
 
-        model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate + " 00:00", formatter),
-                LocalDateTime.parse(finishDate + " 00:00", formatter),
-                solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));*/
+        model.addAttribute("fileFormat", fileFormat);
 
-        model.addAttribute("resultMessage","Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
+        //Path newFilePath = Paths.get("upload-dir/1.txt");
+        //Files.createFile(newFilePath);
 
-        model.addAttribute("fileFormat",fileFormat);
+        /*FileWriter fileWriter = new FileWriter("upload-dir/1.txt");
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.print("1Some String");
+        printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
+        printWriter.close();*/
+
+        List<String[]> dataLines = new ArrayList<>();
+        dataLines.add(new String[]
+                {"John", "Doe", "38", "Comment Data\nAnother line of comment data"});
+        dataLines.add(new String[]
+                {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
+        givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);
+
+        // ==========================
+        String fileName = "f.csv";
+        System.out.println("t-t-t-t-t-t-t");
+        String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
+        Path file = Paths.get("upload-dir/"+fileName);
+
+        if (Files.exists(file)) {
+            System.out.println("5-5-5-5-5-5-5");
+
+            response.setContentType("application/csv");
+            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+            try {
+                Files.copy(file, response.getOutputStream());
+                response.getOutputStream().flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        // ==========================
+
         return "export-data";
+    }
+
+    public String convertToCSV(String[] data) {
+        return Stream.of(data)
+                .map(this::escapeSpecialCharacters)
+                .collect(Collectors.joining(","));
+    }
+
+    public String escapeSpecialCharacters(String data) {
+        String escapedData = data.replaceAll("\\R", " ");
+        if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+            data = data.replace("\"", "\"\"");
+            escapedData = "\"" + data + "\"";
+        }
+        return escapedData;
+    }
+
+    public void givenDataArray_whenConvertToCSV_thenOutputCreated(String fileName, List<String[]> data) throws IOException {
+        File csvOutputFile = new File(fileName);
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            data.stream()
+                    .map(this::convertToCSV)
+                    .forEach(pw::println);
+        }
+        //assertTrue(csvOutputFile.exists());
     }
 }
