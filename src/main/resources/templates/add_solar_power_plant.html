@@ -2,11 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.min.css"
+          th:href="@{/styles/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.css"
+          th:href="@{/styles/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <title>Title</title>
 </head>
 <body>
 
-<script>
+
+
+<!--<script>
     function checkFields() {
         let countErrors = 0;
 
@@ -34,7 +49,7 @@
     <p>name: <input type="text" th:field="*{name}" id="name"/></p>
     <div id="name_error"></div>
     <h4>Static data</h4>
-<!--    <p>quantity: <input type="number" min="1" value="1" th:field="*{}"/></p>-->
+&lt;!&ndash;    <p>quantity: <input type="number" min="1" value="1" th:field="*{}"/></p>&ndash;&gt;
     <p>quantity: <input type="number" min="1" value="1" th:field="*{staticData.quantity}"></p>
     <p>Date of installation <input type="date" th:field="*{staticData.installationDate}"></p>
     <h4>Location</h4>
@@ -42,7 +57,7 @@
 
     <select th:field="*{location.region}">
         <option th:each="region : ${regions}" th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
-<!--        <option>Івано-Франківська</option>-->
+&lt;!&ndash;        <option>Івано-Франківська</option>&ndash;&gt;
     </select>
     <p>Місто/Населений пункт: <input type="text" th:field="*{location.city}"/></p>
     <p>Вулиця: <input type="text" th:field="*{location.street}"/></p>
@@ -52,6 +67,25 @@
 </form>
 
 
-<hr/>
+<hr/>-->
+
+<!-- Navigation panel -->
+
+<div th:replace="~{user/dashboard/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{user/dashboard/sidebar}"></div>
+
+        <!-- Main -->
+        <div th:replace="~{user/dashboard/solar-power-plant/registration
+        ::main-content(${solarPowerPlant})}"></div>
+
+    </div>
+</div>
+
 </body>
 </html>
