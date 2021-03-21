@@ -181,7 +181,7 @@ public class SolarPowerPlantController {
         givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);
 
         // ==========================
-        String fileName = "f.csv";
+        /*String fileName = "f.csv";
         System.out.println("t-t-t-t-t-t-t");
         String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
         Path file = Paths.get("upload-dir/"+fileName);
@@ -201,7 +201,9 @@ public class SolarPowerPlantController {
             System.out.println("File not found");
             return "download-file-error";
         }
-        System.out.println("0=0=0=0=0=0=0=0=0");
+        System.out.println("0=0=0=0=0=0=0=0=0");*/
+
+        return dynamicDataService.downloadData(request,response,"f.csv");
 
         // ==========================
 
@@ -209,7 +211,7 @@ public class SolarPowerPlantController {
 
         //return "redirect:/view/"+id+"/data/export";
         //return "redirect:/home";
-        return null;
+        //return null;
     }
 
     @GetMapping(path = "/view/{id}/data/export")

@@ -8,6 +8,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -112,6 +118,33 @@ public class DynamicDataService {
     private double hourlyCoefficient(int hour, int month) {
         System.out.println("hour: " + hour);
         return (hour >= 5 && hour <= 20) ? (((Math.sin(0.44 * hour + 2.3)) + 1) / 2) * monthlyCoefficient(month, 0.3, 0.25) : 0;
+    }
+
+    public String downloadData(HttpServletRequest request,
+                        HttpServletResponse response,
+                        String fileName){
+        //String fileName = "f.csv";
+        System.out.println("t-t-t-t-t-t-t");
+        String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
+        Path file = Paths.get("upload-dir/"+fileName);
+
+        if (Files.exists(file)) {
+            System.out.println("5-5-5-5-5-5-5");
+
+            response.setContentType("application/csv");
+            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+            try {
+                Files.copy(file, response.getOutputStream());
+                response.getOutputStream().flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else{
+            System.out.println("File not found");
+            return "download-file-error";
+        }
+        System.out.println("0=0=0=0=0=0=0=0=0");
+        return null;
     }
 }
 
