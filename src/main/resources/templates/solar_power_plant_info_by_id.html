@@ -49,10 +49,10 @@
     <h3>Dynamic data between data</h3>
     <form th:action="@{'/view/' +${solarPowerPlant.get().getStringId()}+'/data'}" method="post">
         <label> З:
-            <input type="date" name="startDate">
+            <input type="date" name="startDate" value="2021-03-01">
         </label>
         <label> до:
-            <input type="date" name="finishDate">
+            <input type="date" name="finishDate" value="2021-03-23">
         </label>
 
         <input type="submit" value="Отримати дані" name="submit">

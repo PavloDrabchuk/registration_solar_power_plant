@@ -1,6 +1,5 @@
 package com.example.demo.api;
 
-import com.example.demo.model.Location;
 import com.example.demo.model.Region;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
@@ -14,24 +13,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 public class SolarPowerPlantController {
@@ -173,12 +163,34 @@ public class SolarPowerPlantController {
         printWriter.printf("Product name is %s and its price is %d $", "iPhone", 1000);
         printWriter.close();*/
 
-        List<String[]> dataLines = new ArrayList<>();
+        /*List<String[]> dataLines = new ArrayList<>();
         dataLines.add(new String[]
                 {"John", "Doe", "38", "Comment Data\nAnother line of comment data"});
         dataLines.add(new String[]
                 {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
-        givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);
+        givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);*/
+
+        String filename = "h.csv";
+
+
+        switch (fileFormat) {
+            case "csv": {
+                dynamicDataService.createDataCSV(filename);
+                break;
+            }
+            case "xml": {
+                dynamicDataService.createDataXML(filename);
+                break;
+            }
+            case "json": {
+                dynamicDataService.createDataJSON(filename);
+                break;
+            }
+            default: {
+                return "download-file-error";
+            }
+
+        }
 
         // ==========================
         /*String fileName = "f.csv";
@@ -203,7 +215,7 @@ public class SolarPowerPlantController {
         }
         System.out.println("0=0=0=0=0=0=0=0=0");*/
 
-        return dynamicDataService.downloadData(request,response,"f.csv");
+        return dynamicDataService.downloadData(request, response, filename);
 
         // ==========================
 
@@ -216,7 +228,7 @@ public class SolarPowerPlantController {
 
     @GetMapping(path = "/view/{id}/data/export")
     public String getExportData(HttpServletRequest request,
-                              HttpServletResponse response, @PathVariable String id){
+                                HttpServletResponse response, @PathVariable String id) {
         /*String fileName = "f.csv";
         System.out.println("t-t-t-t-t-t-t");
         String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
@@ -238,7 +250,7 @@ public class SolarPowerPlantController {
         return "redirect:/home";
     }
 
-    public String convertToCSV(String[] data) {
+    /*public String convertToCSV(String[] data) {
         return Stream.of(data)
                 .map(this::escapeSpecialCharacters)
                 .collect(Collectors.joining(","));
@@ -261,5 +273,5 @@ public class SolarPowerPlantController {
                     .forEach(pw::println);
         }
         //assertTrue(csvOutputFile.exists());
-    }
+    }*/
 }

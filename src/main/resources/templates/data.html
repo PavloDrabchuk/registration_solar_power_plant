@@ -35,12 +35,14 @@
     <tr>
         <th>Id</th>
         <th>Date</th>
+        <th>Weather</th>
         <th>Produced power</th>
         <th>SPP id</th>
     </tr>
     <tr th:each="data1 : ${data}">
         <td th:utext="${data1.getId()}"></td>
         <td th:utext="${data1.getCollectionDateTime()}"></td>
+        <td th:utext="${data1.getWeather().name()}"></td>
         <td th:utext="${data1.getProducedPower()}"></td>
         <td th:utext="${data1.getSolarPowerPlant().getId()}"></td>
     </tr>

@@ -18,12 +18,15 @@ public class DynamicData {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SolarPowerPlant solarPowerPlant;
 
+    private Weather weather;
+
     private Double producedPower;
 
     private LocalDateTime collectionDateTime;
 
-    public DynamicData(SolarPowerPlant solarPowerPlant, Double producedPower, LocalDateTime collectionDateTime) {
+    public DynamicData(SolarPowerPlant solarPowerPlant, Weather weather, Double producedPower, LocalDateTime collectionDateTime) {
         this.solarPowerPlant = solarPowerPlant;
+        this.weather=weather;
         this.producedPower = producedPower;
         this.collectionDateTime = collectionDateTime;
     }
@@ -62,5 +65,13 @@ public class DynamicData {
 
     public void setCollectionDateTime(LocalDateTime collectionDateTime) {
         this.collectionDateTime = collectionDateTime;
+    }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
     }
 }
