@@ -171,7 +171,7 @@ public class SolarPowerPlantController {
                 {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
         givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);*/
 
-        String filename = "h.csv";
+        String filename = getFilename(solarPowerPlantService.getSolarPowerPlantByStringId(id).get().getName());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -182,14 +182,17 @@ public class SolarPowerPlantController {
 
         switch (fileFormat) {
             case "csv": {
+                filename += ".csv";
                 dynamicDataService.createDataCSV(filename, data);
                 break;
             }
             case "xml": {
+                filename += ".xml";
                 dynamicDataService.createDataXML(filename, data);
                 break;
             }
             case "json": {
+                filename += ".json";
                 dynamicDataService.createDataJSON(filename, data);
                 break;
             }
@@ -281,4 +284,16 @@ public class SolarPowerPlantController {
         }
         //assertTrue(csvOutputFile.exists());
     }*/
+
+    public String getFilename(String name) {
+        //String filename = "";
+        //String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
+        return reformatName(name) + "-"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
+                + "-data";
+    }
+
+    public String reformatName(String name) {
+        return name.replace(' ', '_');
+    }
 }
