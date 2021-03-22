@@ -4,6 +4,9 @@ import com.example.demo.dao.DynamicDataRepository;
 import com.example.demo.model.DynamicData;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.Weather;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -270,15 +274,37 @@ public class DynamicDataService {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSource = new DOMSource(document);
-        StreamResult streamResult = new StreamResult(new File(directoryName+filename));
+        StreamResult streamResult = new StreamResult(new File(directoryName + filename));
 
         transformer.transform(domSource, streamResult);
 
         System.out.println("Done creating XML File");
     }
 
-    public void createDataJSON(String filename, List<DynamicData> data) {
+    public void createDataJSON(String filename, List<DynamicData> data) throws JSONException {
+        String directoryName = "upload-dir/";
 
+        JSONArray result = new JSONArray();
+        JSONObject jsonObject= new JSONObject();
+
+        for (DynamicData dynamicData : data) {
+            jsonObject = new JSONObject();
+
+            jsonObject.put("dateTime", dynamicData.getCollectionDateTime().toString());
+            jsonObject.put("weather", dynamicData.getWeather().name());
+            jsonObject.put("producedPower", dynamicData.getProducedPower().toString());
+
+            result.put(jsonObject);
+        }
+
+        try {
+            FileWriter file = new FileWriter(directoryName + filename);
+            file.write(result.toString());
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println("JSON file created: " + jsonObject);
     }
 }
 

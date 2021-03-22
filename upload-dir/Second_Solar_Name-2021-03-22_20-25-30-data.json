@@ -1,0 +1,3402 @@
+[
+  {
+    "dateTime": "2021-03-22T16:58:56.121715",
+    "weather": "BrokenClouds",
+    "producedPower": "0.5452796968750985"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:01.118901",
+    "weather": "ShowerRain",
+    "producedPower": "0.1817598989583662"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:06.127751",
+    "weather": "Mist",
+    "producedPower": "0.0908799494791831"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:11.112560",
+    "weather": "ShowerRain",
+    "producedPower": "0.1817598989583662"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:16.124298",
+    "weather": "ShowerRain",
+    "producedPower": "0.1817598989583662"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:21.132794",
+    "weather": "ShowerRain",
+    "producedPower": "0.1817598989583662"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:26.123555",
+    "weather": "ShowerRain",
+    "producedPower": "0.1817598989583662"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:31.120912",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.7270395958334648"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:36.121357",
+    "weather": "Rain",
+    "producedPower": "0.3635197979167324"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:41.114870",
+    "weather": "BrokenClouds",
+    "producedPower": "0.5452796968750985"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:46.131568",
+    "weather": "ShowerRain",
+    "producedPower": "0.1817598989583662"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:51.117952",
+    "weather": "FewClouds",
+    "producedPower": "1.4540791916669296"
+  },
+  {
+    "dateTime": "2021-03-22T16:59:56.120356",
+    "weather": "BrokenClouds",
+    "producedPower": "0.5452796968750985"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:01.120415",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:06.116318",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:11.125266",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:16.115086",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:21.118320",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:26.128366",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:31.126088",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:36.155528",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:53.255706",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:00:58.034654",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:03.028415",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:08.038261",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:13.029122",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:18.036404",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:23.032651",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:28.028799",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:46.201497",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:50.897061",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:01:55.895441",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:00.904747",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:05.900347",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:10.901518",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:15.896994",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:20.884011",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:25.883213",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:30.914209",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:35.887452",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:40.892258",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:45.883847",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:50.888091",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:02:55.890911",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:00.883240",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:05.882134",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:10.888398",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:15.887741",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:20.884326",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:25.885351",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:30.890242",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:35.883563",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:40.893123",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:45.880374",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:50.890199",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:03:55.884291",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:00.878237",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:05.886130",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:10.889519",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:15.879893",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:20.892136",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:25.877195",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:30.886625",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:35.879028",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:40.892389",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:04:56.931811",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:01.679391",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:06.680936",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:11.680143",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:16.669472",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:21.814888",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:26.669225",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:46.047068",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:50.803203",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:05:55.801658",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:00.801502",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:05.813129",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:10.811529",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:15.796659",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:20.794726",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:25.793814",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:30.789809",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:35.802055",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:40.792212",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:45.806334",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:50.786481",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:06:55.783629",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:00.794566",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:05.786444",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:10.797256",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:15.795987",
+    "weather": "Thunderstorm",
+    "producedPower": "0.010928979810390179"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:20.783518",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:25.780074",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:30.787986",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:35.797030",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:40.791668",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:45.778237",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:50.793752",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:07:55.781505",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:00.790347",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:05.789742",
+    "weather": "Rain",
+    "producedPower": "0.21857959620780357"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:10.785203",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:15.793690",
+    "weather": "Mist",
+    "producedPower": "0.05464489905195089"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:20.791831",
+    "weather": "ClearSky",
+    "producedPower": "1.0928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:25.791977",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:30.788724",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:35.788322",
+    "weather": "Snow",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:40.785980",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:45.783915",
+    "weather": "BrokenClouds",
+    "producedPower": "0.32786939431170525"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:50.780789",
+    "weather": "ShowerRain",
+    "producedPower": "0.10928979810390178"
+  },
+  {
+    "dateTime": "2021-03-22T17:08:55.786263",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.43715919241560713"
+  },
+  {
+    "dateTime": "2021-03-22T17:09:00.796210",
+    "weather": "FewClouds",
+    "producedPower": "0.8743183848312143"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:14.559775",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:19.289512",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:24.294564",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:29.284142",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:34.287203",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:39.290675",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:44.284126",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:49.270439",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:54.283861",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:09:59.282338",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:04.282024",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:09.282944",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:14.292246",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:19.281376",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:24.280453",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:29.289489",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:34.272114",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:39.271624",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:44.293112",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:49.287610",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:54.276819",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:10:59.274982",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:04.284244",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:09.275453",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:14.280476",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:19.286932",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:24.280828",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:29.275782",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:34.274417",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:39.275959",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:44.274060",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:49.270210",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:54.271565",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:11:59.296413",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:04.276652",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:09.293703",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:14.271325",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:19.300345",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:24.282502",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:29.282267",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:34.271256",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:39.282346",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:44.284046",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:49.270638",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:54.281973",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:12:59.278666",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:04.275692",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:09.279420",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:14.278836",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:19.279368",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:24.267122",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:29.275044",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:34.265353",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:39.267075",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:44.271275",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:49.273069",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:54.282399",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:13:59.287702",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:04.274255",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:09.280174",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:14.287298",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:19.277288",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:24.275097",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:29.272527",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:34.282447",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:39.283091",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:44.269521",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:49.277905",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:54.282620",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:14:59.272543",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:04.280532",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:09.280820",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:14.270734",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:19.272186",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:24.271536",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:29.280265",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:34.274583",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:39.284160",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:44.271254",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:49.271977",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:54.268054",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:15:59.268383",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:04.278512",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:09.271192",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:14.268051",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:19.270418",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:24.273159",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:29.271713",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:34.266917",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:39.273355",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:44.277852",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:49.277319",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:54.281070",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:16:59.277915",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:04.279031",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:09.267162",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:14.279289",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:19.270898",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:24.278089",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:29.279760",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:34.271608",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:39.268807",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:44.270824",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:49.269060",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:54.269494",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:17:59.268963",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:04.287760",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:09.273877",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:14.280196",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:19.279408",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:24.277475",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:29.277637",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:34.277876",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:39.279059",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:44.272501",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:49.272671",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:54.273242",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:18:59.270354",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:04.267683",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:09.266165",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:14.271833",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:19.275284",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:24.269040",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:29.284954",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:34.271237",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:39.269690",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:44.276375",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:49.271476",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:54.273479",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:19:59.275737",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:04.268576",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:09.272571",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:14.278149",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:19.269294",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:24.293427",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:29.266683",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:34.271664",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:39.266",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:44.274518",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:49.268591",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:54.272617",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:20:59.277722",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:04.261747",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:09.271614",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:14.275277",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:19.276579",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:24.282194",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:29.265577",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:34.262657",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:39.264413",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:44.275058",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:49.274694",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:54.278589",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:21:59.266734",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:04.270709",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:09.270188",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:14.267731",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:19.266217",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:24.268667",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:29.273667",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:34.269598",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:39.262645",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:44.267402",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:49.271650",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:54.262359",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:22:59.262417",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:04.274782",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:09.262812",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:14.261453",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:19.264592",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:24.272025",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:29.271378",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:34.274794",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:39.268339",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:44.261805",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:49.265017",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:54.270622",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:23:59.269851",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:04.271027",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:09.276927",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:14.267581",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:19.267571",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:24.261306",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:29.273831",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:34.265090",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:39.274841",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:44.265586",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:49.260639",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:54.271447",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:24:59.269735",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:04.270085",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:09.260629",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:14.276577",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:19.271189",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:24.273310",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:29.262266",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:34.267757",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:39.274058",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:44.264608",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:49.275849",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:54.270990",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:25:59.269356",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:04.273941",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:09.271963",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:14.274689",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:19.263739",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:24.264999",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:29.276127",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:34.261256",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:39.263063",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:44.272773",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:49.276746",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:54.271797",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:26:59.278392",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:04.277296",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:09.263530",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:14.265584",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:19.262787",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:24.272685",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:29.277744",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:34.265982",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:39.267584",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:44.272708",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:49.276620",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:54.269642",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:27:59.262056",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:04.262742",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:09.275639",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:14.269871",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:19.265318",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:24.272693",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:29.271687",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:34.274708",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:39.265832",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:44.264473",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:49.260735",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:54.266110",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:28:59.278741",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:04.269777",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:09.262201",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:14.322753",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:19.271514",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:24.297624",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:29.270067",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:34.276589",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:39.275972",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:44.273732",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:49.262126",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:54.264379",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:29:59.270700",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:04.264318",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:09.324588",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:14.268034",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:19.262824",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:24.270819",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:29.266068",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:34.270028",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:39.277705",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:44.276749",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:49.276581",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:54.267521",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:30:59.272624",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:04.266555",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:09.267959",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:14.266615",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:19.261841",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:24.271632",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:29.283727",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:34.263614",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:39.274450",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:44.273698",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:49.268881",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:54.263615",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:31:59.266583",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:04.265576",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:09.267753",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:14.265672",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:19.260766",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:24.263821",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:29.272092",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:34.275552",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:39.270068",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:44.263537",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:49.274611",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:54.266584",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:32:59.261260",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:04.271081",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:09.261780",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:14.274706",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:19.267036",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:24.270504",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:29.276580",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:34.270652",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:39.266586",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:44.271708",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:49.273982",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:54.275552",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:33:59.276733",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:04.267781",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:09.261622",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:14.263655",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:19.262506",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:24.264532",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:29.269873",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:34.262353",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:39.263620",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:44.260924",
+    "weather": "Snow",
+    "producedPower": "0.19168799621954136"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:49.260622",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:54.267485",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:34:59.262234",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:14.781318",
+    "weather": "BrokenClouds",
+    "producedPower": "0.143765997164656"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:19.592541",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:24.597379",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:29.583567",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:34.576893",
+    "weather": "ShowerRain",
+    "producedPower": "0.04792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:39.574114",
+    "weather": "ClearSky",
+    "producedPower": "0.4792199905488534"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:44.580621",
+    "weather": "Mist",
+    "producedPower": "0.02396099952744267"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:49.572522",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:54.569532",
+    "weather": "Rain",
+    "producedPower": "0.09584399810977068"
+  },
+  {
+    "dateTime": "2021-03-22T18:35:59.579631",
+    "weather": "FewClouds",
+    "producedPower": "0.3833759924390827"
+  },
+  {
+    "dateTime": "2021-03-22T18:36:04.578455",
+    "weather": "Thunderstorm",
+    "producedPower": "0.0047921999054885344"
+  },
+  {
+    "dateTime": "2021-03-22T20:04:34.305813",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:04:39.184572",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:04:44.192607",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:04:49.185321",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:04:54.190589",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:04:59.193791",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:04.179405",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:09.204347",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:14.190519",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:19.187598",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:24.188595",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:29.188315",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:34.190606",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:39.187616",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:44.184973",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:49.181592",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:54.177660",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:05:59.177169",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:04.185558",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:09.179619",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:14.184465",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:19.182573",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:24.190357",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:29.176599",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:34.178666",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:39.183149",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:44.178361",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:49.181133",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:54.187585",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:06:59.181578",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:04.177734",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:09.181607",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:14.175517",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:19.191628",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:24.177628",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:29.188614",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:34.173850",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:39.182593",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:44.181568",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:49.183204",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:54.185283",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:07:59.177707",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:04.193841",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:09.182597",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:14.184995",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:19.183644",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:24.190171",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:29.188968",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:34.183585",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:39.182593",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:44.178008",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:49.184571",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:54.177694",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:08:59.184189",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:04.184560",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:09.181623",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:14.189579",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:19.182557",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:24.180628",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:29.179643",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:34.181632",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:39.178133",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:44.179168",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:49.180659",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:54.175656",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:09:59.185739",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:04.178900",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:09.183061",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:14.180350",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:19.179416",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:24.180622",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:29.178974",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:34.177872",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:39.183579",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:44.174950",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:49.182296",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:54.177493",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:10:59.173825",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:04.178792",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:09.182837",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:14.180114",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:19.185910",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:24.178616",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:29.179612",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:34.185960",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:39.184616",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:44.174093",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:49.184668",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:54.178580",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:11:59.178440",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:04.173247",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:09.182559",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:14.172617",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:19.186568",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:24.171655",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:29.184652",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:34.170241",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:39.173623",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:44.174391",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:49.175369",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:54.177563",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:12:59.182563",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:04.184639",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:09.186623",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:14.185472",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:19.174348",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:24.182381",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:29.171909",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:34.173616",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:39.181021",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:44.174594",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:49.178633",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:54.178820",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:13:59.185582",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:04.184558",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:09.179236",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:14.179637",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:19.189969",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:24.179897",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:29.187804",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:34.176675",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:39.187607",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:44.181673",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:49.183579",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:54.177746",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:14:59.179657",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:04.178952",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:09.183030",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:14.183658",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:19.186877",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:24.177027",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:29.185607",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:34.175023",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:39.183035",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:44.176145",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:49.182390",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:54.173188",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:15:59.176023",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:04.177040",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:09.189594",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:14.180934",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:19.185831",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:24.183822",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:29.181361",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:34.181967",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:39.185607",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:44.185751",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:49.180701",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:54.186608",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:16:59.186613",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:04.181507",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:09.178599",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:14.190897",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:19.184656",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:24.182176",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:29.172224",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:34.173172",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:39.182154",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:44.177572",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:49.183883",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:54.178246",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:17:59.175614",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:04.175525",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:09.188107",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:14.184784",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:19.184617",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:24.180935",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:29.177819",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:34.176608",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:39.180989",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:44.186967",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:49.185624",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:18:54.181644",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:07.663271",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:12.506166",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:17.514460",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:22.505575",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:27.505076",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:32.507879",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:37.511769",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:42.527421",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:47.506468",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:52.514098",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:19:57.500689",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:02.514081",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:07.498149",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:12.511646",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:17.512950",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:22.509541",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:27.533972",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:32.502926",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:37.499613",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:42.502121",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:47.503514",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:52.499607",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:20:57.509655",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:02.506823",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:07.497572",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:12.501610",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:17.508958",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:22.507921",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:27.502593",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:32.496181",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:37.506503",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:42.507357",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:47.505705",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:52.502591",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:21:57.513051",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:02.505635",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:07.506890",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:12.498020",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:17.505910",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:22.505290",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:27.508175",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:32.526571",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:37.504955",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:42.506572",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:47.496579",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:52.506656",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:22:57.501967",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:02.505552",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:07.510351",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:12.504421",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:17.499450",
+    "weather": "ClearSky",
+    "producedPower": "0.009128261463707656"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:22.508036",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:27.500954",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:32.511643",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:37.497812",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:42.498678",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:47.504144",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:52.497234",
+    "weather": "Snow",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:23:57.505181",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:10.297797",
+    "weather": "Rain",
+    "producedPower": "0.0018256522927415314"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:15.163774",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:20.157604",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:25.153524",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:30.154915",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:35.162610",
+    "weather": "Mist",
+    "producedPower": "4.5641307318538285E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:40.158574",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:45.150587",
+    "weather": "BrokenClouds",
+    "producedPower": "0.0027384784391122964"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:50.157103",
+    "weather": "Thunderstorm",
+    "producedPower": "9.128261463707657E-5"
+  },
+  {
+    "dateTime": "2021-03-22T20:24:55.156247",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:25:00.161772",
+    "weather": "ShowerRain",
+    "producedPower": "9.128261463707657E-4"
+  },
+  {
+    "dateTime": "2021-03-22T20:25:05.144979",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:25:19.552449",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  },
+  {
+    "dateTime": "2021-03-22T20:25:24.415683",
+    "weather": "FewClouds",
+    "producedPower": "0.007302609170966126"
+  },
+  {
+    "dateTime": "2021-03-22T20:25:29.422600",
+    "weather": "ScatteredClouds",
+    "producedPower": "0.003651304585483063"
+  }
+]

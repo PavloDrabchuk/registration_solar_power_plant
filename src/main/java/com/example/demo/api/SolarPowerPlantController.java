@@ -9,6 +9,7 @@ import com.example.demo.service.LocationService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -150,7 +151,7 @@ public class SolarPowerPlantController {
                              @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
                              Model model,
                              HttpServletRequest request,
-                             HttpServletResponse response) throws IOException, TransformerException, ParserConfigurationException {
+                             HttpServletResponse response) throws IOException, TransformerException, ParserConfigurationException, JSONException {
 
 
         model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
