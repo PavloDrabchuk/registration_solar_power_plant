@@ -285,7 +285,7 @@ public class DynamicDataService {
         String directoryName = "upload-dir/";
 
         JSONArray result = new JSONArray();
-        JSONObject jsonObject= new JSONObject();
+        JSONObject jsonObject;
 
         for (DynamicData dynamicData : data) {
             jsonObject = new JSONObject();
