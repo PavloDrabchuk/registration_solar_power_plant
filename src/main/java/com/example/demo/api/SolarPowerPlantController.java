@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.model.DynamicData;
 import com.example.demo.model.Region;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
@@ -172,18 +173,24 @@ public class SolarPowerPlantController {
 
         String filename = "h.csv";
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        List<DynamicData> data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
+                LocalDateTime.parse(startDate + " 00:00", formatter),
+                LocalDateTime.parse(finishDate + " 00:00", formatter),
+                solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
 
         switch (fileFormat) {
             case "csv": {
-                dynamicDataService.createDataCSV(filename);
+                dynamicDataService.createDataCSV(filename, data);
                 break;
             }
             case "xml": {
-                dynamicDataService.createDataXML(filename);
+                dynamicDataService.createDataXML(filename, data);
                 break;
             }
             case "json": {
-                dynamicDataService.createDataJSON(filename);
+                dynamicDataService.createDataJSON(filename, data);
                 break;
             }
             default: {

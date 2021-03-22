@@ -171,14 +171,22 @@ public class DynamicDataService {
         return null;
     }
 
-    public void createDataCSV(String filename) throws IOException {
+    public void createDataCSV(String filename, List<DynamicData> data) throws IOException {
         String directoryName = "upload-dir/";
 
         List<String[]> dataLines = new ArrayList<>();
-        dataLines.add(new String[]
+
+        for (DynamicData dynamicData : data) {
+            dataLines.add(new String[]{
+                    dynamicData.getCollectionDateTime().toString(),
+                    dynamicData.getWeather().name(),
+                    dynamicData.getProducedPower().toString()});
+        }
+
+        /*dataLines.add(new String[]
                 {"John", "Doe", "38", "Comment Data\nAnother line of comment data"});
         dataLines.add(new String[]
-                {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
+                {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});*/
 
         givenDataArray_whenConvertToCSV_thenOutputCreated(directoryName + filename, dataLines);
     }
@@ -208,11 +216,11 @@ public class DynamicDataService {
         //assertTrue(csvOutputFile.exists());
     }
 
-    public void createDataXML(String filename) {
+    public void createDataXML(String filename, List<DynamicData> data) {
 
     }
 
-    public void createDataJSON(String filename) {
+    public void createDataJSON(String filename, List<DynamicData> data) {
 
     }
 }
