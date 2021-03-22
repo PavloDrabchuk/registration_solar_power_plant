@@ -138,8 +138,8 @@ public class SolarPowerPlantController {
         model.addAttribute("id", id);
 
         model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate + " 00:00", formatter),
-                LocalDateTime.parse(finishDate + " 00:00", formatter),
+                LocalDateTime.parse(startDate, formatter),
+                LocalDateTime.parse(finishDate, formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
         return "data";
     }
@@ -179,8 +179,8 @@ public class SolarPowerPlantController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         List<DynamicData> data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate + " 00:00", formatter),
-                LocalDateTime.parse(finishDate + " 00:00", formatter),
+                LocalDateTime.parse(startDate, formatter),
+                LocalDateTime.parse(finishDate, formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
 
         switch (fileFormat) {

@@ -14,11 +14,24 @@
     <link rel="stylesheet" href="/styles/solarPowerPlantPageStyle.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.min.css"
+          th:href="@{/styles/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.css"
+          th:href="@{/styles/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 
 </head>
 <body>
 
-<div th:if="${notFoundSolarPowerPlant}" th:value="${notFoundSolarPowerPlant}"
+<!--<div th:if="${notFoundSolarPowerPlant}" th:value="${notFoundSolarPowerPlant}"
      th:utext="${notFoundSolarPowerPlant}"></div>
 
 <div th:if="${deletedSolarPowerPlantOK}" th:value="${deletedSolarPowerPlantOK}"
@@ -83,9 +96,9 @@
         <div id="popup" class="ol-popup">
             <div id="popup-content"></div>
         </div>
-        <!--<div id="popup2" class="ol-popup">
+        &lt;!&ndash;<div id="popup2" class="ol-popup">
             <div id="popup-content2"></div>
-        </div>-->
+        </div>&ndash;&gt;
     </div>
 
 
@@ -104,7 +117,23 @@
         <input type="submit" value="Видалити">
     </form>
 </div>
-<a href="/home">Повернутись</a>
+<a href="/home">Повернутись</a>-->
+
+<div th:replace="~{user/dashboard/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{user/dashboard/sidebar}"></div>
+
+        <!-- Main -->
+        <div th:replace="~{user/dashboard/solar-power-plant/solar-power-plant-by-id
+        ::main-content(${solarPowerPlant})}"></div>
+
+    </div>
+</div>
 
 
 </body>

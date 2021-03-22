@@ -11,7 +11,7 @@ public class StaticData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double quantity;
+    private Integer quantity;
 
     private Date installationDate;
 
@@ -19,7 +19,7 @@ public class StaticData {
     @Transient
     private SolarPowerPlant solarPowerPlant;
 
-    public StaticData(Double quantity, Date installationDate, SolarPowerPlant solarPowerPlant) {
+    public StaticData(Integer quantity, Date installationDate, SolarPowerPlant solarPowerPlant) {
         this.quantity = quantity;
         this.installationDate = installationDate;
     }
@@ -36,11 +36,11 @@ public class StaticData {
         this.id = id;
     }
 
-    public Double getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
