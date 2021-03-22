@@ -7,9 +7,21 @@ import com.example.demo.model.Weather;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -216,8 +228,53 @@ public class DynamicDataService {
         //assertTrue(csvOutputFile.exists());
     }
 
-    public void createDataXML(String filename, List<DynamicData> data) {
+    public void createDataXML(String filename, List<DynamicData> data) throws ParserConfigurationException, TransformerException {
+        String directoryName = "upload-dir/";
 
+        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+
+        DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+
+        Document document = documentBuilder.newDocument();
+
+        // root element
+        Element root = document.createElement("solarPowerPlant");
+        document.appendChild(root);
+
+        for (DynamicData dynamicData : data) {
+            // data element
+            Element dataElement = document.createElement("data");
+
+            root.appendChild(dataElement);
+
+            // also use staff.setAttribute("id", "1")
+
+            // firstname element
+            Element dateTime = document.createElement("dateTime");
+            dateTime.appendChild(document.createTextNode(dynamicData.getCollectionDateTime().toString()));
+            dataElement.appendChild(dateTime);
+
+            // weather element
+            Element weather = document.createElement("weather");
+            weather.appendChild(document.createTextNode(dynamicData.getWeather().name()));
+            dataElement.appendChild(weather);
+
+            // producedPower element
+            Element producedPower = document.createElement("producedPower");
+            producedPower.appendChild(document.createTextNode(dynamicData.getProducedPower().toString()));
+            dataElement.appendChild(producedPower);
+
+        }
+        // create the xml file
+        //transform the DOM Object to an XML File
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource domSource = new DOMSource(document);
+        StreamResult streamResult = new StreamResult(new File(directoryName+filename));
+
+        transformer.transform(domSource, streamResult);
+
+        System.out.println("Done creating XML File");
     }
 
     public void createDataJSON(String filename, List<DynamicData> data) {

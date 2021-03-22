@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -148,7 +150,7 @@ public class SolarPowerPlantController {
                              @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
                              Model model,
                              HttpServletRequest request,
-                             HttpServletResponse response) throws IOException {
+                             HttpServletResponse response) throws IOException, TransformerException, ParserConfigurationException {
 
 
         model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
