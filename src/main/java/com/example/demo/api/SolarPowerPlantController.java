@@ -130,7 +130,7 @@ public class SolarPowerPlantController {
                           @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
                           Model model) {
         model.addAttribute("info", startDate + " - " + finishDate + "\nid: " + id);
-
+        //System.out.println("info: "+ startDate + " - " + finishDate + "\nid: " + id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         model.addAttribute("startDate", startDate);
@@ -138,8 +138,8 @@ public class SolarPowerPlantController {
         model.addAttribute("id", id);
 
         model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate, formatter),
-                LocalDateTime.parse(finishDate, formatter),
+                LocalDateTime.parse(startDate.replace("T"," "), formatter),
+                LocalDateTime.parse(finishDate.replace("T"," "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
         return "data";
     }
@@ -179,8 +179,8 @@ public class SolarPowerPlantController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         List<DynamicData> data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate, formatter),
-                LocalDateTime.parse(finishDate, formatter),
+                LocalDateTime.parse(startDate.replace("T"," "), formatter),
+                LocalDateTime.parse(finishDate.replace("T", " "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
 
         switch (fileFormat) {
