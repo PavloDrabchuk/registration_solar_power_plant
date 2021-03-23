@@ -13,6 +13,12 @@
 <main th:fragment="main-content (userInformation)"
       role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
+    <div th:if="${notFoundSolarPowerPlant}" th:value="${notFoundSolarPowerPlant}"
+         th:utext="${notFoundSolarPowerPlant}"></div>
+
+    <div th:if="${deletedSolarPowerPlantOK}" th:value="${deletedSolarPowerPlantOK}"
+         th:utext="${deletedSolarPowerPlantOK}"></div>
+
     <div class="main-body">
 
 
@@ -167,12 +173,12 @@
                             <div class="">
                                 <!--                            <input type="submit" class="btn btn-success" value="Повернутись">-->
                                 <form>
-                                    <input type="reset" class="btn btn-success
+                                    <input type="submit" class="btn btn-success
                             my-xl-1 my-lg-1 my-md-1 my-sm-1 my-1" value="Оновити інформацію">
                                 </form>
                                 <form th:action="@{'/solarPowerPlant/delete/' +${solarPowerPlant.get().getStringId()}}"
                                       method="post">
-                                    <input type="reset" class="btn btn-danger pull-right"
+                                    <input type="submit" class="btn btn-danger pull-right"
                                            value="Видалити сонячну станцію">
                                 </form>
                             </div>
@@ -234,14 +240,14 @@
                 </div>
 
                 <!-- Карта -->
-                <div class="col-lg-12 col-md-12  mb-3">
-                    <div class="card">
-                        <div class="card-body">
+                <div class="col-lg-12 col-md-12 card  mb-3">
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
 <!--                            <div class="d-flex flex-column align-items-center text-center">-->
                                 <!--<img src="images/map.jpg" alt="map"
                                      class="" width="100%">-->
 
-                                <div id="mapBlock" class="mapBlock w-auto">
+                                <div id="mapBlock" class="mapBlock w-auto py-3">
                                     <div id="popup" class="ol-popup">
                                         <div id="popup-content"></div>
                                     </div>
@@ -262,9 +268,9 @@
 
                                 <script type="text/javascript" src="/scripts/map.js"></script>
 
-                            </div>
+<!--                            </div>-->
 <!--                        </div>-->
-                    </div>
+<!--                    </div>-->
                     <!--<div class="card mt-3">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">

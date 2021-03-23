@@ -2,9 +2,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <title>Title</title>
+
+    <script>
+        function visibleExportDataTip(state) {
+            document.getElementById('export-data-tip').hidden = state;
+            //console.log("state: " + document.getElementById('export-data-tip').hidden);
+        }
+
+        function visibleExportDataWithTimeout() {
+            visibleExportDataTip(false);
+            setTimeout(visibleExportDataTip, 15000, true);
+        }
+    </script>
+
 </head>
 <body>
+
+<!-- Navigation panel -->
+
+<div th:replace="~{user/dashboard/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{user/dashboard/sidebar}"></div>
+
+        <!-- Main -->
+        <div th:replace="~{user/dashboard/solar-power-plant/data
+        ::main-content(${id},${startDate}, ${finishDate}, ${data})}"></div>
+
+    </div>
+</div>
 
 <h1>data</h1>
 <h1 th:utext="${info}"></h1>
