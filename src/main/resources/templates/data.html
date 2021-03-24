@@ -44,10 +44,10 @@
 
     </div>
 </div>
-
+<!--
 <h1>data</h1>
 <h1 th:utext="${info}"></h1>
-<!--<p th:text="${data}"></p>-->
+&lt;!&ndash;<p th:text="${data}"></p>&ndash;&gt;
 
 <form th:action="@{'/view/' +${id}+'/data/export'}" method="post">
 
@@ -85,7 +85,7 @@
         <td th:utext="${data1.getProducedPower()}"></td>
         <td th:utext="${data1.getSolarPowerPlant().getId()}"></td>
     </tr>
-</table>
+</table>-->
 
 </body>
 </html>

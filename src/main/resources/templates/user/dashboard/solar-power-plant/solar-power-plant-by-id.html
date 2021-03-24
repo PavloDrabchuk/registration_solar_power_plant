@@ -3,8 +3,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/profile.css">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/profile.css">-->
 </head>
 
 <body>
@@ -13,11 +13,11 @@
 <main th:fragment="main-content (userInformation)"
       role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-    <div th:if="${notFoundSolarPowerPlant}" th:value="${notFoundSolarPowerPlant}"
+    <!--<div th:if="${notFoundSolarPowerPlant}" th:value="${notFoundSolarPowerPlant}"
          th:utext="${notFoundSolarPowerPlant}"></div>
 
     <div th:if="${deletedSolarPowerPlantOK}" th:value="${deletedSolarPowerPlantOK}"
-         th:utext="${deletedSolarPowerPlantOK}"></div>
+         th:utext="${deletedSolarPowerPlantOK}"></div>-->
 
     <div class="main-body">
 
@@ -149,12 +149,12 @@
                                     </div>
 
                                     <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">
-                                        <input type="submit" class="btn btn-success col-xl-3" value="Отримати дані">
+                                        <input type="submit" class="btn btn-success text-wrap" value="Отримати дані">
                                         <!-- </div>-->
                                         <!-- <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
                                         <br/>
                                         <input type="submit"
-                                               class="btn btn-success col-xl-4 my-xl-1 my-lg-1 my-md-1 my-sm-1 my-1"
+                                               class="btn btn-success text-wrap my-xl-1 my-lg-1 my-md-1 my-sm-1 my-1"
                                                value="Отримати дані за весь час">
                                     </div>
                                 </div>
@@ -247,7 +247,7 @@
                                 <!--<img src="images/map.jpg" alt="map"
                                      class="" width="100%">-->
 
-                                <div id="mapBlock" class="mapBlock w-auto py-3">
+                                <div id="mapBlock" class="mapBlock w-auto p-3">
                                     <div id="popup" class="ol-popup">
                                         <div id="popup-content"></div>
                                     </div>
