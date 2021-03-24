@@ -27,7 +27,7 @@
 </nav>-->
 
 <!--<nav th:fragment="nav-panel (onevar,twovar)"-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top flex-md-nowrap">
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top flex-md-nowrap">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <!--<li class="nav-item">
+            &lt;!&ndash;<li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item dropdown">
@@ -55,7 +55,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>-->
+            </li>&ndash;&gt;
         </ul>
 
         <div class="nav-item dropdown">
@@ -65,7 +65,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Профіль</a>
-                <!--                <a class="dropdown-item" href="#">Another action</a>-->
+                &lt;!&ndash;                <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
 
@@ -75,11 +75,71 @@
             <a class="nav-link" href="/profile">Профіль<span class="sr-only">(current)</span></a>
         </div>
         <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
-            <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+            &lt;!&ndash;            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">&ndash;&gt;
             <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Вийти</button>
         </form>
     </div>
-</nav>
+</nav>-->
+
+<header class="p-2 border-bottom bg-dark sticky-top flex-md-nowrap">
+    <div class="px-4">
+        <button class="bg-light navbar-toggler position-absolute d-md-none collapsed"
+                type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
+                aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                <!--                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>-->
+                <img src="images/logo-social-sq.png" height="30px">
+            </a>
+
+
+
+            <ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end">
+                <!--<li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+                <li><a href="#" class="nav-link px-2 link-light">Inventory</a></li>
+                <li><a href="#" class="nav-link px-2 link-light">Customers</a></li>-->
+                <li><a href="#" class="nav-link px-2 link-light">Повідомлення
+                    <div class="noti-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffffff" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
+                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                        <span class="quantity">1</span>
+                    </div>
+                </a></li>
+
+            </ul>
+
+            <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control" placeholder="Search...">
+            </form>-->
+
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    <img src="/images/default-profile-image.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    Username
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+<!--                    <li><a class="dropdown-item" href="#">New project...</a></li>-->
+<!--                    <li><a class="dropdown-item" href="#">Settings</a></li>-->
+                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
+                            <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+                            <button class="dropdown-item  my-2 my-sm-0" type="submit">Вийти</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
 
 </body>
 
