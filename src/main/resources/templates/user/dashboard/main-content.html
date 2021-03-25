@@ -72,39 +72,40 @@
         <span th:each="num : ${numList}" th:with="dataIndex=(${row.index} - ${num})" th:text="${solarPowerPlantsByUser[dataIndex]}">data</span>
     </div>-->
 
-    <hr>
+    <!--<hr>
     <h2>Test</h2>
 
-    <!--    <div th:each="s1,st1:${solarPowerPlantsByUser}" th:if="${st1.odd}">-->
+    &lt;!&ndash;    <div th:each="s1,st1:${solarPowerPlantsByUser}" th:if="${st1.odd}">&ndash;&gt;
 
     <div class="rrr" th:each="s1,st1:${solarPowerPlantsByUser}" th:if="${st1.odd}"
          th:with="numList=${#strings.listSplit('1,0',',')}">
-        <!--             th:with="ff=${ {solarPowerPlantsByUser[st1.index] , solarPowerPlantsByUser[st1.index+1]} }">-->
+        &lt;!&ndash;             th:with="ff=${ {solarPowerPlantsByUser[st1.index] , solarPowerPlantsByUser[st1.index+1]} }">&ndash;&gt;
 
-        <!--            <div th:each="s:${solarPowerPlantsByUser}" class="ppp">-->
+        &lt;!&ndash;            <div th:each="s:${solarPowerPlantsByUser}" class="ppp">&ndash;&gt;
 
         <div class="ppp" th:each="num : ${numList}"
              th:with="dataIndex=(${st1.index} - ${num}+1)">
-<!--             th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">-->
-            <!--                <p th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num}"></p>-->
+&lt;!&ndash;             th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">&ndash;&gt;
+            &lt;!&ndash;                <p th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num}"></p>&ndash;&gt;
             <div class="yyy"
                  th:if="${(dataIndex) < #lists.size(solarPowerPlantsByUser)}"
                  th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">
             </div>
         </div>
 
-        <!--  &lt;!&ndash;/*@thymesVar id="ff" type="java.lang.*"*/&ndash;&gt;
+        &lt;!&ndash;  &lt;!&ndash;/*@thymesVar id="ff" type="java.lang.*"*/&ndash;&gt;
           <div th:each="s:${ff}" class="ppp">
               <p th:utext="${s.name}"></p>
-          </div>-->
+          </div>&ndash;&gt;
 
     </div>
 
 
-    <hr>
+    <hr>-->
 
     <div th:if="${not #lists.isEmpty(solarPowerPlantsByUser)}">
-        <div th:each="solarPowerPlant,state : ${solarPowerPlantsByUser}">
+        <div th:each="solarPowerPlant,state : ${solarPowerPlantsByUser}" th:if="${state.odd}"
+             th:with="numList=${#strings.listSplit('1,0',',')}" class="row mb-2">
             <!--             th:with="solarPowerPlants111=${ {solarPowerPlant[state.index] , solarPowerPlant[state.index+1]} }" >-->
             <!--                                                                        th:if="${state.index} % 2 == 0"-->
             <!--            <div th:if="${state.odd}">-->
@@ -119,8 +120,10 @@
             </div>-->
 
             <!--<div th:if="${state.index} % 2 == 0" th:class="${state.odd}? 'row mb-2'" >-->
-            <div class="col-md-6">
-                <div class="card flex-md-row mb-4 box-shadow h-md-250">
+            <div class="col-md-6" th:each="num : ${numList}"
+                 th:with="dataIndex=(${state.index} - ${num}+1)">
+                <div class="card flex-md-row mb-4 box-shadow h-md-250"
+                     th:if="${(dataIndex) < #lists.size(solarPowerPlantsByUser)}">
                     <div class="card-body col p-4 d-flex flex-column position-static">
                         <!--<h5>
                             <strong title="Від n панелей до z"
@@ -134,15 +137,15 @@
                         <h3 class="mb-0">
                             <!--/*@thymesVar id="stringId" type="java.lang.String"*/-->
                             <a class="text-dark header-tittle" th:href="${'/view/'+ solarPowerPlant.stringId}"
-                               th:utext="${solarPowerPlant.getName()}"></a>
+                               th:utext="${solarPowerPlantsByUser[dataIndex].getName()}"></a>
                         </h3>
-                        <div class="mb-1 text-muted" th:if="${solarPowerPlant.getStringRegistrationDateTime()}"
-                             th:utext="${'Дата реєстрації: '+solarPowerPlant.getStringRegistrationDateTime()}"></div>
+                        <div class="mb-1 text-muted" th:if="${solarPowerPlantsByUser[dataIndex].getStringRegistrationDateTime()}"
+                             th:utext="${'Дата реєстрації: '+solarPowerPlantsByUser[dataIndex].getStringRegistrationDateTime()}"></div>
                         <p class="card-text"
-                           th:if="${solarPowerPlant.getLocation().getStringLocation()}"
-                           th:utext="${'Розташування: '+solarPowerPlant.getLocation().getStringLocation()}"></p>
+                           th:if="${solarPowerPlantsByUser[dataIndex].getLocation().getStringLocation()}"
+                           th:utext="${'Розташування: '+solarPowerPlantsByUser[dataIndex].getLocation().getStringLocation()}"></p>
                         <a class="header-tittle"
-                           th:href="${'/view/'+solarPowerPlant.getStringId()}">Переглянути інформацію</a>
+                           th:href="${'/view/'+solarPowerPlantsByUser[dataIndex].getStringId()}">Переглянути інформацію</a>
                     </div>
                     <!--                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1781d9a0648%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1781d9a0648%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 200px; height: 250px;">-->
                 </div>
