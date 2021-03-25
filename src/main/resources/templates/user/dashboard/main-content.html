@@ -84,10 +84,13 @@
         <!--            <div th:each="s:${solarPowerPlantsByUser}" class="ppp">-->
 
         <div class="ppp" th:each="num : ${numList}"
-             th:with="dataIndex=(${st1.index} - ${num}+1)"
-             th:if="${dataIndex < #lists.size(solarPowerPlantsByUser)}"
-             th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">
+             th:with="dataIndex=(${st1.index} - ${num}+1)">
+<!--             th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">-->
             <!--                <p th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num}"></p>-->
+            <div class="yyy"
+                 th:if="${(dataIndex) < #lists.size(solarPowerPlantsByUser)}"
+                 th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">
+            </div>
         </div>
 
         <!--  &lt;!&ndash;/*@thymesVar id="ff" type="java.lang.*"*/&ndash;&gt;
