@@ -79,6 +79,7 @@ public class UsersController {
             List<String> pageNumList = solarPowerPlantService.getNumPagesList(user.get(), limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
+            model.addAttribute("currentPage",page);
 
             if (userRole.equals("ADMIN")) {
                 model.addAttribute("adminAccess", "admin");
