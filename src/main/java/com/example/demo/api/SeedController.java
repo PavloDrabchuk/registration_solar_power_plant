@@ -23,7 +23,7 @@ public class SeedController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping(path = "/data/seed")
+   /* @GetMapping(path = "/data/seed")
     public String seedData(){
         User user=new User();
         user.setEmail("ravluk2000@gmail.com");
@@ -46,5 +46,5 @@ public class SeedController {
         usersService.saveUser(user1);
 
         return "Ok";
-    }
+    }*/
 }
