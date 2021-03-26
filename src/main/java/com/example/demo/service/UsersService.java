@@ -45,14 +45,14 @@ public class UsersService {
 
     @Autowired
     public UsersService(@Qualifier("fakeDao") UsersDao usersDao,
-    UsersRepository usersRepository,
-                        EmailSenderService emailSenderService){
-        this.usersDao=usersDao;
-        this.usersRepository=usersRepository;
-        this.emailSenderService=emailSenderService;
+                        UsersRepository usersRepository,
+                        EmailSenderService emailSenderService) {
+        this.usersDao = usersDao;
+        this.usersRepository = usersRepository;
+        this.emailSenderService = emailSenderService;
     }
 
-    public Optional<User> getUserById(Long id){
+    public Optional<User> getUserById(Long id) {
 
         return usersRepository.findUserById(id);
     }
@@ -60,7 +60,7 @@ public class UsersService {
     /*public List<User> getAllUsers(){
         return usersDao.selectAllBooks();
     }*/
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return (List<User>) usersRepository.findAll();
     }
 
@@ -68,27 +68,27 @@ public class UsersService {
         return  usersDao.addUser(user);
     }*/
 
-    public void saveUser(User user){
+    public void saveUser(User user) {
         //usersRepository.save(new User(user.getName(), user.getSurname()));
 
         //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
 
-    public void deleteUserById(Long id){
+    public void deleteUserById(Long id) {
         usersRepository.deleteById(id);
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(User user) {
         usersRepository.delete(user);
     }
 
 
-    public Optional<User> getUserByUsername(String username){
+    public Optional<User> getUserByUsername(String username) {
         return usersRepository.findByUsername(username);
     }
 
-    public Optional<User> getUserByEmail(String email){
+    public Optional<User> getUserByEmail(String email) {
         return usersRepository.findByEmail(email);
     }
 
@@ -100,7 +100,7 @@ public class UsersService {
 
     }*/
 
-    public List<String> getNumPagesList(List<User> users,double limit) {
+    public List<String> getNumPagesList(List<User> users, double limit) {
         //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
@@ -112,23 +112,27 @@ public class UsersService {
         return pageNumList;
     }
 
-    public List<User> getUsersForPage( int offset, int limit){
-        return usersRepository.getListUsersForPage(offset,limit);
+    public List<User> getUsersForPage(int offset, int limit) {
+        return usersRepository.getListUsersForPage(offset, limit);
     }
 
-    public List<User> getUsersByUsername(String username){
+    public List<User> getUsersByUsernameForPage(String username, int offset, int limit) {
+        return usersRepository.getListUsersByUsernameForPage(username, offset, limit);
+    }
+
+    public List<User> getUsersByUsername(String username) {
         return usersRepository.getUsersByUsernameContaining(username);
     }
 
-    public void sendMailWithConfirmationCode(String email, String confirmationCode, TypesConfirmationCode typeConfirmationCode){
-        SimpleMailMessage confirmationMessage=new SimpleMailMessage();
+    public void sendMailWithConfirmationCode(String email, String confirmationCode, TypesConfirmationCode typeConfirmationCode) {
+        SimpleMailMessage confirmationMessage = new SimpleMailMessage();
         confirmationMessage.setTo(email);
 
 
-        if(typeConfirmationCode.name().equals("confirmRegistration")) {
+        if (typeConfirmationCode.name().equals("confirmRegistration")) {
             confirmationMessage.setSubject("Confirmation mail");
-            confirmationMessage.setText("<html><body><h1>header</h1> Please: http://localhost:8080/confirm/" + confirmationCode+"</body></html>");
-        } else if(typeConfirmationCode.name().equals("recoverPassword")){
+            confirmationMessage.setText("<html><body><h1>header</h1> Please: http://localhost:8080/confirm/" + confirmationCode + "</body></html>");
+        } else if (typeConfirmationCode.name().equals("recoverPassword")) {
             confirmationMessage.setSubject("Recover password mail");
             confirmationMessage.setText("Please: http://localhost:8080/recover/" + confirmationCode);
         }
@@ -136,7 +140,7 @@ public class UsersService {
         emailSenderService.sendEmail(confirmationMessage);
     }
 
-    public void updateUserInformation(User user, User updatedUserInfo){
+    public void updateUserInformation(User user, User updatedUserInfo) {
         user.setName(updatedUserInfo.getName());
         user.setSurname(updatedUserInfo.getSurname());
         user.setMobilePhoneNumber(updatedUserInfo.getMobilePhoneNumber());

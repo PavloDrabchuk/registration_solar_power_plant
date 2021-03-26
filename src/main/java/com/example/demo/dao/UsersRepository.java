@@ -25,5 +25,9 @@ public interface UsersRepository extends CrudRepository<User,Long> {
             nativeQuery = true)
     List<User> getListUsersForPage(int offset, int row_count);
 
+    @Query(value = "select * from user c where c.username like %?1% order by c.id limit ?2, ?3 ",
+            nativeQuery = true)
+    List<User> getListUsersByUsernameForPage(String username, int offset, int row_count);
+
     List<User> getUsersByUsernameContaining(String username);
 }

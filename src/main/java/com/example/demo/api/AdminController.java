@@ -47,25 +47,48 @@ public class AdminController {
 
     @GetMapping(path = "/admin/users")
     public String getUsersPage(@RequestParam(value = "page", defaultValue = "1") String page,
+                               @RequestParam(value = "search",required = false) String searchUsername,
                                Model model) {
         model.addAttribute("usersMessage", "Users :)");
 
         if (getAuthorisedUser().isPresent()) {
             double limitUsers = 4;
 
-            model.addAttribute("users",
-                    usersService.getUsersForPage(
-                            (Integer.parseInt(page) - 1) * (int) limitUsers,
-                            (int) limitUsers));
+            if(searchUsername==null) {
 
-            //model.addAttribute("name", username);
+                model.addAttribute("users",
+                        usersService.getUsersForPage(
+                                (Integer.parseInt(page) - 1) * (int) limitUsers,
+                                (int) limitUsers));
 
-            List<String> pageNumList = usersService.getNumPagesList(usersService.getAllUsers(), limitUsers);
+                //model.addAttribute("name", username);
 
-            model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", page);
+                List<String> pageNumList = usersService.getNumPagesList(usersService.getAllUsers(), limitUsers);
 
-            //model.addAttribute("users", usersService.getAllUsers());
+                model.addAttribute("numPages", pageNumList);
+                model.addAttribute("currentPage", page);
+
+                //model.addAttribute("users", usersService.getAllUsers());
+            } else {
+                List<User> users = usersService.getUsersByUsername(searchUsername);
+                if (users.size() > 0) {
+                    //double limitUsers = 2;
+
+                    model.addAttribute("users",
+                            usersService.getUsersByUsernameForPage(
+                                    searchUsername,
+                                    (Integer.parseInt(page) - 1) * (int) limitUsers,
+                                    (int) limitUsers));
+
+                    List<String> pageNumList = usersService.getNumPagesList(users, limitUsers);
+
+                    model.addAttribute("numPages", pageNumList);
+                    model.addAttribute("currentPage", page);
+                    model.addAttribute("search",searchUsername);
+                } else {
+                    model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
+                }
+            }
         }
 
         return "dashboard/admin/users";
@@ -86,9 +109,14 @@ public class AdminController {
                                        Model model) {
         List<User> users = usersService.getUsersByUsername(username);
         if (users.size() > 0) {
-            double limitUsers = 4;
+            double limitUsers = 2;
 
-            model.addAttribute("users", users);
+            model.addAttribute("users",
+                    usersService.getUsersByUsernameForPage(
+                            username,
+                            (Integer.parseInt(page) - 1) * (int) limitUsers,
+                            (int) limitUsers));
+
             List<String> pageNumList = usersService.getNumPagesList(users, limitUsers);
 
             model.addAttribute("numPages", pageNumList);

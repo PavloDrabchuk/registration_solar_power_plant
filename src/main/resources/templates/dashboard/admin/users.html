@@ -15,16 +15,16 @@
 
 <div th:if="${usersNotFoundMessage}" th:utext="${usersNotFoundMessage}"></div>
 
-<form action="/admin/users/search" method="get">
-    <input type="text" name="username">
+<form action="/admin/users/" method="get">
+    <input type="text" name="search">
     <input type="submit" value="Шукати">
 </form>
 
-<div th:if="${#lists.size(users)<=0}">Користувачів немає</div>
+<div th:if="${usersNotFoundMessage}">Користувачів немає</div>
 
 <!--<h3>All users</h3>-->
 
-<table border="1" th:if="${#lists.size(users)>0}">
+<table border="1" th:unless="${usersNotFoundMessage}" >
     <caption>All users</caption>
     <tr>
         <th>Id</th>
@@ -47,7 +47,7 @@
     </tr>
 </table>
 
-<div th:if="${#lists.size(numPages)}> 1" class="text-center pagination-menu">
+<div th:if="${numPages!=null and !numPages.isEmpty()}" class="text-center pagination-menu">
     <form action="/admin/users" method="get">
         <nav>
             <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
@@ -55,6 +55,7 @@
             <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
             <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
                    id="page4">-->
+            <input th:if="${search}" type="hidden" name="search" th:value="${search}">
             <input th:each="page : ${numPages}" th:value="${page}"
                    th:name="page" th:id="${'page'+page}"
 
