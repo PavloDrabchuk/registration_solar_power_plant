@@ -34,17 +34,17 @@
 
 <!-- Navigation panel -->
 
-<div th:replace="~{user/dashboard/nav-panel}"></div>
+<div th:replace="~{dashboard/user/nav-panel}"></div>
 
 
 <div class="container-fluid">
     <div class="row">
 
         <!-- Sidebar -->
-        <div th:replace="~{user/dashboard/sidebar}"></div>
+        <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-        <div th:replace="~{user/dashboard/profile
+        <div th:replace="~{dashboard/user/profile
         ::main-content(${userInformation},${accountStatus}, ${countOfRegisteredSolarStations})}"></div>
 
     </div>

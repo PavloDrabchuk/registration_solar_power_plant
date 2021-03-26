@@ -116,17 +116,17 @@
 </div>
 <a href="/home">Повернутись</a>-->
 
-<div th:replace="~{user/dashboard/nav-panel}"></div>
+<div th:replace="~{dashboard/user/nav-panel}"></div>
 
 
 <div class="container-fluid">
     <div class="row">
 
         <!-- Sidebar -->
-        <div th:replace="~{user/dashboard/sidebar}"></div>
+        <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-        <div th:replace="~{user/dashboard/solar-power-plant/solar-power-plant-by-id
+        <div th:replace="~{dashboard/user/solar-power-plant/solar-power-plant-by-id
         ::main-content(${solarPowerPlant})}"></div>
 
     </div>

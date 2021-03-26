@@ -72,17 +72,17 @@
 
 <!-- Navigation panel -->
 
-<div th:replace="~{user/dashboard/nav-panel}"></div>
+<div th:replace="~{dashboard/user/nav-panel}"></div>
 
 
 <div class="container-fluid">
     <div class="row">
 
         <!-- Sidebar -->
-        <div th:replace="~{user/dashboard/sidebar}"></div>
+        <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-        <div th:replace="~{user/dashboard/solar-power-plant/registration
+        <div th:replace="~{dashboard/user/solar-power-plant/registration
         ::main-content(${solarPowerPlant},${staticData})}"></div>
 
     </div>

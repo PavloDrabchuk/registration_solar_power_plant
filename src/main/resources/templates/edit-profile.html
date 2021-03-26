@@ -17,17 +17,17 @@
 
 <!-- Navigation panel -->
 
-<div th:replace="~{user/dashboard/nav-panel}"></div>
+<div th:replace="~{dashboard/user/nav-panel}"></div>
 
 
 <div class="container-fluid">
     <div class="row">
 
         <!-- Sidebar -->
-        <div th:replace="~{user/dashboard/sidebar}"></div>
+        <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-        <div th:replace="~{user/dashboard/edit-profile ::main-content(${userInformation}, ${accountStatus})}"></div>
+        <div th:replace="~{dashboard/user/edit-profile ::main-content(${userInformation}, ${accountStatus})}"></div>
 
     </div>
 </div>

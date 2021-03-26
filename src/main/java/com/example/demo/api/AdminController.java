@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
@@ -30,11 +29,36 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
-        if (user.get().getUserRoles().toString().equals(UserRoles.ADMIN)) {
+        if (user.get().getUserRoles().toString().equals(UserRoles.ADMIN.name())) {
             model.addAttribute("users", usersService.getAllUsers());
+            System.out.println("--- ADMIN ---\n role: " + user.get().getUserRoles().toString().equals(UserRoles.ADMIN.name()));
             return "admin_page";
         } else {
+            System.out.println("--- HOME ---");
             return "home";
         }
+    }
+
+    @GetMapping(path = "/admin/users")
+    public String getUsersPage(Model model) {
+        model.addAttribute("usersMessage", "Users :)");
+
+        if(getAuthorisedUser().isPresent()){
+            model.addAttribute("users",usersService.getAllUsers());
+        }
+
+        return "dashboard/admin/users";
+    }
+
+    @GetMapping(path = "/admin/solar-power-plants")
+    public String getSolarPowerPlantsPage(Model model) {
+        model.addAttribute("solarPowerPlants", "Solar power plants :)");
+        return "dashboard/admin/solar-power-plants";
+    }
+
+    Optional<User> getAuthorisedUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        return  usersService.getUserByUsername(username);
     }
 }
