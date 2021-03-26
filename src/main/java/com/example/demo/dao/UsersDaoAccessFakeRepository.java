@@ -36,4 +36,22 @@ public class UsersDaoAccessFakeRepository implements UsersDao {
                 user.getSurname()));*/
         return 1;
     }
+
+    @Override
+    public int updateUserById(Integer id, User updatedUser) {
+        /*Optional<User> user = selectUserById(id);
+        if (user.isPresent())
+            jdbcTemplate.update(
+                    "UPDATE `home_library` SET `id` = ?, `name` = ?, `author` = ?,`year` = ?,`publishingHouse` = ?,`countPage` = ? WHERE id = ?",
+                    id,
+                    (updateBook.getName() == null) ? book.get().getName() : updateBook.getName(),
+                    (updateBook.getAuthor() == null) ? book.get().getAuthor() : updateBook.getAuthor(),
+                    (updateBook.getYear() == null) ? book.get().getYear() : updateBook.getYear(),
+                    (updateBook.getPublishingHouse() == null) ? book.get().getPublishingHouse() : updateBook.getPublishingHouse(),
+                    (updateBook.getCountPage() == null) ? book.get().getCountPage() : updateBook.getCountPage(),
+
+                    id
+            );*/
+        return 1;
+    }
 }

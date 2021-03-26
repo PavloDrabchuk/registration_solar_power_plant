@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:if="${userChangeError}" th:utext="${userChangeError}"></div>
+
+<form th:if="${user}" th:action="${'/admin/users/'+user.getId()+'/update'}" method="post">
+<!--    Змінити можна e-mail ... -->
+    <label>E-mail
+        <input type="text" name="username">
+        <input type="email" name="email">
+    </label>
+    <input type="submit" value="Змінити інформацію">
+</form>
+
+</body>
+</html>

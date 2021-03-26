@@ -9,6 +9,8 @@
 
 <div th:utext="${usersMessage}"></div>
 
+<div th:if="${updateUserMessage}" th:utext="${updateUserMessage}"></div>
+
 <h3>All users</h3>
 
 <table border="1">
@@ -23,9 +25,9 @@
         <td th:utext="${user.getName()}"></td>
         <td th:utext="${user.getSurname()}"></td>
         <td>
-            <a href="/admin/users/{id}">Read</a>
-            <a href="/admin/users/{id}/update">Update</a>
-            <a href="/admin/users/{id}/delete">Delete</a>
+            <a th:href="${'/admin/users/'+user.getId()}">Read</a>
+            <a th:href="${'/admin/users/'+user.getId()+'/update'}">Update</a>
+            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>
         </td>
     </tr>
 </table>

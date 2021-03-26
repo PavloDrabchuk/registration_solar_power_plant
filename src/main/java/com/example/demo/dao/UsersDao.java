@@ -11,4 +11,5 @@ public interface UsersDao {
     Optional<User> selectUserById(Integer id);
 
     int addUser(User user);
+    int updateUserById(Integer id, User updatedUser);
 }

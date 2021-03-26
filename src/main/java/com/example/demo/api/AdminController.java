@@ -9,6 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -43,10 +46,43 @@ public class AdminController {
     public String getUsersPage(Model model) {
         model.addAttribute("usersMessage", "Users :)");
 
-        if(getAuthorisedUser().isPresent()){
-            model.addAttribute("users",usersService.getAllUsers());
+        if (getAuthorisedUser().isPresent()) {
+            model.addAttribute("users", usersService.getAllUsers());
         }
 
+        return "dashboard/admin/users";
+    }
+
+    @GetMapping(path = "/admin/users/{id}")
+    public String getUserById(@PathVariable String id, Model model) {
+        model.addAttribute("user", usersService.getUserById(Integer.parseInt(id)));
+        return "dashboard/admin/user-by-id";
+    }
+
+    @GetMapping(path = "/admin/users/{id}/update")
+    public String getUserByIdForUpdate(@PathVariable String id, Model model) {
+        System.out.println("user:== " + usersService.getUserById(Integer.valueOf(id)));
+        System.out.println("integer id: " + Integer.valueOf(id));
+        Optional<User> user = usersService.getUserById(Integer.valueOf(id));
+        if (user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше");
+
+        return "dashboard/admin/update-user-by-id";
+    }
+
+    @PostMapping(path = "/admin/users/{id}/update")
+    public String updateUserById(@PathVariable String id,
+                                 Model model,
+                                 @RequestParam(value = "username", defaultValue = "username") String username,
+                                 @RequestParam(value = "email", defaultValue = "example@example.com") String email) {
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        usersService.saveUser(user);
+
+        //тут можна надіслати сповіщення для користувача
+        model.addAttribute("updateUserMessage", "Інформацію про користувача оновлено");
         return "dashboard/admin/users";
     }
 
@@ -56,9 +92,10 @@ public class AdminController {
         return "dashboard/admin/solar-power-plants";
     }
 
-    Optional<User> getAuthorisedUser(){
+    Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        return  usersService.getUserByUsername(username);
+        return usersService.getUserByUsername(username);
     }
+
 }
