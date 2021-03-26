@@ -92,11 +92,11 @@ public class UsersController {
         }
     }
 
-    @GetMapping(path = "/id={id}")
+    /*@GetMapping(path = "/id={id}")
     public User getUserById(@PathVariable("id") Integer id) {
         System.out.println("getUserById");
         return usersService.getUserById(id).orElse(null);
-    }
+    }*/
 
     @GetMapping(path = "/registration/success")
     public String redirectToNew() {

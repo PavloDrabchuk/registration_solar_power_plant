@@ -55,18 +55,22 @@ public class AdminController {
 
     @GetMapping(path = "/admin/users/{id}")
     public String getUserById(@PathVariable String id, Model model) {
-        model.addAttribute("user", usersService.getUserById(Integer.parseInt(id)));
+        Optional<User> user=usersService.getUserById(Long.valueOf(id));
+        if(user.isPresent()) {
+            model.addAttribute("user", user.get());
+        } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
     }
 
     @GetMapping(path = "/admin/users/{id}/update")
     public String getUserByIdForUpdate(@PathVariable String id, Model model) {
-        System.out.println("user:== " + usersService.getUserById(Integer.valueOf(id)));
-        System.out.println("integer id: " + Integer.valueOf(id));
-        Optional<User> user = usersService.getUserById(Integer.valueOf(id));
+        System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
+        System.out.println("integer id: " + Long.valueOf(id));
+
+        Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
-        } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше");
+        } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
 
         return "dashboard/admin/update-user-by-id";
     }

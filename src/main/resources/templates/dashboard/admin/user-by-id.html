@@ -6,7 +6,9 @@
 </head>
 <body>
 
-<p th:utext="${user.get().getName()}"></p>
+<div th:if="${userChangeError}" th:utext="${userChangeError}"></div>
+
+<p th:if="${user}" th:utext="${user.getName()}"></p>
 
 </body>
 </html>

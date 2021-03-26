@@ -49,8 +49,9 @@ public class UsersService {
         this.emailSenderService=emailSenderService;
     }
 
-    public Optional<User> getUserById(Integer id){
-        return usersDao.selectUserById(id);
+    public Optional<User> getUserById(Long id){
+
+        return usersRepository.findUserById(id);
     }
 
     /*public List<User> getAllUsers(){
