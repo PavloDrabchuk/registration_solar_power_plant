@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,7 +64,11 @@ public class User {
     //@Builder.Default
     //private UserRoles userRole = UserRoles.USER;
 
-    //@ManyToOne
+    //@Cascade(CascadeType.ALL)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+
+    //    @Cascade(value = {  CascadeType.ALL })
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private UserRoles userRoles;
 
     public User(

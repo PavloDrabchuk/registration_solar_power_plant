@@ -10,8 +10,10 @@
 
 <form th:if="${user}" th:action="${'/admin/users/'+user.getId()+'/update'}" method="post">
 <!--    Змінити можна e-mail ... -->
-    <label>E-mail
+    <label>Username
         <input type="text" name="username">
+    </label>
+    <label>E-mail
         <input type="email" name="email">
     </label>
     <input type="submit" value="Змінити інформацію">

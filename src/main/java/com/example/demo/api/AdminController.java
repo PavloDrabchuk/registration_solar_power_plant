@@ -8,10 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -55,8 +52,8 @@ public class AdminController {
 
     @GetMapping(path = "/admin/users/{id}")
     public String getUserById(@PathVariable String id, Model model) {
-        Optional<User> user=usersService.getUserById(Long.valueOf(id));
-        if(user.isPresent()) {
+        Optional<User> user = usersService.getUserById(Long.valueOf(id));
+        if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
@@ -78,15 +75,40 @@ public class AdminController {
     @PostMapping(path = "/admin/users/{id}/update")
     public String updateUserById(@PathVariable String id,
                                  Model model,
-                                 @RequestParam(value = "username", defaultValue = "username") String username,
-                                 @RequestParam(value = "email", defaultValue = "example@example.com") String email) {
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        usersService.saveUser(user);
-
+                                 @RequestParam(value = "username") String username,
+                                 @RequestParam(value = "email") String email) {
+        Optional<User> user = usersService.getUserById(Long.valueOf(id));
+        if (user.isPresent()) {
+            if (!username.isEmpty()) {
+                user.get().setUsername(username);
+            }
+            if (!email.isEmpty()) {
+                user.get().setEmail(email);
+            }
+            usersService.saveUser(user.get());
+        }
         //тут можна надіслати сповіщення для користувача
-        model.addAttribute("updateUserMessage", "Інформацію про користувача оновлено");
+        model.addAttribute("updateUserMessage", "Інформацію про користувача оновлено.");
+        model.addAttribute("users", usersService.getAllUsers());
+        return "dashboard/admin/users";
+    }
+
+    @DeleteMapping(path = "/admin/users/{id}/delete")
+    public String deleteUserById(@PathVariable String id, Model model) {
+        //usersService.deleteUserById(Long.valueOf(id));
+
+        Optional<User> user = usersService.getUserById(Long.valueOf(id));
+        if (user.isPresent()) {
+            usersService.deleteUser(user.get());
+
+            //Тут можна надіслати ласта користувачу про видалення його аккаунта
+
+            model.addAttribute("deleteUserMessage", "Користувача видалено з системи.");
+        } else {
+            model.addAttribute("deleteUserMessage", "Сталась помилка, спробуйте пізніше.");
+        }
+        model.addAttribute("users", usersService.getAllUsers());
+
         return "dashboard/admin/users";
     }
 
