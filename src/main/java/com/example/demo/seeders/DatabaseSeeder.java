@@ -49,5 +49,35 @@ public class DatabaseSeeder {
         user1.setPassword(bCryptPasswordEncoder.encode("qwerty"));
         user1.setDateTimeOfCreation(LocalDateTime.now());
         usersService.saveUser(user1);
+
+        User user2=new User();
+        user2.setEmail("lab2018.home.work1@gmail.com");
+        user2.setUsername("qwerty1231");
+        user2.setUserRoles(UserRoles.USER);
+        user2.setActivated(true);
+        user2.setLocked(false);
+        user2.setPassword(bCryptPasswordEncoder.encode("qwerty"));
+        user2.setDateTimeOfCreation(LocalDateTime.now());
+        usersService.saveUser(user2);
+
+        User user3=new User();
+        user3.setEmail("lab2018.home.work2@gmail.com");
+        user3.setUsername("qwerty1232");
+        user3.setUserRoles(UserRoles.USER);
+        user3.setActivated(true);
+        user3.setLocked(false);
+        user3.setPassword(bCryptPasswordEncoder.encode("qwerty"));
+        user3.setDateTimeOfCreation(LocalDateTime.now());
+        usersService.saveUser(user3);
+
+        User user4=new User();
+        user4.setEmail("lab2018.home.work3@gmail.com");
+        user4.setUsername("qwerty1233");
+        user4.setUserRoles(UserRoles.USER);
+        user4.setActivated(true);
+        user4.setLocked(false);
+        user4.setPassword(bCryptPasswordEncoder.encode("qwerty"));
+        user4.setDateTimeOfCreation(LocalDateTime.now());
+        usersService.saveUser(user4);
     }
 }

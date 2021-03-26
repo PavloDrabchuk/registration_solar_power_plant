@@ -72,7 +72,11 @@ public class UsersController {
 
             String userRole = user.get().getUserRoles().toString();
 
-            model.addAttribute("solarPowerPlantsByUser", solarPowerPlantService.getSolarPowerPlantByUserForPage(user.get().getId(), (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant, (int) limitSolarPowerPlant));
+            model.addAttribute("solarPowerPlantsByUser",
+                    solarPowerPlantService.getSolarPowerPlantByUserForPage(
+                            user.get().getId(),
+                            (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant,
+                            (int) limitSolarPowerPlant));
 
             model.addAttribute("name", username);
 

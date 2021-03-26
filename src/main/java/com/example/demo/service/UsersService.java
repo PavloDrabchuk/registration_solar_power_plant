@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.UsersDao;
 import com.example.demo.dao.UsersRepository;
+import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.TypesConfirmationCode;
 import com.example.demo.model.User;
 
@@ -27,7 +28,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,8 +60,8 @@ public class UsersService {
     /*public List<User> getAllUsers(){
         return usersDao.selectAllBooks();
     }*/
-    public Iterable<User> getAllUsers(){
-        return usersRepository.findAll();
+    public List<User> getAllUsers(){
+        return (List<User>) usersRepository.findAll();
     }
 
     /*public int addUser(User user){
@@ -96,6 +99,22 @@ public class UsersService {
         return (UserDetails) optionalUser.orElseThrow(() -> new UsernameNotFoundException(MessageFormat.format("User with username: {0} cannot be found.", username)));
 
     }*/
+
+    public List<String> getNumPagesList(double limit) {
+        //double limitTracksId = 2;
+
+        //List<String> listTrackId = tracksRepository.getListTrackId();
+        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
+        List<String> pageNumList = new ArrayList<>();
+        for (int i = 1; i <= ((int) Math.ceil(getAllUsers().size() / limit)); i++) {
+            pageNumList.add(Integer.toString(i));
+        }
+        return pageNumList;
+    }
+
+    public List<User> getUsersForPage( int offset, int limit){
+        return usersRepository.getListUsersForPage(offset,limit);
+    }
 
     public void sendMailWithConfirmationCode(String email, String confirmationCode, TypesConfirmationCode typeConfirmationCode){
         SimpleMailMessage confirmationMessage=new SimpleMailMessage();

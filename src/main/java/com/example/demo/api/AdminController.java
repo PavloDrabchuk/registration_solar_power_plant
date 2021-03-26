@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -45,11 +46,26 @@ public class AdminController {
     }
 
     @GetMapping(path = "/admin/users")
-    public String getUsersPage(Model model) {
+    public String getUsersPage(@RequestParam(value = "page", defaultValue = "1") String page,
+                               Model model) {
         model.addAttribute("usersMessage", "Users :)");
 
         if (getAuthorisedUser().isPresent()) {
-            model.addAttribute("users", usersService.getAllUsers());
+            double limitUsers = 4;
+
+            model.addAttribute("users",
+                    usersService.getUsersForPage(
+                            (Integer.parseInt(page) - 1) * (int) limitUsers,
+                            (int) limitUsers));
+
+            //model.addAttribute("name", username);
+
+            List<String> pageNumList = usersService.getNumPagesList(limitUsers);
+
+            model.addAttribute("numPages", pageNumList);
+            model.addAttribute("currentPage",page);
+
+            //model.addAttribute("users", usersService.getAllUsers());
         }
 
         return "dashboard/admin/users";
