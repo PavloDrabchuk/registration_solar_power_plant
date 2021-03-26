@@ -47,32 +47,28 @@ public class AdminController {
 
     @GetMapping(path = "/admin/users")
     public String getUsersPage(@RequestParam(value = "page", defaultValue = "1") String page,
-                               @RequestParam(value = "search",required = false) String searchUsername,
+                               @RequestParam(value = "search", required = false) String searchUsername,
                                Model model) {
         model.addAttribute("usersMessage", "Users :)");
 
         if (getAuthorisedUser().isPresent()) {
             double limitUsers = 4;
 
-            if(searchUsername==null) {
+            if (searchUsername == null) {
 
                 model.addAttribute("users",
                         usersService.getUsersForPage(
                                 (Integer.parseInt(page) - 1) * (int) limitUsers,
                                 (int) limitUsers));
 
-                //model.addAttribute("name", username);
-
                 List<String> pageNumList = usersService.getNumPagesList(usersService.getAllUsers(), limitUsers);
 
                 model.addAttribute("numPages", pageNumList);
                 model.addAttribute("currentPage", page);
 
-                //model.addAttribute("users", usersService.getAllUsers());
             } else {
                 List<User> users = usersService.getUsersByUsername(searchUsername);
                 if (users.size() > 0) {
-                    //double limitUsers = 2;
 
                     model.addAttribute("users",
                             usersService.getUsersByUsernameForPage(
@@ -84,7 +80,7 @@ public class AdminController {
 
                     model.addAttribute("numPages", pageNumList);
                     model.addAttribute("currentPage", page);
-                    model.addAttribute("search",searchUsername);
+                    model.addAttribute("search", searchUsername);
                 } else {
                     model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
                 }
@@ -103,7 +99,7 @@ public class AdminController {
         return "dashboard/admin/user-by-id";
     }
 
-    @GetMapping(path = "/admin/users/search")
+    /*@GetMapping(path = "/admin/users/search")
     public String searchUserByUsername(@RequestParam(value = "page", defaultValue = "1") String page,
                                        @RequestParam(value = "username", defaultValue = "") String username,
                                        Model model) {
@@ -125,7 +121,7 @@ public class AdminController {
             model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
         }
         return "dashboard/admin/users";
-    }
+    }*/
 
     @GetMapping(path = "/admin/users/{id}/update")
     public String getUserByIdForUpdate(@PathVariable String id, Model model) {
