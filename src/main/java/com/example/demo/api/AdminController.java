@@ -6,10 +6,12 @@ import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -20,6 +22,9 @@ public class AdminController {
     public AdminController(UsersService usersService) {
         this.usersService = usersService;
     }
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(path = "/admin")
     public String getAllUsers(Model model) {
@@ -123,5 +128,8 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
     }
+
+
+
 
 }
