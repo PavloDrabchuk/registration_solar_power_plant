@@ -13,9 +13,19 @@
 
 <div th:if="${deleteUserMessage}" th:utext="${deleteUserMessage}"></div>
 
-<h3>All users</h3>
+<div th:if="${usersNotFoundMessage}" th:utext="${usersNotFoundMessage}"></div>
 
-<table border="1">
+<form action="/admin/users/search" method="get">
+    <input type="text" name="username">
+    <input type="submit" value="Шукати">
+</form>
+
+<div th:if="${#lists.size(users)<=0}">Користувачів немає</div>
+
+<!--<h3>All users</h3>-->
+
+<table border="1" th:if="${#lists.size(users)>0}">
+    <caption>All users</caption>
     <tr>
         <th>Id</th>
         <th>Name</th>

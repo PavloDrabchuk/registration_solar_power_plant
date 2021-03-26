@@ -60,10 +60,10 @@ public class AdminController {
 
             //model.addAttribute("name", username);
 
-            List<String> pageNumList = usersService.getNumPagesList(limitUsers);
+            List<String> pageNumList = usersService.getNumPagesList(usersService.getAllUsers(), limitUsers);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage",page);
+            model.addAttribute("currentPage", page);
 
             //model.addAttribute("users", usersService.getAllUsers());
         }
@@ -78,6 +78,25 @@ public class AdminController {
             model.addAttribute("user", user.get());
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
+    }
+
+    @GetMapping(path = "/admin/users/search")
+    public String searchUserByUsername(@RequestParam(value = "page", defaultValue = "1") String page,
+                                       @RequestParam(value = "username", defaultValue = "") String username,
+                                       Model model) {
+        List<User> users = usersService.getUsersByUsername(username);
+        if (users.size() > 0) {
+            double limitUsers = 4;
+
+            model.addAttribute("users", users);
+            List<String> pageNumList = usersService.getNumPagesList(users, limitUsers);
+
+            model.addAttribute("numPages", pageNumList);
+            model.addAttribute("currentPage", page);
+        } else {
+            model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
+        }
+        return "dashboard/admin/users";
     }
 
     @GetMapping(path = "/admin/users/{id}/update")
@@ -144,8 +163,6 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
     }
-
-
 
 
 }

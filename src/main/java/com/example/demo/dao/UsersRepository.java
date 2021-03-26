@@ -24,4 +24,6 @@ public interface UsersRepository extends CrudRepository<User,Long> {
     @Query(value = "select * from user c order by c.id limit ?1, ?2 ",
             nativeQuery = true)
     List<User> getListUsersForPage(int offset, int row_count);
+
+    List<User> getUsersByUsernameContaining(String username);
 }

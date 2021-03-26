@@ -100,13 +100,13 @@ public class UsersService {
 
     }*/
 
-    public List<String> getNumPagesList(double limit) {
+    public List<String> getNumPagesList(List<User> users,double limit) {
         //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
         //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
         List<String> pageNumList = new ArrayList<>();
-        for (int i = 1; i <= ((int) Math.ceil(getAllUsers().size() / limit)); i++) {
+        for (int i = 1; i <= ((int) Math.ceil(users.size() / limit)); i++) {
             pageNumList.add(Integer.toString(i));
         }
         return pageNumList;
@@ -114,6 +114,10 @@ public class UsersService {
 
     public List<User> getUsersForPage( int offset, int limit){
         return usersRepository.getListUsersForPage(offset,limit);
+    }
+
+    public List<User> getUsersByUsername(String username){
+        return usersRepository.getUsersByUsernameContaining(username);
     }
 
     public void sendMailWithConfirmationCode(String email, String confirmationCode, TypesConfirmationCode typeConfirmationCode){
