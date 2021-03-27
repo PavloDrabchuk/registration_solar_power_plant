@@ -123,6 +123,42 @@ public class AdminController {
         return "dashboard/admin/users";
     }*/
 
+    @PostMapping(path = "/admin/users/{id}/set-role")
+    public String updateUserRoles(@PathVariable String id,
+                                  @RequestParam(value = "role", defaultValue = "USER") String role,
+                                  Model model) {
+        Optional<User> user = usersService.getUserById(Long.valueOf(id));
+        if (user.isPresent()) {
+            System.out.println("---((((((((((((((((: role: "+role);
+            //user.get().setUserRoles(UserRoles.model);
+            switch (role) {
+                case "USER": {
+                    user.get().setUserRoles(UserRoles.USER);
+                    break;
+                }
+                case "ADMIN": {
+                    user.get().setUserRoles(UserRoles.ADMIN);
+                    break;
+                }
+                case "EDITOR": {
+                    user.get().setUserRoles(UserRoles.EDITOR);
+                    break;
+                }
+                default: {
+                    model.addAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше");
+                    break;
+                }
+            }
+            usersService.saveUser(user.get());
+            model.addAttribute("updateUserMessage", "Роль користувача змінено.");
+        } else {
+            System.out.println("((((((((((((((((");
+            model.addAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше");
+        }
+
+        return "redirect:/admin/users/"+id;
+    }
+
     @GetMapping(path = "/admin/users/{id}/update")
     public String getUserByIdForUpdate(@PathVariable String id, Model model) {
         System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
