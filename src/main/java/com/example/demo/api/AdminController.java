@@ -287,6 +287,41 @@ public class AdminController {
         return "dashboard/admin/solar-power-plant-by-id";
     }
 
+    @GetMapping(path = "/admin/solar-power-plants/{id}/update")
+    public String getSolarPowerPlantByIdForUpdate(@PathVariable String id, Model model) {
+        //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
+        //System.out.println("integer id: " + Long.valueOf(id));
+
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isPresent()) {
+            model.addAttribute("solarPowerPlant", solarPowerPlant.get());
+        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+
+        return "dashboard/admin/update-solar-power-plant-by-id";
+    }
+
+    @PostMapping(path = "/admin/solar-power-plants/{id}/update")
+    public String updateSolarPowerPlantById(@PathVariable String id,
+                                 Model model,
+                                 @RequestParam(value = "name") String name,
+                                 @RequestParam(value = "quantity") Integer quantity,
+                                 RedirectAttributes redirectAttributes) {
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isPresent()) {
+            if (!name.isEmpty()) {
+                solarPowerPlant.get().setName(name);
+            }
+            if (quantity!=null) {
+                solarPowerPlant.get().getStaticData().setQuantity(quantity);
+            }
+            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get());
+        }
+        //тут можна надіслати сповіщення для користувача
+        redirectAttributes.addFlashAttribute("updateSolarPowerPlantMessage", "Інформацію про сонячну станцію оновлено.");
+        model.addAttribute("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
+        return "redirect:/admin/solar-power-plants";
+    }
+
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username

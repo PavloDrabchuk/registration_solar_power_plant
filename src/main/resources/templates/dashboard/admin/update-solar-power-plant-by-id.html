@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:if="${solarPowerPlantChangeError}" th:utext="${solarPowerPlantChangeError}"></div>
+
+<form th:if="${solarPowerPlant}" th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}" method="post">
+    <!--    Змінити можна e-mail ... -->
+    <label>Username
+        <input type="text" name="name">
+    </label>
+    <label>E-mail
+        <input type="number" min="1" name="quantity">
+    </label>
+    <input type="submit" value="Змінити інформацію">
+</form>
+
+</body>
+</html>
