@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -126,10 +127,11 @@ public class AdminController {
     @PostMapping(path = "/admin/users/{id}/set-role")
     public String updateUserRoles(@PathVariable String id,
                                   @RequestParam(value = "role", defaultValue = "USER") String role,
-                                  Model model) {
+                                  Model model,
+                                  RedirectAttributes redirectAttributes) {
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
-            System.out.println("---((((((((((((((((: role: "+role);
+            System.out.println("---((((((((((((((((: role: " + role);
             //user.get().setUserRoles(UserRoles.model);
             switch (role) {
                 case "USER": {
@@ -150,13 +152,13 @@ public class AdminController {
                 }
             }
             usersService.saveUser(user.get());
-            model.addAttribute("updateUserMessage", "Роль користувача змінено.");
+            redirectAttributes.addFlashAttribute("updateUserMessage", "Роль користувача змінено.");
         } else {
             System.out.println("((((((((((((((((");
-            model.addAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше");
+            redirectAttributes.addFlashAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше");
         }
 
-        return "redirect:/admin/users/"+id;
+        return "redirect:/admin/users/" + id;
     }
 
     @GetMapping(path = "/admin/users/{id}/update")
@@ -176,7 +178,8 @@ public class AdminController {
     public String updateUserById(@PathVariable String id,
                                  Model model,
                                  @RequestParam(value = "username") String username,
-                                 @RequestParam(value = "email") String email) {
+                                 @RequestParam(value = "email") String email,
+                                 RedirectAttributes redirectAttributes) {
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
             if (!username.isEmpty()) {
@@ -188,13 +191,13 @@ public class AdminController {
             usersService.saveUser(user.get());
         }
         //тут можна надіслати сповіщення для користувача
-        model.addAttribute("updateUserMessage", "Інформацію про користувача оновлено.");
+        redirectAttributes.addFlashAttribute("updateUserMessage", "Інформацію про користувача оновлено.");
         model.addAttribute("users", usersService.getAllUsers());
-        return "dashboard/admin/users";
+        return "redirect:/admin/users";
     }
 
     @DeleteMapping(path = "/admin/users/{id}/delete")
-    public String deleteUserById(@PathVariable String id, Model model) {
+    public String deleteUserById(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
         //usersService.deleteUserById(Long.valueOf(id));
 
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
@@ -203,13 +206,13 @@ public class AdminController {
 
             //Тут можна надіслати ласта користувачу про видалення його аккаунта
 
-            model.addAttribute("deleteUserMessage", "Користувача видалено з системи.");
+            redirectAttributes.addFlashAttribute("deleteUserMessage", "Користувача видалено з системи.");
         } else {
-            model.addAttribute("deleteUserMessage", "Сталась помилка, спробуйте пізніше.");
+            redirectAttributes.addFlashAttribute("deleteUserMessage", "Сталась помилка, спробуйте пізніше.");
         }
         model.addAttribute("users", usersService.getAllUsers());
 
-        return "dashboard/admin/users";
+        return "redirect:/admin/users";
     }
 
     @GetMapping(path = "/admin/solar-power-plants")
