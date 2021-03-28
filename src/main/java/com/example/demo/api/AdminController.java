@@ -104,6 +104,7 @@ public class AdminController {
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
+            model.addAttribute("solarPowerPlants",solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
     }

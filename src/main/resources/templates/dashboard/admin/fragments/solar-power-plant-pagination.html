@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="solar-power-plants-pagination (search, numPages, currentPage)">
+
+    <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}" class="text-center pagination-menu">
+        <form action="/admin/solar-power-plants" method="get">
+            <nav>
+                <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
+                <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
+                <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
+                       id="page4">-->
+                <input th:if="${search}" type="hidden" name="search" th:value="${search}">
+                <input th:each="page : ${numPages}" th:value="${page}"
+                       th:name="page" th:id="${'page'+page}"
+
+                       th:class="${page==currentPage}
+                           ? 'btn btn-success mx-1'
+                           : 'btn btn-outline-success mx-1'"
+                       type="submit">
+            </nav>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

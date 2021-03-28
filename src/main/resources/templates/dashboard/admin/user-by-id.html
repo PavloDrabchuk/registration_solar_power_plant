@@ -31,5 +31,13 @@
            value="Змінити роль користувача">
 </form>
 
+<!-- Solar power plant block -->
+<div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants(${solarPowerPlants})}"></div>
+
+<!-- Pagination -->
+<!--<div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants-paginatio(${search}, ${numPages}, ${currentPage})}"></div>-->
+
 </body>
 </html>

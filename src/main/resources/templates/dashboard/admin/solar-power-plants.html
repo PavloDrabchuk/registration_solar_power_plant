@@ -68,8 +68,11 @@
 
 <!-- Solar power plant block -->
 <div th:replace="~{dashboard/admin/fragments/solar-power-plant
-        ::solar-power-plants(${solarPowerPlants},${search}, ${numPages}, ${currentPage})}"></div>
+        ::solar-power-plants(${solarPowerPlants})}"></div>
 
+<!-- Pagination -->
+<div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants-pagination(${search}, ${numPages}, ${currentPage})}"></div>
 
 </body>
 </html>
