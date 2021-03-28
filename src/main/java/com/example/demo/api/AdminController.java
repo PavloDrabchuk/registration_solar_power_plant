@@ -10,10 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -201,7 +205,7 @@ public class AdminController {
         //usersService.deleteUserById(Long.valueOf(id));
 
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
-        if (user.isPresent()) {
+        if (user.isPresent() && getAuthorisedUser().isPresent() && user.get()!= getAuthorisedUser().get()) {
             usersService.deleteUser(user.get());
 
             //Тут можна надіслати ласта користувачу про видалення його аккаунта
