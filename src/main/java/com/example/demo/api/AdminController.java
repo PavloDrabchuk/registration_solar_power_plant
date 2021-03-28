@@ -262,6 +262,10 @@ public class AdminController {
 
                     List<String> pageNumList = solarPowerPlantService.getNumPagesListForAll(solarPowerPlants, limitSolarPowerPlants);
 
+                    for (String p:pageNumList){
+                        System.out.println("    p: "+p);
+                    }
+
                     model.addAttribute("numPages", pageNumList);
                     model.addAttribute("currentPage", page);
                     model.addAttribute("search", searchName);
@@ -272,6 +276,15 @@ public class AdminController {
         }
 
         return "dashboard/admin/solar-power-plants";
+    }
+
+    @GetMapping(path = "/admin/solar-power-plants/{id}")
+    public String getSolarPowerPlantById(@PathVariable String id, Model model) {
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isPresent()) {
+            model.addAttribute("solarPowerPlant", solarPowerPlant.get());
+        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+        return "dashboard/admin/solar-power-plant-by-id";
     }
 
     Optional<User> getAuthorisedUser() {

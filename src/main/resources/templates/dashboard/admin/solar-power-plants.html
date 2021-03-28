@@ -23,24 +23,26 @@
     <caption>All solar power plants</caption>
     <tr>
         <th>Id</th>
+        <th>StringId</th>
         <th>Name</th>
         <th>CRUD</th>
     </tr>
     <tr th:each="solarPowerPlant : ${solarPowerPlants}">
         <td th:utext="${solarPowerPlant.getId()}"></td>
+        <td th:utext="${solarPowerPlant.getStringId()}"></td>
         <td th:utext="${solarPowerPlant.getName()}"></td>
         <td>
-            <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getId()}">Read</a>
-            <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getId()+'/update'}">Update</a>
+            <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()}">Read</a>
+            <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}">Update</a>
             <!--            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>-->
-            <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getId()+'/delete'}" th:method="delete">
+            <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/delete'}" th:method="delete">
                 <input type="submit" value="delete">
             </form>
         </td>
     </tr>
 </table>
 
-<div th:if="${numPages!=null and !numPages.isEmpty()}" class="text-center pagination-menu">
+<div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}" class="text-center pagination-menu">
     <form action="/admin/solar-power-plants" method="get">
         <nav>
             <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
