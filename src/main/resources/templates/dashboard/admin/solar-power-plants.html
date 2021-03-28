@@ -23,7 +23,7 @@
 
 <!--<h3>All users</h3>-->
 
-<table border="1" th:unless="${solarPowerPlantNotFoundMessage}" >
+<!--<table border="1" th:unless="${solarPowerPlantNotFoundMessage}" >
     <caption>All solar power plants</caption>
     <tr>
         <th>Id</th>
@@ -38,7 +38,7 @@
         <td>
             <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()}">Read</a>
             <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}">Update</a>
-            <!--            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>-->
+            &lt;!&ndash;            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>&ndash;&gt;
             <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/delete'}" th:method="delete">
                 <input type="submit" value="delete">
             </form>
@@ -49,11 +49,11 @@
 <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}" class="text-center pagination-menu">
     <form action="/admin/solar-power-plants" method="get">
         <nav>
-            <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+            &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
             <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
             <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
             <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                   id="page4">-->
+                   id="page4">&ndash;&gt;
             <input th:if="${search}" type="hidden" name="search" th:value="${search}">
             <input th:each="page : ${numPages}" th:value="${page}"
                    th:name="page" th:id="${'page'+page}"
@@ -64,7 +64,11 @@
                    type="submit">
         </nav>
     </form>
-</div>
+</div>-->
+
+<!-- Solar power plant block -->
+<div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants(${solarPowerPlants},${search}, ${numPages}, ${currentPage})}"></div>
 
 
 </body>
