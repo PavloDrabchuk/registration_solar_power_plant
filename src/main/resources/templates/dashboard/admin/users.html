@@ -42,7 +42,8 @@
             <a th:href="${'/admin/users/'+user.getId()}">Read</a>
             <a th:href="${'/admin/users/'+user.getId()+'/update'}">Update</a>
 <!--            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>-->
-            <form th:action="${'/admin/users/'+user.getId()+'/delete'}" th:method="delete">
+            <form th:action="${'/admin/users/'+user.getId()+'/delete'}" th:method="delete"
+            th:if="${#httpServletRequest.remoteUser != user.getUsername()}">
                 <input type="submit" value="delete">
             </form>
         </td>

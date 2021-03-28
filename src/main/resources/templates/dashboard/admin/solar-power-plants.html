@@ -6,7 +6,60 @@
 </head>
 <body>
 
-<div th:utext="${solarPowerPlants}"></div>
+<div th:utext="${solarPowerPlantsMessage}"></div>
+
+<div th:if="${solarPowerPlantNotFoundMessage}" th:utext="${solarPowerPlantNotFoundMessage}"></div>
+
+<form action="/admin/solar-power-plants/" method="get">
+    <input type="text" name="search">
+    <input type="submit" value="Шукати">
+</form>
+
+<div th:if="${solarPowerPlantNotFoundMessage}">Користувачів немає</div>
+
+<!--<h3>All users</h3>-->
+
+<table border="1" th:unless="${solarPowerPlantNotFoundMessage}" >
+    <caption>All solar power plants</caption>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>CRUD</th>
+    </tr>
+    <tr th:each="solarPowerPlant : ${solarPowerPlants}">
+        <td th:utext="${solarPowerPlant.getId()}"></td>
+        <td th:utext="${solarPowerPlant.getName()}"></td>
+        <td>
+            <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getId()}">Read</a>
+            <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getId()+'/update'}">Update</a>
+            <!--            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>-->
+            <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getId()+'/delete'}" th:method="delete">
+                <input type="submit" value="delete">
+            </form>
+        </td>
+    </tr>
+</table>
+
+<div th:if="${numPages!=null and !numPages.isEmpty()}" class="text-center pagination-menu">
+    <form action="/admin/solar-power-plants" method="get">
+        <nav>
+            <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+            <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
+            <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
+            <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
+                   id="page4">-->
+            <input th:if="${search}" type="hidden" name="search" th:value="${search}">
+            <input th:each="page : ${numPages}" th:value="${page}"
+                   th:name="page" th:id="${'page'+page}"
+
+                   th:class="${page==currentPage}
+                           ? 'btn btn-success mx-1'
+                           : 'btn btn-outline-success mx-1'"
+                   type="submit">
+        </nav>
+    </form>
+</div>
+
 
 </body>
 </html>

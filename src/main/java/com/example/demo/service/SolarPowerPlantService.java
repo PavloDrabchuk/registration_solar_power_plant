@@ -68,8 +68,32 @@ public class SolarPowerPlantService {
         return pageNumList;
     }
 
+    public List<String> getNumPagesListForAll(List<SolarPowerPlant> solarPowerPlants,double limit) {
+        //double limitTracksId = 2;
+
+        //List<String> listTrackId = tracksRepository.getListTrackId();
+        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
+        List<String> pageNumList = new ArrayList<>();
+        for (int i = 1; i <= ((int) Math.ceil(solarPowerPlants.size() / limit)); i++) {
+            pageNumList.add(Integer.toString(i));
+        }
+        return pageNumList;
+    }
+
+    public List<SolarPowerPlant> getSolarPowerPlantsByName(String name) {
+        return solarPowerPlantRepository.getSolarPowerPlantByNameContaining(name);
+    }
+
+    public List<SolarPowerPlant> getSolarPowerPlantsByNameForPage(String name, int offset, int limit) {
+        return solarPowerPlantRepository.getListSolarPowerPlantsByNameForPage(name, offset, limit);
+    }
+
     public List<SolarPowerPlant> getSolarPowerPlantByUserForPage(Long id, int offset,int limit){
         return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset,limit);
+    }
+
+    public List<SolarPowerPlant> getAllSolarPowerPlantByUserForPage(int offset,int limit){
+        return solarPowerPlantRepository.getListOfAllSolarPowerPlantForPage(offset,limit);
     }
 
     public void deleteSolarPowerPlant(SolarPowerPlant solarPowerPlant){

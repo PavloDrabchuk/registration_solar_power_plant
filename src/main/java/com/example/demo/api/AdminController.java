@@ -1,7 +1,9 @@
 package com.example.demo.api;
 
+import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRoles;
+import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,14 +25,16 @@ import java.util.Optional;
 @Controller
 public class AdminController {
     private final UsersService usersService;
+    private final SolarPowerPlantService solarPowerPlantService;
 
     @Autowired
-    public AdminController(UsersService usersService) {
+    public AdminController(UsersService usersService, SolarPowerPlantService solarPowerPlantService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersService = usersService;
+        this.solarPowerPlantService = solarPowerPlantService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(path = "/admin")
     public String getAllUsers(Model model) {
@@ -205,7 +209,7 @@ public class AdminController {
         //usersService.deleteUserById(Long.valueOf(id));
 
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
-        if (user.isPresent() && getAuthorisedUser().isPresent() && user.get()!= getAuthorisedUser().get()) {
+        if (user.isPresent() && getAuthorisedUser().isPresent() && user.get() != getAuthorisedUser().get()) {
             usersService.deleteUser(user.get());
 
             //Тут можна надіслати ласта користувачу про видалення його аккаунта
@@ -220,8 +224,53 @@ public class AdminController {
     }
 
     @GetMapping(path = "/admin/solar-power-plants")
-    public String getSolarPowerPlantsPage(Model model) {
-        model.addAttribute("solarPowerPlants", "Solar power plants :)");
+    public String getSolarPowerPlantsPage(@RequestParam(value = "page", defaultValue = "1") String page,
+                                          @RequestParam(value = "search", required = false) String searchName,
+                                          Model model) {
+        model.addAttribute("solarPowerPlantsMessage", "Solar power plants :)");
+
+        if (getAuthorisedUser().isPresent()) {
+            double limitSolarPowerPlants = 4;
+
+            if (searchName == null) {
+
+                model.addAttribute("solarPowerPlants",
+                        solarPowerPlantService.getAllSolarPowerPlantByUserForPage(
+                                (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlants,
+                                (int) limitSolarPowerPlants));
+
+                List<String> pageNumList = solarPowerPlantService.getNumPagesListForAll(
+                        solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants);
+
+                model.addAttribute("numPages", pageNumList);
+                model.addAttribute("currentPage", page);
+
+            } else {
+                List<SolarPowerPlant> solarPowerPlants = solarPowerPlantService.getSolarPowerPlantsByName(searchName);
+
+                for (SolarPowerPlant s:solarPowerPlants) {
+                    System.out.println("   s: "+s.getName());
+                }
+
+                if (solarPowerPlants.size() > 0) {
+
+                    model.addAttribute("solarPowerPlants",
+                            solarPowerPlantService.getSolarPowerPlantsByNameForPage(
+                                    searchName,
+                                    (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlants,
+                                    (int) limitSolarPowerPlants));
+
+                    List<String> pageNumList = solarPowerPlantService.getNumPagesListForAll(solarPowerPlants, limitSolarPowerPlants);
+
+                    model.addAttribute("numPages", pageNumList);
+                    model.addAttribute("currentPage", page);
+                    model.addAttribute("search", searchName);
+                } else {
+                    model.addAttribute("solarPowerPlantNotFoundMessage", "За Вашим запитом станції не знайдено.");
+                }
+            }
+        }
+
         return "dashboard/admin/solar-power-plants";
     }
 
