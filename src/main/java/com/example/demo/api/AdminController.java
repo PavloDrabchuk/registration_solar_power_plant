@@ -322,6 +322,26 @@ public class AdminController {
         return "redirect:/admin/solar-power-plants";
     }
 
+    @DeleteMapping(path = "/admin/solar-power-plants/{id}/delete")
+    public String deleteSolarPowerPlantById(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
+        //usersService.deleteUserById(Long.valueOf(id));
+
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+
+        if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent()) {
+            solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
+
+            //Тут можна надіслати ласта користувачу про видалення його аккаунта
+
+            redirectAttributes.addFlashAttribute("deleteSolarPowerPlantMessage", "Сонячну станцію видалено з системи.");
+        } else {
+            redirectAttributes.addFlashAttribute("deleteSolarPowerPlantMessage", "Сталась помилка, спробуйте пізніше.");
+        }
+        model.addAttribute("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
+
+        return "redirect:/admin/solar-power-plants";
+    }
+
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username

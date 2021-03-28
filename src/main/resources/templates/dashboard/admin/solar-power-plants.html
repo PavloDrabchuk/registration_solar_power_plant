@@ -8,6 +8,10 @@
 
 <div th:utext="${solarPowerPlantsMessage}"></div>
 
+<div th:if="${updateSolarPowerPlantMessage}" th:utext="${updateSolarPowerPlantMessage}"></div>
+
+<div th:if="${deleteSolarPowerPlantMessage}" th:utext="${deleteSolarPowerPlantMessage}"></div>
+
 <div th:if="${solarPowerPlantNotFoundMessage}" th:utext="${solarPowerPlantNotFoundMessage}"></div>
 
 <form action="/admin/solar-power-plants/" method="get">
