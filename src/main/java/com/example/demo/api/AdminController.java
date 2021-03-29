@@ -105,6 +105,10 @@ public class AdminController {
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
             model.addAttribute("solarPowerPlants",solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
+            model.addAttribute("countOfRegisteredSolarStations",solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
+
+            Boolean accountStatus = user.get().getActivated();
+            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
     }
