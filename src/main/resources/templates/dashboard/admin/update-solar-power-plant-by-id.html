@@ -10,10 +10,10 @@
 
 <form th:if="${solarPowerPlant}" th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}" method="post">
     <!--    Змінити можна e-mail ... -->
-    <label>Username
+    <label>Name
         <input type="text" name="name">
     </label>
-    <label>E-mail
+    <label>Quantity
         <input type="number" min="1" name="quantity">
     </label>
     <input type="submit" value="Змінити інформацію">

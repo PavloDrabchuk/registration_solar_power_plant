@@ -26,7 +26,7 @@ public class DatabaseSeeder {
 
     @EventListener
     public void seed(ContextRefreshedEvent event) {
-        //seedUsersTable();
+        seedUsersTable();
     }
 
     private void seedUsersTable(){
