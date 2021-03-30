@@ -99,7 +99,7 @@ public class DatabaseSeeder {
 
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
-                        "Івано-Франківськ", "Грушевського", Integer.toString(i*j), 42.14512, 38.65412);
+                        "Івано-Франківськ", "Грушевського", Integer.toString(i*j), 48.9117518,24.6470892);
                 SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv"+ i +"_"+ j,
                         "Name"+ i +"_"+ j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);
