@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import com.example.demo.model.Region;
 import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRoles;
@@ -17,6 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -300,6 +302,8 @@ public class AdminController {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
+            model.addAttribute("regions", Region.values());
+            model.addAttribute("localDate",LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
 
         return "dashboard/admin/update-solar-power-plant-by-id";

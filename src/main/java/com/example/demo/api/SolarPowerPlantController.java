@@ -100,6 +100,7 @@ public class SolarPowerPlantController {
         model.addAttribute("solarPowerPlant", solarPowerPlant);
 
         model.addAttribute("regions", Region.values());
+        model.addAttribute("localDate",LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         return "add_solar_power_plant";
     }
 
