@@ -254,6 +254,8 @@ public class SolarPowerPlantController {
                 LocalDateTime.parse(finishDate.replace("T", " "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
 
+        model.addAttribute("solarPowerPlant",solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+
         addAdminAccessToModel(model);
 
         return "data";

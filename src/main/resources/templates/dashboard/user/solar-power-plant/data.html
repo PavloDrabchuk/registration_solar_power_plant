@@ -24,7 +24,7 @@
 <body>
 
 
-<main th:fragment="main-content (id,startDate,finishDate,data)"
+<main th:fragment="main-content (id,startDate,finishDate,data,solarPowerPlant)"
       role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
     <div class="main-body">
@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <!-- Назва -->
-                <h3>Name</h3>
+                <h3 th:utext="${solarPowerPlant.getName()}">Name</h3>
 
                 <!-- Блок з інформацією про зібрані дані -->
                 <div class="col-lg-12 col-md-12  mb-3">
