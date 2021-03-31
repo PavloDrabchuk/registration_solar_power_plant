@@ -218,11 +218,13 @@ public class UsersController {
 
             confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.confirmRegistration);
 
-            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail();
+            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail()+".";
+            model.addAttribute("email",user.get().getEmail());
         } else {
             sendingCodeMessage = "Посилання не надіслано, спробуйте пізніше ще раз.";
         }
         model.addAttribute("sendingCodeMessage", sendingCodeMessage);
+
 
         return "confirm_registration";
     }

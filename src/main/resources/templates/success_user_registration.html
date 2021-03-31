@@ -3,17 +3,48 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/main.css" th:href="@{/styles/mail.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}"/>
+
+
     <title>Title</title>
 </head>
 <body>
-<h3>Дякуємо за реєстрацію!</h3>
+<!--<h3>Дякуємо за реєстрацію!</h3>
 
 <div th:if="${email}">
     <p th:text="'Для продовження реєстрації виконуйте пункти, які наведено в інструкції, яку надіслано на вказану адресу електронної пошти: '+ ${email}"></p>
 </div>
 
 <h3>Натисніть <a th:href="@{/login}">сюди</a>, щоб ввійти.</h3>
-<h3><a th:href="@{/}">Перейти на головну</a></h3>
+<h3><a th:href="@{/}">Перейти на головну</a></h3>-->
+
+<main role="main" class="col-xl-10 col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
+
+
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Дякуємо за реєстрацію!</h4>
+                    <p th:if="${email}"
+                       th:text="'Для продовження реєстрації виконуйте пункти, які наведено в інструкції, яку надіслано на вказану адресу електронної пошти: ' + ${email}+'.'"></p>
+                    <hr>
+                    <p class="mb-0 text-center">Натисніть <a th:href="@{/login}" class="alert-link">сюди</a>, щоб ввійти.</p>
+                    <hr>
+                    <p class="mb-0 text-center"><a th:href="@{/}" class="alert-link">Повернутись на головну</a></p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
 
 
 </body>

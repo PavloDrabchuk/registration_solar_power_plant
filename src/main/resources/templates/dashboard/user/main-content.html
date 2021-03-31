@@ -155,7 +155,8 @@
                         </div>
                         <h3 class="mb-0">
                             <!--/*@thymesVar id="stringId" type="java.lang.String"*/-->
-                            <a class="text-dark header-tittle" th:href="${'/view/'+ solarPowerPlantsByUser[dataIndex].stringId}"
+                            <a class="text-dark header-tittle"
+                               th:href="${'/view/'+ solarPowerPlantsByUser[dataIndex].stringId}"
                                th:utext="${solarPowerPlantsByUser[dataIndex].getName()}"></a>
                         </h3>
                         <div class="mb-1 text-muted"
@@ -236,14 +237,14 @@
             </form>
         </div>
     </div>
-        <!--            -->
-        <!--<form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">
-            <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
-        </form>-->
+    <!--            -->
+    <!--<form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">
+        <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
+    </form>-->
 
-        <!-- Footer -->
 
-        <div th:replace="~{dashboard/user/footer}"></div>
+    <!-- Footer -->
+    <!-- <div th:replace="~{dashboard/user/footer}"></div>-->
 
 </main>
 
