@@ -6,10 +6,8 @@ import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class SolarPowerPlantService {
@@ -35,7 +33,7 @@ public class SolarPowerPlantService {
         String stringId;
         Optional<SolarPowerPlant> solarPowerPlant1;
 
-        if(action==0) {
+        if (action == 0) {
             do {
                 stringId = UUID.randomUUID().toString();
                 solarPowerPlant1 = solarPowerPlantRepository.findByStringId(stringId);
@@ -65,7 +63,7 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.findByStringId(stringId);
     }
 
-    public List<String> getNumPagesList(User user,double limit) {
+    public List<String> getNumPagesList(User user, double limit) {
         //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
@@ -77,7 +75,7 @@ public class SolarPowerPlantService {
         return pageNumList;
     }
 
-    public List<String> getNumPagesListForAll(List<SolarPowerPlant> solarPowerPlants,double limit) {
+    public List<String> getNumPagesListForAll(List<SolarPowerPlant> solarPowerPlants, double limit) {
         //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
@@ -97,20 +95,46 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.getListSolarPowerPlantsByNameForPage(name, offset, limit);
     }
 
-    public List<SolarPowerPlant> getSolarPowerPlantByUserForPage(Long id, int offset,int limit){
-        return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset,limit);
+    public List<SolarPowerPlant> getSolarPowerPlantByUserForPage(Long id, int offset, int limit) {
+        return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset, limit);
     }
 
-    public List<SolarPowerPlant> getAllSolarPowerPlantByUserForPage(int offset,int limit){
-        return solarPowerPlantRepository.getListOfAllSolarPowerPlantForPage(offset,limit);
+    public List<SolarPowerPlant> getAllSolarPowerPlantByUserForPage(int offset, int limit) {
+        return solarPowerPlantRepository.getListOfAllSolarPowerPlantForPage(offset, limit);
     }
 
-    public void deleteSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+    public void deleteSolarPowerPlant(SolarPowerPlant solarPowerPlant) {
         solarPowerPlantRepository.delete(solarPowerPlant);
     }
 
-    public Integer getCountSolarPowerPlantByUser(User user){
+    public Integer getCountSolarPowerPlantByUser(User user) {
         return solarPowerPlantRepository.countAllByUser(user);
+    }
+
+    public String getUsingTime(SolarPowerPlant solarPowerPlant) {
+
+        LocalDate date = LocalDate.now();
+        int year, month, day;
+        String result = "";
+
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
+
+        year = date.getYear();
+        month = date.getMonthValue();
+        day = date.getDayOfMonth();
+
+        day -= calendar.get(Calendar.DAY_OF_MONTH);
+        if (day < 0) month--;
+        month -= (calendar.get(Calendar.MONTH) + 1);
+        if (month < 0) year--;
+        year -= calendar.get(Calendar.YEAR);
+
+        if (year != 0) result += year + " р. ";
+        if (month != 0) result += month + " міс. ";
+        if (day != 0) result += day + " д.";
+
+        return result;
     }
 
 }

@@ -137,6 +137,7 @@ public class SolarPowerPlantController {
             //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
             model.addAttribute("averagePowerForDay",
                     String.format("%,.2f",dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+model.addAttribute("usingTime",solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
