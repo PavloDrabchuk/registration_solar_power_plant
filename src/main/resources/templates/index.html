@@ -29,13 +29,13 @@
         id="header">
     <p class="h5 my-0 me-md-auto fw-normal">Company name</p>
     <nav class="my-2 my-md-0 me-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>
+<!--        <a class="p-2 text-dark" href="#">Features</a>-->
+<!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+<!--        <a class="p-2 text-dark" href="#">Support</a>-->
+<!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
-    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Sign in</a>
-    <a class="btn btn-outline-primary" th:href="@{/registration}">Sign up</a>
+    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Ввійти</a>
+    <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>
 </header>
 
 <!-- Banner -->
@@ -50,9 +50,9 @@
 
         <div class="container">
             <div class="banner-caption text-end">
-                <h1>One more for good measure.</h1>
-                <p>Some representative placeholder content for the third slide of this carousel.</p>
-                <p><a class="btn btn-lg btn-primary" href="#">Почати</a></p>
+                <h1>Зробіть ще один крок для збереження екології.</h1>
+                <p>Створіть особистий кабінет та додайте свою першу сонячну станцію.</p>
+                <p><a class="btn btn-lg btn-success" href="#">Почати</a></p>
             </div>
         </div>
     </div>
@@ -72,10 +72,9 @@
                 <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
             </svg>
 
-            <h2>Heading</h2>
-            <p>Some representative placeholder content for the three columns of text below the carousel. This is the
-                first column.</p>
-            <p><a class="btn btn-secondary" onclick="jump('first')">View details »</a></p>
+            <h2>Про систему</h2>
+            <p>Система створена для реєстрації сонячних станцій та збирання даних про вироблену потужність.</p>
+            <p><a class="btn btn-secondary" onclick="jump('first')">Дізнатись більше</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
@@ -85,10 +84,9 @@
                 <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
             </svg>
 
-            <h2>Heading</h2>
-            <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second
-                column.</p>
-            <p><a class="btn btn-secondary" onclick="jump('second')">View details »</a></p>
+            <h2>Реєстрація сонячної станції</h2>
+            <p>Зареєструвати власну сонячну станцію просто. Для цього необхідно створити кабінет та додати першу станцію.</p>
+            <p><a class="btn btn-secondary" onclick="jump('second')">Дізнатись більше</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
@@ -98,9 +96,9 @@
                 <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
             </svg>
 
-            <h2>Heading</h2>
-            <p>And lastly this, the third column of representative placeholder content.</p>
-            <p><a class="btn btn-secondary" onclick="jump('third')">View details »</a></p>
+            <h2>Збір даних</h2>
+            <p>Збір на зберігання даних про вироблену потужність сонячної станції виконується автоматично.</p>
+            <p><a class="btn btn-secondary" onclick="jump('third')">Дізнатись більше</a></p>
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
@@ -112,10 +110,9 @@
     <div class="row featurette">
 
         <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span
-                    class="text-muted">It’ll blow your mind.</span></h2>
-            <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose
-                here.</p>
+            <h2 class="featurette-heading">Про систему<!--<span
+                    class="text-muted">It’ll blow your mind.</span>--></h2>
+            <p class="lead">Система створена, щоб зберігати дані про вироблену потужність сонячних станцій для подальшого прогнозування.</p>
         </div>
         <div class="col-md-5">
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
@@ -132,10 +129,8 @@
 
     <div class="row featurette">
         <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span>
-            </h2>
-            <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this
-                layout would work with some actual real-world content in place.</p>
+            <h2 class="featurette-heading">Реєстрація сонячної станції<!--<span class="text-muted">See for yourself.</span>--></h2>
+            <p class="lead">Зареєструвати власну сонячну станцію дуже просто, для цього необхідно вказати всі дані та виконувати інструкції.</p>
         </div>
         <div class="col-md-5 order-md-1">
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
@@ -152,10 +147,8 @@
 
     <div class="row featurette">
         <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really
-                intended to be actually read, simply here to give you a better view of what this would look like with
-                some actual content. Your content.</p>
+            <h2 class="featurette-heading">Збір даних<!--<span class="text-muted">Checkmate.</span>--></h2>
+            <p class="lead">Збір даних проводиться в автоматичному режимі кожних 30 хвилин протягом дня. Інформацію про накопичену енергію можна переглянути в особистому кабінеті.</p>
         </div>
         <div class="col-md-5">
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
@@ -180,35 +173,35 @@
     <div class="row">
         <div class="col-12 col-md">
             <img class="mb-2" src="images/logo-social-sq.png" alt="" width="24" height="19">
-            <small class="d-block mb-3 text-muted">© 2017–2021</small>
+            <small class="d-block mb-3 text-muted">© 2021</small>
         </div>
-        <div class="col-6 col-md">
-            <h5>Features</h5>
+        <!--<div class="col-6 col-md">
+            <h5>Особливості</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary" href="#">Cool stuff</a></li>
+                <li><a class="link-secondary" href="#">Реєстраці</a></li>
                 <li><a class="link-secondary" href="#">Random feature</a></li>
                 <li><a class="link-secondary" href="#">Team feature</a></li>
                 <li><a class="link-secondary" href="#">Stuff for developers</a></li>
                 <li><a class="link-secondary" href="#">Another one</a></li>
                 <li><a class="link-secondary" href="#">Last time</a></li>
             </ul>
-        </div>
+        </div>-->
         <div class="col-6 col-md">
-            <h5>Resources</h5>
+            <h5>Допомога</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary" href="#">Resource</a></li>
-                <li><a class="link-secondary" href="#">Resource name</a></li>
-                <li><a class="link-secondary" href="#">Another resource</a></li>
-                <li><a class="link-secondary" href="#">Final resource</a></li>
+                <li><a class="link-secondary" href="#">Про систему</a></li>
+                <li><a class="link-secondary" href="#">Реєстрація користувача</a></li>
+                <li><a class="link-secondary" href="#">Реєстрація сонячної станції</a></li>
+                <li><a class="link-secondary" href="#">Збір даних</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">
-            <h5>About</h5>
+            <h5>Про систему</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary" href="#">Team</a></li>
-                <li><a class="link-secondary" href="#">Locations</a></li>
-                <li><a class="link-secondary" href="#">Privacy</a></li>
-                <li><a class="link-secondary" href="#">Terms</a></li>
+                <li><a class="link-secondary" href="#">Розробник</a></li>
+<!--                <li><a class="link-secondary" href="#">Locations</a></li>-->
+<!--                <li><a class="link-secondary" href="#">Privacy</a></li>-->
+                <li><a class="link-secondary" href="#">Правила</a></li>
             </ul>
         </div>
     </div>

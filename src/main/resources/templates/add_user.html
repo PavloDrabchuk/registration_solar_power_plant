@@ -101,7 +101,7 @@
         <form action="add" th:action="@{/registration/success}" th:object="${user}" method="post">
             <div class="text-center">
                 <a th:href="@{/}">
-                    <img class="mb-4 float-center" src="images/logo-social-sq.png" alt="" width="72" height="57">
+                    <img class="mb-4 float-center" src="images/logo-social-sq.png" alt="Логотип" width="72" height="57">
                 </a>
             </div>
 
@@ -124,9 +124,9 @@
 
             <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
 
-            <label for="username">Username</label>
+            <label for="username">Ім'я користувача</label>
             <input type="text" id="username" name="username" th:field="*{username}" class="form-control"
-                   placeholder="Username" required=""
+                   placeholder="Ім'я користувача" required=""
                    autofocus="">
 <!--            <br/>-->
 
@@ -135,15 +135,15 @@
                    required="">
 <!--            <br/>-->
 
-            <label for="password">Password</label>
+            <label for="password">Пароль</label>
             <input type="password" id="password" name="password" th:field="*{password}" class="form-control"
                    placeholder="Password"
                    required="">
 <!--            <br/>-->
 
-            <label for="password_confirm">Password confirm</label>
+            <label for="password_confirm">Пароль ще раз</label>
             <input type="password" id="password_confirm" name="password_confirm" th:field="*{passwordConfirm}"
-                   class="form-control" placeholder="Password"
+                   class="form-control" placeholder="Пароль ще раз"
                    required="" onblur="checkMatchingPasswords()">
             <br/>
 
@@ -151,7 +151,7 @@
 
             <div class="text-center">
                 <button class="w-50 btn btn-lg btn-primary" type="submit" value="add" onclick="return checkFields()">
-                    Sign up
+                    Зареєструватись
                 </button>
                 <input class="btn btn-lg btn-danger" type="reset" value="Reset"/>
             </div>
@@ -160,7 +160,7 @@
 
             <hr/>
             <div class="text-center">
-                Do you have account? <a th:href="@{/login}">Login</a>
+                Вже зареєстровані? <a th:href="@{/login}">Ввійти</a>
             </div>
         </form>
     </div>

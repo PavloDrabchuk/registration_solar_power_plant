@@ -42,7 +42,7 @@
         <form role="form" th:action="@{/login}" th:method="post">
             <div class="text-center">
                 <a th:href="@{/}">
-                    <img class="mb-4 float-center" src="images/logo-social-sq.png" alt="" width="72" height="57">
+                    <img class="mb-4 float-center" src="images/logo-social-sq.png" alt="Логотип" width="72" height="57">
                 </a>
             </div>
 
@@ -53,25 +53,25 @@
                 Ви вийшли з свого аккаунту.
             </div>
 
-            <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal text-center">Вхід</h1>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
+            <label for="username">Ім'я користувача</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Ім'я користувача" required=""
                    autofocus="">
 
             <br/>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Пароль"
                    required="">
 
             <div class="btn-link mb-3">
                 <a th:href="@{/recover_password}">Забули пароль?</a>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Ввійти</button>
 
             <hr/>
             <div class="text-center">
-                Don't you have account? <a th:href="@{/registration}">Sign Up Here</a>
+                Ще не зареєстровані? <a th:href="@{/registration}">Зареєструватись</a>
             </div>
         </form>
     </div>
