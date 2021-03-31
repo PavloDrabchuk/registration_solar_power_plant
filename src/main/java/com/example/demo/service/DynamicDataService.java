@@ -320,5 +320,14 @@ public class DynamicDataService {
                 LocalDateTime.now(),
                 solarPowerPlant.getId());
     }
+
+    public Double getAveragePowerPerDayBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
+        System.out.println("day start: "+LocalDateTime.now().minusDays(30));
+        System.out.println("day finish: "+LocalDateTime.now());
+        return  dynamicDataRepository.getTotalPowerForLastThirtyDays(
+                LocalDateTime.now().minusDays(28),
+                LocalDateTime.now(),
+                solarPowerPlant.getId());
+    }
 }
 

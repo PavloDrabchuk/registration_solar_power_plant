@@ -130,10 +130,13 @@ public class SolarPowerPlantController {
             model.addAttribute("dynamicData", dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get()));
 
             model.addAttribute("totalPower",
-                    String.format("%,.2f",dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get())));
+                    String.format("%,.2f", dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get())));
 
             model.addAttribute("totalPowerForLarThirtyDays",
-                    String.format("%,.2f",dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
+                    String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
+            //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
+            model.addAttribute("averagePowerForDay",
+                    String.format("%,.2f",dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
