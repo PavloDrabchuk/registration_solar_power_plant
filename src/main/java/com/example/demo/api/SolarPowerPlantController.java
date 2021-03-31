@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,15 +70,16 @@ public class SolarPowerPlantController {
     }
 
     @PostMapping(path = "/solarPowerPlant/delete/{id}")
-    public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model) {
+    public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model, RedirectAttributes redirectAttributes) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
             System.out.println("Is present!: " + solarPowerPlant.get().getId());
             solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
-            model.addAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");
+            redirectAttributes.addFlashAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");
 
-            return "solar_power_plant_info_by_id";
+            //return "solar_power_plant_info_by_id";
+            return "redirect:/home";
         } else {
             return "redirect:/home";
         }
@@ -116,11 +118,11 @@ public class SolarPowerPlantController {
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
 
-        Optional<SolarPowerPlant> solarPowerPlant1 = solarPowerPlantService.getSolarPowerPlantById(1L);
+        //Optional<SolarPowerPlant> solarPowerPlant1 = solarPowerPlantService.getSolarPowerPlantById(1L);
 
         // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
 
-        if (solarPowerPlant.isPresent()) {
+        if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent() && solarPowerPlant.get().getUser()==getAuthorisedUser().get()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
             model.addAttribute("dynamicData", dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get()));
 

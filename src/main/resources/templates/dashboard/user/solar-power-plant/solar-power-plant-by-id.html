@@ -21,6 +21,15 @@
 
     <div class="main-body">
 
+        <div class="alert alert-warning m-2" role="alert"
+             th:if="${notFoundSolarPowerPlant}" th:utext="${notFoundSolarPowerPlant}">
+            notFoundSolarPowerPlant
+        </div>
+
+        <div class="alert alert-success m-2" role="alert"
+             th:if="${deletedSolarPowerPlantOK}" th:utext="${deletedSolarPowerPlantOK}">
+            deletedSolarPowerPlantOK
+        </div>
 
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -253,11 +262,11 @@
                             <!--                                    </button>-->
                             <!--                                </div>-->
                             <div class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
-                                 title="Координати можна змінити...">
+                                 title="Координати можна змінити, оновивши інформацію про станцію.">
                                 <button type="submit" class="item border-0 btn btn-success disabled"
                                         data-toggle="tooltip"
 
-                                        title="Координати можна змінити..."
+                                        title="Координати можна змінити, оновивши інформацію про станцію."
                                 >
                                     <!--            <i class="zmdi zmdi-delete"></i>-->
                                     <!--            <i class="bi bi-trash"></i>-->

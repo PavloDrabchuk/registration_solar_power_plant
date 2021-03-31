@@ -37,6 +37,10 @@
                                 </form>-->
         </div>
     </div>
+    <div class="alert alert-success m-2" role="alert"
+         th:if="${deletedSolarPowerPlantOK}" th:utext="${deletedSolarPowerPlantOK}">
+        deletedSolarPowerPlantOK
+    </div>
 
     <!--<div class="row mb-2">
         <div class="col-md-6">
@@ -102,6 +106,21 @@
 
 
     <hr>-->
+    <div th:if="${#lists.isEmpty(solarPowerPlantsByUser)}">
+        <!-- <h1>Ще не зареєстровано жодної сонячної станції.</h1>-->
+        <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Ще не зареєстровано жодної сонячної станції.</h4>
+                <p>Щоб зареєструвати сонячну станцію натисніть на кнопку "Додати станцію", яка розташована вище.</p>
+
+                <hr>
+                <p class="mb-0 text-center">Детальну інформацію можно переглянути
+                    <a href="#" class="alert-link">тут</a>.
+                </p>
+
+            </div>
+        </div>
+    </div>
 
     <div th:if="${not #lists.isEmpty(solarPowerPlantsByUser)}">
         <div th:each="solarPowerPlant,state : ${solarPowerPlantsByUser}" th:if="${state.odd}"
