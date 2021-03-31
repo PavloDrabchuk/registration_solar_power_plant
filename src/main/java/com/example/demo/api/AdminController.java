@@ -1,9 +1,7 @@
 package com.example.demo.api;
 
-import com.example.demo.model.Region;
-import com.example.demo.model.SolarPowerPlant;
-import com.example.demo.model.User;
-import com.example.demo.model.UserRoles;
+import com.example.demo.model.*;
+import com.example.demo.service.DynamicDataService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +26,17 @@ import java.util.Optional;
 public class AdminController {
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
+    private final DynamicDataService dynamicDataService;
 
     @Autowired
-    public AdminController(UsersService usersService, SolarPowerPlantService solarPowerPlantService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AdminController(UsersService usersService,
+                           SolarPowerPlantService solarPowerPlantService,
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           DynamicDataService dynamicDataService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.dynamicDataService=dynamicDataService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -68,7 +71,7 @@ public class AdminController {
         addAdminAccessToModel(model);
 
         if (getAuthorisedUser().isPresent()) {
-            double limitUsers = 4;
+            double limitUsers = 7;
 
             if (searchUsername == null) {
 
@@ -250,7 +253,7 @@ public class AdminController {
         addAdminAccessToModel(model);
 
         if (getAuthorisedUser().isPresent()) {
-            double limitSolarPowerPlants = 4;
+            double limitSolarPowerPlants = 7;
 
             if (searchName == null) {
 
@@ -307,6 +310,16 @@ public class AdminController {
 
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
+
+            model.addAttribute("totalPower",
+                    String.format("%,.2f", dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get())));
+
+            model.addAttribute("totalPowerForLarThirtyDays",
+                    String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
+            //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
+            model.addAttribute("averagePowerForDay",
+                    String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+            model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/solar-power-plant-by-id";
     }

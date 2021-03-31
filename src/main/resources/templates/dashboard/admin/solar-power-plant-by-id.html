@@ -82,15 +82,15 @@
                                         <tbody>
                                         <tr>
                                             <td>Вироблено енергії за увесь час</td>
-                                            <td>8888</td>
+                                            <td th:utext="${totalPower}">8888</td>
                                         </tr>
                                         <tr>
                                             <td>Вироблено енергії за останніх 30 днів</td>
-                                            <td>888</td>
+                                            <td th:utext="${totalPowerForLarThirtyDays}">888</td>
                                         </tr>
                                         <tr>
                                             <td>Середнє значення за добу</td>
-                                            <td>88</td>
+                                            <td th:utext="${averagePowerForDay}">88</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -130,7 +130,7 @@
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Термін експлуатації</h6>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
+                                    <div class="col-sm-9 text-secondary" th:utext="${usingTime}">
                                         12 р. 8 міс.
                                     </div>
                                 </div>
