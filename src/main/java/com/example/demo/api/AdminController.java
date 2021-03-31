@@ -341,7 +341,7 @@ public class AdminController {
             if (quantity!=null) {
                 solarPowerPlant.get().getStaticData().setQuantity(quantity);
             }
-            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get());
+            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get(),1);
         }
         //тут можна надіслати сповіщення для користувача
         redirectAttributes.addFlashAttribute("updateSolarPowerPlantMessage", "Інформацію про сонячну станцію оновлено.");

@@ -20,7 +20,13 @@ public class SolarPowerPlantService {
         this.solarPowerPlantRepository = solarPowerPlantRepository;
     }
 
-    public void addSolarPowerPlant(SolarPowerPlant solarPowerPlant) {
+    public void addSolarPowerPlant(SolarPowerPlant solarPowerPlant, int action) {
+        /*
+        actions:
+        0 - create
+        1 - update
+         */
+
         /*solarPowerPlantRepository.save(new SolarPowerPlant(
                 solarPowerPlant.getName(),
                 solarPowerPlant.getLocation(),
@@ -29,14 +35,17 @@ public class SolarPowerPlantService {
         String stringId;
         Optional<SolarPowerPlant> solarPowerPlant1;
 
+        if(action==0) {
+            do {
+                stringId = UUID.randomUUID().toString();
+                solarPowerPlant1 = solarPowerPlantRepository.findByStringId(stringId);
+                System.out.println("stringId: " + stringId);
+            } while (solarPowerPlant1.isPresent());
 
-        do {
-            stringId=UUID.randomUUID().toString();
-            solarPowerPlant1 = solarPowerPlantRepository.findByStringId(stringId);
-            System.out.println("stringId: "+stringId);
-        } while (solarPowerPlant1.isPresent());
 
-        solarPowerPlant.setStringId(stringId);
+            solarPowerPlant.setStringId(stringId);
+        }
+
         solarPowerPlantRepository.save(solarPowerPlant);
     }
 

@@ -103,7 +103,7 @@ public class DatabaseSeeder {
                 SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv"+ i +"_"+ j,
                         "Name"+ i +"_"+ j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);
-                solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1);
+                solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1,0);
 
                 //staticData.setQuantity(i*(j+1));
                 //staticData.setInstallationDate("2021-03-29");

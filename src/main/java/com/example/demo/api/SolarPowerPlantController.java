@@ -20,6 +20,9 @@ import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -65,7 +68,7 @@ public class SolarPowerPlantController {
         solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
 //        solarPowerPlant.getStaticData().setStringInstallationDate();
         System.out.println("Installation date: " + solarPowerPlant.getStaticData().getInstallationDate());
-        solarPowerPlantService.addSolarPowerPlant(solarPowerPlant);
+        solarPowerPlantService.addSolarPowerPlant(solarPowerPlant, 0);
         return "redirect:/home";
     }
 
@@ -99,7 +102,7 @@ public class SolarPowerPlantController {
         model.addAttribute("solarPowerPlant", solarPowerPlant);
 
         model.addAttribute("regions", Region.values());
-        model.addAttribute("localDate",LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
         /*Optional<User> user=getAuthorisedUser();
 
@@ -122,10 +125,15 @@ public class SolarPowerPlantController {
 
         // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
 
-        if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent() && solarPowerPlant.get().getUser()==getAuthorisedUser().get()) {
+        if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent() && solarPowerPlant.get().getUser() == getAuthorisedUser().get()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
             model.addAttribute("dynamicData", dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get()));
 
+            model.addAttribute("totalPower",
+                    String.format("%,.2f",dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get())));
+
+            model.addAttribute("totalPowerForLarThirtyDays",
+                    String.format("%,.2f",dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
@@ -133,6 +141,95 @@ public class SolarPowerPlantController {
         addAdminAccessToModel(model);
 
         return "solar_power_plant_info_by_id";
+    }
+
+    @GetMapping(path = "/view/{id}/update")
+    public String getSolarPowerPlantByIdForUpdate(@PathVariable("id") String id, Model model) {
+        //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
+        //System.out.println("integer id: " + Long.valueOf(id));
+        addAdminAccessToModel(model);
+
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isPresent()) {
+            model.addAttribute("solarPowerPlant", solarPowerPlant.get());
+            model.addAttribute("regions", Region.values());
+            model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+
+        return "dashboard/user/solar-power-plant/update-solar-power-plant-by-id";
+    }
+
+    @PostMapping(path = "/view/{id}/update")
+    public String updateSolarPowerPlantById(@PathVariable String id,
+                                            Model model,
+                                            /*@RequestParam(value = "name") String name,
+                                            @RequestParam(value = "quantity") Integer quantity,
+                                            @RequestParam(value = "installationDate") String installationDate,
+                                            @RequestParam(value = "region") String region,
+                                            @RequestParam(value = "city") String city,
+                                            @RequestParam(value = "street") String street,
+                                            @RequestParam(value = "number") String number,
+                                            @RequestParam(value = "longitude") Double longitude,
+                                            @RequestParam(value = "latitude") Double latitude,*/
+                                            RedirectAttributes redirectAttributes,
+                                            @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
+        //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
+        //System.out.println("integer id: " + Long.valueOf(id));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+
+        Optional<User> user = usersService.getUserByUsername(username);
+        if (user.isPresent()) {
+            System.out.println("username: " + username + " \n userId: " + user.get().getId());
+
+            solarPowerPlant.setUser(user.get());
+        }
+        //System.out.println("Region: " + solarPowerPlant.getLocation().getRegion().getName());
+
+        Optional<SolarPowerPlant> solarPowerPlant1 = solarPowerPlantService.getSolarPowerPlantByStringId(solarPowerPlant.getStringId());
+
+        solarPowerPlant1.ifPresent(powerPlant -> solarPowerPlant.setRegistrationDateTime(powerPlant.getRegistrationDateTime()));
+        //locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
+        solarPowerPlant.getLocation().setCountry("Україна");
+        //solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+
+
+        solarPowerPlantService.addSolarPowerPlant(solarPowerPlant, 1);
+        /*Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isPresent()) {
+            if (!name.isEmpty()) {
+                solarPowerPlant.get().setName(name);
+            }
+            if (quantity!=null) {
+                solarPowerPlant.get().getStaticData().setQuantity(quantity);
+            }
+            if (installationDate!=null) {
+                solarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
+            }
+            if (region!=null) {
+                solarPowerPlant.get().getLocation().setRegion(region);
+            }
+            if (city!=null) {
+                solarPowerPlant.get().getLocation().setCity(city);
+            }
+            if (street!=null) {
+                solarPowerPlant.get().getLocation().setStreet(street);
+            }
+            if (number!=null) {
+                solarPowerPlant.get().getLocation().setNumber(number);
+            }
+            if (longitude!=null) {
+                solarPowerPlant.get().getLocation().setNumber(number);
+            }
+            if (latitude!=null) {
+                solarPowerPlant.get().getLocation().setNumber(number);
+            }
+            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get(),1);
+        }*/
+        redirectAttributes.addFlashAttribute("updateSolarPowerPlantMessage", "Інформацію про сонячну станцію оновлено.");
+        //model.addAttribute("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
+        return "redirect:/view/" + id;
     }
 
     @PostMapping(path = "/view/{id}/data")
@@ -149,8 +246,8 @@ public class SolarPowerPlantController {
         model.addAttribute("id", id);
 
         model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate.replace("T"," "), formatter),
-                LocalDateTime.parse(finishDate.replace("T"," "), formatter),
+                LocalDateTime.parse(startDate.replace("T", " "), formatter),
+                LocalDateTime.parse(finishDate.replace("T", " "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
 
         addAdminAccessToModel(model);
@@ -193,7 +290,7 @@ public class SolarPowerPlantController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         List<DynamicData> data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate.replace("T"," "), formatter),
+                LocalDateTime.parse(startDate.replace("T", " "), formatter),
                 LocalDateTime.parse(finishDate.replace("T", " "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
 
@@ -320,10 +417,10 @@ public class SolarPowerPlantController {
         return usersService.getUserByUsername(username);
     }
 
-    private void addAdminAccessToModel(Model model){
-        Optional<User> user=getAuthorisedUser();
+    private void addAdminAccessToModel(Model model) {
+        Optional<User> user = getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRoles()== UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRoles() == UserRoles.ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }

@@ -32,6 +32,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -305,6 +306,19 @@ public class DynamicDataService {
             e.printStackTrace();
         }
         //System.out.println("JSON file created: " + jsonObject);
+    }
+
+    public Double getTotalPowerBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
+        return  dynamicDataRepository.getTotalPower(solarPowerPlant.getId());
+    }
+
+    public Double getTotalPowerForLastThirtyDaysBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
+        System.out.println("day start: "+LocalDateTime.now().minusDays(30));
+        System.out.println("day finish: "+LocalDateTime.now());
+        return  dynamicDataRepository.getTotalPowerForLastThirtyDays(
+                LocalDateTime.now().minusDays(30),
+                LocalDateTime.now(),
+                solarPowerPlant.getId());
     }
 }
 
