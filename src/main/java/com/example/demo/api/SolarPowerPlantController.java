@@ -1,9 +1,6 @@
 package com.example.demo.api;
 
-import com.example.demo.model.DynamicData;
-import com.example.demo.model.Region;
-import com.example.demo.model.SolarPowerPlant;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
 import com.example.demo.service.DynamicDataService;
 import com.example.demo.service.LocationService;
 import com.example.demo.service.SolarPowerPlantService;
@@ -101,6 +98,15 @@ public class SolarPowerPlantController {
 
         model.addAttribute("regions", Region.values());
         model.addAttribute("localDate",LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        /*Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRoles()== UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }*/
+        addAdminAccessToModel(model);
+
         return "add_solar_power_plant";
     }
 
@@ -122,6 +128,8 @@ public class SolarPowerPlantController {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
 
+        addAdminAccessToModel(model);
+
         return "solar_power_plant_info_by_id";
     }
 
@@ -142,6 +150,9 @@ public class SolarPowerPlantController {
                 LocalDateTime.parse(startDate.replace("T"," "), formatter),
                 LocalDateTime.parse(finishDate.replace("T"," "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
+
+        addAdminAccessToModel(model);
+
         return "data";
     }
 
@@ -299,5 +310,20 @@ public class SolarPowerPlantController {
 
     public String reformatName(String name) {
         return name.replace(' ', '_');
+    }
+
+    Optional<User> getAuthorisedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        return usersService.getUserByUsername(username);
+    }
+
+    private void addAdminAccessToModel(Model model){
+        Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRoles()== UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            //System.out.println("admin access");
+        }
     }
 }

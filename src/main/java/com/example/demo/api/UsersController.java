@@ -243,6 +243,12 @@ public class UsersController {
 
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
+
+            if (user.get().getUserRoles()==UserRoles.ADMIN) {
+                model.addAttribute("adminAccess", "admin");
+                System.out.println("admin access");
+            }
+
         }
         return "profile";
     }
@@ -260,6 +266,12 @@ public class UsersController {
 
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
+
+            if (user.get().getUserRoles()==UserRoles.ADMIN) {
+                model.addAttribute("adminAccess", "admin");
+                System.out.println("admin access");
+            }
+
         }
         return "edit-profile";
     }

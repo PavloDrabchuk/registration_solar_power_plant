@@ -49,6 +49,9 @@ public class AdminController {
         if (user.get().getUserRoles().toString().equals(UserRoles.ADMIN.name())) {
             model.addAttribute("users", usersService.getAllUsers());
             System.out.println("--- ADMIN ---\n role: " + user.get().getUserRoles().toString().equals(UserRoles.ADMIN.name()));
+
+            addAdminAccessToModel(model);
+
             return "admin_page";
         } else {
             System.out.println("--- HOME ---");
@@ -61,6 +64,8 @@ public class AdminController {
                                @RequestParam(value = "search", required = false) String searchUsername,
                                Model model) {
         model.addAttribute("usersMessage", "Users :)");
+
+        addAdminAccessToModel(model);
 
         if (getAuthorisedUser().isPresent()) {
             double limitUsers = 4;
@@ -103,6 +108,9 @@ public class AdminController {
 
     @GetMapping(path = "/admin/users/{id}")
     public String getUserById(@PathVariable String id, Model model) {
+
+        addAdminAccessToModel(model);
+
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
@@ -178,6 +186,9 @@ public class AdminController {
 
     @GetMapping(path = "/admin/users/{id}/update")
     public String getUserByIdForUpdate(@PathVariable String id, Model model) {
+
+        addAdminAccessToModel(model);
+
         System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         System.out.println("integer id: " + Long.valueOf(id));
 
@@ -236,6 +247,8 @@ public class AdminController {
                                           Model model) {
         model.addAttribute("solarPowerPlantsMessage", "Solar power plants :)");
 
+        addAdminAccessToModel(model);
+
         if (getAuthorisedUser().isPresent()) {
             double limitSolarPowerPlants = 4;
 
@@ -287,7 +300,11 @@ public class AdminController {
 
     @GetMapping(path = "/admin/solar-power-plants/{id}")
     public String getSolarPowerPlantById(@PathVariable String id, Model model) {
+
+        addAdminAccessToModel(model);
+
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
@@ -298,6 +315,7 @@ public class AdminController {
     public String getSolarPowerPlantByIdForUpdate(@PathVariable String id, Model model) {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
+        addAdminAccessToModel(model);
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
@@ -357,5 +375,13 @@ public class AdminController {
         return usersService.getUserByUsername(username);
     }
 
+    private void addAdminAccessToModel(Model model){
+        Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRoles()== UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            //System.out.println("admin access");
+        }
+    }
 
 }
