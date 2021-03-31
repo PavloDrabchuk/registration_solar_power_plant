@@ -323,9 +323,9 @@ public class UsersController {
         if (user.isPresent() && user.get().getEmail().equals(recoverInformation.getEmail())) {
 
             confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.recoverPassword);
-            model.addAttribute("sendMessageOK", "Повідомлення для відновлення паролю надіслано на вказаний email: " + recoverInformation.getEmail() + ".");
+            model.addAttribute("sendMessageOK", "Повідомлення для відновлення паролю надіслано на Ваш e-mail: " + recoverInformation.getEmail() + ".");
         } else {
-            model.addAttribute("sendMessageERROR", "Повідомлення не надіслано. Перевірте правильність даних.");
+            model.addAttribute("sendMessageERROR", "Повідомлення не надіслано. Перевірте правильність введених даних.");
         }
         return "recover_password";
     }
