@@ -12,6 +12,7 @@ public class StaticData {
     private Long id;
 
     private Integer quantity;
+    private Double power;
 
     private Date installationDate;
 
@@ -19,8 +20,9 @@ public class StaticData {
     @Transient
     private SolarPowerPlant solarPowerPlant;
 
-    public StaticData(Integer quantity, Date installationDate, SolarPowerPlant solarPowerPlant) {
+    public StaticData(Integer quantity,Double power, Date installationDate, SolarPowerPlant solarPowerPlant) {
         this.quantity = quantity;
+        this.power=power;
         this.installationDate = installationDate;
     }
 
@@ -42,6 +44,14 @@ public class StaticData {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getPower() {
+        return power;
+    }
+
+    public void setPower(Double power) {
+        this.power = power;
     }
 
     public Date getInstallationDate() {

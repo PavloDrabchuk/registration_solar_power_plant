@@ -34,17 +34,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class DynamicDataService {
 
+    private final int DATA_COLLECTION_TIME = 5 * 1000;
+
     private final DynamicDataRepository dynamicDataRepository;
     private final SolarPowerPlantService solarPowerPlantService;
+
 
     public DynamicDataService(DynamicDataRepository dynamicDataRepository,
                               SolarPowerPlantService solarPowerPlantService) {
@@ -66,6 +67,18 @@ public class DynamicDataService {
         );
     }
 
+    @Async
+    @Scheduled(fixedRate = DATA_COLLECTION_TIME /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
+    public void saveDynamicData() {
+        System.out.println("\n\n save dynamic data: ");
+        //dynamicDataRepository.save(dynamicData);
+        for (DynamicData dynamicData : generateData()) {
+            System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
+            dynamicDataRepository.save(dynamicData);
+        }
+        System.out.println("\n\n\n");
+    }
+
     private List<DynamicData> generateData() {
         List<DynamicData> generatedData = new ArrayList<>();
         List<SolarPowerPlant> solarPowerPlantList = solarPowerPlantService.getAllSolarPowerPlants();
@@ -84,7 +97,14 @@ public class DynamicDataService {
 
             System.out.println("Month: " + month);
             weatherNumber = getWeatherNumber(month);
-            producedPower = generateProducerPower(month, localDateTime.getHour(), weatherNumber);
+
+
+            producedPower = generateProducerPower(month,
+                    localDateTime.getHour(),
+                    weatherNumber,
+                    solarPowerPlant.getStaticData().getPower(),
+                    solarPowerPlant.getStaticData().getQuantity(),
+                    getUsingTime(solarPowerPlant));
 
             generatedData.add(new DynamicData(
                     solarPowerPlant,
@@ -96,25 +116,19 @@ public class DynamicDataService {
         return generatedData;
     }
 
-    @Async
-    @Scheduled(fixedRate = /*1000*60*1000*/ 5 * 1000 /*2 * 60 * 1000*/)
-    public void saveDynamicData() {
-        System.out.println("\n\n save dynamic data: ");
-        //dynamicDataRepository.save(dynamicData);
-        for (DynamicData dynamicData : generateData()) {
-            System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
-            dynamicDataRepository.save(dynamicData);
-        }
-        System.out.println("\n\n\n");
-    }
 
-    private double generateProducerPower(int month, int hour, int weatherNumber) {
-        double producerPower = 340.0 / 48.0; //якщо збирати дані раз в 30 хвилин
+    private double generateProducerPower(int month, int hour, int weatherNumber, Double power, Integer quantity, int usingTime) {
+        //double producerPower = 340.0 / 48.0; //якщо збирати дані раз в 30 хвилин
+        double producerPower = power;
         producerPower *= monthlyCoefficient(month, 0.4, 1.02) * weatherCoefficient(month, weatherNumber) * hourlyCoefficient(hour, month);
-
+        producerPower *= quantity;
         /*
         Months.values()[index]
          */
+        if(usingTime>=10 && usingTime<25)producerPower*=0.9;
+        else if(usingTime>=25) producerPower*=0.8;
+
+        producerPower/=32;
 
 
         //ArrayList<Weather> weathers = new ArrayList<Weather>();
@@ -159,6 +173,26 @@ public class DynamicDataService {
     private double hourlyCoefficient(int hour, int month) {
         System.out.println("hour: " + hour);
         return (hour >= 5 && hour <= 20) ? (((Math.sin(0.44 * hour + 2.3)) + 1) / 2) * monthlyCoefficient(month, 0.3, 0.25) : 0;
+    }
+
+    private int getUsingTime(SolarPowerPlant solarPowerPlant){
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
+
+        LocalDate date = LocalDate.now();
+        int year, month, day;
+
+        year = date.getYear();
+        month = date.getMonthValue();
+        day = date.getDayOfMonth();
+
+        day -= calendar.get(Calendar.DAY_OF_MONTH);
+        if (day < 0) month--;
+        month -= (calendar.get(Calendar.MONTH) + 1);
+        if (month < 0) year--;
+        year -= calendar.get(Calendar.YEAR);
+
+        return year;
     }
 
     public String downloadData(HttpServletRequest request,
@@ -252,9 +286,8 @@ public class DynamicDataService {
 
             root.appendChild(dataElement);
 
-            // also use staff.setAttribute("id", "1")
 
-            // firstname element
+            // dateTime element
             Element dateTime = document.createElement("dateTime");
             dateTime.appendChild(document.createTextNode(dynamicData.getCollectionDateTime().toString()));
             dataElement.appendChild(dateTime);
@@ -308,23 +341,23 @@ public class DynamicDataService {
         //System.out.println("JSON file created: " + jsonObject);
     }
 
-    public Double getTotalPowerBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
-        return  dynamicDataRepository.getTotalPower(solarPowerPlant.getId());
+    public Double getTotalPowerBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {
+        return dynamicDataRepository.getTotalPower(solarPowerPlant.getId());
     }
 
-    public Double getTotalPowerForLastThirtyDaysBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
-        System.out.println("day start: "+LocalDateTime.now().minusDays(30));
-        System.out.println("day finish: "+LocalDateTime.now());
-        return  dynamicDataRepository.getTotalPowerForLastThirtyDays(
+    public Double getTotalPowerForLastThirtyDaysBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {
+        System.out.println("day start: " + LocalDateTime.now().minusDays(30));
+        System.out.println("day finish: " + LocalDateTime.now());
+        return dynamicDataRepository.getTotalPowerForLastThirtyDays(
                 LocalDateTime.now().minusDays(30),
                 LocalDateTime.now(),
                 solarPowerPlant.getId());
     }
 
-    public Double getAveragePowerPerDayBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
-        System.out.println("day start: "+LocalDateTime.now().minusDays(30));
-        System.out.println("day finish: "+LocalDateTime.now());
-        return  dynamicDataRepository.getTotalPowerForLastThirtyDays(
+    public Double getAveragePowerPerDayBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {
+        System.out.println("day start: " + LocalDateTime.now().minusDays(30));
+        System.out.println("day finish: " + LocalDateTime.now());
+        return dynamicDataRepository.getTotalPowerForLastThirtyDays(
                 LocalDateTime.now().minusDays(28),
                 LocalDateTime.now(),
                 solarPowerPlant.getId());

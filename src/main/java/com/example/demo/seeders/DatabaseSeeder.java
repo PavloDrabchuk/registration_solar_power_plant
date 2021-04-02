@@ -94,7 +94,8 @@ public class DatabaseSeeder {
         for (int i = 1; i <= 5; i++) {
             for (int j = 0; j < 5; j++) {
                 StaticData staticData=new StaticData();
-                staticData.setQuantity(i*(j+1));
+                staticData.setQuantity(10+(int)(Math.random()*20));
+                staticData.setPower(350+Math.random()*200);
                 staticData.setInstallationDate("2021-03-29");
 
                 Location location1 = new Location("Україна",

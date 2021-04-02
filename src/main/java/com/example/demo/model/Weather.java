@@ -14,7 +14,7 @@ public enum Weather {
     private final double coefficient;
 
     Weather(double coefficient) {
-        this.coefficient=coefficient;
+        this.coefficient = coefficient;
     }
 
     public double getCoefficient() {
