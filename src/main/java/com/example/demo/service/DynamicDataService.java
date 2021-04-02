@@ -10,7 +10,6 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -20,7 +19,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -72,18 +70,19 @@ public class DynamicDataService {
 
     @Async
     @Scheduled(fixedRate = DATA_COLLECTION_TIME /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
-    public void saveDynamicData() {
+    public void collectDynamicData() {
         System.out.println("\n\n save dynamic data: ");
         //dynamicDataRepository.save(dynamicData);
-        for (DynamicData dynamicData : generateData(LocalDateTime.now())) {
+        /*for (DynamicData dynamicData : generateData(LocalDateTime.now())) {
             System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
-        }
+        }*/
         System.out.println("\n\n\n");
+        saveDynamicData(LocalDateTime.now());
 
     }
 
-    public void saveDynamicDataForDatabaseSeeder(LocalDateTime dateTime){
+    public void saveDynamicData(LocalDateTime dateTime){
         for (DynamicData dynamicData : generateData(dateTime)) {
             //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
@@ -374,7 +373,7 @@ public class DynamicDataService {
     public Double getAveragePowerPerDayBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {
         System.out.println("day start: " + LocalDateTime.now().minusDays(30));
         System.out.println("day finish: " + LocalDateTime.now());
-        return dynamicDataRepository.getTotalPowerForLastThirtyDays(
+        return dynamicDataRepository.getAveragePowerPerDay(
                 LocalDateTime.now().minusDays(28),
                 LocalDateTime.now(),
                 solarPowerPlant.getId());

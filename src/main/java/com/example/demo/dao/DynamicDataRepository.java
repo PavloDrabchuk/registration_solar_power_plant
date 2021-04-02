@@ -30,7 +30,7 @@ public interface DynamicDataRepository extends CrudRepository<DynamicData, Long>
                                           LocalDateTime finishDate,
                                           Long solarPowerPlantId);
 
-    @Query(value = "select avg(s) from (select SUM(d.produced_power) as s from dynamic_data d where d.collection_date_time between ?1 and ?2 and d.solar_power_plant_id = ?3 group by day d.collection_date_time) as T",
+    @Query(value = "select avg(q.s) from (select SUM(d.produced_power) as s from dynamic_data d where d.collection_date_time between ?1 and ?2 and d.solar_power_plant_id = ?3 group by DAY(d.collection_date_time) ) q",
             nativeQuery = true)
     Double getAveragePowerPerDay(LocalDateTime startDate,
                                           LocalDateTime finishDate,

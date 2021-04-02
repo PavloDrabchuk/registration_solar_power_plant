@@ -130,15 +130,15 @@ public class DatabaseSeeder {
     }
 
     private void seedDynamicDataTable() {
-        String str = "2021-04-02 00:00:00";
+        String str = "2021-03-12 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        for (int k = 0; k < 250; k++) {
+        for (int k = 0; k < 20; k++) {
 
             dateTime = dateTime.plusMinutes(30);
 
-            dynamicDataService.saveDynamicDataForDatabaseSeeder(dateTime);
+            dynamicDataService.saveDynamicData(dateTime);
 
         }
     }
