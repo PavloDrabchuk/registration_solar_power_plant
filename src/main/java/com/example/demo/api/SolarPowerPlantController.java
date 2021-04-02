@@ -129,14 +129,28 @@ public class SolarPowerPlantController {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
             model.addAttribute("dynamicData", dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get()));
 
-            model.addAttribute("totalPower",
-                    String.format("%,.2f", dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get())));
+            Double totalPower = dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get());
+            //if (totalPower != null) model.addAttribute("totalPower", String.format("%,.2f", totalPower));
+            //else model.addAttribute("totalPower", "Недостатньо даних.");
 
-            model.addAttribute("totalPowerForLarThirtyDays",
-                    String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
+            model.addAttribute("totalPower", totalPower != null ? String.format("%,.2f", totalPower) : "Недостатньо даних.");
+
+            Double totalPowerForLarThirtyDays=dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get());
+
+            model.addAttribute("totalPowerForLarThirtyDays", totalPowerForLarThirtyDays != null ? String.format("%,.2f", totalPowerForLarThirtyDays) : "Недостатньо даних.");
+
+
+            //model.addAttribute("totalPowerForLarThirtyDays",
+            //        String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
             //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
-            model.addAttribute("averagePowerForDay",
-                    String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+
+            Double averagePowerForDay=dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get());
+            //model.addAttribute("averagePowerForDay",
+              //      String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+
+            model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
+
+
             model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
@@ -254,7 +268,7 @@ public class SolarPowerPlantController {
                 LocalDateTime.parse(finishDate.replace("T", " "), formatter),
                 solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
 
-        model.addAttribute("solarPowerPlant",solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+        model.addAttribute("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
 
         addAdminAccessToModel(model);
 

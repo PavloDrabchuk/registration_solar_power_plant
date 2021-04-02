@@ -94,9 +94,15 @@ public class DatabaseSeeder {
         for (int i = 1; i <= 5; i++) {
             for (int j = 0; j < 5; j++) {
                 StaticData staticData=new StaticData();
-                staticData.setQuantity(10+(int)(Math.random()*20));
+                staticData.setQuantity(1+(int)(Math.random()*20));
                 staticData.setPower(350+Math.random()*200);
-                staticData.setInstallationDate("2021-03-29");
+
+                /*String stringYear="20";
+                int year=1+(int)(Math.random()*20);
+                if(year<10)stringYear+="0"+year;
+                else stringYear+=year;*/
+
+                staticData.setInstallationDate("20"+getStringNumberForDate(1,20)+"-"+getStringNumberForDate(1,12)+"-"+getStringNumberForDate(1,28));
 
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
@@ -112,6 +118,16 @@ public class DatabaseSeeder {
 
             }
         }
+    }
+
+    private String getStringNumberForDate(int startNum, int finishNum){
+        //String stringYear="20";
+        String result="";
+        int num=startNum+(int)(Math.random()*finishNum);
+        if(num<10) result+="0"+num;
+        else result+=num;
+
+        return result;
     }
 
 

@@ -41,7 +41,8 @@ import java.util.stream.Stream;
 @Service
 public class DynamicDataService {
 
-    private final int DATA_COLLECTION_TIME = 5 * 1000;
+    private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
+    //private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
 
     private final DynamicDataRepository dynamicDataRepository;
     private final SolarPowerPlantService solarPowerPlantService;
@@ -125,10 +126,14 @@ public class DynamicDataService {
         /*
         Months.values()[index]
          */
-        if(usingTime>=10 && usingTime<25)producerPower*=0.9;
-        else if(usingTime>=25) producerPower*=0.8;
+        if (usingTime >= 10 && usingTime < 25) {
+            producerPower *= 0.9;
+        } else if (usingTime >= 25) {
+            producerPower *= 0.8;
+        }
 
-        producerPower/=32;
+        producerPower /= 16*3600/(DATA_COLLECTION_TIME/1000D);
+        System.out.println("DATA_COLLECTION_TIME: "+16*3600/(DATA_COLLECTION_TIME/1000));
 
 
         //ArrayList<Weather> weathers = new ArrayList<Weather>();
@@ -175,7 +180,7 @@ public class DynamicDataService {
         return (hour >= 5 && hour <= 20) ? (((Math.sin(0.44 * hour + 2.3)) + 1) / 2) * monthlyCoefficient(month, 0.3, 0.25) : 0;
     }
 
-    private int getUsingTime(SolarPowerPlant solarPowerPlant){
+    private int getUsingTime(SolarPowerPlant solarPowerPlant) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
 
@@ -200,7 +205,7 @@ public class DynamicDataService {
                                String fileName) {
         //String fileName = "f.csv";
         System.out.println("t-t-t-t-t-t-t");
-        String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
+        //String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
         Path file = Paths.get("upload-dir/" + fileName);
 
         if (Files.exists(file)) {

@@ -130,9 +130,9 @@ public class SolarPowerPlantService {
         if (month < 0) year--;
         year -= calendar.get(Calendar.YEAR);
 
-        if (year != 0) result += year + " р. ";
-        if (month != 0) result += month + " міс. ";
-        if (day != 0) result += day + " д.";
+        if (year != 0) result += Math.abs(year) + " р. ";
+        if (month != 0) result += Math.abs(month) + " міс. ";
+        if (day != 0) result += Math.abs(day) + " д.";
 
         return result;
     }

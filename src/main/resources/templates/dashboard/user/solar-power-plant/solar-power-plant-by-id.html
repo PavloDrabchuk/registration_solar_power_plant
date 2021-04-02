@@ -56,13 +56,15 @@
                                 <tr>
                                     <th class="text-center">Характеристика</th>
                                     <!-- Alt+0183 -> · -->
-                                    <th class="text-center">Значення (кВт·год)</th>
+                                    <!--                                    <th class="text-center">Значення (кВт·год)</th>-->
+                                    <th class="text-center">Значення</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>Вироблено енергії за увесь час</td>
-                                    <td th:utext="${totalPower}">8888</td>
+                                    <td th:if="${totalPower != null}" th:utext="${totalPower}">8888</td>
+                                    <td th:if="${totalPower == null}">Недостатньо даних</td>
                                 </tr>
                                 <tr>
                                     <td>Вироблено енергії за останніх 30 днів</td>
