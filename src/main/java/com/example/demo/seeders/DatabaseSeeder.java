@@ -1,6 +1,7 @@
 package com.example.demo.seeders;
 
 import com.example.demo.model.*;
+import com.example.demo.service.DynamicDataService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,22 +12,24 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class DatabaseSeeder {
 
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
-    //private final StaticDataSe staticData;
+    private final DynamicDataService dynamicDataService;
+
 
     @Autowired
     public DatabaseSeeder(UsersService usersService,
                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                          SolarPowerPlantService solarPowerPlantService) {
+                          SolarPowerPlantService solarPowerPlantService, DynamicDataService dynamicDataService) {
         this.usersService = usersService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.solarPowerPlantService = solarPowerPlantService;
+        this.dynamicDataService = dynamicDataService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -35,6 +38,7 @@ public class DatabaseSeeder {
     public void seed(ContextRefreshedEvent event) throws ParseException {
         seedUsersTable();
         seedSolarPowerPlantTable();
+        seedDynamicDataTable();
     }
 
     private void seedUsersTable() {
@@ -93,24 +97,29 @@ public class DatabaseSeeder {
 
         for (int i = 1; i <= 5; i++) {
             for (int j = 0; j < 5; j++) {
-                StaticData staticData=new StaticData();
-                staticData.setQuantity(1+(int)(Math.random()*20));
-                staticData.setPower(350+Math.random()*200);
+                StaticData staticData = new StaticData();
+                staticData.setQuantity(1 + (int) (Math.random() * 20));
+                staticData.setPower(350 + Math.random() * 200);
 
                 /*String stringYear="20";
                 int year=1+(int)(Math.random()*20);
                 if(year<10)stringYear+="0"+year;
                 else stringYear+=year;*/
 
-                staticData.setInstallationDate("20"+getStringNumberForDate(1,20)+"-"+getStringNumberForDate(1,12)+"-"+getStringNumberForDate(1,28));
+                staticData.setInstallationDate("20" + getStringNumberForDate(1, 20) + "-" + getStringNumberForDate(1, 12) + "-" + getStringNumberForDate(1, 28));
 
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
-                        "Івано-Франківськ", "Грушевського", Integer.toString(i*j), 48.9117518,24.6470892);
-                SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv"+ i +"_"+ j,
-                        "Name"+ i +"_"+ j, location1, usersService.getUserById((long) i).get());
+                        "Івано-Франківськ", "Грушевського", Integer.toString(i * j), 48.9117518, 24.6470892);
+                SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
+                        "Name" + i + "_" + j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);
-                solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1,0);
+                solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1, 0);
+
+                String str = "2021-04-02 00:00:00";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
 
                 //staticData.setQuantity(i*(j+1));
                 //staticData.setInstallationDate("2021-03-29");
@@ -120,12 +129,26 @@ public class DatabaseSeeder {
         }
     }
 
-    private String getStringNumberForDate(int startNum, int finishNum){
+    private void seedDynamicDataTable() {
+        String str = "2021-04-02 00:00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+
+        for (int k = 0; k < 250; k++) {
+
+            dateTime = dateTime.plusMinutes(30);
+
+            dynamicDataService.saveDynamicDataForDatabaseSeeder(dateTime);
+
+        }
+    }
+
+    private String getStringNumberForDate(int startNum, int finishNum) {
         //String stringYear="20";
-        String result="";
-        int num=startNum+(int)(Math.random()*finishNum);
-        if(num<10) result+="0"+num;
-        else result+=num;
+        String result = "";
+        int num = startNum + (int) (Math.random() * finishNum);
+        if (num < 10) result += "0" + num;
+        else result += num;
 
         return result;
     }

@@ -41,8 +41,8 @@ import java.util.stream.Stream;
 @Service
 public class DynamicDataService {
 
-    private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
-    //private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
+    //private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
+    private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
 
     private final DynamicDataRepository dynamicDataRepository;
     private final SolarPowerPlantService solarPowerPlantService;
@@ -53,6 +53,8 @@ public class DynamicDataService {
         this.dynamicDataRepository = dynamicDataRepository;
         this.solarPowerPlantService = solarPowerPlantService;
     }
+
+
 
     public List<DynamicData> getDynamicDataBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {
         return (List<DynamicData>) dynamicDataRepository.findAllBySolarPowerPlant(solarPowerPlant);
@@ -73,35 +75,45 @@ public class DynamicDataService {
     public void saveDynamicData() {
         System.out.println("\n\n save dynamic data: ");
         //dynamicDataRepository.save(dynamicData);
-        for (DynamicData dynamicData : generateData()) {
+        for (DynamicData dynamicData : generateData(LocalDateTime.now())) {
             System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
         }
         System.out.println("\n\n\n");
+
     }
 
-    private List<DynamicData> generateData() {
+    public void saveDynamicDataForDatabaseSeeder(LocalDateTime dateTime){
+        for (DynamicData dynamicData : generateData(dateTime)) {
+            //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
+            dynamicDataRepository.save(dynamicData);
+        }
+    }
+
+    private List<DynamicData> generateData(LocalDateTime dateTime) {
         List<DynamicData> generatedData = new ArrayList<>();
         List<SolarPowerPlant> solarPowerPlantList = solarPowerPlantService.getAllSolarPowerPlants();
 
-        LocalDateTime localDateTime = LocalDateTime.now();
+        //LocalDateTime localDateTime = LocalDateTime.now();
 
-        double producedPower,
+        double producedPower;
+        /*
                 leftLimit = 1D,
                 rightLimit = 100D;
+                */
 
         int month, weatherNumber;
 
         for (SolarPowerPlant solarPowerPlant : solarPowerPlantList) {
             // producedPower = leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);
-            month = localDateTime.getMonthValue();
+            month = dateTime.getMonthValue();
 
             System.out.println("Month: " + month);
             weatherNumber = getWeatherNumber(month);
 
 
             producedPower = generateProducerPower(month,
-                    localDateTime.getHour(),
+                    dateTime.getHour(),
                     weatherNumber,
                     solarPowerPlant.getStaticData().getPower(),
                     solarPowerPlant.getStaticData().getQuantity(),
@@ -111,7 +123,7 @@ public class DynamicDataService {
                     solarPowerPlant,
                     Weather.values()[weatherNumber],
                     producedPower,
-                    localDateTime));
+                    dateTime));
         }
 
         return generatedData;
