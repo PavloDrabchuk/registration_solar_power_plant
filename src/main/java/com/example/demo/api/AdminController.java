@@ -11,15 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -49,9 +45,9 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
-        if (user.get().getUserRoles().toString().equals(UserRoles.ADMIN.name())) {
+        if (user.get().getUserRole().toString().equals(UserRoles.ADMIN.name())) {
             model.addAttribute("users", usersService.getAllUsers());
-            System.out.println("--- ADMIN ---\n role: " + user.get().getUserRoles().toString().equals(UserRoles.ADMIN.name()));
+            System.out.println("--- ADMIN ---\n role: " + user.get().getUserRole().toString().equals(UserRoles.ADMIN.name()));
 
             addAdminAccessToModel(model);
 
@@ -161,15 +157,15 @@ public class AdminController {
             //user.get().setUserRoles(UserRoles.model);
             switch (role) {
                 case "USER": {
-                    user.get().setUserRoles(UserRoles.USER);
+                    user.get().setUserRole(UserRoles.USER);
                     break;
                 }
                 case "ADMIN": {
-                    user.get().setUserRoles(UserRoles.ADMIN);
+                    user.get().setUserRole(UserRoles.ADMIN);
                     break;
                 }
                 case "EDITOR": {
-                    user.get().setUserRoles(UserRoles.EDITOR);
+                    user.get().setUserRole(UserRoles.EDITOR);
                     break;
                 }
                 default: {
@@ -391,7 +387,7 @@ public class AdminController {
     private void addAdminAccessToModel(Model model){
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRoles()== UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole()== UserRoles.ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }

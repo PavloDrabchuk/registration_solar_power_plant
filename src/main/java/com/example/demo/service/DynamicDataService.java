@@ -53,7 +53,6 @@ public class DynamicDataService {
     }
 
 
-
     public List<DynamicData> getDynamicDataBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {
         return (List<DynamicData>) dynamicDataRepository.findAllBySolarPowerPlant(solarPowerPlant);
     }
@@ -82,7 +81,7 @@ public class DynamicDataService {
 
     }
 
-    public void saveDynamicData(LocalDateTime dateTime){
+    public void saveDynamicData(LocalDateTime dateTime) {
         for (DynamicData dynamicData : generateData(dateTime)) {
             //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
@@ -111,7 +110,7 @@ public class DynamicDataService {
             weatherNumber = getWeatherNumber(month);
 
 
-            producedPower = generateProducerPower(month,
+            producedPower = generateProducedPower(month,
                     dateTime.getHour(),
                     weatherNumber,
                     solarPowerPlant.getStaticData().getPower(),
@@ -129,11 +128,23 @@ public class DynamicDataService {
     }
 
 
-    private double generateProducerPower(int month, int hour, int weatherNumber, Double power, Integer quantity, int usingTime) {
+    private double generateProducedPower(
+            int month,
+            int hour,
+            int weatherNumber,
+            Double power,
+            Integer quantity,
+            int usingTime) {
         //double producerPower = 340.0 / 48.0; //якщо збирати дані раз в 30 хвилин
         double producerPower = power;
-        producerPower *= monthlyCoefficient(month, 0.4, 1.02) * weatherCoefficient(month, weatherNumber) * hourlyCoefficient(hour, month);
-        producerPower *= quantity;
+
+        producerPower
+                *= monthlyCoefficient(month, 0.4, 1.02)
+                * weatherCoefficient(month, weatherNumber)
+                * hourlyCoefficient(hour, month)
+                * quantity;
+
+        //producerPower *= quantity;
         /*
         Months.values()[index]
          */
@@ -143,8 +154,8 @@ public class DynamicDataService {
             producerPower *= 0.8;
         }
 
-        producerPower /= 16*3600/(DATA_COLLECTION_TIME/1000D);
-        System.out.println("DATA_COLLECTION_TIME: "+16*3600/(DATA_COLLECTION_TIME/1000));
+        producerPower /= 16 * 3600 / (DATA_COLLECTION_TIME / 1000D);
+        System.out.println("DATA_COLLECTION_TIME: " + 16 * 3600 / (DATA_COLLECTION_TIME / 1000));
 
 
         //ArrayList<Weather> weathers = new ArrayList<Weather>();
@@ -196,11 +207,14 @@ public class DynamicDataService {
         calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
 
         LocalDate date = LocalDate.now();
-        int year, month, day;
 
-        year = date.getYear();
+        int year = date.getYear(),
+                month = date.getMonthValue(),
+                day = date.getDayOfMonth();
+
+        /*year = date.getYear();
         month = date.getMonthValue();
-        day = date.getDayOfMonth();
+        day = date.getDayOfMonth();*/
 
         day -= calendar.get(Calendar.DAY_OF_MONTH);
         if (day < 0) month--;

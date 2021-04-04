@@ -20,8 +20,6 @@ import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -49,10 +47,15 @@ public class SolarPowerPlantController {
     }
 
     @PostMapping(path = "/addSolarPowerPlant")
-    public String addSolarPowerPlant(@Valid @ModelAttribute("solarPowerPlant") SolarPowerPlant solarPowerPlant) throws IOException {
+    public String addSolarPowerPlant(
+            @Valid
+            @ModelAttribute("solarPowerPlant")
+                    SolarPowerPlant solarPowerPlant) throws IOException {
         System.out.println("addSolarPowerPlant");
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
         String username = auth.getName();//get logged in username
 
         Optional<User> user = usersService.getUserByUsername(username);
@@ -65,7 +68,8 @@ public class SolarPowerPlantController {
 
         locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
         solarPowerPlant.getLocation().setCountry("Україна");
-        solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+        solarPowerPlant.setRegistrationDateTime(
+                LocalDateTime.now(ZoneId.of("UTC")));
 //        solarPowerPlant.getStaticData().setStringInstallationDate();
         System.out.println("Installation date: " + solarPowerPlant.getStaticData().getInstallationDate());
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant, 0);
@@ -135,7 +139,7 @@ public class SolarPowerPlantController {
 
             model.addAttribute("totalPower", totalPower != null ? String.format("%,.2f", totalPower) : "Недостатньо даних.");
 
-            Double totalPowerForLarThirtyDays=dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get());
+            Double totalPowerForLarThirtyDays = dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get());
 
             model.addAttribute("totalPowerForLarThirtyDays", totalPowerForLarThirtyDays != null ? String.format("%,.2f", totalPowerForLarThirtyDays) : "Недостатньо даних.");
 
@@ -144,9 +148,9 @@ public class SolarPowerPlantController {
             //        String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
             //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
 
-            Double averagePowerForDay=dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get());
+            Double averagePowerForDay = dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get());
             //model.addAttribute("averagePowerForDay",
-              //      String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+            //      String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
 
             model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
 
@@ -305,7 +309,7 @@ public class SolarPowerPlantController {
                 {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
         givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);*/
 
-        String filename = getFilename(solarPowerPlantService.getSolarPowerPlantByStringId(id).get().getName());
+        String filename = createFilename(solarPowerPlantService.getSolarPowerPlantByStringId(id).get().getName());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -419,17 +423,17 @@ public class SolarPowerPlantController {
         //assertTrue(csvOutputFile.exists());
     }*/
 
-    public String getFilename(String name) {
+    public String createFilename(String name) {
         //String filename = "";
         //String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
-        return reformatName(name) + "-"
+        return name.replace(' ', '_') + "-"
                 + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"))
                 + "-data";
     }
 
-    public String reformatName(String name) {
+    /*public String reformatName(String name) {
         return name.replace(' ', '_');
-    }
+    }*/
 
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -440,7 +444,7 @@ public class SolarPowerPlantController {
     private void addAdminAccessToModel(Model model) {
         Optional<User> user = getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRoles() == UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }

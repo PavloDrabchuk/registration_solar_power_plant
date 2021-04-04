@@ -45,7 +45,7 @@ public class DatabaseSeeder {
         User user = new User();
         user.setEmail("ravluk2000@gmail.com");
         user.setUsername("qwerty");
-        user.setUserRoles(UserRoles.ADMIN);
+        user.setUserRole(UserRoles.ADMIN);
         user.setActivated(true);
         user.setLocked(false);
         user.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -55,7 +55,7 @@ public class DatabaseSeeder {
         User user1 = new User();
         user1.setEmail("lab2018.home.work@gmail.com");
         user1.setUsername("qwerty123");
-        user1.setUserRoles(UserRoles.USER);
+        user1.setUserRole(UserRoles.USER);
         user1.setActivated(true);
         user1.setLocked(false);
         user1.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -65,7 +65,7 @@ public class DatabaseSeeder {
         User user2 = new User();
         user2.setEmail("lab2018.home.work1@gmail.com");
         user2.setUsername("qwerty1231");
-        user2.setUserRoles(UserRoles.USER);
+        user2.setUserRole(UserRoles.USER);
         user2.setActivated(true);
         user2.setLocked(false);
         user2.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -75,7 +75,7 @@ public class DatabaseSeeder {
         User user3 = new User();
         user3.setEmail("lab2018.home.work2@gmail.com");
         user3.setUsername("qwerty1232");
-        user3.setUserRoles(UserRoles.USER);
+        user3.setUserRole(UserRoles.USER);
         user3.setActivated(true);
         user3.setLocked(false);
         user3.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -85,7 +85,7 @@ public class DatabaseSeeder {
         User user4 = new User();
         user4.setEmail("lab2018.home.work3@gmail.com");
         user4.setUsername("qwerty1233");
-        user4.setUserRoles(UserRoles.USER);
+        user4.setUserRole(UserRoles.USER);
         user4.setActivated(true);
         user4.setLocked(false);
         user4.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -134,7 +134,7 @@ public class DatabaseSeeder {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        for (int k = 0; k < 20; k++) {
+        for (int k = 0; k < 100; k++) {
 
             dateTime = dateTime.plusMinutes(30);
 

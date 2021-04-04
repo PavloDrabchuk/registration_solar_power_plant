@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dao.UsersRepository;
 import com.example.demo.model.User;
-import com.example.demo.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,8 +33,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
 
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.get().getUserRoles().toString()));
-        System.out.println("access: "+user.get().getUserRoles().toString());
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.get().getUserRole().toString()));
+        System.out.println("access: "+user.get().getUserRole().toString());
 
         return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), grantedAuthorities);
     }

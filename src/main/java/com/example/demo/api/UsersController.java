@@ -70,7 +70,7 @@ public class UsersController {
 
             System.out.println("status:" + user.get().getActivated());
 
-            String userRole = user.get().getUserRoles().toString();
+            String userRole = user.get().getUserRole().toString();
 
             model.addAttribute("solarPowerPlantsByUser",
                     solarPowerPlantService.getSolarPowerPlantByUserForPage(
@@ -135,7 +135,7 @@ public class UsersController {
 
             System.out.println("addUser");
 
-            user.setUserRoles(UserRoles.USER);
+            user.setUserRole(UserRoles.USER);
             user.setActivated(false);
             user.setLocked(false);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -246,7 +246,7 @@ public class UsersController {
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
 
-            if (user.get().getUserRoles()==UserRoles.ADMIN) {
+            if (user.get().getUserRole()==UserRoles.ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
             }
@@ -269,7 +269,7 @@ public class UsersController {
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
-            if (user.get().getUserRoles()==UserRoles.ADMIN) {
+            if (user.get().getUserRole()==UserRoles.ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
             }

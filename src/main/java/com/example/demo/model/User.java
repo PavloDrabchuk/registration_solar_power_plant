@@ -1,25 +1,14 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import java.util.UUID;
 
 @Entity
 //@Table(name="user", catalog = "registration_system")
@@ -27,8 +16,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
 
     private String username;
 
@@ -69,21 +56,21 @@ public class User {
 
     //    @Cascade(value = {  CascadeType.ALL })
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private UserRoles userRoles;
+    private UserRoles userRole;
 
     public User(
             @JsonProperty("username") String username,
                 @JsonProperty("name") String name,
                 @JsonProperty("surname") String surname,
                 @JsonProperty("password") String password,
-                @JsonProperty("userRoles") UserRoles userRoles,
+                @JsonProperty("userRoles") UserRoles userRole,
                 @JsonProperty("email") String email,
                 @JsonProperty("mobilePhoneNumber") String mobilePhoneNumber) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
-        this.userRoles = userRoles;
+        this.userRole = userRole;
         //this.activated=false;
         //this.locked=false;
         this.email = email;
@@ -93,9 +80,6 @@ public class User {
 
     public User() {
     }
-
-
-
 
     public Long getId() {
         return id;
@@ -145,12 +129,12 @@ public class User {
         this.userRole = userRole;
     }*/
 
-    public UserRoles getUserRoles() {
-        return userRoles;
+    public UserRoles getUserRole() {
+        return userRole;
     }
 
-    public void setUserRoles(UserRoles userRoles) {
-        this.userRoles = userRoles;
+    public void setUserRole(UserRoles userRoles) {
+        this.userRole = userRoles;
     }
 
     public Boolean getActivated() {
@@ -186,7 +170,7 @@ public class User {
                 "\nsurname: " + surname +
                 "\npassword: " + password +
                 "\nemail: " + email +
-                "\nuserRoles: " + userRoles +
+                "\nuserRoles: " + userRole +
                 "\nmobilePhoneNumber: " + mobilePhoneNumber);
     }
 

@@ -18,16 +18,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+//@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Qualifier("myUserDetailsService")
-    @Autowired
     private final UserDetailsService userDetailsService;
 
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public WebSecurityConfig(@Qualifier("myUserDetailsService") UserDetailsService userDetailsService,
+                             BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     /*@Autowired
     public WebSecurityConfig (UsersService usersService,BCryptPasswordEncoder bCryptPasswordEncoder){
@@ -39,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/","/index","/add_user/**","/new","/addUser","/registration/**","/confirm_registration","/success_user_registration","/confirm/**","/recover/**","/recover_password","/recoverPassword","/updatePassword")
+                .antMatchers("/", "/index", "/add_user/**", "/new", "/addUser", "/registration/**", "/confirm_registration", "/success_user_registration", "/confirm/**", "/recover/**", "/recover_password", "/recoverPassword", "/updatePassword")
                 .permitAll()
                 .antMatchers("/styles/**").permitAll()
                 .antMatchers("/data/seed").permitAll()
@@ -47,8 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/admin/**")
                 .hasAuthority("ADMIN")
-                .antMatchers("/sign-up/**",/* "/login/**",*/"/home/**","/add_solar_power_plant/**")
-                .hasAnyAuthority("USER","ADMIN")
+                .antMatchers("/sign-up/**", "/home/**",
+                        "/add_solar_power_plant/**")
+                .hasAnyAuthority("USER", "ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -57,13 +62,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();;
+                .permitAll();
     }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.inMemoryAuthentication()
+       /* auth.inMemoryAuthentication()
                 .withUser("nameSurname").password(bCryptPasswordEncoder.encode("qwerty123")).roles("USER")
                 .and()
                 .withUser("user2").password(bCryptPasswordEncoder.encode("user2Pass")).roles("USER")
@@ -71,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin").password(bCryptPasswordEncoder.encode("adminPass")).roles("ADMIN")
                 .and()
                 .withUser("admin1").password(bCryptPasswordEncoder.encode("admin")).authorities("ADMIN");
-
+*/
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);
     }

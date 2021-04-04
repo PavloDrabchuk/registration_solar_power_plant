@@ -26,7 +26,7 @@ public class DynamicData {
 
     public DynamicData(SolarPowerPlant solarPowerPlant, Weather weather, Double producedPower, LocalDateTime collectionDateTime) {
         this.solarPowerPlant = solarPowerPlant;
-        this.weather=weather;
+        this.weather = weather;
         this.producedPower = producedPower;
         this.collectionDateTime = collectionDateTime;
     }
