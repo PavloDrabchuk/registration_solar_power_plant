@@ -134,7 +134,7 @@ public class DatabaseSeeder {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        for (int k = 0; k < 100; k++) {
+        for (int k = 0; k < 20; k++) {
 
             dateTime = dateTime.plusMinutes(30);
 

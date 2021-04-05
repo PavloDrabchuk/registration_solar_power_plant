@@ -32,7 +32,7 @@ public class AdminController {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.dynamicDataService=dynamicDataService;
+        this.dynamicDataService = dynamicDataService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -76,7 +76,9 @@ public class AdminController {
                                 (Integer.parseInt(page) - 1) * (int) limitUsers,
                                 (int) limitUsers));
 
-                List<String> pageNumList = usersService.getNumPagesList(usersService.getAllUsers(), limitUsers);
+                List<String> pageNumList = usersService
+                        .getNumPagesList(usersService.getAllUsers(),
+                        limitUsers);
 
                 model.addAttribute("numPages", pageNumList);
                 model.addAttribute("currentPage", page);
@@ -113,8 +115,8 @@ public class AdminController {
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
-            model.addAttribute("solarPowerPlants",solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
-            model.addAttribute("countOfRegisteredSolarStations",solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
+            model.addAttribute("solarPowerPlants", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
+            model.addAttribute("countOfRegisteredSolarStations", solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
 
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
@@ -169,7 +171,7 @@ public class AdminController {
                     break;
                 }
                 default: {
-                    model.addAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше");
+                    model.addAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше.");
                     break;
                 }
             }
@@ -177,7 +179,7 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("updateUserMessage", "Роль користувача змінено.");
         } else {
             System.out.println("((((((((((((((((");
-            redirectAttributes.addFlashAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше");
+            redirectAttributes.addFlashAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше.");
         }
 
         return "redirect:/admin/users/" + id;
@@ -267,8 +269,8 @@ public class AdminController {
             } else {
                 List<SolarPowerPlant> solarPowerPlants = solarPowerPlantService.getSolarPowerPlantsByName(searchName);
 
-                for (SolarPowerPlant s:solarPowerPlants) {
-                    System.out.println("   s: "+s.getName());
+                for (SolarPowerPlant s : solarPowerPlants) {
+                    System.out.println("   s: " + s.getName());
                 }
 
                 if (solarPowerPlants.size() > 0) {
@@ -281,8 +283,8 @@ public class AdminController {
 
                     List<String> pageNumList = solarPowerPlantService.getNumPagesListForAll(solarPowerPlants, limitSolarPowerPlants);
 
-                    for (String p:pageNumList){
-                        System.out.println("    p: "+p);
+                    for (String p : pageNumList) {
+                        System.out.println("    p: " + p);
                     }
 
                     model.addAttribute("numPages", pageNumList);
@@ -307,14 +309,27 @@ public class AdminController {
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
 
-            model.addAttribute("totalPower",
-                    String.format("%,.2f", dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get())));
+            Double totalPower = dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get());
+            //if (totalPower != null) model.addAttribute("totalPower", String.format("%,.2f", totalPower));
+            //else model.addAttribute("totalPower", "Недостатньо даних.");
 
-            model.addAttribute("totalPowerForLarThirtyDays",
-                    String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
+            model.addAttribute("totalPower", totalPower != null ? String.format("%,.2f", totalPower) : "Недостатньо даних.");
+
+            Double totalPowerForLarThirtyDays = dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get());
+
+            model.addAttribute("totalPowerForLarThirtyDays", totalPowerForLarThirtyDays != null ? String.format("%,.2f", totalPowerForLarThirtyDays) : "Недостатньо даних.");
+
+
+            //model.addAttribute("totalPowerForLarThirtyDays",
+            //        String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
             //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
-            model.addAttribute("averagePowerForDay",
-                    String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+
+            Double averagePowerForDay = dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get());
+            //model.addAttribute("averagePowerForDay",
+            //      String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+
+            model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
+
             model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/solar-power-plant-by-id";
@@ -330,7 +345,7 @@ public class AdminController {
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
             model.addAttribute("regions", Region.values());
-            model.addAttribute("localDate",LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
 
         return "dashboard/admin/update-solar-power-plant-by-id";
@@ -338,19 +353,19 @@ public class AdminController {
 
     @PostMapping(path = "/admin/solar-power-plants/{id}/update")
     public String updateSolarPowerPlantById(@PathVariable String id,
-                                 Model model,
-                                 @RequestParam(value = "name") String name,
-                                 @RequestParam(value = "quantity") Integer quantity,
-                                 RedirectAttributes redirectAttributes) {
+                                            Model model,
+                                            @RequestParam(value = "name") String name,
+                                            @RequestParam(value = "quantity") Integer quantity,
+                                            RedirectAttributes redirectAttributes) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
             if (!name.isEmpty()) {
                 solarPowerPlant.get().setName(name);
             }
-            if (quantity!=null) {
+            if (quantity != null) {
                 solarPowerPlant.get().getStaticData().setQuantity(quantity);
             }
-            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get(),1);
+            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get(), 1);
         }
         //тут можна надіслати сповіщення для користувача
         redirectAttributes.addFlashAttribute("updateSolarPowerPlantMessage", "Інформацію про сонячну станцію оновлено.");
@@ -384,10 +399,10 @@ public class AdminController {
         return usersService.getUserByUsername(username);
     }
 
-    private void addAdminAccessToModel(Model model){
-        Optional<User> user=getAuthorisedUser();
+    private void addAdminAccessToModel(Model model) {
+        Optional<User> user = getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()== UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }
