@@ -23,16 +23,17 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -227,16 +228,20 @@ public class DynamicDataService {
 
     public String downloadData(HttpServletRequest request,
                                HttpServletResponse response,
-                               String fileName) {
+                               String fileName) throws UnsupportedEncodingException {
         //String fileName = "f.csv";
-        System.out.println("t-t-t-t-t-t-t");
+        System.out.println("t-t-t-t-t-t-t filename: "+fileName);
+
         //String dataDirectory = request.getServletContext().getRealPath("upload-dir/");
         Path file = Paths.get("upload-dir/" + fileName);
 
-        if (Files.exists(file)) {
-            System.out.println("5-5-5-5-5-5-5");
+        fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 
-            response.setContentType("application/csv");
+        if (Files.exists(file)) {
+            System.out.println("5-5-5-5-5-5-5 file: "+file.toString()+" file extension: "+getFileExtension(fileName));
+
+            response.setContentType("application/"+ getFileExtension(fileName)+"; charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
             response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
             try {
                 Files.copy(file, response.getOutputStream());
@@ -392,5 +397,15 @@ public class DynamicDataService {
                 LocalDateTime.now(),
                 solarPowerPlant.getId());
     }
+
+    public String getFileExtension(String fileName) {
+        Pattern pattern = Pattern
+                .compile(".*(data\\.(csv|xml|json))");
+
+        Matcher matcher = pattern.matcher(fileName);
+
+        return (matcher.find()) ? matcher.group(2) : "-1";
+    }
+
 }
 

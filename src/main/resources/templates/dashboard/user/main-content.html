@@ -123,8 +123,10 @@
     </div>
 
     <div th:if="${not #lists.isEmpty(solarPowerPlantsByUser)}">
-        <div th:each="solarPowerPlant,state : ${solarPowerPlantsByUser}" th:if="${state.odd}"
-             th:with="numList=${#strings.listSplit('1,0',',')}" class="row mb-2">
+        <div th:each="solarPowerPlant,state : ${solarPowerPlantsByUser}"
+             th:if="${state.odd}"
+             th:with="numList=${#strings.listSplit('1,0',',')}"
+             class="row mb-2">
             <!--             th:with="solarPowerPlants111=${ {solarPowerPlant[state.index] , solarPowerPlant[state.index+1]} }" >-->
             <!--                                                                        th:if="${state.index} % 2 == 0"-->
             <!--            <div th:if="${state.odd}">-->
@@ -237,7 +239,8 @@
                 </li>
             </ul>
         </nav>-->
-        <div th:if="${#lists.size(numPages)}> 1" class="text-center pagination-menu">
+        <div th:if="${#lists.size(numPages)}> 1"
+             class="text-center pagination-menu">
             <form action="/home" method="get">
                 <nav>
                     <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">

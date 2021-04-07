@@ -109,6 +109,17 @@
                                     <br/>
                                     <div class="row">
                                         <div class="input-group">
+                                            <span class="col-4 text-wrap input-group-text" id="addon-wrapping-power">Потужність батареї</span>
+                                            <input type="number" min="1" class="form-control" name="power"
+                                                   placeholder="Наприклад: 480, 550." aria-label="Power"
+                                                   aria-describedby="addon-wrapping-power"
+                                                   th:value="${solarPowerPlant.getStaticData().getPower()}"
+                                                   th:field="*{staticData.power}">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
                                           id="addon-wrapping-installation-date">Дата встановлення</span>
                                             <input type="date" class="form-control" name="installationDate"

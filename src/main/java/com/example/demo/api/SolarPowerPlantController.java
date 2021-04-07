@@ -21,6 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -256,22 +257,42 @@ public class SolarPowerPlantController {
 
     @PostMapping(path = "/view/{id}/data")
     public String getData(@PathVariable String id,
-                          @RequestParam(value = "startDate", defaultValue = "World") String startDate,
-                          @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
+                          @RequestParam(value = "startDate", defaultValue = "") String startDate,
+                          @RequestParam(value = "finishDate", defaultValue = "") String finishDate,
+                          @RequestParam(value = "dataPeriod", defaultValue = "World") String dataPeriod,
                           Model model) {
-        model.addAttribute("info", startDate + " - " + finishDate + "\nid: " + id);
+        System.out.println("dataPeriod: " + dataPeriod);
+
+        if (startDate.equals("")) {
+            //startDate = LocalDate.now().toString()+"T00:00";
+            startDate = LocalDateTime.now().minusHours(24).toString().substring(0,16);
+        }
+        System.out.println("... startDate: "+startDate);
+        if (finishDate.equals("")) {
+            //finishDate = LocalDate.now().toString()+"T23:59";
+            finishDate = LocalDateTime.now().toString().substring(0,16);
+            System.out.println(".....date now(): "+LocalDateTime.now().toString().substring(0,16));
+            System.out.println(".....date now()-24h: "+LocalDateTime.now().minusHours(24).toString().substring(0,16));
+        }
+        System.out.println("... finishDate: " + finishDate);
+
+        model.addAttribute("info", "Дані з "+startDate.replace("T"," ") + " по " + finishDate.replace("T"," "));
         //System.out.println("info: "+ startDate + " - " + finishDate + "\nid: " + id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
+//String g=LocalDateTime.now().toString();
         model.addAttribute("startDate", startDate);
         model.addAttribute("finishDate", finishDate);
         model.addAttribute("id", id);
 
-        model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
-                LocalDateTime.parse(startDate.replace("T", " "), formatter),
-                LocalDateTime.parse(finishDate.replace("T", " "), formatter),
-                solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
-
+        if (dataPeriod.equals("Отримати дані")) {
+            model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
+                    LocalDateTime.parse(startDate.replace("T", " "), formatter),
+                    LocalDateTime.parse(finishDate.replace("T", " "), formatter),
+                    solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
+        } else if (dataPeriod.equals("Отримати дані за весь час")) {
+            model.addAttribute("data", dynamicDataService.getDynamicDataBySolarPowerPlant(
+                    solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
+        }
         model.addAttribute("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
 
         addAdminAccessToModel(model);
@@ -362,7 +383,7 @@ public class SolarPowerPlantController {
             return "download-file-error";
         }
         System.out.println("0=0=0=0=0=0=0=0=0");*/
-
+        System.out.println("........ filename: " + filename);
         return dynamicDataService.downloadData(request, response, filename);
 
         // ==========================

@@ -53,7 +53,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user);
 
         User user1 = new User();
-        user1.setEmail("lab2018.home.work@gmail.com");
+        user1.setEmail("example1@gmail.com");
         user1.setUsername("qwerty123");
         user1.setUserRole(UserRoles.USER);
         user1.setActivated(true);
@@ -63,7 +63,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user1);
 
         User user2 = new User();
-        user2.setEmail("lab2018.home.work1@gmail.com");
+        user2.setEmail("example2@gmail.com");
         user2.setUsername("qwerty1231");
         user2.setUserRole(UserRoles.USER);
         user2.setActivated(true);
@@ -73,7 +73,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user2);
 
         User user3 = new User();
-        user3.setEmail("lab2018.home.work2@gmail.com");
+        user3.setEmail("example3@gmail.com");
         user3.setUsername("qwerty1232");
         user3.setUserRole(UserRoles.USER);
         user3.setActivated(true);
@@ -110,9 +110,9 @@ public class DatabaseSeeder {
 
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
-                        "Івано-Франківськ", "Грушевського", Integer.toString(i * j), 48.9117518, 24.6470892);
+                        "Івано-Франківськ", "Грушевського", Integer.toString((i+1) * (j+1)), 48.92065, 24.71355);
                 SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
-                        "Name" + i + "_" + j, location1, usersService.getUserById((long) i).get());
+                        "Назва станції № " + i + "_" + j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);
                 solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1, 0);
 
@@ -130,11 +130,11 @@ public class DatabaseSeeder {
     }
 
     private void seedDynamicDataTable() {
-        String str = "2021-03-12 00:00:00";
+        String str = "2021-04-06 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        for (int k = 0; k < 20; k++) {
+        for (int k = 0; k < 250; k++) {
 
             dateTime = dateTime.plusMinutes(30);
 
