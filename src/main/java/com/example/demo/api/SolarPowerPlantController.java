@@ -6,7 +6,7 @@ import com.example.demo.service.LocationService;
 import com.example.demo.service.SolarPowerPlantService;
 import com.example.demo.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.json.JSONException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
