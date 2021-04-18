@@ -3,6 +3,7 @@ package com.example.demo.api;
 import com.example.demo.model.Product;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRoles;
+import com.example.demo.model.Weather;
 import com.example.demo.service.UsersService;
 import com.example.weather.OpenWeather;
 import com.google.gson.Gson;
@@ -19,6 +20,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 
 @RestController
@@ -37,7 +40,7 @@ public class SeedController {
     @GetMapping(path = "/test-json")
     public void testJson() throws IOException {
 
-        String API_KEY="ad4112f68d38350518e7c19239012a75";
+        String API_KEY = "ad4112f68d38350518e7c19239012a75";
 
 
         //Product product = null;
@@ -45,19 +48,76 @@ public class SeedController {
         /*gsonBuilder.registerTypeAdapter(Product.class);
         Gson gson = gsonBuilder.create();*/
 
-        Gson gson=new Gson();
+        Gson gson = new Gson();
 //        String d=Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"));
-        String d=getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid="+API_KEY);
-        Product product= gson.fromJson(d,Product.class);
-        OpenWeather openWeather=gson.fromJson(d,OpenWeather.class);
+        String d = getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY);
+        Product product = gson.fromJson(d, Product.class);
+        OpenWeather openWeather = gson.fromJson(d, OpenWeather.class);
 //        String d=getFileContent("/upload-dir/product.json");
         //File myFile = new File("product.json");
 //"D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"
         //System.out.println(".-.-.-.-.-.-: data: "+new FileReader("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"));
-        System.out.println(".-.-.-.-.-.-: data: "+ getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid="+API_KEY));
+        System.out.println(".-.-.-.-.-.-: data: " + getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY));
 //        System.out.println(".-.-.-.-.-.-: data: "+ Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json")));
 
-        System.out.println("\n product: "+openWeather.getName()+" desc: "+openWeather.getWeather().get(0).getMain());
+        System.out.println("\n product: " + openWeather.getName() + " desc: " + openWeather.getWeather().get(0).getMain());
+        System.out.println("==== data: " + d);
+
+        String description = openWeather.getWeather().get(0).getDescription();
+//        Double coef= Weather.values().equals()
+        double coefficient = -1;
+        for (Weather weather : Weather.values()) {
+            if (weather.getDescription().equals(description)) {
+                coefficient = weather.getCoefficient();
+                break;
+            }
+
+            /*else {
+                coefficient=0.01D;
+                //зберігати в файли інформацію про невідомі description
+               *//* FileWriter myWriter = new FileWriter("system-information-files/descriptions.txt");
+
+                myWriter.write("Main: \""+openWeather.getWeather().get(0).getMain()+"\", "+
+                        "description: \""+description+"\", "+
+                        "dt: "+openWeather.getDt()+"\n");
+                myWriter.close();*//*
+
+                Path filePath = Paths.get("system-information-files/descriptions.txt");
+                Files.writeString(filePath, "Hello World !!\n", StandardOpenOption.APPEND);
+
+                //Verify file content
+                String content = Files.readString(filePath);
+
+                System.out.println(content);
+            }*/
+        }
+        if (coefficient == -1) {
+
+            coefficient = 0.01D;
+            //зберігати в файли інформацію про невідомі description
+               /* FileWriter myWriter = new FileWriter("system-information-files/descriptions.txt");
+
+                myWriter.write("Main: \""+openWeather.getWeather().get(0).getMain()+"\", "+
+                        "description: \""+description+"\", "+
+                        "dt: "+openWeather.getDt()+"\n");
+                myWriter.close();*/
+
+            Path filePath = Paths.get("system-information-files/descriptions.txt");
+
+            String message = "Main: \"" + openWeather.getWeather().get(0).getMain() + "\", " +
+                    "description: \"" + description + "\", " +
+                    "dt: " + openWeather.getDt() + "\n";
+
+            Files.writeString(filePath, message, StandardOpenOption.APPEND);
+
+            //Verify file content
+            //String content = Files.readString(filePath);
+
+            //System.out.println(content);
+
+        }
+
+        System.out.println("description: " + description + " coefficient: " + coefficient);
         /*try(Reader reader = new InputStreamReader(GsonUtil.class.getResourceAsStream("/json/product.json"))){
             product = gson.fromJson(reader, Product.class);
             System.out.println(product.getProductId());
