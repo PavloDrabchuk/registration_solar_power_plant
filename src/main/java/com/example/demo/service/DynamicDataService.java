@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -206,7 +207,7 @@ public class DynamicDataService {
         return (hour >= 5 && hour <= 20) ? (((Math.sin(0.44 * hour + 2.3)) + 1) / 2) * monthlyCoefficient(month, 0.3, 0.25) : 0;
     }
 
-    private int getUsingTime(SolarPowerPlant solarPowerPlant) {
+    private int getUsingTime(@NotNull SolarPowerPlant solarPowerPlant) {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
 
