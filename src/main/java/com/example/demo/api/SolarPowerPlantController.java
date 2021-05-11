@@ -54,14 +54,24 @@ public class SolarPowerPlantController {
             @Valid
             @ModelAttribute("solarPowerPlant")
                     SolarPowerPlant solarPowerPlant,
-            BindingResult bindingResult) throws IOException {
+            BindingResult bindingResult,
+            Model model) throws IOException {
 
         if (bindingResult.hasErrors()) {
             System.out.println("-=-= errors");
             for (ObjectError h:bindingResult.getAllErrors()) {
                 System.out.println("  e: "+h.toString()+", "+h.getObjectName()+"\n");
             }
+
+            model.addAttribute("solarPowerPlant", solarPowerPlant);
+
+            model.addAttribute("regions", Region.values());
+            model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+            addAdminAccessToModel(model);
+
             return "add_solar_power_plant";
+            //return "redirect:/newSolarPowerPlant";
         }
 
         System.out.println("addSolarPowerPlant");
