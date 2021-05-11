@@ -3,9 +3,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-   <!-- <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.css"
-          th:href="@{/styles/bootstrap.css}"/>
-    <link rel="stylesheet" href="css/profile.css">-->
+    <!-- <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.css"
+           th:href="@{/styles/bootstrap.css}"/>
+     <link rel="stylesheet" href="css/profile.css">-->
 </head>
 
 <body>
@@ -32,25 +32,30 @@
                     </div>
                 </div>-->
                 <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 mb-3">
-                    <form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}" method="post">
+                    <form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}"
+                          method="post">
 
                         <!-- Name and other -->
                         <h3>Реєстрація сонячної станції</h3>
                         <div class="card mb-3">
                             <div class="card-body">
 
-                                <div class="row">
+                                <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap input-group-text "
                                           id="addon-wrapping-name">Назва</span>
                                         <input type="text" class="form-control"
                                                placeholder="Наприклад: Перша станція." aria-label="Name"
                                                aria-describedby="addon-wrapping-name"
-                                        th:field="*{name}" id="name">
+                                               th:field="*{name}" id="name">
+                                    </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                        Name error
                                     </div>
                                 </div>
-                                <br/>
-                                <div class="row">
+<!--                                <br/>-->
+                                <div class="row my-2">
                                     <div class="input-group">
                                         <span class="col-4 text-wrap input-group-text" id="addon-wrapping-quantity">Кількість панелей</span>
                                         <input type="number" value="1" min="1" class="form-control"
@@ -58,9 +63,13 @@
                                                aria-describedby="addon-wrapping-quantity"
                                                th:field="*{staticData.quantity}">
                                     </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('staticData.quantity')}" th:errors="*{staticData.quantity}">
+                                        Quantity error
+                                    </div>
                                 </div>
-                                <br/>
-                                <div class="row">
+<!--                                <br/>-->
+                                <div class="row my-2">
                                     <div class="input-group">
                                         <span class="col-4 text-wrap input-group-text" id="addon-wrapping-power">Потужність батареї</span>
                                         <input type="number" value="1" min="1" class="form-control"
@@ -68,9 +77,13 @@
                                                aria-describedby="addon-wrapping-power"
                                                th:field="*{staticData.power}">
                                     </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('staticData.power')}" th:errors="*{staticData.power}">
+                                        Power error
+                                    </div>
                                 </div>
-                                <br/>
-                                <div class="row">
+<!--                                <br/>-->
+                                <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
                                           id="addon-wrapping-installation-date">Дата встановлення</span>
@@ -79,6 +92,10 @@
                                                aria-describedby="addon-wrapping-installation-date"
                                                th:max="${localDate}"
                                                th:field="*{staticData.installationDate}">
+                                    </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('staticData.installationDate')}" th:errors="*{staticData.installationDate}">
+                                        InstallationDate error
                                     </div>
                                 </div>
 
@@ -90,7 +107,7 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h4>Розташування</h4>
-                                <div class="row">
+                                <div class="row my-2">
                                     <div class="input-group">
                                         <!--                                    <span class="col-4 text-wrap input-group-text" id="addon-wrapping-region">Область</span>-->
                                         <label class="col-4 input-group-text"
@@ -98,16 +115,21 @@
                                         <select class="col-8 custom-select" id="inputGroupSelectForRegions"
                                                 name="region"
                                                 th:field="*{location.region}">
-<!--                                            <option selected>Оберіть область</option>-->
+                                            <!--                                            <option selected>Оберіть область</option>-->
                                             <!--<option value="Київська">Київська</option>
                                             <option value="Івано-Франківська">Івано-Франківська</option>
                                             <option value="Львівська">Львівська</option>-->
-                                            <option th:each="region : ${regions}" th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
+                                            <option th:each="region : ${regions}" th:name="${region}"
+                                                    th:value="${region}" th:utext="${region.getName()}"></option>
                                         </select>
                                     </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('location.region')}" th:errors="*{location.region}">
+                                        Location region error
+                                    </div>
                                 </div>
-                                <br/>
-                                <div class="row">
+<!--                                <br/>-->
+                                <div class="row my-2">
                                     <div class="input-group">
                                         <span class="col-4 text-wrap input-group-text" id="addon-wrapping-city">Місто/Населений пункт</span>
                                         <input type="text" class="form-control"
@@ -115,9 +137,13 @@
                                                aria-describedby="addon-wrapping-city"
                                                name="city" th:field="*{location.city}">
                                     </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('location.city')}" th:errors="*{location.city}">
+                                        Location city error
+                                    </div>
                                 </div>
-                                <br/>
-                                <div class="row">
+<!--                                <br/>-->
+                                <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
                                           id="addon-wrapping-street">Вулиця</span>
@@ -126,9 +152,13 @@
                                                aria-describedby="addon-wrapping-street"
                                                name="street" th:field="*{location.street}">
                                     </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('location.street')}" th:errors="*{location.street}">
+                                        Location street error
+                                    </div>
                                 </div>
-                                <br/>
-                                <div class="row">
+<!--                                <br/>-->
+                                <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
                                           id="addon-wrapping-number">Номер</span>
@@ -136,6 +166,10 @@
                                                placeholder="Наприклад: 12, 8Б." aria-label="Number"
                                                aria-describedby="addon-wrapping-number"
                                                name="number" th:field="*{location.number}">
+                                    </div>
+                                    <div class="form-text text-danger fw-bold"
+                                         th:if="${#fields.hasErrors('location.number')}" th:errors="*{location.number}">
+                                        Location number error
                                     </div>
                                 </div>
 

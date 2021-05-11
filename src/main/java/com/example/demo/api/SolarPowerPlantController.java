@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,7 +53,17 @@ public class SolarPowerPlantController {
     public String addSolarPowerPlant(
             @Valid
             @ModelAttribute("solarPowerPlant")
-                    SolarPowerPlant solarPowerPlant) throws IOException {
+                    SolarPowerPlant solarPowerPlant,
+            BindingResult bindingResult) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("-=-= errors");
+            for (ObjectError h:bindingResult.getAllErrors()) {
+                System.out.println("  e: "+h.toString()+", "+h.getObjectName()+"\n");
+            }
+            return "add_solar_power_plant";
+        }
+
         System.out.println("addSolarPowerPlant");
 
         Authentication auth = SecurityContextHolder

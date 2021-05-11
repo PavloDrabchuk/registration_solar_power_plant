@@ -4,6 +4,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +20,8 @@ public class SolarPowerPlant {
 
     private String stringId;
 
+    @NotNull
+    @Size(min=2, max=30)
     private String name;
 
     @OneToOne(cascade = {CascadeType.ALL})

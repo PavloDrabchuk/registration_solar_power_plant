@@ -37,14 +37,7 @@ public class User {
 
     private LocalDateTime dateTimeOfCreation;
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-//@ManyToMany
+    //@ManyToMany
     //private Set<UserRole> roles;
 
 
@@ -121,6 +114,15 @@ public class User {
         this.password = password;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+
    /* public UserRole getUserRole() {
         return userRole;
     }
@@ -133,8 +135,8 @@ public class User {
         return userRole;
     }
 
-    public void setUserRole(UserRoles userRoles) {
-        this.userRole = userRoles;
+    public void setUserRole(UserRoles userRole) {
+        this.userRole = userRole;
     }
 
     public Boolean getActivated() {
@@ -160,6 +162,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
 
     public void getStringInfo() {

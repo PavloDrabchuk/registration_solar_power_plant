@@ -145,7 +145,7 @@ public class UsersController {
             System.out.println("time: " + LocalDateTime.now());
 
 
-            confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.confirmRegistration);
+            confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.ConfirmRegistration);
 
             System.out.println("--- --- ---");
             model.addAttribute("email", user.getEmail());
@@ -216,7 +216,7 @@ public class UsersController {
 
             confirmationCodeService.deactivateConfirmationCodesByUser(user.get());
 
-            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.confirmRegistration);
+            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.ConfirmRegistration);
 
             sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail()+".";
             model.addAttribute("email",user.get().getEmail());
@@ -322,7 +322,7 @@ public class UsersController {
         Optional<User> user = usersService.getUserByUsername(recoverInformation.getUsername());
         if (user.isPresent() && user.get().getEmail().equals(recoverInformation.getEmail())) {
 
-            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.recoverPassword);
+            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.RecoverPassword);
             model.addAttribute("sendMessageOK", "Повідомлення для відновлення паролю надіслано на Ваш e-mail: " + recoverInformation.getEmail() + ".");
         } else {
             model.addAttribute("sendMessageERROR", "Повідомлення не надіслано. Перевірте правильність введених даних.");
