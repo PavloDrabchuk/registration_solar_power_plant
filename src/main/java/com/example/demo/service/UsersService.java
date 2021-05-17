@@ -1,41 +1,27 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.UsersDao;
 import com.example.demo.dao.UsersRepository;
-import com.example.demo.model.SolarPowerPlant;
 import com.example.demo.model.TypesConfirmationCode;
 import com.example.demo.model.User;
 
 
 //import org.json.simple.parser.JSONParser;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
 //import org.json.simple.parser.JSONParser;
 //import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsersService {
-    private final UsersDao usersDao;
+
     private final UsersRepository usersRepository;
 
     private final EmailSenderService emailSenderService;
@@ -44,10 +30,8 @@ public class UsersService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UsersService(@Qualifier("fakeDao") UsersDao usersDao,
-                        UsersRepository usersRepository,
+    public UsersService(UsersRepository usersRepository,
                         EmailSenderService emailSenderService) {
-        this.usersDao = usersDao;
         this.usersRepository = usersRepository;
         this.emailSenderService = emailSenderService;
     }
