@@ -1,8 +1,7 @@
-package com.example.demo.api;
+package com.example.demo.controllers;
 
 import com.example.demo.model.*;
 import com.example.demo.service.*;
-import com.example.demo.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,10 +22,10 @@ public class UsersController {
 
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
-    private final UserRoleService userRoleService;
+
     private final ConfirmationCodeService confirmationCodeService;
     private final LocationService locationService;
-    private final UserValidator userValidator;
+    //private final UserValidator userValidator;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,15 +33,15 @@ public class UsersController {
     @Autowired
     public UsersController(UsersService usersService,
                            SolarPowerPlantService solarPowerPlantService,
-                           UserRoleService userRoleService,
+
                            ConfirmationCodeService confirmationCodeService,
-                           UserValidator userValidator,
+
                            LocationService locationService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
-        this.userRoleService = userRoleService;
+
         this.confirmationCodeService = confirmationCodeService;
-        this.userValidator = userValidator;
+        //this.userValidator = userValidator;
         this.locationService = locationService;
     }
 

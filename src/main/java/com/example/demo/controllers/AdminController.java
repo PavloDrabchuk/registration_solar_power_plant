@@ -1,4 +1,4 @@
-package com.example.demo.api;
+package com.example.demo.controllers;
 
 import com.example.demo.model.*;
 import com.example.demo.service.DynamicDataService;

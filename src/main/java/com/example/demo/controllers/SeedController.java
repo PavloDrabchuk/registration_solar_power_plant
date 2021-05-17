@@ -1,13 +1,10 @@
-package com.example.demo.api;
+package com.example.demo.controllers;
 
 import com.example.demo.model.Product;
-import com.example.demo.model.User;
-import com.example.demo.model.UserRoles;
 import com.example.demo.model.Weather;
 import com.example.demo.service.UsersService;
 import com.example.weather.OpenWeather;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
 
 @RestController
 public class SeedController {
