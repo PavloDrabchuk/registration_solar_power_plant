@@ -2,14 +2,21 @@ package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.dao.DynamicDataRepository;
 import com.example.solar_power_plant.model.DynamicData;
+import com.example.solar_power_plant.model.Product;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.Weather;
+import com.example.weather.OpenWeather;
+import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 //import org.springframework.boot.configurationprocessor.json.JSONArray;
 //import org.springframework.boot.configurationprocessor.json.JSONException;
 //import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -33,6 +40,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -74,7 +82,7 @@ public class DynamicDataService {
 
     @Async
     @Scheduled(fixedRate = DATA_COLLECTION_TIME /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
-    public void collectDynamicData() {
+    public void collectDynamicData() throws IOException {
         System.out.println("\n\n save dynamic data: ");
         //dynamicDataRepository.save(dynamicData);
         /*for (DynamicData dynamicData : generateData(LocalDateTime.now())) {
@@ -86,14 +94,14 @@ public class DynamicDataService {
 
     }
 
-    public void saveDynamicData(LocalDateTime dateTime) {
+    public void saveDynamicData(LocalDateTime dateTime) throws IOException {
         for (DynamicData dynamicData : generateData(dateTime)) {
             //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
             dynamicDataRepository.save(dynamicData);
         }
     }
 
-    private List<DynamicData> generateData(LocalDateTime dateTime) {
+    private List<DynamicData> generateData(LocalDateTime dateTime) throws IOException {
         List<DynamicData> generatedData = new ArrayList<>();
         List<SolarPowerPlant> solarPowerPlantList = solarPowerPlantService.getAllSolarPowerPlants();
 
@@ -106,25 +114,34 @@ public class DynamicDataService {
                 */
 
         int month, weatherNumber;
+        OpenWeather openWeather;
 
         for (SolarPowerPlant solarPowerPlant : solarPowerPlantList) {
             // producedPower = leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);
             month = dateTime.getMonthValue();
 
             System.out.println("Month: " + month);
-            weatherNumber = getWeatherNumber(month);
+            //weatherNumber = getWeatherNumber(month);
+             openWeather=getOpenWeatherInfo(
+                    solarPowerPlant.getLocation().getLatitude(),
+                    solarPowerPlant.getLocation().getLongitude());
 
 
             producedPower = generateProducedPower(month,
                     dateTime.getHour(),
-                    weatherNumber,
+                    //weatherNumber,
+                    getWeather(openWeather).getCoefficient(),
                     solarPowerPlant.getStaticData().getPower(),
                     solarPowerPlant.getStaticData().getQuantity(),
-                    getUsingTime(solarPowerPlant));
+                    getUsingTime(solarPowerPlant),
+                    solarPowerPlant.getLocation().getLatitude(),
+                    solarPowerPlant.getLocation().getLongitude());
 
             generatedData.add(new DynamicData(
                     solarPowerPlant,
-                    Weather.values()[weatherNumber],
+                    //Weather.values()[weatherNumber],
+                    //openWeather.getWeather().get(0).getDescription(),
+                    getWeather(openWeather),
                     producedPower,
                     dateTime));
         }
@@ -136,16 +153,20 @@ public class DynamicDataService {
     private double generateProducedPower(
             int month,
             int hour,
-            int weatherNumber,
+            //int weatherNumber,
+            double weatherCoefficient,
             Double power,
             Integer quantity,
-            int usingTime) {
+            int usingTime,
+            double lat,
+            double lon) throws IOException {
         //double producerPower = 340.0 / 48.0; //якщо збирати дані раз в 30 хвилин
         double producerPower = power;
 
         producerPower
                 *= monthlyCoefficient(month, 0.4, 1.02)
-                * weatherCoefficient(month, weatherNumber)
+                //* weatherCoefficient(month, weatherNumber)
+                * weatherCoefficient
                 * hourlyCoefficient(hour, month)
                 * quantity;
 
@@ -210,6 +231,67 @@ public class DynamicDataService {
         //return new double[]{Weather.values()[weatherNumber].getCoefficient(), weatherNumber};
         return weatherNumber;
     }
+
+    private OpenWeather getOpenWeatherInfo(double lat, double lon) throws IOException {
+        String API_KEY = "ad4112f68d38350518e7c19239012a75";
+        System.out.println("   --- lon: " + lon + ", lat: " + lat);
+        Gson gson = new Gson();
+        //        String d=Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"));
+        String d = getFileContent("http://api.openweathermap.org/data/2.5/weather?lat="
+                + lat + "&lon=" + lon + "&appid=" + API_KEY);
+
+        //Product product = gson.fromJson(d, Product.class);
+        OpenWeather openWeather = gson.fromJson(d, OpenWeather.class);
+
+        System.out.println(".-.-.-.-.-.-: data: " + getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY));
+//        System.out.println(".-.-.-.-.-.-: data: "+ Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json")));
+
+        System.out.println("\n product: " + openWeather.getName() + " desc: " + openWeather.getWeather().get(0).getMain());
+        System.out.println("==== data: " + d);
+
+        //String description = openWeather.getWeather().get(0).getDescription();
+        return openWeather;
+    }
+    public Weather getWeather(OpenWeather openWeather) throws IOException {
+        //        Double coef= Weather.values().equals()
+        //Pair<Integer, String> pair = new Pair<>(1, "One");
+        //Integer key = pair.getKey();
+        //String value = pair.getValue();
+//HashMap<Weather,Double> result=new HashMap<>();
+        Weather weatherResult;
+        String description=openWeather.getWeather().get(0).getDescription();
+        double coefficient = -1;
+        for (Weather weather : Weather.values()) {
+            if (weather.getDescription().equals(description)) {
+                //coefficient = weather.getCoefficient();
+                //pair=new Pair<>(weather,coefficient);
+                //result.put(weather,coefficient);
+                return weather;
+                //break;
+            }
+        }
+
+
+        //if (coefficient == -1) {
+
+        //    coefficient = 0.01D;
+            //зберігати в файли інформацію про невідомі description
+
+            Path filePath = Paths.get("system-information-files/descriptions.txt");
+
+            String message = "Main: \"" + openWeather.getWeather().get(0).getMain() + "\", " +
+                    "description: \"" + description + "\", " +
+                    "dt: " + openWeather.getDt() + "\n";
+
+            Files.writeString(filePath, message, StandardOpenOption.APPEND);
+            //result.put(Weather.Other)
+      //  }
+        System.out.println("description: " + description + " coefficient: " + coefficient);
+        return Weather.Other;
+
+        //return new HashMap<>(wea);
+    }
+
 
     private double hourlyCoefficient(int hour, int month) {
         System.out.println("hour: " + hour);
@@ -418,6 +500,32 @@ public class DynamicDataService {
         Matcher matcher = pattern.matcher(fileName);
 
         return (matcher.find()) ? matcher.group(2) : "-1";
+    }
+
+
+    public String getFileContent(String filePath) throws IOException {
+        ApplicationContext appContext =
+                new ClassPathXmlApplicationContext(new String[]{});
+
+        Resource resource = appContext.getResource(filePath);
+
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(
+                    new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } finally {
+            if (br != null) try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 
 }

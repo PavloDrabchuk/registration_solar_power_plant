@@ -10,6 +10,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +36,7 @@ public class DatabaseSeeder {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @EventListener
-    public void seed(ContextRefreshedEvent event) throws ParseException {
+    public void seed(ContextRefreshedEvent event) throws ParseException, IOException {
         seedUsersTable();
         seedSolarPowerPlantTable();
         seedDynamicDataTable();
@@ -135,8 +136,11 @@ public class DatabaseSeeder {
 
     private void seedSolarPowerPlantTable() throws ParseException {
 
-        for (int i = 1; i <= 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        int userQuantity=2,
+                solarPowerPlantQuantity=1;
+
+        for (int i = 1; i <= userQuantity; i++) {
+            for (int j = 0; j < solarPowerPlantQuantity; j++) {
                 StaticData staticData = new StaticData();
                 staticData.setQuantity(1 + (int) (Math.random() * 20));
                 staticData.setPower(350 + Math.random() * 200);
@@ -150,7 +154,9 @@ public class DatabaseSeeder {
 
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
-                        "Івано-Франківськ", "Грушевського", Integer.toString((i+1) * (j+1)), 48.92065, 24.71355);
+                        "Івано-Франківськ", "Грушевського", Integer.toString((i+1) * (j+1)),
+                        28.92065+(1 + Math.random() * 25),
+                        14.71355+(1 + Math.random() * 15));
                 SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
                         "Назва станції № " + i + "_" + j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);
@@ -169,14 +175,15 @@ public class DatabaseSeeder {
         }
     }
 
-    private void seedDynamicDataTable() {
-        String str = "2021-04-06 00:00:00";
+    private void seedDynamicDataTable() throws IOException {
+        String str = "2021-01-06 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        for (int k = 0; k < 200; k++) {
+        for (int k = 0; k < 20; k++) {
 
             dateTime = dateTime.plusMinutes(30);
+            //dateTime = dateTime.plusMinutes(60*12);
 
             dynamicDataService.saveDynamicData(dateTime);
 

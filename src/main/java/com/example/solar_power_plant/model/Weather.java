@@ -9,7 +9,8 @@ public enum Weather {
     Rain(0.2D,"light rain"),
     Thunderstorm(0.01D,"thunderstorm"),
     Mist(0.05D,"mist"),
-    Snow(0.15D,"snow");
+    Snow(0.15D,"snow"),
+    Other(0.01D,"other");
 
     private final double coefficient;
     private final String description;
