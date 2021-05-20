@@ -52,8 +52,8 @@ import java.util.stream.Stream;
 @Service
 public class DynamicDataService {
 
-    //private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
-    private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
+    private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
+    //private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
 
     private final DynamicDataRepository dynamicDataRepository;
     private final SolarPowerPlantService solarPowerPlantService;
@@ -90,14 +90,18 @@ public class DynamicDataService {
             dynamicDataRepository.save(dynamicData);
         }*/
         System.out.println("\n\n\n");
-        saveDynamicData(LocalDateTime.now());
+        saveDynamicData(LocalDateTime.now(), false);
 
     }
 
-    public void saveDynamicData(LocalDateTime dateTime) throws IOException {
-        for (DynamicData dynamicData : generateData(dateTime)) {
-            //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
-            dynamicDataRepository.save(dynamicData);
+    public void saveDynamicData(LocalDateTime dateTime, boolean demoData) throws IOException {
+        if(demoData){
+            //в базу вручну
+        } else {
+            for (DynamicData dynamicData : generateData(dateTime)) {
+                //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
+                dynamicDataRepository.save(dynamicData);
+            }
         }
     }
 
@@ -121,16 +125,32 @@ public class DynamicDataService {
             month = dateTime.getMonthValue();
 
             System.out.println("Month: " + month);
-            //weatherNumber = getWeatherNumber(month);
-             openWeather=getOpenWeatherInfo(
-                    solarPowerPlant.getLocation().getLatitude(),
-                    solarPowerPlant.getLocation().getLongitude());
+            Weather weather;
+            double coefficient;
 
+            /*if (demoData) {
+                //
+                coefficient = 0.01D;
+                weather = Weather.Other;
+                weather = Weather.valueOf("ClearSky");
+                System.out.println("iiiiiiii: " + weather.getDescription() + " --> " + getFormattedDescription(weather.getDescription()) + " : " + weather.name());
+                coefficient = weather.getCoefficient();
+                //weather=getWeather(openWeather);
 
+            } else {*/
+                //weatherNumber = getWeatherNumber(month);
+                openWeather = getOpenWeatherInfo(
+                        solarPowerPlant.getLocation().getLatitude(),
+                        solarPowerPlant.getLocation().getLongitude());
+                coefficient = getWeather(openWeather).getCoefficient();
+                weather = getWeather(openWeather);
+
+           // }
             producedPower = generateProducedPower(month,
                     dateTime.getHour(),
                     //weatherNumber,
-                    getWeather(openWeather).getCoefficient(),
+                    //getWeather(openWeather).getCoefficient(),
+                    coefficient,
                     solarPowerPlant.getStaticData().getPower(),
                     solarPowerPlant.getStaticData().getQuantity(),
                     getUsingTime(solarPowerPlant),
@@ -141,7 +161,8 @@ public class DynamicDataService {
                     solarPowerPlant,
                     //Weather.values()[weatherNumber],
                     //openWeather.getWeather().get(0).getDescription(),
-                    getWeather(openWeather),
+//                    getWeather(openWeather),
+                    weather,
                     producedPower,
                     dateTime));
         }
@@ -252,6 +273,7 @@ public class DynamicDataService {
         //String description = openWeather.getWeather().get(0).getDescription();
         return openWeather;
     }
+
     public Weather getWeather(OpenWeather openWeather) throws IOException {
         //        Double coef= Weather.values().equals()
         //Pair<Integer, String> pair = new Pair<>(1, "One");
@@ -259,8 +281,8 @@ public class DynamicDataService {
         //String value = pair.getValue();
 //HashMap<Weather,Double> result=new HashMap<>();
         Weather weatherResult;
-        String description=openWeather.getWeather().get(0).getDescription();
-        double coefficient = -1;
+        String description = openWeather.getWeather().get(0).getDescription();
+        /*double coefficient = -1;
         for (Weather weather : Weather.values()) {
             if (weather.getDescription().equals(description)) {
                 //coefficient = weather.getCoefficient();
@@ -269,15 +291,36 @@ public class DynamicDataService {
                 return weather;
                 //break;
             }
+        }*/
+
+        try {
+            Weather weather1 = Weather.valueOf(getFormattedDescription(description));
+            //yes
+            System.out.println("--- yes ---");
+            return weather1;
+        } catch (IllegalArgumentException ex) {
+            //nope
+            Path filePath = Paths.get("system-information-files/descriptions.txt");
+
+            String message = "Main: \"" + openWeather.getWeather().get(0).getMain() + "\", " +
+                    "description: \"" + description + "\", " +
+                    "dt: " + openWeather.getDt() + "\n";
+
+            Files.writeString(filePath, message, StandardOpenOption.APPEND);
+            //result.put(Weather.Other)
+            //  }
+            System.out.println("description: " + description + " coefficient: " + 0.01);
+            System.out.println("--- no ---");
+            return Weather.Other;
         }
 
 
         //if (coefficient == -1) {
 
         //    coefficient = 0.01D;
-            //зберігати в файли інформацію про невідомі description
+        //зберігати в файли інформацію про невідомі description
 
-            Path filePath = Paths.get("system-information-files/descriptions.txt");
+         /*   Path filePath = Paths.get("system-information-files/descriptions.txt");
 
             String message = "Main: \"" + openWeather.getWeather().get(0).getMain() + "\", " +
                     "description: \"" + description + "\", " +
@@ -287,9 +330,19 @@ public class DynamicDataService {
             //result.put(Weather.Other)
       //  }
         System.out.println("description: " + description + " coefficient: " + coefficient);
-        return Weather.Other;
+        return Weather.Other;*/
 
         //return new HashMap<>(wea);
+    }
+
+    public String getFormattedDescription(String description) {
+        String[] words = description.split(" ");
+
+// capitalize each word
+        for (int i = 0; i < words.length; i++) {
+            words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1).toLowerCase();
+        }
+        return String.join("", words);
     }
 
 

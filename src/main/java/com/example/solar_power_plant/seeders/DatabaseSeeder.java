@@ -176,7 +176,7 @@ public class DatabaseSeeder {
     }
 
     private void seedDynamicDataTable() throws IOException {
-        String str = "2021-01-06 00:00:00";
+        String str = "2021-04-06 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
@@ -185,7 +185,7 @@ public class DatabaseSeeder {
             dateTime = dateTime.plusMinutes(30);
             //dateTime = dateTime.plusMinutes(60*12);
 
-            dynamicDataService.saveDynamicData(dateTime);
+            dynamicDataService.saveDynamicData(dateTime, true);
 
         }
     }

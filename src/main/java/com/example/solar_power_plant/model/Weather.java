@@ -5,8 +5,9 @@ public enum Weather {
     FewClouds(0.8D,"few clouds"), //60-80%
     ScatteredClouds(0.4D,"scattered clouds"), //30-40%
     BrokenClouds(0.3D,"broken clouds"), //20-30%
+    OvercastClouds(0.2D,"overcast clouds"),
     ShowerRain(0.1D,"shower rain"),
-    Rain(0.2D,"light rain"),
+    LightRain(0.2D,"light rain"),
     Thunderstorm(0.01D,"thunderstorm"),
     Mist(0.05D,"mist"),
     Snow(0.15D,"snow"),
