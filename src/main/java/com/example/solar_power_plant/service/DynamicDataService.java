@@ -95,8 +95,60 @@ public class DynamicDataService {
     }
 
     public void saveDynamicData(LocalDateTime dateTime, boolean demoData) throws IOException {
-        if(demoData){
+        if (demoData) {
+
+            //List<String> weatherDescriptions = readWeatherDescriptionsFromCSV("demo-data/weather_description.csv");
+            List<String> weatherDescriptions = new ArrayList<>();
+            BufferedReader bufferedReader = new BufferedReader(
+                    new FileReader("demo-data/weather_description.txt"));
+            String currentLine;
+            while ((currentLine = bufferedReader.readLine()) != null) {
+                weatherDescriptions.add(currentLine);
+            }
+            bufferedReader.close();
+
+            for (String w : weatherDescriptions) {
+                System.out.println("  w: " + w);
+            }
+
+            LocalDateTime dateTimeCopy = dateTime;
+            double producedPower;
+            int month;
+
+            Weather weather;
+            double coefficient;
+
             //в базу вручну
+            for (SolarPowerPlant solarPowerPlant : solarPowerPlantService.getAllSolarPowerPlants()) {
+                for (int i = 0; i < 20; i++) {
+                    dateTimeCopy = dateTimeCopy.plusMinutes(30);
+
+                    month = dateTime.getMonthValue();
+
+                    weather = Weather.valueOf("ClearSky");
+                    coefficient = weather.getCoefficient();
+
+                    producedPower = generateProducedPower(month,
+                            dateTime.getHour(),
+                            //weatherNumber,
+                            //getWeather(openWeather).getCoefficient(),
+                            coefficient,
+                            solarPowerPlant.getStaticData().getPower(),
+                            solarPowerPlant.getStaticData().getQuantity(),
+                            getUsingTime(solarPowerPlant),
+                            solarPowerPlant.getLocation().getLatitude(),
+                            solarPowerPlant.getLocation().getLongitude());
+
+                    new DynamicData(
+                            solarPowerPlant,
+                            //Weather.values()[weatherNumber],
+                            //openWeather.getWeather().get(0).getDescription(),
+//                    getWeather(openWeather),
+                            weather,
+                            producedPower,
+                            dateTimeCopy);
+                }
+            }
         } else {
             for (DynamicData dynamicData : generateData(dateTime)) {
                 //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
@@ -138,14 +190,14 @@ public class DynamicDataService {
                 //weather=getWeather(openWeather);
 
             } else {*/
-                //weatherNumber = getWeatherNumber(month);
-                openWeather = getOpenWeatherInfo(
-                        solarPowerPlant.getLocation().getLatitude(),
-                        solarPowerPlant.getLocation().getLongitude());
-                coefficient = getWeather(openWeather).getCoefficient();
-                weather = getWeather(openWeather);
+            //weatherNumber = getWeatherNumber(month);
+            openWeather = getOpenWeatherInfo(
+                    solarPowerPlant.getLocation().getLatitude(),
+                    solarPowerPlant.getLocation().getLongitude());
+            coefficient = getWeather(openWeather).getCoefficient();
+            weather = getWeather(openWeather);
 
-           // }
+            // }
             producedPower = generateProducedPower(month,
                     dateTime.getHour(),
                     //weatherNumber,
@@ -581,5 +633,26 @@ public class DynamicDataService {
         return sb.toString();
     }
 
+    /*private static List<String> readWeatherDescriptionsFromCSV(String fileName) {
+        List<String> books = new ArrayList<>();
+        Path pathToFile = Paths.get(fileName); // create an instance of BufferedReader // using try with resource, Java 7 feature to close resources
+        try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
+            // read the first line from the text file
+            String line = br.readLine(); // loop until all lines are read
+            while (line != null) {
+                // use string.split to load a string array with the values from // each line of // the file, using a comma as the delimiter
+                //String[] attributes = line.split(",");
+                //String weatherDescription = createBook(attributes); // adding book into ArrayList
+                books.add(line); // read next line before looping // if end of file reached, line would be null
+                line = br.readLine();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return books;
+    }*/
 }
+
+
+
 

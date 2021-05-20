@@ -180,14 +180,14 @@ public class DatabaseSeeder {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        for (int k = 0; k < 20; k++) {
+        //for (int k = 0; k < 20; k++) {
 
-            dateTime = dateTime.plusMinutes(30);
+         //   dateTime = dateTime.plusMinutes(30);
             //dateTime = dateTime.plusMinutes(60*12);
 
             dynamicDataService.saveDynamicData(dateTime, true);
 
-        }
+       // }
     }
 
     private String getStringNumberForDate(int startNum, int finishNum) {
