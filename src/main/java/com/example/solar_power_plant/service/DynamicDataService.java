@@ -111,6 +111,8 @@ public class DynamicDataService {
                 System.out.println("  w: " + w);
             }
 
+
+
             LocalDateTime dateTimeCopy = dateTime;
             double producedPower;
             int month;
@@ -118,8 +120,10 @@ public class DynamicDataService {
             Weather weather;
             double coefficient;
 
+            int solarPowerPlantCount=0;
             //в базу вручну
             for (SolarPowerPlant solarPowerPlant : solarPowerPlantService.getAllSolarPowerPlants()) {
+                System.out.println(" --> solarPowerPlantCount: "+solarPowerPlantCount);
                 for (int i = 0; i < 20; i++) {
                     dateTimeCopy = dateTimeCopy.plusMinutes(30);
 
@@ -147,7 +151,9 @@ public class DynamicDataService {
                             weather,
                             producedPower,
                             dateTimeCopy);
+                    System.out.println(" kk: "+solarPowerPlantCount*20+i);
                 }
+                solarPowerPlantCount++;
             }
         } else {
             for (DynamicData dynamicData : generateData(dateTime)) {

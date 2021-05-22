@@ -136,8 +136,8 @@ public class DatabaseSeeder {
 
     private void seedSolarPowerPlantTable() throws ParseException {
 
-        int userQuantity=2,
-                solarPowerPlantQuantity=1;
+        int userQuantity = 2,
+                solarPowerPlantQuantity = 1;
 
         for (int i = 1; i <= userQuantity; i++) {
             for (int j = 0; j < solarPowerPlantQuantity; j++) {
@@ -154,9 +154,9 @@ public class DatabaseSeeder {
 
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
-                        "Івано-Франківськ", "Грушевського", Integer.toString((i+1) * (j+1)),
-                        28.92065+(1 + Math.random() * 25),
-                        14.71355+(1 + Math.random() * 15));
+                        "Івано-Франківськ", "Грушевського", Integer.toString((i + 1) * (j + 1)),
+                        28.92065 + (1 + Math.random() * 25),
+                        14.71355 + (1 + Math.random() * 15));
                 SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
                         "Назва станції № " + i + "_" + j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);
@@ -182,12 +182,12 @@ public class DatabaseSeeder {
 
         //for (int k = 0; k < 20; k++) {
 
-         //   dateTime = dateTime.plusMinutes(30);
-            //dateTime = dateTime.plusMinutes(60*12);
+        //   dateTime = dateTime.plusMinutes(30);
+        //dateTime = dateTime.plusMinutes(60*12);
 
-            dynamicDataService.saveDynamicData(dateTime, true);
+        dynamicDataService.saveDynamicData(dateTime, true);
 
-       // }
+        // }
     }
 
     private String getStringNumberForDate(int startNum, int finishNum) {
