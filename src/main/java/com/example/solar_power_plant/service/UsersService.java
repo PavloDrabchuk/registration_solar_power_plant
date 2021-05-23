@@ -10,6 +10,7 @@ import com.example.solar_power_plant.model.User;
 //import org.json.simple.JSONObject;
 //import org.json.simple.parser.JSONParser;
 //import org.json.simple.parser.ParseException;
+import com.example.solar_power_plant.model.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -74,6 +75,10 @@ public class UsersService {
 
     public Optional<User> getUserByEmail(String email) {
         return usersRepository.findByEmail(email);
+    }
+
+    public Optional<User> getUserByUserRole(UserRoles userRoles){
+        return usersRepository.findUserByUserRole(userRoles);
     }
 
     /*@Override

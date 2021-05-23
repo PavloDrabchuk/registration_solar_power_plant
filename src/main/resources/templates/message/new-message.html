@@ -11,7 +11,14 @@
 <h2>new message</h2>
 
 <form method="post" th:action="@{/messages}" th:object="${message}">
-    <input type="text" th:field="*{title}">
+    <label for="title">Title:
+        <input id="title" type="text" th:field="*{title}">
+    </label>
+    <label for="text">Text:
+        <input id="text" type="text" th:field="*{text}">
+    </label>
+
+    <input type="submit" value="Sent message">
 </form>
 
 </body>

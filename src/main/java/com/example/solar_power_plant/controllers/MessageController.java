@@ -1,8 +1,14 @@
 package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.model.Message;
+import com.example.solar_power_plant.model.MessageType;
+import com.example.solar_power_plant.model.User;
+import com.example.solar_power_plant.model.UserRoles;
 import com.example.solar_power_plant.service.MessageService;
+import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,10 +26,13 @@ import java.util.UUID;
 public class MessageController {
 
     private final MessageService messageService;
+    private final UsersService usersService;
 
     @Autowired
-    public MessageController(MessageService messageService) {
+    public MessageController(MessageService messageService,
+                             UsersService usersService) {
         this.messageService = messageService;
+        this.usersService=usersService;
     }
 
     @GetMapping(path = "/messages")
@@ -54,7 +64,27 @@ public class MessageController {
     }
 
     @PostMapping(path = "/messages")
-    public void addMessage(@ModelAttribute("message") Message message) {
+    public String addMessage(@ModelAttribute("message") Message message,
+                           RedirectAttributes redirectAttributes) {
+        Optional<User> user = getAuthorisedUser();
+        Optional<User> editor=usersService.getUserByUserRole(UserRoles.EDITOR);
+
+        user.ifPresent(message::setUser);
+        editor.ifPresent(message::setEditor);
+
+        message.setRead(false);
+        message.setMessageType(MessageType.INFORMATION);
+        message.setDateTime(LocalDateTime.now());
+
         messageService.save(message);
+
+        redirectAttributes.addFlashAttribute("messageSent","Повідомлення надіслано");
+        return "redirect:/messages";
+    }
+
+    Optional<User> getAuthorisedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        return usersService.getUserByUsername(username);
     }
 }

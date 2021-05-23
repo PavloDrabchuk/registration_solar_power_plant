@@ -1,6 +1,7 @@
 package com.example.solar_power_plant.dao;
 
 import com.example.solar_power_plant.model.User;
+import com.example.solar_power_plant.model.UserRoles;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,6 +15,8 @@ public interface UsersRepository extends CrudRepository<User,Long> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findUserById(Long id);
+
+    Optional<User> findUserByUserRole(UserRoles userRoles);
 
     void deleteById(Long id);
 

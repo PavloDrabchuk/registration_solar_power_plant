@@ -11,6 +11,9 @@
 <!--/*@thymesVar id="messageNotFound" type="java.lang.String"*/-->
 <h2 style="color: red;" th:text="${messageNotFound}"></h2>
 
+<!--/*@thymesVar id="messageSent" type="java.lang.String"*/-->
+<h2 style="color: green;" th:text="${messageSent}"></h2>
+
 <ul th:each="m : ${messages}">
     <li  th:text="${m.getTitle()}+' -> id: '+${m.getId()}">
 
