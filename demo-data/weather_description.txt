@@ -1,3 +1,6 @@
-tyutyu  bbb
-nghng vvv
-xcd ccc
+clear sky
+few clouds
+shower rain
+thunderstorm
+snow
+mist

@@ -155,8 +155,8 @@ public class DatabaseSeeder {
                 Location location1 = new Location("Україна",
                         Region.IvanoFrankivsk,
                         "Івано-Франківськ", "Грушевського", Integer.toString((i + 1) * (j + 1)),
-                        28.92065 + (1 + Math.random() * 25),
-                        14.71355 + (1 + Math.random() * 15));
+                        23.92065 + (1 + Math.random() * 5),
+                        44.71355 + (1 + Math.random() * 5));
                 SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
                         "Назва станції № " + i + "_" + j, location1, usersService.getUserById((long) i).get());
                 solarPowerPlant1.setStaticData(staticData);

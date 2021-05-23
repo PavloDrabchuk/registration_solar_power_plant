@@ -112,7 +112,6 @@ public class DynamicDataService {
             }
 
 
-
             LocalDateTime dateTimeCopy = dateTime;
             double producedPower;
             int month;
@@ -120,16 +119,22 @@ public class DynamicDataService {
             Weather weather;
             double coefficient;
 
-            int solarPowerPlantCount=0;
+            int solarPowerPlantCount = 0;
+            int quantityOfDescriptionForSolarPowerPlant = weatherDescriptions.size() / solarPowerPlantService.getAllSolarPowerPlants().size();
+
+            System.out.println(" === q: "+quantityOfDescriptionForSolarPowerPlant+" s: "+weatherDescriptions.size()+" as: "+solarPowerPlantService.getAllSolarPowerPlants().size());
+
             //в базу вручну
             for (SolarPowerPlant solarPowerPlant : solarPowerPlantService.getAllSolarPowerPlants()) {
-                System.out.println(" --> solarPowerPlantCount: "+solarPowerPlantCount);
-                for (int i = 0; i < 20; i++) {
+                System.out.println(" --> solarPowerPlantCount: " + solarPowerPlantCount);
+                for (int i = 0; i < quantityOfDescriptionForSolarPowerPlant; i++) {
                     dateTimeCopy = dateTimeCopy.plusMinutes(30);
 
                     month = dateTime.getMonthValue();
 
-                    weather = Weather.valueOf("ClearSky");
+                    //weather = Weather.valueOf("ClearSky");
+                    weather = Weather.valueOf(getFormattedDescription(weatherDescriptions.get(solarPowerPlantCount * quantityOfDescriptionForSolarPowerPlant + i)));
+                    System.out.println(" ***** weather: " + weather.name());
                     coefficient = weather.getCoefficient();
 
                     producedPower = generateProducedPower(month,
@@ -143,15 +148,15 @@ public class DynamicDataService {
                             solarPowerPlant.getLocation().getLatitude(),
                             solarPowerPlant.getLocation().getLongitude());
 
-                    new DynamicData(
+                    dynamicDataRepository.save(new DynamicData(
                             solarPowerPlant,
                             //Weather.values()[weatherNumber],
                             //openWeather.getWeather().get(0).getDescription(),
 //                    getWeather(openWeather),
                             weather,
                             producedPower,
-                            dateTimeCopy);
-                    System.out.println(" kk: "+solarPowerPlantCount*20+i);
+                            dateTimeCopy));
+                    System.out.println(" kk: " + solarPowerPlantCount * 20 + i);
                 }
                 solarPowerPlantCount++;
             }
