@@ -161,10 +161,11 @@ public class DynamicDataService {
                 solarPowerPlantCount++;
             }
         } else {
-            for (DynamicData dynamicData : generateData(dateTime)) {
+            /*for (DynamicData dynamicData : generateData(dateTime)) {
                 //System.out.println("  id: " + dynamicData.getSolarPowerPlant().getId());
                 dynamicDataRepository.save(dynamicData);
-            }
+            }*/
+            dynamicDataRepository.saveAll(generateData(dateTime));
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.solar_power_plant.seeders;
 
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
+import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.SolarPowerPlantService;
 import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Component
 public class DatabaseSeeder {
@@ -21,16 +23,20 @@ public class DatabaseSeeder {
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
     private final DynamicDataService dynamicDataService;
+    private final MessageService messageService;
 
 
     @Autowired
     public DatabaseSeeder(UsersService usersService,
                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                          SolarPowerPlantService solarPowerPlantService, DynamicDataService dynamicDataService) {
+                          SolarPowerPlantService solarPowerPlantService,
+                          DynamicDataService dynamicDataService,
+                          MessageService messageService) {
         this.usersService = usersService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.solarPowerPlantService = solarPowerPlantService;
         this.dynamicDataService = dynamicDataService;
+        this.messageService = messageService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,6 +46,7 @@ public class DatabaseSeeder {
         seedUsersTable();
         seedSolarPowerPlantTable();
         seedDynamicDataTable();
+        seedMessageTable();
     }
 
     private void seedUsersTable() {
@@ -198,6 +205,18 @@ public class DatabaseSeeder {
         else result += num;
 
         return result;
+    }
+
+    private void seedMessageTable() {
+        Optional<User> user1 = usersService.getUserByUsername("qwerty");
+        Optional<User> user2 = usersService.getUserByUsername("qwerty123");
+        Optional<User> editor = usersService.getUserByUsername("qwerty1235");
+
+        Message message1 = new Message("title1", "text1", user1.get(), editor.get(), MessageType.UPDATE, true);
+        messageService.save(message1);
+
+        Message message2 = new Message("title2", "text2", user2.get(), editor.get(), MessageType.UPDATE, true);
+        messageService.save(message2);
     }
 
 

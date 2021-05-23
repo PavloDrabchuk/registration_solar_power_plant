@@ -2,6 +2,7 @@ package com.example.solar_power_plant.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,8 +11,11 @@ import java.util.UUID;
 @Entity
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @Type(type="org.hibernate.type.UUIDCharType")
     private UUID id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
     private String title;
     private String text;
@@ -29,11 +33,11 @@ public class Message {
     private MessageType messageType;
     private Boolean isRead;
 
-    public Message(String title, String text, LocalDateTime dateTime, User user, User editor, MessageType messageType, Boolean isRead) {
-        this.id=UUID.fromString(title);
+    public Message(String title, String text, User user, User editor, MessageType messageType, Boolean isRead) {
+        //this.id=UUID.fromString(title);
         this.title = title;
         this.text = text;
-        this.dateTime = dateTime;
+        this.dateTime = LocalDateTime.now();
         this.user = user;
         this.editor = editor;
         this.messageType = messageType;
@@ -42,6 +46,14 @@ public class Message {
 
     public Message() {
 
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getTitle() {
