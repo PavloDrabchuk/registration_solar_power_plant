@@ -112,11 +112,11 @@ public class DatabaseSeeder {
 
         User user6 = new User();
         user6.setEmail("lab2018.home.work3@gmail.com");
-        user6.setUsername("qwerty1235");
+        user6.setUsername("editor");
         user6.setUserRole(UserRoles.EDITOR);
         user6.setActivated(true);
         user6.setLocked(false);
-        user6.setPassword(bCryptPasswordEncoder.encode("qwerty6"));
+        user6.setPassword(bCryptPasswordEncoder.encode("qwerty"));
         user6.setDateTimeOfCreation(LocalDateTime.now().minusDays(24));
         usersService.saveUser(user6);
 
@@ -210,7 +210,7 @@ public class DatabaseSeeder {
     private void seedMessageTable() {
         Optional<User> user1 = usersService.getUserByUsername("qwerty");
         Optional<User> user2 = usersService.getUserByUsername("qwerty123");
-        Optional<User> editor = usersService.getUserByUsername("qwerty1235");
+        Optional<User> editor = usersService.getUserByUsername("editor");
 
         Message message1 = new Message("title1", "text1", user1.get(), editor.get(), MessageType.UPDATE, true);
         messageService.save(message1);

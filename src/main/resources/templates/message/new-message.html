@@ -18,8 +18,17 @@
         <input id="text" type="text" th:field="*{text}">
     </label>
 
+    <label for="types" th:if="${editorAccess}">
+        <select name="type" id="types">
+            <option name="INFORMATION" value="INFORMATION">Info</option>
+            <option name="UPDATE" value="UPDATE">Update</option>
+            <option name="user" value="user">For user (?)</option>
+        </select>
+    </label>
+
     <input type="submit" value="Sent message">
 </form>
+
 
 </body>
 </html>

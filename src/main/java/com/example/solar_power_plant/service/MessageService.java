@@ -32,6 +32,9 @@ public class MessageService {
 
     public Optional<Message> getMessageById(UUID id){
         return messageRepository.findById(id);
+    }
 
+    public List<Message> getAllMessageByUser(User user){
+        return messageRepository.findAllByUser(user);
     }
 }

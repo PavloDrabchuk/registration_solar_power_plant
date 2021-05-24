@@ -11,10 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -32,7 +29,7 @@ public class MessageController {
     public MessageController(MessageService messageService,
                              UsersService usersService) {
         this.messageService = messageService;
-        this.usersService=usersService;
+        this.usersService = usersService;
     }
 
     @GetMapping(path = "/messages")
@@ -51,7 +48,7 @@ public class MessageController {
             model.addAttribute("message", message.get());
         } else {
             System.out.println(" ........ no message ........");
-            redirectAttributes.addFlashAttribute("messageNotFound","Повідомлення не знайдено");
+            redirectAttributes.addFlashAttribute("messageNotFound", "Повідомлення не знайдено");
             return "redirect:/messages";
         }
         return "message/message-by-id";
@@ -59,26 +56,35 @@ public class MessageController {
 
     @GetMapping(path = "/messages/new")
     public String getNewMessageForm(Model model) {
-        model.addAttribute("message",new Message());
+        model.addAttribute("message", new Message());
+
+        if (getAuthorisedUser().isPresent() && getAuthorisedUser().get().getUserRole() == UserRoles.EDITOR) {
+            model.addAttribute("editorAccess", "editor");
+        }
+
         return "message/new-message";
     }
 
     @PostMapping(path = "/messages")
     public String addMessage(@ModelAttribute("message") Message message,
-                           RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes,
+                             @RequestParam(name = "type") String type) {
         Optional<User> user = getAuthorisedUser();
-        Optional<User> editor=usersService.getUserByUserRole(UserRoles.EDITOR);
+        Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
         user.ifPresent(message::setUser);
         editor.ifPresent(message::setEditor);
 
         message.setRead(false);
-        message.setMessageType(MessageType.INFORMATION);
+
+        System.out.println(" messageType: "+type);
+        //message.setMessageType(MessageType.INFORMATION);
+        message.setMessageType(MessageType.valueOf(type));
         message.setDateTime(LocalDateTime.now());
 
         messageService.save(message);
 
-        redirectAttributes.addFlashAttribute("messageSent","Повідомлення надіслано");
+        redirectAttributes.addFlashAttribute("messageSent", "Повідомлення надіслано");
         return "redirect:/messages";
     }
 
