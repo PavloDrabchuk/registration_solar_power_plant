@@ -15,12 +15,21 @@
 <h2 style="color: green;" th:text="${messageSent}"></h2>
 
 <ul th:each="m : ${messages}">
-    <li  th:text="${m.getTitle()}+' -> id: '+${m.getId()}">
-
+    <li>
+        <a th:href="'/messages/'+${m.getId()}"
+           th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
     </li>
 </ul>
 
-<a  th:href="@{/messages/new}">New message</a>
+<h3>Надіслані</h3>
+<ul th:each="m:${sentMessages}">
+    <li>
+        <a th:href="'/messages/'+${m.getId()}"
+           th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
+    </li>
+</ul>
+
+<a th:href="@{/messages/new}">New message</a>
 
 </body>
 </html>

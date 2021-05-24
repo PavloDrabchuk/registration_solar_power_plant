@@ -1,6 +1,7 @@
 package com.example.solar_power_plant.dao;
 
 import com.example.solar_power_plant.model.Message;
+import com.example.solar_power_plant.model.MessageType;
 import com.example.solar_power_plant.model.User;
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,4 +14,8 @@ public interface MessageRepository extends CrudRepository<Message,Long> {
     Optional<Message> findById(UUID id);
 
     List<Message> findAllByUser(User user);
+
+    List<Message> findAllByMessageType(MessageType messageType);
+
+    List<Message> findAllByUserAndMessageType(User user,MessageType messageType);
 }

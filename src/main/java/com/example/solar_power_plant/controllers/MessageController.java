@@ -34,7 +34,22 @@ public class MessageController {
 
     @GetMapping(path = "/messages")
     public String getAllMessage(Model model) {
-        model.addAttribute("messages", messageService.getAllMessages());
+        Optional<User> user = getAuthorisedUser();
+        if (user.isPresent()) {
+            //List<Message> messages = messageService.getAllMessageByUser(user.get());
+            List<Message> messages = messageService.getAllMessageByMessageType(MessageType.INFORMATION);
+            messages.addAll(messageService.getAllMessageByMessageType(MessageType.UPDATE));
+
+            if (user.get().getUserRole()==UserRoles.EDITOR){
+                messages.addAll(messageService.getAllMessageByMessageType(MessageType.FOR_EDITOR));
+            }
+
+            model.addAttribute("messages", messages);
+
+            model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
+                    user.get(),
+                    MessageType.FOR_EDITOR));
+        }
         return "message/messages";
     }
 
@@ -68,7 +83,7 @@ public class MessageController {
     @PostMapping(path = "/messages")
     public String addMessage(@ModelAttribute("message") Message message,
                              RedirectAttributes redirectAttributes,
-                             @RequestParam(name = "type") String type) {
+                             @RequestParam(name = "type", defaultValue = "FOR_EDITOR") String type) {
         Optional<User> user = getAuthorisedUser();
         Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
@@ -77,7 +92,7 @@ public class MessageController {
 
         message.setRead(false);
 
-        System.out.println(" messageType: "+type);
+        System.out.println(" messageType: " + type);
         //message.setMessageType(MessageType.INFORMATION);
         message.setMessageType(MessageType.valueOf(type));
         message.setDateTime(LocalDateTime.now());

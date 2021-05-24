@@ -3,6 +3,7 @@ package com.example.solar_power_plant.service;
 import com.example.solar_power_plant.dao.MessageRepository;
 import com.example.solar_power_plant.dao.UsersRepository;
 import com.example.solar_power_plant.model.Message;
+import com.example.solar_power_plant.model.MessageType;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,5 +37,13 @@ public class MessageService {
 
     public List<Message> getAllMessageByUser(User user){
         return messageRepository.findAllByUser(user);
+    }
+
+    public List<Message> getAllMessageByMessageType(MessageType messageType){
+        return messageRepository.findAllByMessageType(messageType);
+    }
+
+    public List<Message> getAllMessageByUserAndMessageType(User user, MessageType messageType){
+        return  messageRepository.findAllByUserAndMessageType(user,messageType);
     }
 }

@@ -11,5 +11,22 @@
 <h2 th:text="${message.getTitle()}"></h2>
 <h4 th:text="${message.getText()}"></h4>
 
+<button>Відповісти</button>
+
+<form method="post" th:action="@{/messages}" th:object="${message}">
+    <label for="title">Title:
+        <input id="title" type="text" th:field="*{title}">
+    </label>
+    <label for="text">Text:
+        <input id="text" type="text" th:field="*{text}">
+    </label>
+
+<!--    <input type="hidden" th:field="">-->
+
+    <input type="submit" value="Sent message">
+</form>
+
+<a href="/messages">Go back</a>
+
 </body>
 </html>
