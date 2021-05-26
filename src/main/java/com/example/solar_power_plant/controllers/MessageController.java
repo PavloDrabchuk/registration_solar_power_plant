@@ -39,6 +39,7 @@ public class MessageController {
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
             List<Message> messages = messageService.getAllMessageByMessageType(MessageType.INFORMATION);
             messages.addAll(messageService.getAllMessageByMessageType(MessageType.UPDATE));
+            messages.addAll(messageService.getAllMessageByMessageType(MessageType.ERROR));
 
             if (user.get().getUserRole()==UserRoles.EDITOR){
                 messages.addAll(messageService.getAllMessageByMessageType(MessageType.FOR_EDITOR));

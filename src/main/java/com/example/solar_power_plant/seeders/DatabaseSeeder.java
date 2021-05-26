@@ -212,11 +212,21 @@ public class DatabaseSeeder {
         Optional<User> user2 = usersService.getUserByUsername("qwerty123");
         Optional<User> editor = usersService.getUserByUsername("editor");
 
-        Message message1 = new Message("title1", "text1", user1.get(), editor.get(), MessageType.UPDATE, true);
+        Message message1 = new Message("title1", "text1", user1.get(), editor.get(), MessageType.INFORMATION, true);
         messageService.save(message1);
 
         Message message2 = new Message("title2", "text2", user2.get(), editor.get(), MessageType.UPDATE, true);
         messageService.save(message2);
+
+        Message message3 = new Message("title3", "text3", user2.get(), editor.get(), MessageType.FOR_EDITOR, true);
+        messageService.save(message3);
+
+        Message message4 = new Message("title4", "text4", user2.get(), editor.get(), MessageType.FOR_USER, false);
+        messageService.save(message4);
+
+        Message message5 = new Message("title5", "text5", user1.get(), editor.get(), MessageType.ERROR, true);
+        messageService.save(message5);
+
     }
 
 

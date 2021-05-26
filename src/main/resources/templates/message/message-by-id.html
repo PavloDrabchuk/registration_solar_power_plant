@@ -4,11 +4,15 @@
       xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
     <title>Title</title>
 </head>
-<body>
+<body style="background-color: #eff1f5;">
 
-<h2 th:text="${message.getTitle()}"></h2>
+<!--<h2 th:text="${message.getTitle()}"></h2>
 <h4 th:text="${message.getText()}"></h4>
 
 <button>Відповісти</button>
@@ -21,12 +25,47 @@
         <input id="text" type="text" th:field="*{text}">
     </label>
 
-<!--    <input type="hidden" th:field="">-->
+&lt;!&ndash;    <input type="hidden" th:field="">&ndash;&gt;
 
     <input type="submit" value="Sent message">
 </form>
 
-<a href="/messages">Go back</a>
+<a href="/messages">Go back</a>-->
+
+<div class="px-4 py-5 my-5">
+    <!--    <button type="button" class="btn btn-success px-4 gap-3">Повернутись</button>-->
+
+    <!--    <img class="d-block mx-auto mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
+    <h1 class="display-5 fw-bold" th:text="${message.getTitle()}">Title message</h1>
+    <div class=" mx-auto">
+        <!--        <p class="">Name Surname</p>-->
+        <h5>
+            <div th:if="${message.getMessageType().name()=='FOR_EDITOR' or message.getMessageType().name()=='FOR_USER'}"
+            th:text="${message.getFormattedUsernameAndNameSurname()}">
+                Name Surname
+            </div>
+            <div th:if="${message.getMessageType().name()=='INFORMATION'}" class="badge bg-info text-wrap user-select-none">
+                Інформаційне повідомлення
+            </div>
+            <div th:if="${message.getMessageType().name()=='UPDATE'}" class="badge bg-warning text-wrap user-select-none">
+                Оновлення в системі
+            </div>
+            <div th:if="${message.getMessageType().name()=='ERROR'}" class="badge bg-danger text-wrap user-select-none">
+                Повідомлення про проблему
+            </div>
+        </h5>
+        <p class="mb-4" th:text="${message.getStringDateTime()}">25.05.2021 17:10</p>
+    </div>
+    <div class=" mx-auto">
+        <p class="lead mb-4" th:text="${message.getText()}">Message text</p>
+        <div class="d-grid gap-2 d-sm-flex ">
+            <a class="btn btn-outline-success px-4 gap-3">Відповісти</a>
+            <a href="/messages" class="btn btn-success px-4 gap-3">Повернутись</a>
+
+            <!--            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>-->
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

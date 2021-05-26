@@ -6,13 +6,14 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Entity
 public class Message {
     @Id
     @GeneratedValue(generator = "UUID")
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
@@ -110,5 +111,25 @@ public class Message {
 
     public void setRead(Boolean read) {
         isRead = read;
+    }
+
+    public String getStringDateTime() {
+        return (dateTime != null)
+                ? dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))
+                : null;
+    }
+
+    public String getFormattedUsernameAndNameSurname() {
+        StringBuilder result = new StringBuilder();
+
+        result.append("Від: ");
+        result.append(user.getUsername());
+
+        if (user.getName() != null || user.getSurname() != null) result.append("| ");
+
+        if (user.getName() != null) result.append(user.getName()).append(" ");
+        if (user.getSurname() != null) result.append(user.getSurname());
+
+        return result.toString();
     }
 }
