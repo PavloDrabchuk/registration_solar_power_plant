@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,23 +34,35 @@ public class MessageController {
     }
 
     @GetMapping(path = "/messages")
-    public String getAllMessage(Model model) {
+    public String getAllMessage(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
         Optional<User> user = getAuthorisedUser();
         if (user.isPresent()) {
+            double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
-            List<Message> messages = messageService.getAllMessageByMessageType(MessageType.INFORMATION);
+
+            /*List<Message> messages = messageService.getAllMessageByMessageType(MessageType.INFORMATION);
             messages.addAll(messageService.getAllMessageByMessageType(MessageType.UPDATE));
             messages.addAll(messageService.getAllMessageByMessageType(MessageType.ERROR));
 
             if (user.get().getUserRole()==UserRoles.EDITOR){
                 messages.addAll(messageService.getAllMessageByMessageType(MessageType.FOR_EDITOR));
+
+                model.addAttribute("sentMessages",messageService.getAllMessageByMessageType(
+                        MessageType.FOR_USER));
+            }else {
+                model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
+                        user.get(),
+                        MessageType.FOR_EDITOR));
             }
 
-            model.addAttribute("messages", messages);
+            model.addAttribute("messages", messages);*/
 
-            model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
+            model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
+            model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
+
+            /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
-                    MessageType.FOR_EDITOR));
+                    MessageType.FOR_EDITOR));*/
         }
         return "message/messages";
     }
@@ -88,17 +101,47 @@ public class MessageController {
         Optional<User> user = getAuthorisedUser();
         Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
-        user.ifPresent(message::setUser);
-        editor.ifPresent(message::setEditor);
+        /*String title = message.getTitle(),
+                text = message.getText();*/
 
-        message.setRead(false);
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.EDITOR) {
+
+            String title = message.getTitle(),
+                    text = message.getText();
+
+            Message message1;
+            //List<Message> messages=new ArrayList<>();
+
+            for (User user1 : usersService.getAllUsers()) {
+                message1=new Message();
+
+                message1.setTitle(title);
+                message1.setText(text);
+
+                user.ifPresent(message1::setSender);
+                message1.setRecipient(user1);
+                message1.setRead(false);
+
+                System.out.println(" messageType: " + type);
+                //message.setMessageType(MessageType.INFORMATION);
+                message1.setMessageType(MessageType.valueOf(type));
+                message1.setDateTime(LocalDateTime.now());
+
+                messageService.save(message1);
+            }
+
+        }
+        //user.ifPresent(message::setSender);
+        //editor.ifPresent(message::setRecipient);
+
+        /*message.setRead(false);
 
         System.out.println(" messageType: " + type);
         //message.setMessageType(MessageType.INFORMATION);
         message.setMessageType(MessageType.valueOf(type));
-        message.setDateTime(LocalDateTime.now());
+        message.setDateTime(LocalDateTime.now());*/
 
-        messageService.save(message);
+//        messageService.save(message);
 
         redirectAttributes.addFlashAttribute("messageSent", "Повідомлення надіслано");
         return "redirect:/messages";

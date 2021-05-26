@@ -13,9 +13,11 @@ public interface MessageRepository extends CrudRepository<Message,Long> {
 
     Optional<Message> findById(UUID id);
 
-    List<Message> findAllByUser(User user);
+    List<Message> findAllByRecipient(User recipient);
+
+    List<Message> findAllBySender(User sender);
 
     List<Message> findAllByMessageType(MessageType messageType);
 
-    List<Message> findAllByUserAndMessageType(User user,MessageType messageType);
+    List<Message> findAllByRecipientAndMessageType(User user,MessageType messageType);
 }

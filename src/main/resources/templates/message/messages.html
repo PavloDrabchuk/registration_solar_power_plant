@@ -31,5 +31,25 @@
 
 <a th:href="@{/messages/new}">New message</a>
 
+<!--<div th:if="${#lists.size(numPages)}> 1"
+     class="text-center pagination-menu my-3">
+    <form action="/home" method="get">
+        <nav>
+            &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+            <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
+            <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
+            <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
+                   id="page4">&ndash;&gt;
+            <input th:each="page : ${numPages}" th:value="${page}"
+                   th:name="page" th:id="${'page'+page}"
+
+                   th:class="${page==currentPage}
+                           ? 'btn btn-success mx-1'
+                           : 'btn btn-outline-success mx-1'"
+                   type="submit">
+        </nav>
+    </form>
+</div>-->
+
 </body>
 </html>

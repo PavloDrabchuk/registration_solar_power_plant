@@ -210,6 +210,7 @@ public class DatabaseSeeder {
     private void seedMessageTable() {
         Optional<User> user1 = usersService.getUserByUsername("qwerty");
         Optional<User> user2 = usersService.getUserByUsername("qwerty123");
+        Optional<User> user3 = usersService.getUserByUsername("qwerty1231");
         Optional<User> editor = usersService.getUserByUsername("editor");
 
         Message message1 = new Message("title1", "text1", user1.get(), editor.get(), MessageType.INFORMATION, true);
@@ -218,13 +219,13 @@ public class DatabaseSeeder {
         Message message2 = new Message("title2", "text2", user2.get(), editor.get(), MessageType.UPDATE, true);
         messageService.save(message2);
 
-        Message message3 = new Message("title3", "text3", user2.get(), editor.get(), MessageType.FOR_EDITOR, true);
+        Message message3 = new Message("title3", "text3", user3.get(), editor.get(), MessageType.FOR_EDITOR, true);
         messageService.save(message3);
 
-        Message message4 = new Message("title4", "text4", user2.get(), editor.get(), MessageType.FOR_USER, false);
+        Message message4 = new Message("title4", "text4", editor.get(), user3.get(), MessageType.FOR_USER, false);
         messageService.save(message4);
 
-        Message message5 = new Message("title5", "text5", user1.get(), editor.get(), MessageType.ERROR, true);
+        Message message5 = new Message("title5", "text5", editor.get(), user2.get(), MessageType.ERROR, true);
         messageService.save(message5);
 
     }

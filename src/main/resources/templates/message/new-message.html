@@ -18,6 +18,14 @@
         <input id="text" type="text" th:field="*{text}">
     </label>
 
+    <label for="typesForUser" th:if="${editorAccess==null}">
+        <select name="type" id="typesForUser">
+            <option name="FOR_EDITOR" value="FOR_EDITOR">Питання</option>
+            <option name="FOR_ADMIN" value="FOR_ADMIN">Технічна помилка</option>
+<!--            <option name="user" value="user">For user (?)</option>-->
+        </select>
+    </label>
+
     <label for="types" th:if="${editorAccess}">
         <select name="type" id="types">
             <option name="INFORMATION" value="INFORMATION">Info</option>

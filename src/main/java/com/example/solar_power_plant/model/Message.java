@@ -24,23 +24,23 @@ public class Message {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    private User sender;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User editor;
+    private User recipient;
 
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private MessageType messageType;
     private Boolean isRead;
 
-    public Message(String title, String text, User user, User editor, MessageType messageType, Boolean isRead) {
+    public Message(String title, String text, User sender, User recipient, MessageType messageType, Boolean isRead) {
         //this.id=UUID.fromString(title);
         this.title = title;
         this.text = text;
         this.dateTime = LocalDateTime.now();
-        this.user = user;
-        this.editor = editor;
+        this.sender = sender;
+        this.recipient = recipient;
         this.messageType = messageType;
         this.isRead = isRead;
     }
@@ -81,20 +81,20 @@ public class Message {
         this.dateTime = dateTime;
     }
 
-    public User getUser() {
-        return user;
+    public User getSender() {
+        return sender;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
-    public User getEditor() {
-        return editor;
+    public User getRecipient() {
+        return recipient;
     }
 
-    public void setEditor(User editor) {
-        this.editor = editor;
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
     }
 
     public MessageType getMessageType() {
@@ -123,12 +123,12 @@ public class Message {
         StringBuilder result = new StringBuilder();
 
         result.append("Від: ");
-        result.append(user.getUsername());
+        result.append(sender.getUsername());
 
-        if (user.getName() != null || user.getSurname() != null) result.append("| ");
+        if (sender.getName() != null || sender.getSurname() != null) result.append("| ");
 
-        if (user.getName() != null) result.append(user.getName()).append(" ");
-        if (user.getSurname() != null) result.append(user.getSurname());
+        if (sender.getName() != null) result.append(sender.getName()).append(" ");
+        if (sender.getSurname() != null) result.append(sender.getSurname());
 
         return result.toString();
     }
