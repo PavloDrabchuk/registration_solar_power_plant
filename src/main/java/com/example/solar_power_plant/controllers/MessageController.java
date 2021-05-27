@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +35,9 @@ public class MessageController {
     @GetMapping(path = "/messages")
     public String getAllMessage(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
         Optional<User> user = getAuthorisedUser();
+
+
+
         if (user.isPresent()) {
             double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
@@ -57,8 +59,29 @@ public class MessageController {
 
             model.addAttribute("messages", messages);*/
 
-            model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
-            model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
+            //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
+
+            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
+            int pageInt = getPage(page,pageNumList.size());
+            /*try {
+                 pageInt = Integer.parseInt(page);
+            }catch(NumberFormatException ex) {
+                //System.err.println("Invalid string in argumment");
+                pageInt=1;
+            }*/
+
+                model.addAttribute("messages",
+                    messageService.getMessagesByRecipientForPage(
+                            user.get().getId(),
+                            (pageInt - 1) * (int) limitMessages,
+                            (int) limitMessages));
+
+            //List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
+
+            model.addAttribute("numPages", pageNumList);
+            model.addAttribute("currentPage",pageInt);
+
+            //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
 
             /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
@@ -92,7 +115,20 @@ public class MessageController {
             model.addAttribute("messages", messages);*/
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
-            model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
+            //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
+            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,2);
+
+            int pageInt = getPage(page,pageNumList.size());
+
+            model.addAttribute("sentMessages",
+                    messageService.getMessagesBySenderForPage(
+                            user.get().getId(),
+                            (pageInt - 1) * (int) limitMessages,
+                            (int) limitMessages));
+
+
+            model.addAttribute("numPages", pageNumList);
+            model.addAttribute("currentPage",pageInt);
 
             /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
@@ -256,5 +292,19 @@ public class MessageController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
+    }
+
+    private int getPage(String page, int maxPage){
+        int pageInt;
+        try {
+            pageInt = Integer.parseInt(page);
+        }catch(NumberFormatException ex) {
+            //System.err.println("Invalid string in argumment");
+            pageInt=1;
+        }
+
+        if(pageInt>maxPage) pageInt=1;
+
+        return pageInt;
     }
 }
