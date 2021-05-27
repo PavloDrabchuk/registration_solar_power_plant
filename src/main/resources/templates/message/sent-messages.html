@@ -12,28 +12,26 @@
 <h2 style="color: red;" th:if="${messageNotFound}" th:text="${messageNotFound}"></h2>
 
 <!--/*@thymesVar id="messageSent" type="java.lang.String"*/-->
-<h2 style="color: green;" th:if="${messageSent}" th:text="${messageSent}"></h2>
-
-<h2 th:if="${#lists.isEmpty(messages)}">Вхідних повідомлень немає</h2>
+<!--<h2 style="color: green;" th:text="${messageSent}"></h2>
 
 <ul th:each="m : ${messages}">
     <li>
         <a th:href="'/messages/'+${m.getId()}"
            th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
     </li>
-</ul>
+</ul>-->
 
-<!--<h3>Надіслані</h3>
+<h2 th:if="${#lists.isEmpty(sentMessages)}">Надісланих повідомлень немає</h2>
+
+<h3>Надіслані</h3>
 <ul th:each="m:${sentMessages}">
     <li>
         <a th:href="'/messages/'+${m.getId()}"
            th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
     </li>
-</ul>-->
+</ul>
 
-<a th:href="@{/messages/new}">New message</a>
-<br/>
-<a th:href="@{/messages/sent}">Надіслані</a>
+<a th:href="@{/messages}">Вхідні</a>
 
 <!--<div th:if="${#lists.size(numPages)}> 1"
      class="text-center pagination-menu my-3">

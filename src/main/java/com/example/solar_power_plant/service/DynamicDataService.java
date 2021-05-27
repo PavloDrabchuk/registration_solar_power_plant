@@ -52,8 +52,8 @@ import java.util.stream.Stream;
 @Service
 public class DynamicDataService {
 
-    private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
-    //private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
+    //private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
+    private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
 
     private final DynamicDataRepository dynamicDataRepository;
     private final SolarPowerPlantService solarPowerPlantService;

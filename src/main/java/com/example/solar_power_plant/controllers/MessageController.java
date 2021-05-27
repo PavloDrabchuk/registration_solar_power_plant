@@ -67,6 +67,40 @@ public class MessageController {
         return "message/messages";
     }
 
+    @GetMapping(path = "/messages/sent")
+    public String getAllSentMessage(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
+        Optional<User> user = getAuthorisedUser();
+        if (user.isPresent()) {
+            double limitMessages = 4;
+            //List<Message> messages = messageService.getAllMessageByUser(user.get());
+
+            /*List<Message> messages = messageService.getAllMessageByMessageType(MessageType.INFORMATION);
+            messages.addAll(messageService.getAllMessageByMessageType(MessageType.UPDATE));
+            messages.addAll(messageService.getAllMessageByMessageType(MessageType.ERROR));
+
+            if (user.get().getUserRole()==UserRoles.EDITOR){
+                messages.addAll(messageService.getAllMessageByMessageType(MessageType.FOR_EDITOR));
+
+                model.addAttribute("sentMessages",messageService.getAllMessageByMessageType(
+                        MessageType.FOR_USER));
+            }else {
+                model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
+                        user.get(),
+                        MessageType.FOR_EDITOR));
+            }
+
+            model.addAttribute("messages", messages);*/
+
+            //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
+            model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
+
+            /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
+                    user.get(),
+                    MessageType.FOR_EDITOR));*/
+        }
+        return "message/sent-messages";
+    }
+
     @GetMapping(path = "/messages/{id}")
     public String getMessageById(@PathVariable("id") UUID id,
                                  Model model,
