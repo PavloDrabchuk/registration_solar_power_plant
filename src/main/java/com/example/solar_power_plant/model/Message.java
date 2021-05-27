@@ -19,6 +19,8 @@ public class Message {
 //    private Long id;
 
     private String title;
+
+    @Column(length = 1024)
     private String text;
     private LocalDateTime dateTime;
 

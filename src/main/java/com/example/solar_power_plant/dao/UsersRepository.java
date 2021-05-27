@@ -18,6 +18,8 @@ public interface UsersRepository extends CrudRepository<User,Long> {
 
     Optional<User> findUserByUserRole(UserRoles userRoles);
 
+    List<User> findAllByUserRole(UserRoles userRoles);
+
     void deleteById(Long id);
 
     //@Override

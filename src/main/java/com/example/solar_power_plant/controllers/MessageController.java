@@ -75,6 +75,9 @@ public class MessageController {
 
         if (message.isPresent()) {
             model.addAttribute("message", message.get());
+            message.get().setRead(true);
+
+            messageService.save(message.get());
         } else {
             System.out.println(" ........ no message ........");
             redirectAttributes.addFlashAttribute("messageNotFound", "Повідомлення не знайдено");
@@ -97,23 +100,28 @@ public class MessageController {
     @PostMapping(path = "/messages")
     public String addMessage(@ModelAttribute("message") Message message,
                              RedirectAttributes redirectAttributes,
-                             @RequestParam(name = "type", defaultValue = "FOR_EDITOR") String type) {
+                             @RequestParam(name = "type", defaultValue = "ERROR") String type) {
         Optional<User> user = getAuthorisedUser();
-        Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
+        //Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
         /*String title = message.getTitle(),
                 text = message.getText();*/
 
+        String title = message.getTitle(),
+                text = message.getText();
+
+        Message message1;
+
         if (user.isPresent() && user.get().getUserRole() == UserRoles.EDITOR) {
 
-            String title = message.getTitle(),
-                    text = message.getText();
-
-            Message message1;
+//            String title = message.getTitle(),
+//                    text = message.getText();
+//
+//            Message message1;
             //List<Message> messages=new ArrayList<>();
 
             for (User user1 : usersService.getAllUsers()) {
-                message1=new Message();
+                message1 = new Message();
 
                 message1.setTitle(title);
                 message1.setText(text);
@@ -129,7 +137,70 @@ public class MessageController {
 
                 messageService.save(message1);
             }
+        } else {
+            switch (type) {
+                case "FOR_EDITOR": {
+                    for (User editor : usersService.getAllUsersByUserRole(UserRoles.EDITOR)) {
+                        message1 = new Message();
 
+                        message1.setTitle(title);
+                        message1.setText(text);
+
+                        user.ifPresent(message1::setSender);
+                        message1.setRecipient(editor);
+                        message1.setRead(false);
+
+                        message1.setMessageType(MessageType.valueOf(type));
+                        message1.setDateTime(LocalDateTime.now());
+
+                        messageService.save(message1);
+                    }
+                    break;
+                }
+                case "FOR_ADMIN": {
+                    for (User admin : usersService.getAllUsersByUserRole(UserRoles.ADMIN)) {
+                        message1 = new Message();
+
+                        message1.setTitle(title);
+                        message1.setText(text);
+
+                        user.ifPresent(message1::setSender);
+                        message1.setRecipient(admin);
+                        message1.setRead(false);
+
+                        message1.setMessageType(MessageType.valueOf(type));
+                        message1.setDateTime(LocalDateTime.now());
+
+                        messageService.save(message1);
+                    }
+                    break;
+                }
+                default: {
+                    System.out.println("error message");
+
+                    Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
+
+                    Message errorMessage = new Message();
+
+                    errorMessage.setTitle("Помилка надсилання");
+                    errorMessage.setText("Під час надсилання вашого повідомлення сталась помилка. " +
+                            "Спробуйте повторити Ваші дії трохи пізніше. Якщо проблему не буде вирішено, " +
+                            "то відправте повідомлення до технічної підтримки на адресу електронної пошти: " +
+                            "solar.power.plant.system@gmail.com. <br><br>" +
+                            "Вибачте за незручності.");
+
+                    editor.ifPresent(errorMessage::setSender);
+                    user.ifPresent(errorMessage::setRecipient);
+                    errorMessage.setRead(false);
+
+                    errorMessage.setMessageType(MessageType.ERROR);
+                    errorMessage.setDateTime(LocalDateTime.now());
+
+                    messageService.save(errorMessage);
+
+                    break;
+                }
+            }
         }
         //user.ifPresent(message::setSender);
         //editor.ifPresent(message::setRecipient);

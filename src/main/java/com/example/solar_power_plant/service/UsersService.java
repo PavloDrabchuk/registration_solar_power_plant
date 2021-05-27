@@ -81,6 +81,10 @@ public class UsersService {
         return usersRepository.findUserByUserRole(userRoles);
     }
 
+    public List<User> getAllUsersByUserRole(UserRoles userRoles){
+        return usersRepository.findAllByUserRole(userRoles);
+    }
+
     /*@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<User> optionalUser = usersRepository.findByUsername(username);
