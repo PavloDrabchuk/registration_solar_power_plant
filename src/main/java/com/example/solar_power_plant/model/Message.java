@@ -134,4 +134,18 @@ public class Message {
 
         return result.toString();
     }
+
+    public String getFormattedUsernameAndNameSurnameOfRecipient() {
+        StringBuilder result = new StringBuilder();
+
+        result.append("Кому: ");
+        result.append(recipient.getUsername());
+
+        if (recipient.getName() != null || recipient.getSurname() != null) result.append("| ");
+
+        if (recipient.getName() != null) result.append(recipient.getName()).append(" ");
+        if (recipient.getSurname() != null) result.append(recipient.getSurname());
+
+        return result.toString();
+    }
 }
