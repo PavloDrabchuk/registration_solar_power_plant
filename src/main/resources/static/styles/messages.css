@@ -1,0 +1,38 @@
+.message-item-read {
+    background-color: #effaef !important;
+}
+
+.btn-sent-messages {
+    color: #000;
+    background-color: #5bb841;
+    border-color: #5bb841;
+}
+
+.btn-sent-messages:hover {
+    color: #000;
+    background-color: #50ae35;
+    border-color: #50ae35;
+}
+
+.btn-check:focus + .btn-sent-messages, .btn-sent-messages:focus {
+    color: #000;
+    background-color: #50ae35;
+    border-color: #50ae35;
+    box-shadow: 0 0 0 0.25rem rgb(19, 148, 10);
+}
+
+.btn-check:checked + .btn-sent-messages, .btn-check:active + .btn-sent-messages, .btn-sent-messages:active, .btn-sent-messages.active, .show > .btn-sent-messages.dropdown-toggle {
+    color: #000;
+    background-color: #4bab2e;
+    border-color: #50ae35;
+}
+
+.btn-check:checked + .btn-sent-messages:focus, .btn-check:active + .btn-sent-messages:focus, .btn-sent-messages:active:focus, .btn-sent-messages.active:focus, .show > .btn-sent-messages.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgb(25, 146, 21);
+}
+
+.btn-sent-messages:disabled, .btn-sent-messages.disabled {
+    color: #000;
+    background-color: #5bb841;
+    border-color: #5bb841;
+}

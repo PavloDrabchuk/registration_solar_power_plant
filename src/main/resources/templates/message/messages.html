@@ -4,17 +4,24 @@
       xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/messages.css"
+          th:href="@{/styles/messages.css}"/>
+
     <title>Title</title>
 </head>
 <body>
 
-<!--/*@thymesVar id="messageNotFound" type="java.lang.String"*/-->
-<h2 style="color: #bf5555;" th:if="${messageNotFound}" th:text="${messageNotFound}"></h2>
 
-<!--/*@thymesVar id="messageSent" type="java.lang.String"*/-->
+<!--<h2 style="color: #bf5555;" th:if="${messageNotFound}" th:text="${messageNotFound}"></h2>
+
+
 <h2 style="color: green;" th:if="${messageSent}" th:text="${messageSent}"></h2>
 
-<!--/*@thymesVar id="messageNotSent" type="java.lang.String"*/-->
+
 <h2 style="color: #d758db;" th:if="${messageNotSent}" th:text="${messageNotSent}"></h2>
 
 <h2 th:if="${#lists.isEmpty(messages)}">Вхідних повідомлень немає</h2>
@@ -26,13 +33,13 @@
     </li>
 </ul>
 
-<!--<h3>Надіслані</h3>
+&lt;!&ndash;<h3>Надіслані</h3>
 <ul th:each="m:${sentMessages}">
     <li>
         <a th:href="'/messages/'+${m.getId()}"
            th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
     </li>
-</ul>-->
+</ul>&ndash;&gt;
 
 <a th:href="@{/messages/new}">New message</a>
 <br/>
@@ -42,11 +49,11 @@
      class="text-center pagination-menu my-3">
     <form action="/messages" method="get">
         <nav>
-            <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+            &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
             <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
             <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
             <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                   id="page4">-->
+                   id="page4">&ndash;&gt;
             <input th:each="page : ${numPages}" th:value="${page}"
                    th:name="page" th:id="${'page'+page}"
 
@@ -58,5 +65,123 @@
     </form>
 </div>
 
+</body>-->
+
+<body style="background-color: #eff1f5;">
+
+<div class="px-4 py-2 my-2">
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mx-lg-4">
+        <h1 class="display-5 fw-bold mx-lg-4">Вхідні повідомлення</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a type="button" class="btn btn-success px-4 gap-3"
+               th:href="@{/messages/new}">Написати повідомлення</a>
+        </div>
+    </div>
+
+    <!-- Alerts -->
+
+    <!--/*@thymesVar id="messageSent" type="java.lang.String"*/-->
+    <div class="alert alert-success mx-2" role="alert"
+         th:if="${messageSent}" th:text="${messageSent}">
+        messageSent
+    </div>
+    <div th:if="${#lists.isEmpty(messages)}" class="alert alert-success mx-2" role="alert">
+        Вхідних повідомлень немає
+    </div>
+
+    <!--/*@thymesVar id="messageNotFound" type="java.lang.String"*/-->
+    <div class="alert alert-danger mx-2" role="alert"
+         th:if="${messageNotFound}" th:text="${messageNotFound}">
+        messageNotFound
+    </div>
+
+    <!--/*@thymesVar id="messageNotSent" type="java.lang.String"*/-->
+    <div class="alert alert-danger mx-2" role="alert"
+         th:if="${messageNotSent}" th:text="${messageNotSent}">
+        messageNotSent
+    </div>
+
+    <div class="mx-lg-4 py-2 my-2">
+        <a type="button" class="btn btn-sent-messages text-light px-4 gap-3"
+           th:href="@{/messages/sent}">Переглянути надіслані повідомлення</a>
+    </div>
+    <!--    <h1 class="display-5 fw-bold mx-lg-4">Повідомлення</h1>-->
+    <!--    <button type="button" class="btn btn-success px-4 gap-3">Написати повідомлення</button>-->
+
+    <div class="list-group mx-lg-4" th:each="m : ${messages}">
+        <a th:href="'/messages/'+${m.getId()}" class="list-group-item list-group-item-action" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1" th:text="${m.getTitle()}">Тема повідомлення №1</h5>
+                <small th:text="${m.getStringDateTime()}">25.05.2021 21:13</small>
+            </div>
+            <p class="mb-1">
+
+                <div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                     th:text="${m.getFormattedUsernameAndNameSurname()}">
+                    Name Surname
+                </div>
+                <div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                     th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">
+                    Name Surname
+                </div>
+                <div th:if="${m.getMessageType().name()=='INFORMATION'}"
+                     class="badge bg-info text-wrap user-select-none">
+                    Інформаційне повідомлення
+                </div>
+                <div th:if="${m.getMessageType().name()=='UPDATE'}"
+                     class="badge bg-warning text-wrap user-select-none">
+                    Оновлення в системі
+                </div>
+                <div th:if="${m.getMessageType().name()=='ERROR'}" class="badge bg-danger text-wrap user-select-none">
+                    Повідомлення про проблему
+                </div>
+
+            </p>
+            <small th:max="50" th:text="${m.getText()}">До 40 символів вміст повідомлення ...</small>
+        </a>
+
+        <!--<a href="#" class="list-group-item list-group-item-action message-item-read">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Тема повідомлення №2</h5>
+                <small class="text-muted">25.05.2021 21:13</small>
+            </div>
+            <p class="mb-1">Name Surname or [Info or Update]</p>
+            <small class="text-muted">До 40 символів вміст повідомлення ...</small>
+        </a>
+
+        <a href="#" class="list-group-item list-group-item-action message-item-read">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Тема повідомлення №3</h5>
+                <small class="text-muted">25.05.2021 21:13</small>
+            </div>
+            <p class="mb-1">Name Surname or [Info or Update]</p>
+            <small class="text-muted">До 40 символів вміст повідомлення ...</small>
+        </a>-->
+    </div>
+
+    <div th:if="${#lists.size(numPages)}> 1"
+         class="text-center pagination-menu my-3">
+        <form action="/messages" method="get">
+            <nav>
+                <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
+                <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
+                <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
+                       id="page4">-->
+                <input th:each="page : ${numPages}" th:value="${page}"
+                       th:name="page" th:id="${'page'+page}"
+
+                       th:class="${page==currentPage}
+                           ? 'btn btn-success mx-1'
+                           : 'btn btn-outline-success mx-1'"
+                       type="submit">
+            </nav>
+        </form>
+    </div>
+
+</div>
+
 </body>
+
 </html>

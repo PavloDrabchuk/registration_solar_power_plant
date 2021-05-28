@@ -148,4 +148,10 @@ public class Message {
 
         return result.toString();
     }
+
+    public boolean isAnswering() {
+        return messageType != MessageType.INFORMATION &&
+                messageType != MessageType.UPDATE &&
+                messageType != MessageType.ERROR;
+    }
 }

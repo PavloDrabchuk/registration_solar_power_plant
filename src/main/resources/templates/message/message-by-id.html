@@ -8,13 +8,30 @@
     <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
           th:href="@{/styles/bootstrap/bootstrap.css}"/>
 
+
+
     <script>
         function visibleExportDataTip() {
             //document.getElementById('export-data-tip').hidden = state;
 
-            let answerBlock=document.getElementById('answerBlock').hidden;
+            //let answerBlock=document.getElementById('answerBlock').hidden;
 
-            document.getElementById('answerBlock').hidden=answerBlock^true;
+            // document.getElementById('answerBlock').hidden=answerBlock^true;
+            document.getElementById('answerBlock').hidden ^= true;
+
+            console.log("b b: " + document.getElementById('buttons').hidden);
+            //document.getElementById('buttons').hidden ^= true;
+            //document.getElementById('answer').hidden ^= true;
+            //document.getElementById('answer').disable=false;
+
+            if (document.getElementById('goBack1')) {
+                document.getElementById('goBack1').hidden ^= true;
+            }
+            if(document.getElementById('goBack2')) {
+                document.getElementById('goBack2').hidden ^= true;
+            }
+            console.log("b a: " + document.getElementById('buttons').hidden);
+
             //if(answerBlock === true) answerBlock= false;
             //else answerBlock=true;
             //console.log("state: " + document.getElementById('export-data-tip').hidden);
@@ -59,17 +76,19 @@
         <!--        <p class="">Name Surname</p>-->
         <h5>
             <div th:if="${(message.getMessageType().name()=='FOR_EDITOR' or message.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != message.getSender().getUsername()}"
-            th:text="${message.getFormattedUsernameAndNameSurname()}">
+                 th:text="${message.getFormattedUsernameAndNameSurname()}">
                 Name Surname
             </div>
             <div th:if="${(message.getMessageType().name()=='FOR_EDITOR' or message.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == message.getSender().getUsername()}"
                  th:text="${message.getFormattedUsernameAndNameSurnameOfRecipient()}">
                 Name Surname
             </div>
-            <div th:if="${message.getMessageType().name()=='INFORMATION'}" class="badge bg-info text-wrap user-select-none">
+            <div th:if="${message.getMessageType().name()=='INFORMATION'}"
+                 class="badge bg-info text-wrap user-select-none">
                 Інформаційне повідомлення
             </div>
-            <div th:if="${message.getMessageType().name()=='UPDATE'}" class="badge bg-warning text-wrap user-select-none">
+            <div th:if="${message.getMessageType().name()=='UPDATE'}"
+                 class="badge bg-warning text-wrap user-select-none">
                 Оновлення в системі
             </div>
             <div th:if="${message.getMessageType().name()=='ERROR'}" class="badge bg-danger text-wrap user-select-none">
@@ -77,25 +96,30 @@
             </div>
         </h5>
         <p class="mb-4" th:text="${message.getStringDateTime()}">25.05.2021 17:10</p>
+        <hr/>
     </div>
     <div class=" mx-auto">
         <p class="lead mb-4" th:text="${message.getText()}">Message text</p>
-        <div class="d-grid gap-2 d-sm-flex ">
-            <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
-               class="btn btn-outline-success px-4 gap-3"
-            onclick="visibleExportDataTip()">Відповісти</a>
-            <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}" href="/messages" class="btn btn-success px-4 gap-3">Повернутись</a>
-            <a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}" href="/messages/sent" class="btn btn-success px-4 gap-3">Повернутись</a>
+<!--        <div id="buttons" hidden="false">-->
 
-            <!--            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>-->
-        </div>
+            <div class="d-grid gap-2 d-sm-flex " id="buttons" hidden>
+                <a th:if="${(#httpServletRequest.remoteUser != message.getSender().getUsername()) and message.isAnswering()}"
+                   class="btn btn-outline-success px-4 gap-3"
+                   onclick="visibleExportDataTip()" id="answer">Відповісти</a>
+                <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
+                   href="/messages" class="btn btn-success px-4 gap-3" id="goBack1">Повернутись</a>
+                <a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
+                   href="/messages/sent" class="btn btn-success px-4 gap-3" id="goBack2">Повернутись</a>
+
+                <!--            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>-->
+            </div>
+<!--        </div>-->
     </div>
 
 
-
     <form method="post" th:action="@{/messages/answer}"
-          th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
-    id="answerBlock" hidden>
+          th:if="${(#httpServletRequest.remoteUser != message.getSender().getUsername()) and message.isAnswering()}"
+          id="answerBlock" hidden>
         <hr>
         <!--<div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -104,12 +128,12 @@
         </div>-->
 
 
-<!--        <input type="hidden" name="title" th:value="${message.getTitle()}" >-->
-<!--        <input type="hidden" name="recipient" th:value="${message.getSender()}" >-->
-<!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_EDITOR' or message.getMessageType()=='FOR_ADMIN'}" value="FOR_USER" >-->
-<!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_USER'}" value="FOR_USER" >-->
-<!--        <input type="hidden" name="sender" th:value="${message.getSender()}" >-->
-        <input type="hidden" name="id" th:value="${message.getId().toString()}" >
+        <!--        <input type="hidden" name="title" th:value="${message.getTitle()}" >-->
+        <!--        <input type="hidden" name="recipient" th:value="${message.getSender()}" >-->
+        <!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_EDITOR' or message.getMessageType()=='FOR_ADMIN'}" value="FOR_USER" >-->
+        <!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_USER'}" value="FOR_USER" >-->
+        <!--        <input type="hidden" name="sender" th:value="${message.getSender()}" >-->
+        <input type="hidden" name="id" th:value="${message.getId().toString()}">
 
 
         <div class="mb-3 col-xl-8 col-lg-9 col-md-12 ">
@@ -121,9 +145,15 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>-->
-        <div class="d-grid gap-2 d-sm-flex">
-            <button type="submit" class="btn btn-success gap-3">Надіслати</button>
-            <button type="submit" class="btn btn-outline-success gap-3">Повернутись</button>
+        <div class="d-grid gap-2 d-sm-flex ">
+            <button type="submit" class="px-4 btn btn-success gap-3">Надіслати</button>
+            <a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
+               href="/messages/sent"
+               class="px-4 btn btn-outline-success gap-3">Повернутись</a>
+
+            <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
+               href="/messages"
+               class="px-4 btn btn-outline-success gap-3">Повернутись</a>
         </div>
     </form>
 
