@@ -5,6 +5,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script>
+        function loadUserList() {
+            var s=document.getElementById("types");
+            var selectedOption=s.options[s.selectedIndex].value;
+            console.log("user list: "+selectedOption);
+            if(selectedOption==="FOR_USER"){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("userSelect").innerHTML =
+                        this.responseText;
+                }
+            };
+
+            xhttp.open("GET", "getUsersList", true);
+            xhttp.send();}
+            else {
+                var element = document.getElementById("userSelect");
+                while (element.firstChild) {
+                    element.removeChild(element.firstChild);
+                }
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -27,12 +52,16 @@
     </label>
 
     <label for="types" th:if="${editorAccess}">
-        <select name="type" id="types">
+        <select name="type" id="types" onclick="loadUserList()">
             <option name="INFORMATION" value="INFORMATION">Info</option>
             <option name="UPDATE" value="UPDATE">Update</option>
-            <option name="user" value="user">For user (?)</option>
+            <option name="FOR_USER" value="FOR_USER" >For user (?)</option>
         </select>
     </label>
+
+    <div id="userSelect" th:if="${editorAccess}">
+
+    </div>
 
     <input type="submit" value="Sent message">
 </form>

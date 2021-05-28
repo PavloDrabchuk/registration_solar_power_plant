@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-@RestController
+@Controller
 public class SeedController {
 
     private final UsersService usersService;
@@ -32,6 +33,17 @@ public class SeedController {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping(path="/say-green-hello")
+    public String sayH(){
+return "jj";
+    }
+
+    @GetMapping(path="/hh")
+    public String sayH1(){
+
+        return "hh";
+    }
 
     @GetMapping(path = "/test-json")
     public void testJson() throws IOException {

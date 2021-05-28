@@ -167,6 +167,12 @@ public class MessageController {
         return "message/new-message";
     }
 
+    @GetMapping(path = "/messages/getUsersList")
+    public String getUserList(){
+        System.out.println("user list");
+        return "message/user-list";
+    }
+
     @PostMapping(path = "/messages")
     public String addMessage(@ModelAttribute("message") Message message,
                              RedirectAttributes redirectAttributes,
