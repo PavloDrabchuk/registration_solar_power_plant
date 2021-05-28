@@ -117,7 +117,7 @@ public class Message {
 
     public String getStringDateTime() {
         return (dateTime != null)
-                ? dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))
+                ? dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
                 : null;
     }
 
