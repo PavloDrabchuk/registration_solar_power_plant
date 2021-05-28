@@ -9,10 +9,13 @@
 <body>
 
 <!--/*@thymesVar id="messageNotFound" type="java.lang.String"*/-->
-<h2 style="color: red;" th:if="${messageNotFound}" th:text="${messageNotFound}"></h2>
+<h2 style="color: #bf5555;" th:if="${messageNotFound}" th:text="${messageNotFound}"></h2>
 
 <!--/*@thymesVar id="messageSent" type="java.lang.String"*/-->
 <h2 style="color: green;" th:if="${messageSent}" th:text="${messageSent}"></h2>
+
+<!--/*@thymesVar id="messageNotSent" type="java.lang.String"*/-->
+<h2 style="color: #d758db;" th:if="${messageNotSent}" th:text="${messageNotSent}"></h2>
 
 <h2 th:if="${#lists.isEmpty(messages)}">Вхідних повідомлень немає</h2>
 

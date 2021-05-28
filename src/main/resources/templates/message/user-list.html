@@ -7,9 +7,12 @@
 
 <!--<label for="selectUser" th:if="${editorAccess==null}">-->
 <label for="selectUser">
-    <select name="type" id="selectUser">
-        <option name="user1" value="user1">User1</option>
-        <option name="user2" value="user2">User2</option>
+    <select name="username" id="selectUser">
+        <option th:each="user : ${users}" th:name="${user.getUsername()}"
+                th:value="${user.getUsername()}" th:utext="${user.getUsername()}"></option>
+
+<!--        <option name="user1" value="user1">User1</option>-->
+<!--        <option name="user2" value="user2">User2</option>-->
         <!--            <option name="user" value="user">For user (?)</option>-->
     </select>
 </label>

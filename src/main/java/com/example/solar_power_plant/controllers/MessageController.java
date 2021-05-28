@@ -37,7 +37,6 @@ public class MessageController {
         Optional<User> user = getAuthorisedUser();
 
 
-
         if (user.isPresent()) {
             double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
@@ -61,8 +60,8 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
 
-            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
-            int pageInt = getPage(page,pageNumList.size());
+            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages, 1);
+            int pageInt = getPage(page, pageNumList.size());
             /*try {
                  pageInt = Integer.parseInt(page);
             }catch(NumberFormatException ex) {
@@ -70,7 +69,7 @@ public class MessageController {
                 pageInt=1;
             }*/
 
-                model.addAttribute("messages",
+            model.addAttribute("messages",
                     messageService.getMessagesByRecipientForPage(
                             user.get().getId(),
                             (pageInt - 1) * (int) limitMessages,
@@ -79,7 +78,7 @@ public class MessageController {
             //List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage",pageInt);
+            model.addAttribute("currentPage", pageInt);
 
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
 
@@ -116,9 +115,9 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
-            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,2);
+            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages, 2);
 
-            int pageInt = getPage(page,pageNumList.size());
+            int pageInt = getPage(page, pageNumList.size());
 
             model.addAttribute("sentMessages",
                     messageService.getMessagesBySenderForPage(
@@ -128,7 +127,7 @@ public class MessageController {
 
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage",pageInt);
+            model.addAttribute("currentPage", pageInt);
 
             /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
@@ -168,7 +167,8 @@ public class MessageController {
     }
 
     @GetMapping(path = "/messages/getUsersList")
-    public String getUserList(){
+    public String getUserList(Model model) {
+        model.addAttribute("users", usersService.getAllUsers());
         System.out.println("user list");
         return "message/user-list";
     }
@@ -176,12 +176,17 @@ public class MessageController {
     @PostMapping(path = "/messages")
     public String addMessage(@ModelAttribute("message") Message message,
                              RedirectAttributes redirectAttributes,
-                             @RequestParam(name = "type", defaultValue = "ERROR") String type) {
+                             @RequestParam(name = "type", required = false) String type,
+                             @RequestParam(name = "username", required = false) String username) {
         Optional<User> user = getAuthorisedUser();
         //Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
         /*String title = message.getTitle(),
                 text = message.getText();*/
+
+        System.out.println("Message title: " + message.getTitle() + ", \n" +
+                "text: " + message.getText() + " \n" +
+                "type: " + type + "\n");
 
         String title = message.getTitle(),
                 text = message.getText();
@@ -196,14 +201,19 @@ public class MessageController {
 //            Message message1;
             //List<Message> messages=new ArrayList<>();
 
-            for (User user1 : usersService.getAllUsers()) {
+            if (type.equals("FOR_USER")) {
                 message1 = new Message();
 
                 message1.setTitle(title);
                 message1.setText(text);
 
                 user.ifPresent(message1::setSender);
-                message1.setRecipient(user1);
+
+                Optional<User> recipient = usersService.getUserByUsername(username);
+                if (recipient.isPresent()) {
+                    message1.setRecipient(recipient.get());
+                }
+
                 message1.setRead(false);
 
                 System.out.println(" messageType: " + type);
@@ -212,6 +222,25 @@ public class MessageController {
                 message1.setDateTime(LocalDateTime.now());
 
                 messageService.save(message1);
+            } else {
+
+                for (User user1 : usersService.getAllUsers()) {
+                    message1 = new Message();
+
+                    message1.setTitle(title);
+                    message1.setText(text);
+
+                    user.ifPresent(message1::setSender);
+                    message1.setRecipient(user1);
+                    message1.setRead(false);
+
+                    System.out.println(" messageType: " + type);
+                    //message.setMessageType(MessageType.INFORMATION);
+                    message1.setMessageType(MessageType.valueOf(type));
+                    message1.setDateTime(LocalDateTime.now());
+
+                    messageService.save(message1);
+                }
             }
         } else {
             switch (type) {
@@ -294,22 +323,65 @@ public class MessageController {
         return "redirect:/messages";
     }
 
+    @PostMapping(path = "/messages/answer")
+    public String answerMessage(RedirectAttributes redirectAttributes,
+                                @RequestParam(name = "id") String id,
+                                @RequestParam(name = "text") String text) {
+        Optional<User> user = getAuthorisedUser();
+
+        Optional<Message> message = messageService.getMessageById(UUID.fromString(id));
+        if (user.isPresent() && message.isPresent()) {
+            Message answer = new Message();
+
+            answer.setTitle(message.get().getTitle());
+            answer.setText(text);
+
+            answer.setSender(user.get());
+            answer.setRecipient(message.get().getSender());
+
+            answer.setRead(false);
+
+            //String typeMessage=message.get().getMessageType().name();
+            User messageSender = message.get().getSender();
+            /*if (messageSender.getUserRole() == UserRoles.EDITOR) {
+                answer.setMessageType(MessageType.FOR_EDITOR);
+            } else if (messageSender.getUserRole() == UserRoles.ADMIN) {
+                answer.setMessageType(MessageType.FOR_ADMIN);
+            } else if (messageSender.getUserRole() == UserRoles.USER) {
+                answer.setMessageType(MessageType.FOR_USER);
+            }*/
+
+            answer.setMessageType(MessageType.valueOf("FOR_"+messageSender.getUserRole().name()));
+
+            answer.setDateTime(LocalDateTime.now());
+
+            messageService.save(answer);
+
+            redirectAttributes.addFlashAttribute("messageSent", "Повідомлення надіслано");
+
+        } else {
+            redirectAttributes.addFlashAttribute("messageNotSent", "Повідомлення не надіслано");
+        }
+
+        return "redirect:/messages";
+    }
+
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
     }
 
-    private int getPage(String page, int maxPage){
+    private int getPage(String page, int maxPage) {
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
-        }catch(NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             //System.err.println("Invalid string in argumment");
-            pageInt=1;
+            pageInt = 1;
         }
 
-        if(pageInt>maxPage) pageInt=1;
+        if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
     }

@@ -65,6 +65,41 @@
             <!--            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>-->
         </div>
     </div>
+
+
+
+    <form method="post" th:action="@{/messages/answer}">
+        <hr>
+        <!--<div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>-->
+
+
+<!--        <input type="hidden" name="title" th:value="${message.getTitle()}" >-->
+<!--        <input type="hidden" name="recipient" th:value="${message.getSender()}" >-->
+<!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_EDITOR' or message.getMessageType()=='FOR_ADMIN'}" value="FOR_USER" >-->
+<!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_USER'}" value="FOR_USER" >-->
+<!--        <input type="hidden" name="sender" th:value="${message.getSender()}" >-->
+        <input type="hidden" name="id" th:value="${message.getId().toString()}" >
+
+
+        <div class="mb-3 col-xl-8 col-lg-9 col-md-12 ">
+            <label for="textarea" class="form-label">Текст повідомлення</label>
+            <textarea class="form-control bi-textarea-resize" id="textarea" cols="20" rows="7" name="text"></textarea>
+        </div>
+
+        <!--<div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>-->
+        <div class="d-grid gap-2 d-sm-flex">
+            <button type="submit" class="btn btn-success gap-3">Надіслати</button>
+            <button type="submit" class="btn btn-outline-success gap-3">Повернутись</button>
+        </div>
+    </form>
+
 </div>
 
 </body>
