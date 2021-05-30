@@ -132,36 +132,47 @@
                 <!--    <button type="button" class="btn btn-success px-4 gap-3">Написати повідомлення</button>-->
 
                 <div class="list-group mx-lg-4" th:each="m : ${messages}">
-                    <a th:href="'/messages/'+${m.getId()}" class="list-group-item list-group-item-action"
+                    <a th:href="'/messages/'+${m.getId()}"
+                       th:class="${m.getRead()}
+                           ? 'list-group-item list-group-item-action message-item-read'
+                           : 'list-group-item list-group-item-action'"
                        aria-current="true">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1" th:text="${m.getTitle()}">Тема повідомлення №1</h5>
                             <small th:text="${m.getStringDateTime()}">25.05.2021 21:13</small>
                         </div>
-                        <p class="mb-1">
+                        <p class="mb-1" th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                           th:text="${m.getFormattedUsernameAndNameSurname()}">Name Surname</p>
 
-                        <div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                        <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
                              th:text="${m.getFormattedUsernameAndNameSurname()}">
                             Name Surname
-                        </div>
-                        <div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                        </div>-->
+                        <p class="mb-1" th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                           th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">Name Surname</p>
+                        <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
                              th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">
                             Name Surname
-                        </div>
-                        <div th:if="${m.getMessageType().name()=='INFORMATION'}"
-                             class="badge bg-info text-wrap user-select-none">
+                        </div>-->
+                        <p th:if="${m.getMessageType().name()=='INFORMATION'}"
+                             class="badge bg-info text-wrap user-select-none mb-1">
                             Інформаційне повідомлення
-                        </div>
-                        <div th:if="${m.getMessageType().name()=='UPDATE'}"
-                             class="badge bg-warning text-wrap user-select-none">
-                            Оновлення в системі
-                        </div>
-                        <div th:if="${m.getMessageType().name()=='ERROR'}"
-                             class="badge bg-danger text-wrap user-select-none">
-                            Повідомлення про проблему
-                        </div>
-
                         </p>
+                        <br th:if="${m.getMessageType().name()=='INFORMATION'}"/>
+
+                        <p th:if="${m.getMessageType().name()=='UPDATE'}"
+                             class="badge bg-warning text-wrap user-select-none mb-1">
+                            Оновлення в системі
+                        </p>
+                        <br th:if="${m.getMessageType().name()=='UPDATE'}"/>
+
+                        <p th:if="${m.getMessageType().name()=='ERROR'}"
+                             class="badge bg-danger text-wrap user-select-none mb-1">
+                            Повідомлення про проблему
+                        </p>
+                        <br th:if="${m.getMessageType().name()=='ERROR'}"/>
+
+
                         <small th:max="50" th:text="${m.getText()}">До 40 символів вміст повідомлення ...</small>
                     </a>
 

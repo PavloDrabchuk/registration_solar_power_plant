@@ -1,13 +1,10 @@
 package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.dao.MessageRepository;
-import com.example.solar_power_plant.dao.UsersRepository;
 import com.example.solar_power_plant.model.Message;
 import com.example.solar_power_plant.model.MessageType;
-import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,15 +35,15 @@ public class MessageService {
     }
 
     public List<Message> getAllMessageByRecipient(User recipient){
-        return messageRepository.findAllByRecipient(recipient);
+        return messageRepository.findAllByRecipientOrderByDateTimeDesc(recipient);
     }
 
     public List<Message> getAllMessageBySender(User sender){
-        return messageRepository.findAllBySender(sender);
+        return messageRepository.findAllBySenderOrderByDateTimeDesc(sender);
     }
 
     public List<Message> getAllMessageByMessageType(MessageType messageType){
-        return messageRepository.findAllByMessageType(messageType);
+        return messageRepository.findAllByMessageTypeOrderByDateTimeDesc(messageType);
     }
 
     public List<Message> getMessagesByRecipientForPage(Long id, int offset, int limit) {

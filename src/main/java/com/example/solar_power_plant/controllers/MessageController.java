@@ -33,7 +33,7 @@ public class MessageController {
     }
 
     @GetMapping(path = "/messages")
-    public String getAllMessage(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
+    public String getAllMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
         Optional<User> user = getAuthorisedUser();
 
 
@@ -90,7 +90,7 @@ public class MessageController {
     }
 
     @GetMapping(path = "/messages/sent")
-    public String getAllSentMessage(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
+    public String getAllSentMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
         Optional<User> user = getAuthorisedUser();
         if (user.isPresent()) {
             double limitMessages = 4;
@@ -125,6 +125,7 @@ public class MessageController {
                             (pageInt - 1) * (int) limitMessages,
                             (int) limitMessages));
 
+            System.out.println("current page: "+pageInt);
 
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", pageInt);

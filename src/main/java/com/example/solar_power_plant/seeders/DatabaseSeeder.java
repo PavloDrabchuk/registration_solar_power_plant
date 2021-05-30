@@ -214,18 +214,23 @@ public class DatabaseSeeder {
         Optional<User> editor = usersService.getUserByUsername("editor");
 
         Message message1 = new Message("title1", "text1", user1.get(), editor.get(), MessageType.INFORMATION, true);
+        message1.setDateTime(LocalDateTime.now().minusDays(3).minusMinutes(153));
         messageService.save(message1);
 
-        Message message2 = new Message("title2", "text2", user2.get(), editor.get(), MessageType.UPDATE, true);
+        Message message2 = new Message("title2", "text2", user2.get(), editor.get(), MessageType.UPDATE, false);
+        message2.setDateTime(LocalDateTime.now().minusMinutes(12));
         messageService.save(message2);
 
         Message message3 = new Message("title3", "text3", user3.get(), editor.get(), MessageType.FOR_EDITOR, true);
+        message3.setDateTime(LocalDateTime.now().minusHours(10).minusMinutes(17));
         messageService.save(message3);
 
         Message message4 = new Message("title4", "text4", editor.get(), user3.get(), MessageType.FOR_USER, false);
+        message4.setDateTime(LocalDateTime.now().minusHours(2).minusMinutes(12));
         messageService.save(message4);
 
         Message message5 = new Message("title5", "text5", editor.get(), user2.get(), MessageType.ERROR, true);
+        message5.setDateTime(LocalDateTime.now().minusMonths(1).minusMinutes(63));
         messageService.save(message5);
 
     }
