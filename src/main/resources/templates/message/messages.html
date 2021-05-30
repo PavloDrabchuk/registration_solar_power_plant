@@ -124,6 +124,12 @@
                     messageNotSent
                 </div>
 
+                <!--/*@thymesVar id="deleteMessage" type="java.lang.String"*/-->
+                <div class="alert alert-success mx-2" role="alert"
+                     th:if="${deleteMessage}" th:utext="${deleteMessage}">
+                    deleteMessage
+                </div>
+
                 <div class="mx-lg-4 py-2 my-2">
                     <a type="button" class="btn btn-sent-messages text-light px-4 gap-3"
                        th:href="@{/messages/sent}">Переглянути надіслані повідомлення</a>

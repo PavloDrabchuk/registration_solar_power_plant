@@ -162,9 +162,9 @@ public class Message {
         }
         return text.substring(0, length) + "...";*/
 
-        return ((text.length() <= 100)
+        return ((text.length() <= 140)
                 ? text.substring(0, text.length()).trim()
-                : text.substring(0, 100).trim())
+                : text.substring(0, 140).trim())
                 + "...";
     }
 }

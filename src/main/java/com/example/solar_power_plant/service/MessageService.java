@@ -80,6 +80,10 @@ public class MessageService {
         return pageNumList;
     }
 
+    public void deleteMessage(Message message){
+        messageRepository.delete(message);
+    }
+
     /*public List<Message> getAllMessageByUserAndMessageType(User user, MessageType messageType){
         return  messageRepository.findAllByUserAndMessageType(user,messageType);
     }*/

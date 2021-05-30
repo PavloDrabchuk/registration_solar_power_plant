@@ -1,9 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
-import com.example.solar_power_plant.model.Message;
-import com.example.solar_power_plant.model.MessageType;
-import com.example.solar_power_plant.model.User;
-import com.example.solar_power_plant.model.UserRoles;
+import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +85,12 @@ public class MessageController {
                     user.get(),
                     MessageType.FOR_EDITOR));*/
         }
+
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }
+
         return "message/messages";
     }
 
@@ -136,6 +139,12 @@ public class MessageController {
                     user.get(),
                     MessageType.FOR_EDITOR));*/
         }
+
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }
+
         return "message/sent-messages";
     }
 
@@ -144,6 +153,13 @@ public class MessageController {
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
         Optional<Message> message = messageService.getMessageById(id);
+
+        Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }
 
         if (message.isPresent()) {
             model.addAttribute("message", message.get());
@@ -155,6 +171,7 @@ public class MessageController {
             redirectAttributes.addFlashAttribute("messageNotFound", "Повідомлення не знайдено");
             return "redirect:/messages";
         }
+
         return "message/message-by-id";
     }
 
@@ -166,6 +183,13 @@ public class MessageController {
             model.addAttribute("editorAccess", "editor");
         }
 
+        Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }
+
         return "message/new-message";
     }
 
@@ -173,6 +197,14 @@ public class MessageController {
     public String getUserList(Model model) {
         model.addAttribute("users", usersService.getAllUsers());
         System.out.println("user list");
+
+        Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }
+
         return "message/user-list";
     }
 
@@ -368,6 +400,27 @@ public class MessageController {
 
         return "redirect:/messages";
     }
+
+    /*@DeleteMapping(path = "/messages/{id}/delete")
+    public String deleteMessageById(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
+        //usersService.deleteUserById(Long.valueOf(id));
+
+        Optional<Message> message = messageService.getMessageById(UUID.fromString(id));
+
+
+        if (message.isPresent() && getAuthorisedUser().isPresent()) {
+            messageService.deleteMessage(message.get());
+
+            //Тут можна надіслати ласта користувачу про видалення його аккаунта
+
+            redirectAttributes.addFlashAttribute("deleteMessage", "Повідомлення успішно видалено.");
+        } else {
+            redirectAttributes.addFlashAttribute("deleteMessage", "Сталась помилка, спробуйте пізніше.");
+        }
+        //model.addAttribute("messages", messageService.getAllSolarPowerPlants());
+
+        return "redirect:/messages";
+    }*/
 
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
