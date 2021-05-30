@@ -192,7 +192,7 @@ public class MessageController {
                 "type: " + type + "\n");
 
         String title = message.getTitle(),
-                text = message.getText();
+                text = message.getText().trim();
 
         Message message1;
 
@@ -337,7 +337,7 @@ public class MessageController {
             Message answer = new Message();
 
             answer.setTitle(message.get().getTitle());
-            answer.setText(text);
+            answer.setText(text.trim());
 
             answer.setSender(user.get());
             answer.setRecipient(message.get().getSender());

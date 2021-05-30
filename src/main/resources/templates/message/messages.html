@@ -175,7 +175,7 @@
                         <br th:if="${m.getMessageType().name()=='ERROR'}"/>
 
 
-                        <small th:max="50" th:text="${m.getText()}">До 40 символів вміст повідомлення ...</small>
+                        <small th:max="50" th:text="${m.getShortText()}">До 40 символів вміст повідомлення ...</small>
                     </a>
 
                     <!--<a href="#" class="list-group-item list-group-item-action message-item-read">

@@ -154,4 +154,17 @@ public class Message {
                 messageType != MessageType.UPDATE &&
                 messageType != MessageType.ERROR;
     }
+
+    public String getShortText() {
+        /*int length = text.length();
+        if (length >= 60) {
+            length = 60;
+        }
+        return text.substring(0, length) + "...";*/
+
+        return ((text.length() <= 100)
+                ? text.substring(0, text.length()).trim()
+                : text.substring(0, 100).trim())
+                + "...";
+    }
 }

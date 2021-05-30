@@ -85,10 +85,10 @@
 
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mx-lg-4">
                     <h1 class="display-5 fw-bold mx-lg-4">Надіслані повідомлення</h1>
-                    <!--<div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-toolbar mb-2 mb-md-0">
                         <a type="button" class="btn btn-success px-4 gap-3"
                            th:href="@{/messages/new}">Написати повідомлення</a>
-                    </div>-->
+                    </div>
                 </div>
 
                 <!-- Alerts -->
@@ -155,7 +155,7 @@
                         <br th:if="${m.getMessageType().name()=='ERROR'}"/>
 
 
-                        <small th:max="50" th:text="${m.getText()}">До 40 символів вміст повідомлення ...</small>
+                        <small th:max="50" th:text="${m.getShortText()}">До 40 символів вміст повідомлення ...</small>
                     </a>
 
                     <!--<a href="#" class="list-group-item list-group-item-action message-item-read">
