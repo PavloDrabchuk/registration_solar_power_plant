@@ -141,33 +141,35 @@
                             <h5 class="mb-1" th:text="${m.getTitle()}">Тема повідомлення №1</h5>
                             <small th:text="${m.getStringDateTime()}">25.05.2021 21:13</small>
                         </div>
-                        <p class="mb-1" th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                        <p class="mb-1"
+                           th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
                            th:text="${m.getFormattedUsernameAndNameSurname()}">Name Surname</p>
 
                         <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
                              th:text="${m.getFormattedUsernameAndNameSurname()}">
                             Name Surname
                         </div>-->
-                        <p class="mb-1" th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                        <p class="mb-1"
+                           th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
                            th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">Name Surname</p>
                         <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
                              th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">
                             Name Surname
                         </div>-->
                         <p th:if="${m.getMessageType().name()=='INFORMATION'}"
-                             class="badge bg-info text-wrap user-select-none mb-1">
+                           class="badge bg-info text-wrap user-select-none mb-1">
                             Інформаційне повідомлення
                         </p>
                         <br th:if="${m.getMessageType().name()=='INFORMATION'}"/>
 
                         <p th:if="${m.getMessageType().name()=='UPDATE'}"
-                             class="badge bg-warning text-wrap user-select-none mb-1">
+                           class="badge bg-warning text-wrap user-select-none mb-1">
                             Оновлення в системі
                         </p>
                         <br th:if="${m.getMessageType().name()=='UPDATE'}"/>
 
                         <p th:if="${m.getMessageType().name()=='ERROR'}"
-                             class="badge bg-danger text-wrap user-select-none mb-1">
+                           class="badge bg-danger text-wrap user-select-none mb-1">
                             Повідомлення про проблему
                         </p>
                         <br th:if="${m.getMessageType().name()=='ERROR'}"/>
@@ -195,7 +197,7 @@
                     </a>-->
                 </div>
 
-                <div th:if="${#lists.size(numPages)}> 1"
+                <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
                      class="text-center pagination-menu my-3">
                     <form action="/messages" method="get">
                         <nav>
@@ -208,8 +210,8 @@
                                    th:name="page" th:id="${'page'+page}"
 
                                    th:class="${page==currentPage}
-                           ? 'btn btn-success mx-1'
-                           : 'btn btn-outline-success mx-1'"
+                                   ? 'btn btn-success mx-1'
+                                   : 'btn btn-outline-success mx-1'"
                                    type="submit">
                         </nav>
                     </form>

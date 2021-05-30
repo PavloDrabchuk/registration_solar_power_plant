@@ -77,8 +77,10 @@ public class MessageController {
 
             //List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
 
+            System.out.println(" - current page: "+pageInt);
+
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", pageInt);
+            model.addAttribute("currentPage", String.valueOf(pageInt));
 
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
 
@@ -128,7 +130,7 @@ public class MessageController {
             System.out.println("current page: "+pageInt);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", pageInt);
+            model.addAttribute("currentPage", String.valueOf(pageInt));
 
             /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
