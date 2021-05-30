@@ -290,7 +290,7 @@ public class MessageController {
 
                     Message errorMessage = new Message();
 
-                    errorMessage.setTitle("Помилка надсилання");
+                    errorMessage.setTitle("Помилка надсилання повідомлення.");
                     errorMessage.setText("Під час надсилання вашого повідомлення сталась помилка. " +
                             "Спробуйте повторити Ваші дії трохи пізніше. Якщо проблему не буде вирішено, " +
                             "то відправте повідомлення до технічної підтримки на адресу електронної пошти: " +
@@ -322,7 +322,7 @@ public class MessageController {
 
 //        messageService.save(message);
 
-        redirectAttributes.addFlashAttribute("messageSent", "Повідомлення надіслано");
+        redirectAttributes.addFlashAttribute("messageSent", "Повідомлення успішно надіслано.");
         return "redirect:/messages";
     }
 
@@ -360,10 +360,10 @@ public class MessageController {
 
             messageService.save(answer);
 
-            redirectAttributes.addFlashAttribute("messageSent", "Повідомлення надіслано");
+            redirectAttributes.addFlashAttribute("messageSent", "Повідомлення успішно надіслано.");
 
         } else {
-            redirectAttributes.addFlashAttribute("messageNotSent", "Повідомлення не надіслано");
+            redirectAttributes.addFlashAttribute("messageNotSent", "Повідомлення не надіслано.");
         }
 
         return "redirect:/messages";
