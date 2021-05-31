@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
-import com.example.solar_power_plant.dao.DataByMonthAndSolarPowerPlant;
+import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
 import com.example.solar_power_plant.service.LocationService;
@@ -59,8 +59,8 @@ public class SolarPowerPlantController {
 
         if (bindingResult.hasErrors()) {
             System.out.println("-=-= errors");
-            for (ObjectError h:bindingResult.getAllErrors()) {
-                System.out.println("  e: "+h.toString()+", "+h.getObjectName()+"\n");
+            for (ObjectError h : bindingResult.getAllErrors()) {
+                System.out.println("  e: " + h.toString() + ", " + h.getObjectName() + "\n");
             }
 
             model.addAttribute("solarPowerPlant", solarPowerPlant);
@@ -155,8 +155,8 @@ public class SolarPowerPlantController {
         if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent() && solarPowerPlant.get().getUser() == getAuthorisedUser().get()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
 
-            for(DataByMonthAndSolarPowerPlant ff:dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
-                System.out.println(" - - - month: " + ff.getMonth()+",  value: "+ff.getTotal());
+            for (DataByPeriodAndSolarPowerPlant ff : dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
+                System.out.println(" - - - month: " + ff.getPeriod() + ",  value: " + ff.getTotal());
             }
             /*for(Double ff:dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get()).values()) {
                 System.out.println(" - - - value: " + ff);
@@ -295,18 +295,18 @@ public class SolarPowerPlantController {
 
         if (startDate.equals("")) {
             //startDate = LocalDate.now().toString()+"T00:00";
-            startDate = LocalDateTime.now().minusHours(24).toString().substring(0,16);
+            startDate = LocalDateTime.now().minusHours(24).toString().substring(0, 16);
         }
-        System.out.println("... startDate: "+startDate);
+        System.out.println("... startDate: " + startDate);
         if (finishDate.equals("")) {
             //finishDate = LocalDate.now().toString()+"T23:59";
-            finishDate = LocalDateTime.now().toString().substring(0,16);
-            System.out.println(".....date now(): "+LocalDateTime.now().toString().substring(0,16));
-            System.out.println(".....date now()-24h: "+LocalDateTime.now().minusHours(24).toString().substring(0,16));
+            finishDate = LocalDateTime.now().toString().substring(0, 16);
+            System.out.println(".....date now(): " + LocalDateTime.now().toString().substring(0, 16));
+            System.out.println(".....date now()-24h: " + LocalDateTime.now().minusHours(24).toString().substring(0, 16));
         }
         System.out.println("... finishDate: " + finishDate);
 
-        model.addAttribute("info", "Дані з "+startDate.replace("T"," ") + " по " + finishDate.replace("T"," "));
+        model.addAttribute("info", "Дані з " + startDate.replace("T", " ") + " по " + finishDate.replace("T", " "));
         //System.out.println("info: "+ startDate + " - " + finishDate + "\nid: " + id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 //String g=LocalDateTime.now().toString();
@@ -324,6 +324,33 @@ public class SolarPowerPlantController {
                     solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
         }
         model.addAttribute("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+
+        List<DataByPeriodAndSolarPowerPlant> dataByMonthAndSolarPowerPlantList = dynamicDataService.getDataByMonthAndSolarPowerPlant(
+                solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+
+        //List<Double> totalPowers = new ArrayList<>(120);
+        List<Double> totalPowers = Arrays.asList(new Double[12]);
+        System.out.println("size: "+totalPowers.size());
+
+        for (DataByPeriodAndSolarPowerPlant totalPower : dataByMonthAndSolarPowerPlantList) {
+            totalPowers.set(totalPower.getPeriod() - 1, totalPower.getTotal());
+        }
+
+        model.addAttribute("dataForGraphsByMonth", totalPowers);
+
+        List<DataByPeriodAndSolarPowerPlant> dataByHourAndSolarPowerPlantList = dynamicDataService.getDataByHourAndSolarPowerPlant(
+                solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+
+        List<Double> averagePowers = Arrays.asList(new Double[24]);
+        System.out.println("size: "+totalPowers.size());
+
+        for (DataByPeriodAndSolarPowerPlant totalPower : dataByHourAndSolarPowerPlantList) {
+            averagePowers.set(totalPower.getPeriod(), totalPower.getTotal());
+            System.out.println("th: "+totalPower.getPeriod()+"  t: "+totalPower.getTotal());
+        }
+
+        model.addAttribute("dataForGraphsByHour", averagePowers);
+
 
         addAdminAccessToModel(model);
 

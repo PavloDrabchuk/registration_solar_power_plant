@@ -183,7 +183,7 @@ public class DatabaseSeeder {
     }
 
     private void seedDynamicDataTable() throws IOException {
-        String str = "2021-04-06 10:00:00";
+        String str = "2021-05-06 10:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
@@ -191,8 +191,53 @@ public class DatabaseSeeder {
 
         //   dateTime = dateTime.plusMinutes(30);
         //dateTime = dateTime.plusMinutes(60*12);
+        Optional<SolarPowerPlant> solarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(1L);
 
+        if(solarPowerPlant.isPresent()) {
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 85.21,
+                    LocalDateTime.parse("2020-05-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 12.2,
+                    LocalDateTime.parse("2020-06-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 121.2,
+                    LocalDateTime.parse("2020-07-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 172.1,
+                    LocalDateTime.parse("2020-08-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.ClearSky, 212.14,
+                    LocalDateTime.parse("2020-09-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.BrokenClouds, 122.8,
+                    LocalDateTime.parse("2020-10-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.LightRain, 36.19,
+                    LocalDateTime.parse("2020-11-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.OvercastClouds, 84.13,
+                    LocalDateTime.parse("2020-12-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.ShowerRain, 71.05,
+                    LocalDateTime.parse("2021-01-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 112.2,
+                    LocalDateTime.parse("2021-02-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.Thunderstorm, 12.9,
+                    LocalDateTime.parse("2021-03-02 10:00:00", formatter)));
+
+            /*dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 35.1,
+                    LocalDateTime.parse("2021-04-02 10:00:00", formatter)));*/
+
+        }
         dynamicDataService.saveDynamicData(dateTime, true);
+
+        /*solarPowerPlant.ifPresent(powerPlant -> dynamicDataService.addDynamicData(new DynamicData(powerPlant, Weather.ClearSky, 229.9,
+                LocalDateTime.parse("2021-05-04 10:00:00", formatter))));*/
+
+        solarPowerPlant.ifPresent(powerPlant -> dynamicDataService.addDynamicData(new DynamicData(powerPlant, Weather.ClearSky, 153.1,
+                LocalDateTime.parse("2021-06-04 10:00:00", formatter))));
 
         // }
     }

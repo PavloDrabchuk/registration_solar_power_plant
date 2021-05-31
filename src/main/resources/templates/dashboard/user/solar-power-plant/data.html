@@ -44,10 +44,10 @@
                         За обраний період дані відсутні.
                     </div>
                     <div th:if="${not #lists.isEmpty(data)}"
-                            class="card py-3">
+                         class="card py-3">
 
                         <div
-                             class="card-body overflow-auto" style="height: 720px;">
+                                class="card-body overflow-auto" style="height: 720px;">
                             <!--<div class="d-flex flex-column align-items-center text-center">
                                 <img src="images/map.jpg" alt="map"
                                      class="" width="100%">
@@ -275,7 +275,7 @@
 
                                 /*<![CDATA[*/
 
-                                let variable2 = /*[[${solarPowerPlant.getDataByMonth()}]]*/ 'name';
+                                let dataByHour = /*[[${dataForGraphsByHour}]]*/ 'name';
 
                                 /*]]>*/
                             </script>
@@ -290,6 +290,15 @@
                 <div class="col-lg-12 col-md-12  mb-3">
                     <div class="card">
                         <div class="card-body">
+
+                            <script th:inline="javascript">
+
+                                /*<![CDATA[*/
+
+                                let dataByMonth = /*[[${dataForGraphsByMonth}]]*/ 'name';
+
+                                /*]]>*/
+                            </script>
 
                             <canvas class="my-4 chartjs-render-monitor" id="chartByMonths" width="2184" height="922"
                                     style="display: block; height: 461px; width: 1092px;"></canvas>
@@ -311,7 +320,8 @@
     <script>
 
         //console.log("var1: "+variable1);
-        console.log("var2: "+variable2);
+        console.log("dataByMonth: " + dataByMonth);
+        console.log("dataByHour: " + dataByHour);
 
         var hours = [];
         var dataHours = [];
@@ -333,10 +343,10 @@
         var chartByHours = document.getElementById("chartByHours");
         var chartByMonths = document.getElementById("chartByMonths");
 
-        getChart(chartByHours, hours, dataHours, 'line', 'Година', 'Потужність');
-        getChart(chartByMonths, months, dataMonths, 'bar', 'Місяць', 'Потужність');
+        getChart(chartByHours, hours, dataByHour, 'line', 'Година', 'Потужність', 'Середнє значення виробленої енергії');
+        getChart(chartByMonths, months, dataByMonth, 'bar', 'Місяць', 'Потужність', 'Вироблення енергії по місяцях');
 
-        function getChart(chart, labels, data, type, xAxesLabel, yAxesLabel) {
+        function getChart(chart, labels, data, type, xAxesLabel, yAxesLabel, chartTitle) {
 
             var myChart = new Chart(chart, {
                 // https://mdbootstrap.com/docs/standard/data/charts/
@@ -355,6 +365,12 @@
                     }]
                 },
                 options: {
+                    /*plugins: {
+                        title: {
+                            display: true,
+                            text: 'chartTitle'
+                        }
+                    },*/
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -376,7 +392,8 @@
                         }]
                     },
                     legend: {
-                        display: false,
+                        display: true,
+                        text:'legend'
                     }
                 }
             });

@@ -33,13 +33,21 @@ public interface DynamicDataRepository extends CrudRepository<DynamicData, Long>
                                           LocalDateTime finishDate,
                                           Long solarPowerPlantId);
 
-    @Query(value="select month(d.collection_date_time) as `month`, SUM(d.produced_power) as `total` from dynamic_data d " +
+    @Query(value="select month(d.collection_date_time) as `period`, SUM(d.produced_power) as `total` from dynamic_data d " +
             "where d.solar_power_plant_id = ?1 and (d.collection_date_time between ?2 and ?3)" +
             "group by month (d.collection_date_time)",
     nativeQuery = true)
-    List<DataByMonthAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId,
+    List<DataByPeriodAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId,
+                                                                          LocalDateTime startDay,
+                                                                          LocalDateTime finishDay);
+    //HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId);
+
+    @Query(value="select hour(d.collection_date_time) as `period`, AVG(d.produced_power) as `total` from dynamic_data d " +
+            "where d.solar_power_plant_id = ?1 and (d.collection_date_time between ?2 and ?3)" +
+            "group by hour (d.collection_date_time)",
+            nativeQuery = true)
+    List<DataByPeriodAndSolarPowerPlant> getDataByHourAndSolarPowerPlant(Long solarPowerPlantId,
                                                                          LocalDateTime startDay,
                                                                          LocalDateTime finishDay);
-    //HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId);
 
 }

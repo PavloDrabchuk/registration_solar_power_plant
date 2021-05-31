@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.service;
 
-import com.example.solar_power_plant.dao.DataByMonthAndSolarPowerPlant;
+import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.dao.DynamicDataRepository;
 import com.example.solar_power_plant.model.*;
 import com.example.weather.OpenWeather;
@@ -77,6 +77,10 @@ public class DynamicDataService {
         );
     }
 
+    public void addDynamicData(DynamicData dynamicData){
+        dynamicDataRepository.save(dynamicData);
+    }
+
     @Async
     @Scheduled(fixedRate = DATA_COLLECTION_TIME /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
     public void collectDynamicData() throws IOException {
@@ -135,7 +139,7 @@ public class DynamicDataService {
                     coefficient = weather.getCoefficient();
 
                     producedPower = generateProducedPower(month,
-                            dateTime.getHour(),
+                            dateTimeCopy.getHour(),
                             //weatherNumber,
                             //getWeather(openWeather).getCoefficient(),
                             coefficient,
@@ -662,10 +666,17 @@ public class DynamicDataService {
     }*/
 
    // public HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
-    public List<DataByMonthAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+    public List<DataByPeriodAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
 
         return dynamicDataRepository.getDataByMonthAndSolarPowerPlant(solarPowerPlant.getId(),
                 LocalDateTime.now().minusYears(1),
+                LocalDateTime.now());
+    }
+
+    public List<DataByPeriodAndSolarPowerPlant> getDataByHourAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+
+        return dynamicDataRepository.getDataByHourAndSolarPowerPlant(solarPowerPlant.getId(),
+                LocalDateTime.now().minusDays(30),
                 LocalDateTime.now());
     }
 }
