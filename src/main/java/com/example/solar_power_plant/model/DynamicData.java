@@ -74,3 +74,4 @@ public class DynamicData {
         this.weather = weather;
     }
 }
+

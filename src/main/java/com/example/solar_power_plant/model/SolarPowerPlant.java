@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class SolarPowerPlant {
@@ -119,6 +121,16 @@ public class SolarPowerPlant {
         return (registrationDateTime != null)
                 ? registrationDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                 : null;
+    }
+
+    public List<Double> getDataByMonth(){
+
+        List<Double> data=new ArrayList<>();
+        data.add(0.21);
+        data.add(0.31);
+        data.add(0.41);
+        data.add(0.11);
+        return data;
     }
 
 }

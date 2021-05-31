@@ -271,6 +271,14 @@
                 <div class="col-lg-12 col-md-12  mb-3">
                     <div class="card">
                         <div class="card-body">
+                            <script th:inline="javascript">
+
+                                /*<![CDATA[*/
+
+                                let variable2 = /*[[${solarPowerPlant.getDataByMonth()}]]*/ 'name';
+
+                                /*]]>*/
+                            </script>
 
                             <canvas class="my-4 chartjs-render-monitor" id="chartByHours" width="2184" height="922"
                                     style="display: block; height: 461px; width: 1092px;"></canvas>
@@ -301,6 +309,10 @@
     <!-- Graphs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
+
+        //console.log("var1: "+variable1);
+        console.log("var2: "+variable2);
+
         var hours = [];
         var dataHours = [];
         var dataMonths = [];

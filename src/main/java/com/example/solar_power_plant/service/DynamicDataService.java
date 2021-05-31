@@ -1,10 +1,8 @@
 package com.example.solar_power_plant.service;
 
+import com.example.solar_power_plant.dao.DaMaS;
 import com.example.solar_power_plant.dao.DynamicDataRepository;
-import com.example.solar_power_plant.model.DynamicData;
-import com.example.solar_power_plant.model.Product;
-import com.example.solar_power_plant.model.SolarPowerPlant;
-import com.example.solar_power_plant.model.Weather;
+import com.example.solar_power_plant.model.*;
 import com.example.weather.OpenWeather;
 import com.google.gson.Gson;
 import org.json.JSONException;
@@ -663,6 +661,12 @@ public class DynamicDataService {
         }
         return books;
     }*/
+
+   // public HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+    public List<DaMaS> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+
+        return dynamicDataRepository.getDataByMonthAndSolarPowerPlant(solarPowerPlant.getId());
+    }
 }
 
 
