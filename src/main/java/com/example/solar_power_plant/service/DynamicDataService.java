@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.service;
 
-import com.example.solar_power_plant.dao.DaMaS;
+import com.example.solar_power_plant.dao.DataByMonthAndSolarPowerPlant;
 import com.example.solar_power_plant.dao.DynamicDataRepository;
 import com.example.solar_power_plant.model.*;
 import com.example.weather.OpenWeather;
@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -663,9 +662,11 @@ public class DynamicDataService {
     }*/
 
    // public HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
-    public List<DaMaS> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
+    public List<DataByMonthAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(SolarPowerPlant solarPowerPlant){
 
-        return dynamicDataRepository.getDataByMonthAndSolarPowerPlant(solarPowerPlant.getId());
+        return dynamicDataRepository.getDataByMonthAndSolarPowerPlant(solarPowerPlant.getId(),
+                LocalDateTime.now().minusYears(1),
+                LocalDateTime.now());
     }
 }
 

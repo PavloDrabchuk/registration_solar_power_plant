@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
-import com.example.solar_power_plant.dao.DaMaS;
+import com.example.solar_power_plant.dao.DataByMonthAndSolarPowerPlant;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
 import com.example.solar_power_plant.service.LocationService;
@@ -155,7 +155,7 @@ public class SolarPowerPlantController {
         if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent() && solarPowerPlant.get().getUser() == getAuthorisedUser().get()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
 
-            for(DaMaS ff:dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
+            for(DataByMonthAndSolarPowerPlant ff:dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
                 System.out.println(" - - - month: " + ff.getMonth()+",  value: "+ff.getTotal());
             }
             /*for(Double ff:dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get()).values()) {

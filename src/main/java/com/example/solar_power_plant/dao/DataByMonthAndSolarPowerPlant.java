@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.dao;
 
-public interface DaMaS {
+public interface DataByMonthAndSolarPowerPlant {
     Integer getMonth();
     Double getTotal();
 

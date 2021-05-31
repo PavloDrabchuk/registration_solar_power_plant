@@ -1,6 +1,5 @@
 package com.example.solar_power_plant.dao;
 
-import com.example.solar_power_plant.model.DataByMonthAndSolarPowerPlant;
 import com.example.solar_power_plant.model.DynamicData;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -35,9 +33,13 @@ public interface DynamicDataRepository extends CrudRepository<DynamicData, Long>
                                           LocalDateTime finishDate,
                                           Long solarPowerPlantId);
 
-    @Query(value="select month(d.collection_date_time) as `month`, SUM(d.produced_power) as `total` from dynamic_data d where d.solar_power_plant_id = ?1 group by month (d.collection_date_time)",
+    @Query(value="select month(d.collection_date_time) as `month`, SUM(d.produced_power) as `total` from dynamic_data d " +
+            "where d.solar_power_plant_id = ?1 and (d.collection_date_time between ?2 and ?3)" +
+            "group by month (d.collection_date_time)",
     nativeQuery = true)
-    List<DaMaS> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId);
+    List<DataByMonthAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId,
+                                                                         LocalDateTime startDay,
+                                                                         LocalDateTime finishDay);
     //HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId);
 
 }
