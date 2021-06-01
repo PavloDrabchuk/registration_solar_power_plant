@@ -225,6 +225,38 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
+    @GetMapping(path="/admin/add-user")
+    public String getAddUserView(Model model){
+        addAdminAccessToModel(model);
+
+        User user = new User();
+        model.addAttribute("user", user);
+
+        return "dashboard/admin/add-user";
+    }
+
+    @PostMapping(path="/admin/add-user")
+    public String addNewUser(Model model,
+                             @Valid @ModelAttribute("user") User user,
+                             RedirectAttributes redirectAttributes){
+
+        System.out.println(" role: "+user.getUserRole());
+
+        //user.setUserRole(UserRoles.valueOf(user.getUserRole().));
+        user.setActivated(true);
+        user.setLocked(false);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setDateTimeOfCreation(LocalDateTime.now());
+        //System.out.println("activated: " + user.getActivated());
+        usersService.saveUser(user);
+
+        //тут можна надіслати сповіщення для користувача
+        redirectAttributes.addFlashAttribute("addUserMessage", "Користувача успішно додано.");
+
+
+        return "redirect:/admin/users";
+    }
+
     @DeleteMapping(path = "/admin/users/{id}/delete")
     public String deleteUserById(@PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
         //usersService.deleteUserById(Long.valueOf(id));

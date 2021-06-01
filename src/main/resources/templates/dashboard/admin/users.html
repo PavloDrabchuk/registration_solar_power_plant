@@ -42,7 +42,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Користувачі системи</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <button type="button" class="btn btn-success">Додати користувача</button>
+                    <a href="/admin/add-user" type="button" class="btn btn-success">Додати користувача</a>
                 </div>
             </div>
 
@@ -82,6 +82,7 @@
                  th:if="${deleteUserMessage}" th:utext="${deleteUserMessage}">
                 deleteUserMessage
             </div>
+
             <div class="alert alert-warning m-2" role="alert"
                  th:if="${usersNotFoundMessage}" th:utext="${usersNotFoundMessage}">
                 usersNotFoundMessage
@@ -90,7 +91,10 @@
                  th:if="${errorSetRoleMessage}" th:utext="${errorSetRoleMessage}">
                 errorSetRoleMessage
             </div>
-
+            <div class="alert alert-success m-2" role="alert"
+                 th:if="${addUserMessage}" th:utext="${addUserMessage}">
+                addUserMessage
+            </div>
             <!--<div class="alert alert-warning alert-dismissible fade show mx-2" role="alert">
                 usersNotFoundMessage
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрити"></button>
