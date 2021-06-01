@@ -414,7 +414,8 @@ public class SolarPowerPlantController {
                              @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
                              Model model,
                              HttpServletRequest request,
-                             HttpServletResponse response) throws IOException, TransformerException, ParserConfigurationException, JSONException {
+                             HttpServletResponse response,
+                             RedirectAttributes redirectAttributes) throws IOException, TransformerException, ParserConfigurationException, JSONException {
 
 
         model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
@@ -469,7 +470,8 @@ public class SolarPowerPlantController {
                 break;
             }
             default: {
-                return "download-file-error";
+                redirectAttributes.addFlashAttribute("exportDataError","Сталась помилка. Дані неможливо завантажити. Спробуйте пізніше.");
+                return "redirect:/home";
             }
 
         }
