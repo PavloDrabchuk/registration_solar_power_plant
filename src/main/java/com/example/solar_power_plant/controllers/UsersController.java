@@ -64,7 +64,7 @@ public class UsersController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
-        if(user.isPresent() && user.get().getLocked()){
+        if (user.isPresent() && user.get().getLocked()) {
             return "redirect:/locked-account";
         }
 
@@ -86,7 +86,7 @@ public class UsersController {
             List<String> pageNumList = solarPowerPlantService.getNumPagesList(user.get(), limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage",page);
+            model.addAttribute("currentPage", page);
 
             if (userRole.equals("ADMIN")) {
                 model.addAttribute("adminAccess", "admin");
@@ -164,6 +164,9 @@ public class UsersController {
         String username = auth.getName();
         Optional<User> user = usersService.getUserByUsername(username);
 
+        if (user.isPresent() && user.get().getLocked()) {
+            return "redirect:/home";
+        }
 
         user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
 
@@ -178,6 +181,9 @@ public class UsersController {
         String username = auth.getName();
         Optional<User> user = usersService.getUserByUsername(username);
 
+        if (user.isPresent() && !user.get().getLocked()) {
+            return "redirect:/confirm_registration";
+        }
 
         //user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
 
@@ -235,8 +241,8 @@ public class UsersController {
 
             confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.ConfirmRegistration);
 
-            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail()+".";
-            model.addAttribute("email",user.get().getEmail());
+            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail() + ".";
+            model.addAttribute("email", user.get().getEmail());
         } else {
             sendingCodeMessage = "Посилання не надіслано, спробуйте пізніше ще раз.";
         }
@@ -258,15 +264,15 @@ public class UsersController {
             System.out.println("time: " + user.get().getDateTimeOfCreation());
 
             user.get().getStringInfo();
-            model.addAttribute("countOfRegisteredSolarStations",solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
+            model.addAttribute("countOfRegisteredSolarStations", solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
 
-            if(user.get().getLocked()){
+            if (user.get().getLocked()) {
                 model.addAttribute("accountStatus", "Заблокований");
-            }else {
+            } else {
                 Boolean accountStatus = user.get().getActivated();
                 model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
             }
-            if (user.get().getUserRole()==UserRoles.ADMIN) {
+            if (user.get().getUserRole() == UserRoles.ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
             }
@@ -289,7 +295,7 @@ public class UsersController {
             Boolean accountStatus = user.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
-            if (user.get().getUserRole()==UserRoles.ADMIN) {
+            if (user.get().getUserRole() == UserRoles.ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
             }
