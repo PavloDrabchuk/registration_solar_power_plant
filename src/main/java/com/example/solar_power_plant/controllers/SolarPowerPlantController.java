@@ -234,10 +234,36 @@ public class SolarPowerPlantController {
         String username = auth.getName();//get logged in username
 
         System.out.println("spp info: "+solarPowerPlant.getId()+" s_id: "+solarPowerPlant.getStringId());
-        System.out.println("  - spp info: "+solarPowerPlant.getName()+" s_id: "+solarPowerPlant.getLocation().getCity());
+        System.out.println("  - spp info: "+solarPowerPlant.getName()+" s_id: "+solarPowerPlant.getLocation().getRegion());
         System.out.println("  - spp info: "+installationDate+" s_id: "+solarPowerPlant.getStaticData().getPower());
 
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<SolarPowerPlant> updatedSolarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
+        if(updatedSolarPowerPlant.isPresent()){
+            updatedSolarPowerPlant.get().setName(solarPowerPlant.getName());
+
+
+            updatedSolarPowerPlant.get().getLocation().setCountry("Україна");
+            updatedSolarPowerPlant.get().getLocation().setRegion(solarPowerPlant.getLocation().getRegion());
+            updatedSolarPowerPlant.get().getLocation().setCity(solarPowerPlant.getLocation().getCity());
+            updatedSolarPowerPlant.get().getLocation().setStreet(solarPowerPlant.getLocation().getStreet());
+            updatedSolarPowerPlant.get().getLocation().setNumber(solarPowerPlant.getLocation().getNumber());
+
+            updatedSolarPowerPlant.get().getLocation().setLatitude(solarPowerPlant.getLocation().getLatitude());
+            updatedSolarPowerPlant.get().getLocation().setLongitude(solarPowerPlant.getLocation().getLongitude());
+
+            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
+
+            //updatedSolarPowerPlant.get().setStaticData(solarPowerPlant.getStaticData());
+
+            updatedSolarPowerPlant.get().getStaticData().setPower(solarPowerPlant.getStaticData().getPower());
+            updatedSolarPowerPlant.get().getStaticData().setQuantity(solarPowerPlant.getStaticData().getQuantity());
+            updatedSolarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
+
+            solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(),1);
+        }
+        //------------------------------
+
+        /*Optional<User> user = usersService.getUserByUsername(username);
         if (user.isPresent()) {
             System.out.println("username: " + username + " \n userId: " + user.get().getId());
 
@@ -250,10 +276,10 @@ public class SolarPowerPlantController {
         solarPowerPlant1.ifPresent(powerPlant -> solarPowerPlant.setRegistrationDateTime(powerPlant.getRegistrationDateTime()));
         //locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
         solarPowerPlant.getLocation().setCountry("Україна");
-        //solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+        //solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));*/
 
 
-        solarPowerPlantService.addSolarPowerPlant(solarPowerPlant, 1);
+        //solarPowerPlantService.addSolarPowerPlant(solarPowerPlant, 1);
         /*Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
             if (!name.isEmpty()) {

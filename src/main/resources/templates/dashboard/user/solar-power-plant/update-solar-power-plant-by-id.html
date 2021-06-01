@@ -149,13 +149,13 @@
                                             <label class="col-4 input-group-text"
                                                    for="inputGroupSelectForRegions">Область</label>
                                             <select class="col-8 custom-select" id="inputGroupSelectForRegions"
-                                                    name="region"
+                                                    name="region" th:field="*{location.region}"
                                                     >
                                                 <!--                                            <option selected>Оберіть область</option>-->
                                                 <!--<option value="Київська">Київська</option>
                                                 <option value="Івано-Франківська">Івано-Франківська</option>
                                                 <option value="Львівська">Львівська</option>-->
-                                                <option th:each="region : ${regions}" th:field="*{location.region}" th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
+                                                <option th:each="region : ${regions}"  th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
                                             </select>
                                         </div>
                                     </div>
