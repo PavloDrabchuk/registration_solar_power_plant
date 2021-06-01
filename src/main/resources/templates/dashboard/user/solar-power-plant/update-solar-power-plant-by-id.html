@@ -125,7 +125,12 @@
                                             <input type="date" class="form-control" name="installationDate"
                                                    aria-label="InstallationDate"
                                                    aria-describedby="addon-wrapping-installation-date"
-                                                   th:max="${localDate}" th:value="${solarPowerPlant.getStaticData().getInstallationDate()}">
+                                                   th:max="${localDate}" th:value="${solarPowerPlant.getStaticData().getStringInstallationDate()}"
+                                                   >
+
+<!--                                            <p th:text="${solarPowerPlant.getStaticData().getStringInstallationDate()}"></p>-->
+<!--                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"-->
+
 <!--                                                   th:field="*{staticData.installationDate}">-->
                                         </div>
                                     </div>

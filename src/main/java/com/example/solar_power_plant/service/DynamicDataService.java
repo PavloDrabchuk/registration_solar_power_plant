@@ -241,7 +241,7 @@ public class DynamicDataService {
             int hour,
             //int weatherNumber,
             double weatherCoefficient,
-            Double power,
+            Integer power,
             Integer quantity,
             int usingTime,
             double lat,

@@ -1,8 +1,13 @@
 package com.example.solar_power_plant.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -12,15 +17,16 @@ public class StaticData {
     private Long id;
 
     private Integer quantity;
-    private Double power;
+    private Integer power;
 
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date installationDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
     @Transient
     private SolarPowerPlant solarPowerPlant;
 
-    public StaticData(Integer quantity,Double power, Date installationDate, SolarPowerPlant solarPowerPlant) {
+    public StaticData(Integer quantity,Integer power, Date installationDate, SolarPowerPlant solarPowerPlant) {
         this.quantity = quantity;
         this.power=power;
         this.installationDate = installationDate;
@@ -46,11 +52,11 @@ public class StaticData {
         this.quantity = quantity;
     }
 
-    public Double getPower() {
+    public Integer getPower() {
         return power;
     }
 
-    public void setPower(Double power) {
+    public void setPower(Integer power) {
         this.power = power;
     }
 
@@ -74,5 +80,13 @@ public class StaticData {
 
     public void setSolarPowerPlant(SolarPowerPlant solarPowerPlant) {
         this.solarPowerPlant = solarPowerPlant;
+    }
+
+    public Timestamp getTimestampInstallationDate(){
+        return Timestamp.valueOf(String.valueOf(installationDate));
+    }
+
+    public String getStringInstallationDate(){
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

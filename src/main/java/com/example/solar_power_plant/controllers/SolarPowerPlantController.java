@@ -224,6 +224,7 @@ public class SolarPowerPlantController {
                                             @RequestParam(value = "number") String number,
                                             @RequestParam(value = "longitude") Double longitude,
                                             @RequestParam(value = "latitude") Double latitude,*/
+                                            @RequestParam(value = "installationDate") String installationDate,
                                             RedirectAttributes redirectAttributes,
                                             @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
@@ -231,6 +232,10 @@ public class SolarPowerPlantController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
+
+        System.out.println("spp info: "+solarPowerPlant.getId()+" s_id: "+solarPowerPlant.getStringId());
+        System.out.println("  - spp info: "+solarPowerPlant.getName()+" s_id: "+solarPowerPlant.getLocation().getCity());
+        System.out.println("  - spp info: "+installationDate+" s_id: "+solarPowerPlant.getStaticData().getPower());
 
         Optional<User> user = usersService.getUserByUsername(username);
         if (user.isPresent()) {
