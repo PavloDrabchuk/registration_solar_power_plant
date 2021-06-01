@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -354,19 +356,42 @@ public class AdminController {
     @PostMapping(path = "/admin/solar-power-plants/{id}/update")
     public String updateSolarPowerPlantById(@PathVariable String id,
                                             Model model,
-                                            @RequestParam(value = "name") String name,
-                                            @RequestParam(value = "quantity") Integer quantity,
-                                            RedirectAttributes redirectAttributes) {
-        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
-        if (solarPowerPlant.isPresent()) {
-            if (!name.isEmpty()) {
-                solarPowerPlant.get().setName(name);
-            }
-            if (quantity != null) {
-                solarPowerPlant.get().getStaticData().setQuantity(quantity);
-            }
-            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant.get(), 1);
+                                            @RequestParam(value = "installationDate") String installationDate,
+                                            RedirectAttributes redirectAttributes,
+                                            @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+
+        System.out.println("spp info: "+solarPowerPlant.getId()+" s_id: "+solarPowerPlant.getStringId());
+        System.out.println("  - spp info: "+solarPowerPlant.getName()+" s_id: "+solarPowerPlant.getLocation().getRegion());
+        System.out.println("  - spp info: "+installationDate+" s_id: "+solarPowerPlant.getStaticData().getPower());
+
+        Optional<SolarPowerPlant> updatedSolarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
+        if(updatedSolarPowerPlant.isPresent()){
+            updatedSolarPowerPlant.get().setName(solarPowerPlant.getName());
+
+
+            updatedSolarPowerPlant.get().getLocation().setCountry("Україна");
+            updatedSolarPowerPlant.get().getLocation().setRegion(solarPowerPlant.getLocation().getRegion());
+            updatedSolarPowerPlant.get().getLocation().setCity(solarPowerPlant.getLocation().getCity());
+            updatedSolarPowerPlant.get().getLocation().setStreet(solarPowerPlant.getLocation().getStreet());
+            updatedSolarPowerPlant.get().getLocation().setNumber(solarPowerPlant.getLocation().getNumber());
+
+            updatedSolarPowerPlant.get().getLocation().setLatitude(solarPowerPlant.getLocation().getLatitude());
+            updatedSolarPowerPlant.get().getLocation().setLongitude(solarPowerPlant.getLocation().getLongitude());
+
+            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
+
+            //updatedSolarPowerPlant.get().setStaticData(solarPowerPlant.getStaticData());
+
+            updatedSolarPowerPlant.get().getStaticData().setPower(solarPowerPlant.getStaticData().getPower());
+            updatedSolarPowerPlant.get().getStaticData().setQuantity(solarPowerPlant.getStaticData().getQuantity());
+            updatedSolarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
+
+            solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(),1);
         }
+
+
         //тут можна надіслати сповіщення для користувача
         redirectAttributes.addFlashAttribute("updateSolarPowerPlantMessage", "Інформацію про сонячну станцію оновлено.");
         model.addAttribute("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());
