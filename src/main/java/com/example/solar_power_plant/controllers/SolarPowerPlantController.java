@@ -337,7 +337,13 @@ public class SolarPowerPlantController {
         }
         System.out.println("... finishDate: " + finishDate);
 
-        model.addAttribute("info", "Дані з " + startDate.replace("T", " ") + " по " + finishDate.replace("T", " "));
+        DateTimeFormatter formatterForView = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        model.addAttribute("info", "Дані з " +
+                LocalDateTime.parse(startDate.replace("T", " "),formatterForView)
+                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))+ " по " +
+                LocalDateTime.parse(finishDate.replace("T", " "),formatterForView)
+                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
         //System.out.println("info: "+ startDate + " - " + finishDate + "\nid: " + id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 //String g=LocalDateTime.now().toString();
