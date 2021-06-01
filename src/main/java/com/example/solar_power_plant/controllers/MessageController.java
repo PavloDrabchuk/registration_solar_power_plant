@@ -33,6 +33,10 @@ public class MessageController {
     public String getAllMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
         Optional<User> user = getAuthorisedUser();
 
+        if(user.isPresent() && (user.get().getLocked() || !user.get().getActivated())){
+            return "redirect:/home";
+        }
+
 
         if (user.isPresent()) {
             double limitMessages = 4;

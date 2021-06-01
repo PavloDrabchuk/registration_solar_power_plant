@@ -64,7 +64,7 @@ public class DatabaseSeeder {
         user1.setEmail("example1@gmail.com");
         user1.setUsername("qwerty123");
         user1.setUserRole(UserRoles.USER);
-        user1.setActivated(true);
+        user1.setActivated(false);
         user1.setLocked(false);
         user1.setPassword(bCryptPasswordEncoder.encode("qwerty"));
         user1.setDateTimeOfCreation(LocalDateTime.now());

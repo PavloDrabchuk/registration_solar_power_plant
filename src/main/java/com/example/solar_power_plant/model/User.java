@@ -53,12 +53,12 @@ public class User {
 
     public User(
             @JsonProperty("username") String username,
-                @JsonProperty("name") String name,
-                @JsonProperty("surname") String surname,
-                @JsonProperty("password") String password,
-                @JsonProperty("userRoles") UserRoles userRole,
-                @JsonProperty("email") String email,
-                @JsonProperty("mobilePhoneNumber") String mobilePhoneNumber) {
+            @JsonProperty("name") String name,
+            @JsonProperty("surname") String surname,
+            @JsonProperty("password") String password,
+            @JsonProperty("userRoles") UserRoles userRole,
+            @JsonProperty("email") String email,
+            @JsonProperty("mobilePhoneNumber") String mobilePhoneNumber) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -68,7 +68,7 @@ public class User {
         //this.locked=false;
         this.email = email;
         this.mobilePhoneNumber = mobilePhoneNumber;
-        this.dateTimeOfCreation=LocalDateTime.now(ZoneId.of("UTC"));
+        this.dateTimeOfCreation = LocalDateTime.now(ZoneId.of("UTC"));
     }
 
     public User() {
@@ -164,7 +164,6 @@ public class User {
     }
 
 
-
     public void getStringInfo() {
         System.out.println("\nUser info: \n" +
                 "id: " + id +
@@ -197,5 +196,13 @@ public class User {
         return (dateTimeOfCreation != null)
                 ? dateTimeOfCreation.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                 : null;
+    }
+
+    public String getAccountStatus() {
+        if (locked) {
+            return "Заблокований";
+        } else {
+            return activated ? "Активований" : "Не активований";
+        }
     }
 }

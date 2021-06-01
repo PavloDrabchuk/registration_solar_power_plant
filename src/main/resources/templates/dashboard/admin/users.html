@@ -131,8 +131,9 @@
                     <th scope="row" th:utext="${state.index+1}">1</th>
                     <td scope="col" th:utext="${user.getUsername()}">Username1</td>
                     <td scope="col" th:utext="${user.getUserRole()}">Editor</td>
-                    <td scope="col" th:if="${user.getActivated()}">Активований</td>
-                    <td scope="col" th:unless="${user.getActivated()}">Не активований</td>
+                    <td scope="col" th:utext="${user.getAccountStatus()}">Статус</td>
+<!--                    <td scope="col" th:if="${user.getActivated()}">Активований</td>-->
+<!--                    <td scope="col" th:unless="${user.getActivated()}">Не активований</td>-->
                     <td scope="col" th:utext="${user.getStringRegistrationDateTime()}">29.03.2021 11:37:37</td>
                     <td scope="col">
                         <div class="table-data-feature">

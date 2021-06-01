@@ -120,8 +120,12 @@ public class AdminController {
             model.addAttribute("solarPowerPlants", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
             model.addAttribute("countOfRegisteredSolarStations", solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
 
-            Boolean accountStatus = user.get().getActivated();
-            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
+            if(user.get().getLocked()){
+                model.addAttribute("accountStatus", "Заблокований");
+            }else {
+                Boolean accountStatus = user.get().getActivated();
+                model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
+            }
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
     }

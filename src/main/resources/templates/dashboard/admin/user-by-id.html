@@ -229,6 +229,18 @@
                                         <div class="col-sm-9" th:switch="${accountStatus}">
                                             <!-- <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>-->
                                             <!-- <div class="d-inline-block fs-5  badge badge-success">Активний</div>-->
+                                            <div th:case="'Заблокований'">
+                                                <!--<h5>
+                                                    <strong th:text="${accountStatus}"
+                                                            class="d-inline-block  badge badge-success">Активований</strong>
+                                                </h5>-->
+                                                <h5>
+                                                    <div class="badge bg-danger text-wrap user-select-none"
+                                                         th:text="${accountStatus}">
+                                                        Активований
+                                                    </div>
+                                                </h5>
+                                            </div>
                                             <div th:case="'Активований'">
                                                 <!--<h5>
                                                     <strong th:text="${accountStatus}"
@@ -248,7 +260,7 @@
                                                         активований</strong>
                                                 </h5>-->
                                                 <h5>
-                                                    <div class="badge bg-danger text-wrap user-select-none"
+                                                    <div class="badge bg-warning text-wrap user-select-none"
                                                          th:text="${accountStatus}">
                                                         Не
                                                         активований
@@ -302,16 +314,16 @@
                                 <div class="card-body">
 
                                     <form th:action="${'/admin/users/'+user.getId()+'/locking'}" method="post"
-                                    class="mx-auto">
+                                    class="d-flex flex-column align-items-center text-center">
                                         <div class="row">
 
                                             <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
                                             <input type="submit" th:if="${user.getLocked()}"
-                                                   class="btn btn-success col-xl-4 col-lg-6 col-md-7 col-sm-8 col-8 "
+                                                   class="btn btn-success"
                                                    value="Розблокувати">
 
                                             <input type="submit" th:if="${!user.getLocked()}"
-                                                   class="mx-auto btn btn-danger col-xl-4 col-lg-6 col-md-7 col-sm-8 col-8 "
+                                                   class="btn btn-danger"
                                                    value="Заблокувати">
                                         </div>
                                     </form>

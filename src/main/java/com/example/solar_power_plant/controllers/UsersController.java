@@ -64,6 +64,10 @@ public class UsersController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
 
+        if(user.isPresent() && user.get().getLocked()){
+            return "redirect:/locked-account";
+        }
+
         if (user.isPresent() && user.get().getActivated()) {
             double limitSolarPowerPlant = 4;
 
@@ -167,6 +171,20 @@ public class UsersController {
         return "confirm_registration";
     }
 
+    @GetMapping(path = "/locked-account")
+    public String gerLockedAccountView(Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Optional<User> user = usersService.getUserByUsername(username);
+
+
+        //user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
+
+        System.out.println("locked-account");
+        return "locked-account";
+    }
+
 
     @GetMapping("/registration")
     public String newCustomerForm(Model model) {
@@ -242,9 +260,12 @@ public class UsersController {
             user.get().getStringInfo();
             model.addAttribute("countOfRegisteredSolarStations",solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
 
-            Boolean accountStatus = user.get().getActivated();
-            model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
-
+            if(user.get().getLocked()){
+                model.addAttribute("accountStatus", "Заблокований");
+            }else {
+                Boolean accountStatus = user.get().getActivated();
+                model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
+            }
             if (user.get().getUserRole()==UserRoles.ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
