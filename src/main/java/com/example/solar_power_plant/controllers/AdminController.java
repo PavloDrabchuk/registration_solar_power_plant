@@ -80,7 +80,7 @@ public class AdminController {
 
                 List<String> pageNumList = usersService
                         .getNumPagesList(usersService.getAllUsers(),
-                        limitUsers);
+                                limitUsers);
 
                 model.addAttribute("numPages", pageNumList);
                 model.addAttribute("currentPage", page);
@@ -187,6 +187,23 @@ public class AdminController {
         return "redirect:/admin/users/" + id;
     }
 
+    @PostMapping(path = "/admin/users/{id}/locking")
+    public String updateUserLocking(@PathVariable String id,
+                                    Model model,
+                                    RedirectAttributes redirectAttributes) {
+        Optional<User> user = usersService.getUserById(Long.valueOf(id));
+        if (user.isPresent()) {
+            //Boolean locked=user.get().getLocked();
+            user.get().setLocked(!user.get().getLocked());
+            usersService.saveUser(user.get());
+            redirectAttributes.addFlashAttribute("lockingUserMessage",
+                    "Користувача " + (user.get().getLocked() ? "заблоковано" : "розблоковано") + ".");
+        } else {
+            redirectAttributes.addFlashAttribute("errorLockingUserMessage", "Помилка запиту, спробуйте пізніше.");
+        }
+        return "redirect:/admin/users/" + id;
+    }
+
     @GetMapping(path = "/admin/users/{id}/update")
     public String getUserByIdForUpdate(@PathVariable String id, Model model) {
 
@@ -225,8 +242,8 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping(path="/admin/add-user")
-    public String getAddUserView(Model model){
+    @GetMapping(path = "/admin/add-user")
+    public String getAddUserView(Model model) {
         addAdminAccessToModel(model);
 
         User user = new User();
@@ -235,12 +252,12 @@ public class AdminController {
         return "dashboard/admin/add-user";
     }
 
-    @PostMapping(path="/admin/add-user")
+    @PostMapping(path = "/admin/add-user")
     public String addNewUser(Model model,
                              @Valid @ModelAttribute("user") User user,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes) {
 
-        System.out.println(" role: "+user.getUserRole());
+        System.out.println(" role: " + user.getUserRole());
 
         //user.setUserRole(UserRoles.valueOf(user.getUserRole().));
         user.setActivated(true);
@@ -394,12 +411,12 @@ public class AdminController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
 
-        System.out.println("spp info: "+solarPowerPlant.getId()+" s_id: "+solarPowerPlant.getStringId());
-        System.out.println("  - spp info: "+solarPowerPlant.getName()+" s_id: "+solarPowerPlant.getLocation().getRegion());
-        System.out.println("  - spp info: "+installationDate+" s_id: "+solarPowerPlant.getStaticData().getPower());
+        System.out.println("spp info: " + solarPowerPlant.getId() + " s_id: " + solarPowerPlant.getStringId());
+        System.out.println("  - spp info: " + solarPowerPlant.getName() + " s_id: " + solarPowerPlant.getLocation().getRegion());
+        System.out.println("  - spp info: " + installationDate + " s_id: " + solarPowerPlant.getStaticData().getPower());
 
-        Optional<SolarPowerPlant> updatedSolarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
-        if(updatedSolarPowerPlant.isPresent()){
+        Optional<SolarPowerPlant> updatedSolarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
+        if (updatedSolarPowerPlant.isPresent()) {
             updatedSolarPowerPlant.get().setName(solarPowerPlant.getName());
 
 
@@ -420,7 +437,7 @@ public class AdminController {
             updatedSolarPowerPlant.get().getStaticData().setQuantity(solarPowerPlant.getStaticData().getQuantity());
             updatedSolarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
 
-            solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(),1);
+            solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
         }
 
 

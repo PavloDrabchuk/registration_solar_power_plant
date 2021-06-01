@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}">
     <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}">
     <link rel="stylesheet" type="text/css" media="all" href="/styles/crud.css" th:href="@{/styles/crud.css}">
 
-    <link rel="stylesheet" type="text/css" media="all" href="styles/bootstrap/bootstrap-icons.css" th:href="@{/styles/bootstrap/bootstrap-icons.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="styles/bootstrap/bootstrap-icons.css"
+          th:href="@{/styles/bootstrap/bootstrap-icons.css}">
 
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
 
 
     <script src="js/bootstrap.js"></script>
@@ -52,7 +54,8 @@
                 <br/>
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-10 col-lg-8">
-                        <form action="/admin/users/" method="get" class="card card-sm" style="background-color: #c7d4e5;">
+                        <form action="/admin/users/" method="get" class="card card-sm"
+                              style="background-color: #c7d4e5;">
                             <div class="card-body row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <i class="fas fa-search text-body"></i>
@@ -91,15 +94,23 @@
                  th:if="${errorSetRoleMessage}" th:utext="${errorSetRoleMessage}">
                 errorSetRoleMessage
             </div>
+
             <div class="alert alert-success m-2" role="alert"
                  th:if="${addUserMessage}" th:utext="${addUserMessage}">
                 addUserMessage
+            </div>
+            <div class="alert alert-success m-2" role="alert"
+                 th:if="${lockingUserMessage}" th:utext="${lockingUserMessage}">
+                lockingUserMessage
+            </div>
+            <div class="alert alert-danger m-2" role="alert"
+                 th:if="${errorLockingUserMessage}" th:utext="${errorLockingUserMessage}">
+                errorLockingUserMessage
             </div>
             <!--<div class="alert alert-warning alert-dismissible fade show mx-2" role="alert">
                 usersNotFoundMessage
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрити"></button>
             </div>-->
-
 
 
             <!-- Table -->
@@ -125,7 +136,8 @@
                     <td scope="col" th:utext="${user.getStringRegistrationDateTime()}">29.03.2021 11:37:37</td>
                     <td scope="col">
                         <div class="table-data-feature">
-                            <a class="item btn btn-success" data-toggle="tooltip" data-placement="top" title="Переглянути"
+                            <a class="item btn btn-success" data-toggle="tooltip" data-placement="top"
+                               title="Переглянути"
                                th:href="${'/admin/users/'+user.getId()}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                      class="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -134,7 +146,8 @@
                                 </svg>
                             </a>
 
-                            <a class="item btn btn-warning" data-toggle="tooltip" data-placement="top" title="Редагувати"
+                            <a class="item btn btn-warning" data-toggle="tooltip" data-placement="top"
+                               title="Редагувати"
                                th:href="${'/admin/users/'+user.getId()+'/update'}">
                                 <!--        <i class="zmdi zmdi-edit"></i>-->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -143,11 +156,11 @@
                                 </svg>
                             </a>
                             <form th:action="${'/admin/users/'+user.getId()+'/delete'}" th:method="delete"
-                                  >
+                            >
 
                                 <button type="submit"
                                         th:class="${#httpServletRequest.remoteUser != user.getUsername()} ? 'item border-0 btn btn-danger' : 'item border-0 btn btn-danger disabled'"
-                                         data-toggle="tooltip"
+                                        data-toggle="tooltip"
                                         data-placement="top"
                                         title="Видалити"
                                 >
@@ -175,7 +188,8 @@
 
             <!-- Pagination -->
 
-            <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}" class="text-center pagination-menu">
+            <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
+                 class="text-center pagination-menu">
                 <form action="/admin/users" method="get">
                     <nav>
                         <input th:if="${search}" type="hidden" name="search" th:value="${search}">
