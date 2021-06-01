@@ -4,19 +4,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Size(min=1,max = 10)
     private String country;
+
+    @NotNull
     private Region region;
+
+    @NotNull
+    @Size(min=1,max = 60)
     private String city;
+
+    @NotNull
+    @Size(min=1,max = 60)
     private String street;
+
+    @NotNull
+    @Size(min=1,max = 50)
     private String number;
 
+    @NotNull
     private Double longitude;
+
+    @NotNull
     private Double latitude;
 
     public Location(String country, Region region, String city, String street, String number, Double longitude, Double latitude) {

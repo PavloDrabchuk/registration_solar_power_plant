@@ -3,6 +3,8 @@ package com.example.solar_power_plant.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,10 +18,16 @@ public class StaticData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Min(1)
     private Integer quantity;
+
+    @NotNull
+    @Min(1)
     private Integer power;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private Date installationDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
