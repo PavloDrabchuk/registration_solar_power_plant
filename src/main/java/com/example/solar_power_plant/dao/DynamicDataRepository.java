@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DynamicDataRepository extends CrudRepository<DynamicData, Long> {
@@ -49,5 +50,5 @@ public interface DynamicDataRepository extends CrudRepository<DynamicData, Long>
     List<DataByPeriodAndSolarPowerPlant> getDataByHourAndSolarPowerPlant(Long solarPowerPlantId,
                                                                          LocalDateTime startDay,
                                                                          LocalDateTime finishDay);
-
+Optional<DynamicData> findFirstBySolarPowerPlant(SolarPowerPlant solarPowerPlant);
 }

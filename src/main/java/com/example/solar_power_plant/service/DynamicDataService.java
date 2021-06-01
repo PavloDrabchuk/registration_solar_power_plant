@@ -679,6 +679,10 @@ public class DynamicDataService {
                 LocalDateTime.now().minusDays(30),
                 LocalDateTime.now());
     }
+
+    public Optional<DynamicData> getFirstDynamicDataBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
+        return dynamicDataRepository.findFirstBySolarPowerPlant(solarPowerPlant);
+    }
 }
 
 

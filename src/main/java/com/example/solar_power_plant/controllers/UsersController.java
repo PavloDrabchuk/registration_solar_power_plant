@@ -191,7 +191,6 @@ public class UsersController {
         return "locked-account";
     }
 
-
     @GetMapping("/registration")
     public String newCustomerForm(Model model) {
         System.out.println("newCustomerForm");
