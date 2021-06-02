@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/test-json").permitAll()
                 .antMatchers("/scripts/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers("/about","/registration-info","/data-collection").permitAll()
+                .antMatchers("/about","/registration-info","/data-collection","/user-registration-info").permitAll()
                 .antMatchers("/admin/**")
                 .hasAuthority("ADMIN")
                 .antMatchers("/sign-up/**", "/home/**",
