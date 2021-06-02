@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <title>Title</title>
+</head>
+<body>
+
+<!-- Header -->
+
+<header class="d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 bg-body border-bottom shadow-sm fixed-top"
+        id="header">
+    <p class="h5 my-0 me-md-auto fw-normal">Company name</p>
+    <nav class="my-1 my-md-0 me-md-3">
+        <!--        <a class="p-2 text-dark" href="#">Features</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Support</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
+    </nav>
+    <!--    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Ввійти</a>-->
+    <!--    <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>-->
+    <a class="btn btn-outline-success" th:href="@{/}">Перейти на головну</a>
+</header>
+
+<!-- Main -->
+
+<h1 class="mt-5 pt-5  text-center">Про систему</h1>
+<h2 class="lead text-center text-secondary">Бажаєте дізнатись про систему? Тут Ви зможете знайти відповіді на
+    найпоширеніші запитання.</h2>
+
+<article class="pb-mb-6">
+    <div class="mx-auto px-3 pt-4 pt-lg-6 pb-6 col-md-10 col-lg-8 col-xl-6">
+        <h3>Що робить система?</h3>
+        <p>Система призначена для реєстрації сонячних електростанцій, яку здійснюють їхні власники.</p>
+
+        <h3>Для чого ця система?</h3>
+        <p>
+            Після реєстрації сонячної електростанції, відбувається збереження даних про вироблену енергію та умови її
+            виготовлення (час доби, місяць, погодні умови, термін використання панелі).
+            На основі збережених даних можна створити методи прогнозування, які дозволять оптимізувати роботу ТЕС чи
+            АЕС.
+        </p>
+
+        <h3>Які є особливості?</h3>
+        <p>
+            Кожен власник зареєстрованої сонячної станції може експортувати дані про вироблену енергію,
+            щоб в подальшому їх використати для встановлення нових сонячних ферм.
+        </p>
+
+        <h3>Хто може нею користуватись?</h3>
+        <p>Системою може користуватись будь-яка людина, яка в ній зареєстрована.
+            Щоб створити власний кабінет потрібно вказати бажане користувацьке ім'я, адресу електронної пошти та придумати пароль.</p>
+
+        <h3>Які є можливості у системи?</h3>
+        <p>В системі передбачено можливість реєстрації безмежної кількості сонячних електростанцій,
+            здійснювати їхній моніторинг, з можливістю експорту даних про вироблену електроенергію.
+            Також в системі є можливість адміністрування та власна система обміну повідомленнями для
+            спілкування з представниками технічної підтримки, у разі виникнення проблем.</p>
+    </div>
+</article>
+
+<!-- Footer -->
+
+<footer class="container border-top pt-md-5 my-md-5 pt-4">
+    <!--<footer class="pt-4 my-md-5 pt-md-5 border-top">-->
+    <div class="row">
+        <div class="col-12 col-md">
+            <img class="mb-2" src="images/logo-social-sq.png" alt="" width="24" height="19">
+            <small class="d-block mb-3 text-muted">© 2021</small>
+        </div>
+        <!--<div class="col-6 col-md">
+            <h5>Особливості</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Реєстраці</a></li>
+                <li><a class="link-secondary" href="#">Random feature</a></li>
+                <li><a class="link-secondary" href="#">Team feature</a></li>
+                <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                <li><a class="link-secondary" href="#">Another one</a></li>
+                <li><a class="link-secondary" href="#">Last time</a></li>
+            </ul>
+        </div>-->
+        <div class="col-6 col-md">
+            <h5>Допомога</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/about">Про систему</a></li>
+                <li><a class="link-secondary" href="#">Реєстрація користувача</a></li>
+                <li><a class="link-secondary" href="#">Реєстрація сонячної станції</a></li>
+                <li><a class="link-secondary" href="#">Збір даних</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Про систему</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Розробник</a></li>
+                <!--                <li><a class="link-secondary" href="#">Locations</a></li>-->
+                <!--                <li><a class="link-secondary" href="#">Privacy</a></li>-->
+                <li><a class="link-secondary" href="#">Правила</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

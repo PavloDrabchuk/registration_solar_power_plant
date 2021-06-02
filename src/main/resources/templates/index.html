@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
 <head>
     <meta charset="UTF-8">
@@ -34,7 +35,7 @@
 <!--        <a class="p-2 text-dark" href="#">Support</a>-->
 <!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
-    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Ввійти</a>
+    <a class="btn text-decoration-none link-dark mx-1" th:href="@{/login}">Ввійти</a>
     <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>
 </header>
 
@@ -112,7 +113,8 @@
         <div class="col-md-7">
             <h2 class="featurette-heading">Про систему<!--<span
                     class="text-muted">It’ll blow your mind.</span>--></h2>
-            <p class="lead">Система створена, щоб зберігати дані про вироблену потужність сонячних станцій для подальшого прогнозування.</p>
+            <p class="lead">Система створена, щоб зберігати дані про вироблену потужність сонячних станцій для подальшого прогнозування.
+                 <a href="/about">Детальніше...</a></p>
         </div>
         <div class="col-md-5">
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
@@ -130,7 +132,8 @@
     <div class="row featurette">
         <div class="col-md-7 order-md-2">
             <h2 class="featurette-heading">Реєстрація сонячної станції<!--<span class="text-muted">See for yourself.</span>--></h2>
-            <p class="lead">Зареєструвати власну сонячну станцію дуже просто, для цього необхідно вказати всі дані та виконувати інструкції.</p>
+            <p class="lead">Зареєструвати власну сонячну станцію дуже просто, для цього необхідно вказати всі дані та виконувати інструкції.
+                 <a href="#">Детальніше...</a></p>
         </div>
         <div class="col-md-5 order-md-1">
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
@@ -148,7 +151,9 @@
     <div class="row featurette">
         <div class="col-md-7">
             <h2 class="featurette-heading">Збір даних<!--<span class="text-muted">Checkmate.</span>--></h2>
-            <p class="lead">Збір даних проводиться в автоматичному режимі кожних 30 хвилин протягом дня. Інформацію про накопичену енергію можна переглянути в особистому кабінеті.</p>
+            <p class="lead">Збір даних проводиться в автоматичному режимі кожних 30 хвилин протягом дня.
+                Інформацію про накопичену енергію можна переглянути в особистому кабінеті.
+                 <a  href="#">Детальніше...</a></p>
         </div>
         <div class="col-md-5">
             <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
@@ -189,7 +194,7 @@
         <div class="col-6 col-md">
             <h5>Допомога</h5>
             <ul class="list-unstyled text-small">
-                <li><a class="link-secondary" href="#">Про систему</a></li>
+                <li><a class="link-secondary" href="/about">Про систему</a></li>
                 <li><a class="link-secondary" href="#">Реєстрація користувача</a></li>
                 <li><a class="link-secondary" href="#">Реєстрація сонячної станції</a></li>
                 <li><a class="link-secondary" href="#">Збір даних</a></li>
