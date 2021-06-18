@@ -2,7 +2,34 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+<script>
+    function loadMessageAlert() {
+        //var s=document.getElementById("types");
+       // var selectedOption=s.options[s.selectedIndex].value;
+        console.log("load message alert");
+        //if(selectedOption==="FOR_USER"){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    document.getElementById("unreadMessageCount").innerHTML =
+                        this.responseText;
+                }
+            };
+
+            xhttp.open("GET", "getMessageAlert", true);
+            xhttp.send();
+        //}
+        /*else {
+            var element = document.getElementById("userSelect");
+            while (element.firstChild) {
+                element.removeChild(element.firstChild);
+            }
+        }*/
+    }
+</script>
+
 <body>
+<!--<body onload="loadMessageAlert()">-->
 
 <!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">Company name</a>
@@ -96,38 +123,52 @@
             </a>
 
 
-
-            <ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end">
-                <!--<li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+            <!--<ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end">
+                &lt;!&ndash;<li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
                 <li><a href="#" class="nav-link px-2 link-light">Inventory</a></li>
-                <li><a href="#" class="nav-link px-2 link-light">Customers</a></li>-->
+                <li><a href="#" class="nav-link px-2 link-light">Customers</a></li>&ndash;&gt;
                 <li><a href="/messages" class="nav-link px-2 link-light">Повідомлення
                     <div class="noti-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffffff" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffffff"
+                             class="bi bi-chat-left-dots" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                             <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                         </svg>
                         <span class="quantity" th:text="${countUnreadMessages}">1</span>
                     </div>
-                </a></li>
+                </a>
+                </li>
+
+            </ul>-->
+
+            <!-- Message-alert -->
+            <div th:replace="~{dashboard/user/message-alert1}"></div>
+<!--            <div id="message-alert"></div>-->
+            <!--<ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end"
+                id="message-alert1">
 
             </ul>
+            <div id="unreadMessageCount"></div>-->
 
             <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <input type="search" class="form-control" placeholder="Search...">
             </form>-->
 
             <div class="dropdown text-end">
-                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
+                   data-bs-toggle="dropdown" aria-expanded="false">
 
-                    <img src="/images/default-profile-image.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    <img src="/images/default-profile-image.png" alt="mdo" width="32" height="32"
+                         class="rounded-circle">
                     [[${#httpServletRequest.remoteUser}]]
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-<!--                    <li><a class="dropdown-item" href="#">New project...</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">Settings</a></li>-->
+                    <!--                    <li><a class="dropdown-item" href="#">New project...</a></li>-->
+                    <!--                    <li><a class="dropdown-item" href="#">Settings</a></li>-->
                     <li><a class="dropdown-item" href="/profile">Профіль</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
                     <li>
                         <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
                             <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->

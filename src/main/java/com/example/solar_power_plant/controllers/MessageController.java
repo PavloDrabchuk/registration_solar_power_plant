@@ -441,6 +441,15 @@ public class MessageController {
         return "redirect:/messages";
     }*/
 
+    @GetMapping(path = "/message-alert1")
+    public String getMessageAlert(Model model){
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
+                messageService.getCountUnreadMessagesByUser(user)));
+
+        System.out.println(".... message-alert1");
+        return "dashboard/user/message-alert1";
+    }
+
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
