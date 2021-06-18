@@ -30,4 +30,8 @@ public interface MessageRepository extends CrudRepository<Message,Long> {
     @Query(value = "select * from message m where m.sender_id = ?1 order by m.date_time desc, m.id limit ?2, ?3 ",
             nativeQuery = true)
     List<Message> getListMessagesBySenderForPage(Long id, int offset, int row_count);
+
+
+//    int findC
+    long countByIsReadAndRecipient(boolean isRead, User recipient);
 }

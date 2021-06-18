@@ -91,4 +91,8 @@ public class MessageService {
     /*public List<SolarPowerPlant> getMessagesForPage(Long id, int offset, int limit) {
         return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset, limit);
     }*/
+
+    public long getCountUnreadMessagesByUser(User user){
+        return messageRepository.countByIsReadAndRecipient(false,user);
+    }
 }

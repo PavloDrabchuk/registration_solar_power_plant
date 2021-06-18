@@ -25,6 +25,7 @@ public class UsersController {
 
     private final ConfirmationCodeService confirmationCodeService;
     private final LocationService locationService;
+    private final MessageService messageService;
     //private final UserValidator userValidator;
 
     @Autowired
@@ -36,13 +37,15 @@ public class UsersController {
 
                            ConfirmationCodeService confirmationCodeService,
 
-                           LocationService locationService) {
+                           LocationService locationService,
+                           MessageService messageService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
 
         this.confirmationCodeService = confirmationCodeService;
         //this.userValidator = userValidator;
         this.locationService = locationService;
+        this.messageService=messageService;
     }
 
 
@@ -87,6 +90,8 @@ public class UsersController {
 
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", page);
+
+            model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
             if (userRole.equals("ADMIN")) {
                 model.addAttribute("adminAccess", "admin");
