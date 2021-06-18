@@ -2,10 +2,7 @@ package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.model.*;
-import com.example.solar_power_plant.service.DynamicDataService;
-import com.example.solar_power_plant.service.LocationService;
-import com.example.solar_power_plant.service.SolarPowerPlantService;
-import com.example.solar_power_plant.service.UsersService;
+import com.example.solar_power_plant.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONException;
 import org.springframework.security.core.Authentication;
@@ -36,17 +33,20 @@ public class SolarPowerPlantController {
     private final SolarPowerPlantService solarPowerPlantService;
     private final LocationService locationService;
     private final DynamicDataService dynamicDataService;
+    private final MessageService messageService;
 
 
     @Autowired
     public SolarPowerPlantController(UsersService usersService,
                                      SolarPowerPlantService solarPowerPlantService,
                                      LocationService locationService,
-                                     DynamicDataService dynamicDataService) {
+                                     DynamicDataService dynamicDataService,
+                                     MessageService messageService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.locationService = locationService;
         this.dynamicDataService = dynamicDataService;
+        this.messageService=messageService;
     }
 
     @PostMapping(path = "/addSolarPowerPlant")
@@ -125,6 +125,9 @@ public class SolarPowerPlantController {
     public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
         model.addAttribute("solarPowerPlant", solarPowerPlant);
 
@@ -145,6 +148,9 @@ public class SolarPowerPlantController {
     @GetMapping(path = "/view/{id}")
     public String getSolarPowerPlantsById(@PathVariable("id") String stringId, Model model) {
         System.out.println("getSolarPowerPlantsById: " + stringId);
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
 
@@ -201,6 +207,9 @@ public class SolarPowerPlantController {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
         addAdminAccessToModel(model);
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
@@ -512,7 +521,13 @@ public class SolarPowerPlantController {
 
     @GetMapping(path = "/view/{id}/data/export")
     public String getExportData(HttpServletRequest request,
-                                HttpServletResponse response, @PathVariable String id) {
+                                HttpServletResponse response,
+                                @PathVariable String id,
+                                Model model) {
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         /*String fileName = "f.csv";
         System.out.println("t-t-t-t-t-t-t");
         String dataDirectory = request.getServletContext().getRealPath("upload-dir/");

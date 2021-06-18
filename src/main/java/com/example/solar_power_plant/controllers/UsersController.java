@@ -50,9 +50,12 @@ public class UsersController {
 
 
     @GetMapping
-    public String redirectToAccessPages() {
+    public String redirectToAccessPages(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         return (username.equals("anonymousUser")) ? "index" : "redirect:/home";
     }
@@ -62,6 +65,9 @@ public class UsersController {
     public String getSolarPowerPlantsByUsername(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
 
         System.out.println("getSolarPowerPlantsByUsername, page: " + page);
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
@@ -91,7 +97,7 @@ public class UsersController {
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", page);
 
-            model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
+            //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
             if (userRole.equals("ADMIN")) {
                 model.addAttribute("adminAccess", "admin");
@@ -212,6 +218,9 @@ public class UsersController {
         System.out.println("CCode: " + confirmationCode);
         //System.out.println("U: " + username);
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
 
@@ -260,9 +269,13 @@ public class UsersController {
     public String goToProfilePage(Model model) {
         System.out.println("goToProfilePage");
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);
+
         if (user.isPresent()) {
             model.addAttribute("userInformation", user.get());
             System.out.println("time: " + user.get().getDateTimeOfCreation());
@@ -280,6 +293,9 @@ public class UsersController {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
             }
+            //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
+
+
 
         }
         return "profile";
@@ -289,9 +305,13 @@ public class UsersController {
     public String editProfileInfo(Model model) {
         System.out.println("editProfileInfo");
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);*/
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
+        Optional<User> user = getAuthorisedUser();
 
         if (user.isPresent()) {
             model.addAttribute("userInformation", user.get());
@@ -303,6 +323,7 @@ public class UsersController {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
             }
+            //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
         }
         return "edit-profile";
@@ -322,9 +343,7 @@ public class UsersController {
             String username = auth.getName();//get logged in username
             Optional<User> user = usersService.getUserByUsername(username);
 
-
-            usersService.updateUserInformation(user.get(), updatedUserInfo);
-
+            user.ifPresent(value -> usersService.updateUserInformation(value, updatedUserInfo));
 
             return "redirect:/profile";
         }
@@ -332,6 +351,9 @@ public class UsersController {
 
     @GetMapping(path = "/recover_password")
     public String recoverPasswordRequest(Model model) {
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         PasswordRecoverInformation recoverInformation = new PasswordRecoverInformation();
 
@@ -365,6 +387,9 @@ public class UsersController {
                                   //@PathVariable("username") String username,
                                   Model model) {
         System.out.println("CCode: " + confirmationCode);
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -410,4 +435,9 @@ public class UsersController {
         return "recover_password";
     }
 
+    Optional<User> getAuthorisedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        return usersService.getUserByUsername(username);
+    }
 }

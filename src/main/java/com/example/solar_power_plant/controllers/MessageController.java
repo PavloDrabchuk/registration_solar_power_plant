@@ -31,6 +31,9 @@ public class MessageController {
 
     @GetMapping(path = "/messages")
     public String getAllMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         Optional<User> user = getAuthorisedUser();
 
         if(user.isPresent() && (user.get().getLocked() || !user.get().getActivated())){
@@ -100,6 +103,9 @@ public class MessageController {
 
     @GetMapping(path = "/messages/sent")
     public String getAllSentMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         Optional<User> user = getAuthorisedUser();
         if (user.isPresent()) {
             double limitMessages = 4;
@@ -156,6 +162,9 @@ public class MessageController {
     public String getMessageById(@PathVariable("id") UUID id,
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         Optional<Message> message = messageService.getMessageById(id);
 
         Optional<User> user=getAuthorisedUser();
@@ -181,6 +190,9 @@ public class MessageController {
 
     @GetMapping(path = "/messages/new")
     public String getNewMessageForm(Model model) {
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         model.addAttribute("message", new Message());
 
         if (getAuthorisedUser().isPresent() && getAuthorisedUser().get().getUserRole() == UserRoles.EDITOR) {
@@ -199,6 +211,9 @@ public class MessageController {
 
     @GetMapping(path = "/messages/getUsersList")
     public String getUserList(Model model) {
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         model.addAttribute("users", usersService.getAllUsers());
         System.out.println("user list");
 

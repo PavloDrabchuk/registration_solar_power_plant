@@ -2,6 +2,7 @@ package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
+import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.SolarPowerPlantService;
 import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,19 @@ public class AdminController {
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
     private final DynamicDataService dynamicDataService;
+    private final MessageService messageService;
 
     @Autowired
     public AdminController(UsersService usersService,
                            SolarPowerPlantService solarPowerPlantService,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
-                           DynamicDataService dynamicDataService) {
+                           DynamicDataService dynamicDataService,
+                           MessageService messageService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dynamicDataService = dynamicDataService;
+        this.messageService = messageService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,15 +47,22 @@ public class AdminController {
     public String getAllUsers(Model model) {
         System.out.println("getAllUsers");
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
-        Optional<User> user = usersService.getUserByUsername(username);
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
-        if (user.get().getUserRole().toString().equals(UserRoles.ADMIN.name())) {
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username
+        Optional<User> user = usersService.getUserByUsername(username);*/
+
+        Optional<User> user=getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRole().toString().equals(UserRoles.ADMIN.name())) {
             model.addAttribute("users", usersService.getAllUsers());
             System.out.println("--- ADMIN ---\n role: " + user.get().getUserRole().toString().equals(UserRoles.ADMIN.name()));
 
             addAdminAccessToModel(model);
+
+
 
             return "admin_page";
         } else {
@@ -67,6 +78,9 @@ public class AdminController {
         model.addAttribute("usersMessage", "Users :)");
 
         addAdminAccessToModel(model);
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         if (getAuthorisedUser().isPresent()) {
             double limitUsers = 7;
@@ -114,18 +128,23 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
+
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
             model.addAttribute("solarPowerPlants", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
             model.addAttribute("countOfRegisteredSolarStations", solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
 
-            if(user.get().getLocked()){
+            if (user.get().getLocked()) {
                 model.addAttribute("accountStatus", "Заблокований");
-            }else {
+            } else {
                 Boolean accountStatus = user.get().getActivated();
                 model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
             }
+            //model.addAttribute("countUnreadMessages", messageService.getCountUnreadMessagesByUser(user.get()));
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
         return "dashboard/admin/user-by-id";
     }
@@ -213,6 +232,9 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         System.out.println("integer id: " + Long.valueOf(id));
 
@@ -220,6 +242,8 @@ public class AdminController {
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
+
+
 
         return "dashboard/admin/update-user-by-id";
     }
@@ -249,6 +273,9 @@ public class AdminController {
     @GetMapping(path = "/admin/add-user")
     public String getAddUserView(Model model) {
         addAdminAccessToModel(model);
+
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         User user = new User();
         model.addAttribute("user", user);
@@ -305,6 +332,9 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         if (getAuthorisedUser().isPresent()) {
             double limitSolarPowerPlants = 7;
 
@@ -359,6 +389,9 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
 
         if (solarPowerPlant.isPresent()) {
@@ -395,6 +428,10 @@ public class AdminController {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
         addAdminAccessToModel(model);
+
+        //Optional<User> authorisedUser=getAuthorisedUser();
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
