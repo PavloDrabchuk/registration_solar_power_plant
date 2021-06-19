@@ -5,19 +5,20 @@
 <script>
     function loadMessageAlert() {
         //var s=document.getElementById("types");
-       // var selectedOption=s.options[s.selectedIndex].value;
+        // var selectedOption=s.options[s.selectedIndex].value;
         console.log("load message alert");
         //if(selectedOption==="FOR_USER"){
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    document.getElementById("unreadMessageCount").innerHTML =
-                        this.responseText;
-                }
-            };
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("unreadMessageCount").innerHTML =
+                    this.responseText;
+            }
+        };
 
-            xhttp.open("GET", "getMessageAlert", true);
-            xhttp.send();
+        xhttp.open("GET", "getMessageAlert", true);
+        xhttp.send();
+
         //}
         /*else {
             var element = document.getElementById("userSelect");
@@ -25,6 +26,21 @@
                 element.removeChild(element.firstChild);
             }
         }*/
+    }
+
+    function getT(){
+        console.log("get t");
+        //if(selectedOption==="FOR_USER"){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("unreadMessageCount").innerHTML =
+                    this.responseText;
+            }
+        };
+
+        xhttp.open("GET", "getTest", true);
+        xhttp.send();
     }
 </script>
 
@@ -116,6 +132,9 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <button onclick="getT()">Click</button>
+
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                 <!--                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>-->
@@ -142,8 +161,9 @@
             </ul>-->
 
             <!-- Message-alert -->
-            <div th:replace="~{dashboard/user/message-alert1}"></div>
-<!--            <div id="message-alert"></div>-->
+            <div id="unreadMessageCount"></div>
+            <!--            <div th:replace="~{dashboard/user/message-alert1}"></div>-->
+            <!--            <div id="message-alert"></div>-->
             <!--<ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end"
                 id="message-alert1">
 

@@ -450,6 +450,11 @@ public class MessageController {
         return "dashboard/user/message-alert1";
     }
 
+    @GetMapping(path = "/getTest")
+    public String getTestG(){
+        return "gt";
+    }
+
     Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username

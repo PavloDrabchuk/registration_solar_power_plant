@@ -22,21 +22,21 @@
 
     <script>
         function loadUserList() {
-            var s=document.getElementById("types");
-            var selectedOption=s.options[s.selectedIndex].value;
-            console.log("user list: "+selectedOption);
-            if(selectedOption==="FOR_USER"){
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    document.getElementById("userSelect").innerHTML =
-                        this.responseText;
-                }
-            };
+            var s = document.getElementById("types");
+            var selectedOption = s.options[s.selectedIndex].value;
+            console.log("user list: " + selectedOption);
+            if (selectedOption === "FOR_USER") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        document.getElementById("userSelect").innerHTML =
+                            this.responseText;
+                    }
+                };
 
-            xhttp.open("GET", "getUsersList", true);
-            xhttp.send();}
-            else {
+                xhttp.open("GET", "getUsersList", true);
+                xhttp.send();
+            } else {
                 var element = document.getElementById("userSelect");
                 while (element.firstChild) {
                     element.removeChild(element.firstChild);
@@ -129,7 +129,7 @@
                                 onclick="loadUserList()">
                             <option name="INFORMATION" value="INFORMATION">Info</option>
                             <option name="UPDATE" value="UPDATE">Update</option>
-                            <option name="FOR_USER" value="FOR_USER" >For user</option>
+                            <option name="FOR_USER" value="FOR_USER">For user</option>
                         </select>
                     </div>
 
