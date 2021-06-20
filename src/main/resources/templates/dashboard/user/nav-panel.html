@@ -133,7 +133,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <button onclick="getT()">Click</button>
+<!--        <button onclick="getT()">Click</button>-->
 
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
@@ -142,10 +142,10 @@
             </a>
 
 
-            <!--<ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end">
-                &lt;!&ndash;<li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
+            <ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end">
+                <!--<li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
                 <li><a href="#" class="nav-link px-2 link-light">Inventory</a></li>
-                <li><a href="#" class="nav-link px-2 link-light">Customers</a></li>&ndash;&gt;
+                <li><a href="#" class="nav-link px-2 link-light">Customers</a></li>-->
                 <li><a href="/messages" class="nav-link px-2 link-light">Повідомлення
                     <div class="noti-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffffff"
@@ -153,15 +153,15 @@
                             <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                             <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                         </svg>
-                        <span class="quantity" th:text="${countUnreadMessages}">1</span>
+                        <span class="quantity" th:if="${countUnreadMessages > 0}" th:text="${countUnreadMessages}">1</span>
                     </div>
                 </a>
                 </li>
 
-            </ul>-->
+            </ul>
 
             <!-- Message-alert -->
-            <div id="unreadMessageCount"></div>
+<!--            <div id="unreadMessageCount"></div>-->
             <!--            <div th:replace="~{dashboard/user/message-alert1}"></div>-->
             <!--            <div id="message-alert"></div>-->
             <!--<ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end"

@@ -44,9 +44,12 @@ public class DatabaseSeeder {
     @EventListener
     public void seed(ContextRefreshedEvent event) throws ParseException, IOException {
         seedUsersTable();
-        seedSolarPowerPlantTable();
+        seedSolarPowerPlantTable(7, 1);
         seedDynamicDataTable();
         seedMessageTable();
+        seedSolarPowerPlantTable(1, 2);
+        //seedSolarPowerPlantTable(2,1);
+
     }
 
     private void seedUsersTable() {
@@ -141,49 +144,50 @@ public class DatabaseSeeder {
         usersService.saveUser(user8);
     }
 
-    private void seedSolarPowerPlantTable() throws ParseException {
+    private void seedSolarPowerPlantTable(int userId, int solarPowerPlantQuantity) throws ParseException {
 
-        int userQuantity = 2,
-                solarPowerPlantQuantity = 1;
+        /*int userQuantity = 2,
+                solarPowerPlantQuantity = 1;*/
 
-        for (int i = 1; i <= userQuantity; i++) {
-            for (int j = 0; j < solarPowerPlantQuantity; j++) {
-                StaticData staticData = new StaticData();
-                staticData.setQuantity(1 + (int) (Math.random() * 20));
-                staticData.setPower((int) (350 + Math.random() * 200));
+        int i = userId;
+        //for (int i = 1; i <= userQuantity; i++) {
+        for (int j = 0; j < solarPowerPlantQuantity; j++) {
+            StaticData staticData = new StaticData();
+            staticData.setQuantity(1 + (int) (Math.random() * 20));
+            staticData.setPower((int) (350 + Math.random() * 200));
 
                 /*String stringYear="20";
                 int year=1+(int)(Math.random()*20);
                 if(year<10)stringYear+="0"+year;
                 else stringYear+=year;*/
 
-                staticData.setInstallationDate("20" + getStringNumberForDate(1, 20) + "-" + getStringNumberForDate(1, 12) + "-" + getStringNumberForDate(1, 28));
+            staticData.setInstallationDate("20" + getStringNumberForDate(1, 20) + "-" + getStringNumberForDate(1, 12) + "-" + getStringNumberForDate(1, 28));
 
-                Location location1 = new Location("Україна",
-                        Region.IvanoFrankivsk,
-                        "Івано-Франківськ", "Грушевського", Integer.toString((i + 1) * (j + 1)),
-                        23.92065 + (1 + Math.random() * 5),
-                        44.71355 + (1 + Math.random() * 5));
-                SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
-                        "Назва станції № " + i + "_" + j, location1, usersService.getUserById((long) i).get());
-                solarPowerPlant1.setStaticData(staticData);
-                solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1, 0);
+            Location location1 = new Location("Україна",
+                    Region.IvanoFrankivsk,
+                    "Івано-Франківськ", "Грушевського", Integer.toString((i + 1) * (j + 1)),
+                    23.92065 + (1 + Math.random() * 5),
+                    44.71355 + (1 + Math.random() * 5));
+            SolarPowerPlant solarPowerPlant1 = new SolarPowerPlant("qwedfv" + i + "_" + j,
+                    "Назва станції № " + i + "_" + j, location1, usersService.getUserById((long) i).get());
+            solarPowerPlant1.setStaticData(staticData);
+            solarPowerPlantService.addSolarPowerPlant(solarPowerPlant1, 0);
 
-                String str = "2021-04-02 00:00:00";
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+            String str = "2021-04-02 00:00:00";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
 
-                //staticData.setQuantity(i*(j+1));
-                //staticData.setInstallationDate("2021-03-29");
-                //staticData.setSolarPowerPlant(solarPowerPlantService.getSolarPowerPlantById((long)i).get());
+            //staticData.setQuantity(i*(j+1));
+            //staticData.setInstallationDate("2021-03-29");
+            //staticData.setSolarPowerPlant(solarPowerPlantService.getSolarPowerPlantById((long)i).get());
 
-            }
         }
+        // }
     }
 
     private void seedDynamicDataTable() throws IOException {
-        String str = "2021-05-06 10:00:00";
+        String str = "2021-06-10 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
@@ -191,9 +195,9 @@ public class DatabaseSeeder {
 
         //   dateTime = dateTime.plusMinutes(30);
         //dateTime = dateTime.plusMinutes(60*12);
-        Optional<SolarPowerPlant> solarPowerPlant=solarPowerPlantService.getSolarPowerPlantById(1L);
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(1L);
 
-        if(solarPowerPlant.isPresent()) {
+        if (solarPowerPlant.isPresent()) {
             dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 85.21,
                     LocalDateTime.parse("2020-05-02 10:00:00", formatter)));
 

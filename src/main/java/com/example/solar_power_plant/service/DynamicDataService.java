@@ -98,7 +98,7 @@ public class DynamicDataService {
     public void saveDynamicData(LocalDateTime dateTime, boolean demoData) throws IOException {
         if (demoData) {
 
-            //List<String> weatherDescriptions = readWeatherDescriptionsFromCSV("demo-data/weather_description.csv");
+            //List<String> weatherDescriptions = readWeatherDescriptionsFromCSV("demo-data/weather_description_old.csv");
             List<String> weatherDescriptions = new ArrayList<>();
             BufferedReader bufferedReader = new BufferedReader(
                     new FileReader("demo-data/weather_description.txt"));
@@ -128,6 +128,7 @@ public class DynamicDataService {
             //в базу вручну
             for (SolarPowerPlant solarPowerPlant : solarPowerPlantService.getAllSolarPowerPlants()) {
                 System.out.println(" --> solarPowerPlantCount: " + solarPowerPlantCount);
+                dateTimeCopy=dateTime;
                 for (int i = 0; i < quantityOfDescriptionForSolarPowerPlant; i++) {
                     dateTimeCopy = dateTimeCopy.plusMinutes(30);
 
