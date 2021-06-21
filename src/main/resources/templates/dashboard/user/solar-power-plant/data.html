@@ -330,18 +330,35 @@
         //hours.push(1,2,3);
         for (var i = 1; i <= 24; i++) {
             hours.push(i);
-            if (i < 5 || i > 19) dataHours.push(0);
-            else dataHours.push(150 * (Math.sin(0.44 * i + 2.3) + 1) / 2);
+            /*if (i < 5 || i > 19) dataHours.push(0);
+            else dataHours.push(150 * (Math.sin(0.44 * i + 2.3) + 1) / 2);*/
         }
 
         for (var i = 1; i <= 12; i++) {
             months.push(i);
-            dataMonths.push(350 * ((Math.sin(0.4 * i - 1.02)) + 1) / 2);
+            //dataMonths.push(350 * ((Math.sin(0.4 * i - 1.02)) + 1) / 2);
         }
         //console.log(hours);
 
         var chartByHours = document.getElementById("chartByHours");
         var chartByMonths = document.getElementById("chartByMonths");
+
+        /*for(var u=dataByMonth.length+1;u>=1;u--){
+            console.log("h: "+dataByMonth[u-1]);
+
+            if(dataByMonth[u-1] !== null)months.push(u);
+            else dataByMonth.splice(u-1,1);
+
+            // console.log("h_u: "+dataByMonth[u-1]);
+        }
+
+        for(var u=dataByMonth.length+1;u>=1;u--){
+            console.log("h_u: "+dataByMonth[u-1]);
+        }*/
+
+        /*for(var u=1;u<=12;u++){
+
+        }*/
 
         getChart(chartByHours, hours, dataByHour, 'line', 'Година', 'Потужність', 'Середнє значення виробленої енергії');
         getChart(chartByMonths, months, dataByMonth, 'bar', 'Місяць', 'Потужність', 'Вироблення енергії по місяцях');

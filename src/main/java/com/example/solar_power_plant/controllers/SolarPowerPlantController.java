@@ -333,6 +333,9 @@ public class SolarPowerPlantController {
                           Model model) {
         System.out.println("dataPeriod: " + dataPeriod);
 
+        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));
+
         if (dataPeriod.equals("Отримати дані")) {
 
             if (startDate.equals("")) {

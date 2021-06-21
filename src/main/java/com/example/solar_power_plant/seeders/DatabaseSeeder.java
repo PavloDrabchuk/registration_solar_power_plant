@@ -44,7 +44,7 @@ public class DatabaseSeeder {
     @EventListener
     public void seed(ContextRefreshedEvent event) throws ParseException, IOException {
         seedUsersTable();
-        seedSolarPowerPlantTable(7, 1);
+        seedSolarPowerPlantTable(7, 5);
         seedDynamicDataTable();
         seedMessageTable();
         seedSolarPowerPlantTable(1, 2);
@@ -94,7 +94,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user3);
 
         User user4 = new User();
-        user4.setEmail("lab2018.home.work3@gmail.com");
+        user4.setEmail("example4@gmail.com");
         user4.setUsername("qwerty1233");
         user4.setUserRole(UserRoles.USER);
         user4.setActivated(true);
@@ -104,7 +104,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user4);
 
         User user5 = new User();
-        user5.setEmail("lab2018.home.work3@gmail.com");
+        user5.setEmail("example5@gmail.com");
         user5.setUsername("qwerty1234");
         user5.setUserRole(UserRoles.USER);
         user5.setActivated(true);
@@ -114,7 +114,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user5);
 
         User user6 = new User();
-        user6.setEmail("lab2018.home.work3@gmail.com");
+        user6.setEmail("editor@gmail.com");
         user6.setUsername("editor");
         user6.setUserRole(UserRoles.EDITOR);
         user6.setActivated(true);
@@ -124,7 +124,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user6);
 
         User user7 = new User();
-        user7.setEmail("lab2018.home.work3@gmail.com");
+        user7.setEmail("example6@gmail.com");
         user7.setUsername("qwerty1236");
         user7.setUserRole(UserRoles.USER);
         user7.setActivated(true);
@@ -134,7 +134,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user7);
 
         User user8 = new User();
-        user8.setEmail("lab2018.home.work3@gmail.com");
+        user8.setEmail("example7@gmail.com");
         user8.setUsername("qwerty1237");
         user8.setUserRole(UserRoles.USER);
         user8.setActivated(true);
@@ -153,7 +153,7 @@ public class DatabaseSeeder {
         //for (int i = 1; i <= userQuantity; i++) {
         for (int j = 0; j < solarPowerPlantQuantity; j++) {
             StaticData staticData = new StaticData();
-            staticData.setQuantity(1 + (int) (Math.random() * 20));
+            staticData.setQuantity(5 + (int) (Math.random() * 30));
             staticData.setPower((int) (350 + Math.random() * 200));
 
                 /*String stringYear="20";
@@ -195,41 +195,61 @@ public class DatabaseSeeder {
 
         //   dateTime = dateTime.plusMinutes(30);
         //dateTime = dateTime.plusMinutes(60*12);
+        int a = 21, b = 22;
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(1L);
 
         if (solarPowerPlant.isPresent()) {
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 85.21,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 5 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-05-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 12.2,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 6 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-06-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 121.2,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 7 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-07-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 172.1,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 8 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-08-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.ClearSky, 212.14,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.ClearSky,
+                    (((Math.sin(0.4 * 9 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-09-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.BrokenClouds, 122.8,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.BrokenClouds,
+                    (((Math.sin(0.4 * 10 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-10-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.LightRain, 36.19,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.LightRain,
+                    (((Math.sin(0.4 * 11 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-11-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.OvercastClouds, 84.13,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.OvercastClouds,
+                    (((Math.sin(0.4 * 12 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2020-12-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.ShowerRain, 71.05,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.ShowerRain,
+                    (((Math.sin(0.4 * 1 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2021-01-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 112.2,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 2 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2021-02-02 10:00:00", formatter)));
 
-            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.Thunderstorm, 12.9,
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.Thunderstorm,
+                    (((Math.sin(0.4 * 3 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
                     LocalDateTime.parse("2021-03-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 4 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
+                    LocalDateTime.parse("2021-04-02 10:00:00", formatter)));
+
+            dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds,
+                    (((Math.sin(0.4 * 5 - 1.02)) + 1) / 2) * solarPowerPlant.get().getStaticData().getQuantity() * solarPowerPlant.get().getStaticData().getPower() * ((a + (int) (Math.random() * b)) / 10),
+                    LocalDateTime.parse("2021-05-02 10:00:00", formatter)));
 
             /*dynamicDataService.addDynamicData(new DynamicData(solarPowerPlant.get(), Weather.FewClouds, 35.1,
                     LocalDateTime.parse("2021-04-02 10:00:00", formatter)));*/
@@ -240,8 +260,8 @@ public class DatabaseSeeder {
         /*solarPowerPlant.ifPresent(powerPlant -> dynamicDataService.addDynamicData(new DynamicData(powerPlant, Weather.ClearSky, 229.9,
                 LocalDateTime.parse("2021-05-04 10:00:00", formatter))));*/
 
-        solarPowerPlant.ifPresent(powerPlant -> dynamicDataService.addDynamicData(new DynamicData(powerPlant, Weather.ClearSky, 153.1,
-                LocalDateTime.parse("2021-06-04 10:00:00", formatter))));
+        /*solarPowerPlant.ifPresent(powerPlant -> dynamicDataService.addDynamicData(new DynamicData(powerPlant, Weather.ClearSky, 153.1,
+                LocalDateTime.parse("2021-06-04 10:00:00", formatter))));*/
 
         // }
     }
