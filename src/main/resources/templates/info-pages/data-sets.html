@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <title>Title</title>
+</head>
+<body>
+
+<!-- Header -->
+
+<header class="d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 bg-body border-bottom shadow-sm fixed-top"
+        id="header">
+    <p class="h5 my-0 me-md-auto fw-normal">Company name</p>
+    <nav class="my-1 my-md-0 me-md-3">
+        <!--        <a class="p-2 text-dark" href="#">Features</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Support</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
+    </nav>
+    <!--    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Ввійти</a>-->
+    <!--    <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>-->
+    <a class="btn btn-outline-success" th:href="@{/}">Перейти на головну</a>
+</header>
+
+<!-- Main -->
+
+<h1 class="mt-5 pt-5  text-center">Реєстрація сонячної станції</h1>
+<h2 class=" text-center text-secondary">Основні питання</h2>
+
+<article class="pb-mb-6">
+    <div class="mx-auto px-3 pt-4 pt-lg-6 pb-6 col-md-10 col-lg-8 col-xl-6">
+        <!--<h3>Чи може додати станцію незареєстрований користувач?</h3>
+        <p>Ні, щоб додати сонячну електростанцію, її власник повинен створити власний кабінет, де
+            зможе переглядати інформацію про усі зареєстровані станції.</p>
+
+        <h3>Які дані потрібні для реєстрації?</h3>
+        <p>
+            Для реєстрації сонячної електростанції потрібно вказати наступну інформацію:</p>
+        <ul>
+            <li>назва;</li>
+            <li>кількість панелей;</li>
+            <li>потужність батареї;</li>
+            <li>дата встановлення;</li>
+            <li>область, де вона розташована;</li>
+            <li>населений пункт;</li>
+            <li>вулиця;</li>
+            <li>номер.</li>
+        </ul>
+
+
+        <h3>Чи є реєстрація платною?</h3>
+        <p>
+            Ні, реєстрація є безкоштовною, крім цього, користувач може зареєструвати необмежену кількість власних
+            станцій.
+        </p>
+
+        <h3>Що я отримаю, зареєструвавши сонячну станцію?</h3>
+        <p>
+            Після реєстрації, власник станції може переглядати інформацію про вироблену енергію за певний період (за
+            весь час,
+            за останніх 30 днів) та середнє значення вироблення за добу. Також можна переглянути на графіку, вироблення
+            енергії
+            протягом доби та по місяцях. Крім цього користувач може експортувати дані про вироблену енергію та про умови
+            її
+            виготовлення у файлі з розширенням: csv, xml та json.
+        </p>
+
+        <h3>Чи можна видалити сонячну станцію чи змінити про неї інформацію?</h3>
+        <p>Так, в особистому кабінеті власник станції може оновити інформацію або видалити її.</p>-->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <!--                <th scope="col">Назва</th>-->
+                <th scope="col">Опис</th>
+                <th scope="col">Файл CSV</th>
+                <th scope="col">Файл XML</th>
+                <th scope="col">Файл JSON</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Набір даних станції, яка має <br/> 18 панелей потужністю 393 Вт<br/> та термін експлуатації: 7 р. 1
+                    міс. 4 д.
+                </td>
+                <td><a href="/data_sets/first.csv" th:href="@{/data_sets/first.csv}" target="_blank">Завантажити</a>
+                </td>
+                <td><a href="/data_sets/first.xml" th:href="@{/data_sets/first.xml}" target="_blank">Переглянути</a>
+                </td>
+                <td><a href="data_sets/first.json" th:href="@{/data_sets/first.json}" target="_blank">Переглянути</a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Набір даних станції, яка має <br/> 27 панелей потужністю 502 Вт<br/> та термін експлуатації: 7 р. 1
+                    міс. 15 д.
+                </td>
+                <td><a th:href="@{/data_sets/second.csv}" target="_blank">Завантажити</a></td>
+                <td><a th:href="@{/data_sets/second.xml}" target="_blank">Переглянути</a></td>
+                <td><a th:href="@{/data_sets/second.json}" target="_blank">Переглянути</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Набір даних станції, яка має <br/> 8 панелей потужністю 478 Вт<br/> та термін експлуатації: 1 р. 2
+                    міс. 5 д.
+                </td>
+                <td><a th:href="@{/data_sets/third.csv}" target="_blank">Завантажити</a></td>
+                <td><a th:href="@{/data_sets/third.xml}" target="_blank">Переглянути</a></td>
+                <td><a th:href="@{/data_sets/third.json}" target="_blank">Переглянути</a></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</article>
+
+<!-- Footer -->
+
+<footer class="container border-top pt-md-5 my-md-5 pt-4">
+    <!--<footer class="pt-4 my-md-5 pt-md-5 border-top">-->
+    <div class="row">
+        <div class="col-12 col-md">
+            <img class="mb-2" src="images/logo-social-sq.png" alt="" width="24" height="19">
+            <small class="d-block mb-3 text-muted">© 2021</small>
+        </div>
+        <!--<div class="col-6 col-md">
+            <h5>Особливості</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Реєстраці</a></li>
+                <li><a class="link-secondary" href="#">Random feature</a></li>
+                <li><a class="link-secondary" href="#">Team feature</a></li>
+                <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                <li><a class="link-secondary" href="#">Another one</a></li>
+                <li><a class="link-secondary" href="#">Last time</a></li>
+            </ul>
+        </div>-->
+        <div class="col-6 col-md">
+            <h5>Допомога</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/about">Про систему</a></li>
+                <li><a class="link-secondary" href="/user-registration-info">Реєстрація користувача</a></li>
+                <li><a class="link-secondary" href="/registration-info">Реєстрація сонячної станції</a></li>
+                <li><a class="link-secondary" href="/data-collection">Збір даних</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Про систему</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/developer">Розробник</a></li>
+                <!--                <li><a class="link-secondary" href="#">Locations</a></li>-->
+                <!--                <li><a class="link-secondary" href="#">Privacy</a></li>-->
+                <li><a class="link-secondary" href="/rules">Правила</a></li>
+                <li><a class="link-secondary" href="/support">Технічна підтримка</a></li>
+
+            </ul>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

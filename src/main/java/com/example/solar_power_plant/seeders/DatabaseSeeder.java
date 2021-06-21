@@ -153,7 +153,7 @@ public class DatabaseSeeder {
         //for (int i = 1; i <= userQuantity; i++) {
         for (int j = 0; j < solarPowerPlantQuantity; j++) {
             StaticData staticData = new StaticData();
-            staticData.setQuantity(5 + (int) (Math.random() * 30));
+            staticData.setQuantity(1 + (int) (Math.random() * 30));
             staticData.setPower((int) (350 + Math.random() * 200));
 
                 /*String stringYear="20";

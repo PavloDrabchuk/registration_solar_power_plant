@@ -3,6 +3,7 @@ package com.example.solar_power_plant.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,8 +26,13 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/developer").setViewName("info-pages/developer");
         registry.addViewController("/rules").setViewName("info-pages/rules");
         registry.addViewController("/support").setViewName("info-pages/support");
+        registry.addViewController("/data-sets").setViewName("info-pages/data-sets");
+//        registry.addViewController("/data-sets/first.csv").setViewName("/data-sets/first.csv");
         //registry.addViewController("/admin").setViewName("admin");
     }
 
-
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/data_sets/**").addResourceLocations("classpath:/static/data_sets/");
+    }
 }
