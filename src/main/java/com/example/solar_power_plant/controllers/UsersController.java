@@ -80,6 +80,8 @@ public class UsersController {
         if (user.isPresent() && user.get().getActivated()) {
             double limitSolarPowerPlant = 4;
 
+            int pageInt = getPage(page, solarPowerPlantService.getNumPagesList(user.get(), limitSolarPowerPlant).size());
+
             System.out.println("status:" + user.get().getActivated());
 
             String userRole = user.get().getUserRole().toString();
@@ -87,7 +89,7 @@ public class UsersController {
             model.addAttribute("solarPowerPlantsByUser",
                     solarPowerPlantService.getSolarPowerPlantByUserForPage(
                             user.get().getId(),
-                            (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlant,
+                            (pageInt - 1) * (int) limitSolarPowerPlant,
                             (int) limitSolarPowerPlant));
 
             model.addAttribute("name", username);
@@ -439,5 +441,19 @@ public class UsersController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
+    }
+
+    private int getPage(String page, int maxPage) {
+        int pageInt;
+        try {
+            pageInt = Integer.parseInt(page);
+        } catch (NumberFormatException ex) {
+            //System.err.println("Invalid string in argumment");
+            pageInt = 1;
+        }
+
+        if (pageInt > maxPage) pageInt = 1;
+
+        return pageInt;
     }
 }

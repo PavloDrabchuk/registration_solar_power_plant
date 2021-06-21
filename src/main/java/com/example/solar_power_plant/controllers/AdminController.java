@@ -85,11 +85,16 @@ public class AdminController {
         if (getAuthorisedUser().isPresent()) {
             double limitUsers = 7;
 
+            int pageInt = getPage(page, usersService
+                    .getNumPagesList(usersService.getAllUsers(),
+                            limitUsers).size());
+
+
             if (searchUsername == null) {
 
                 model.addAttribute("users",
                         usersService.getUsersForPage(
-                                (Integer.parseInt(page) - 1) * (int) limitUsers,
+                                (pageInt - 1) * (int) limitUsers,
                                 (int) limitUsers));
 
                 List<String> pageNumList = usersService
@@ -106,7 +111,7 @@ public class AdminController {
                     model.addAttribute("users",
                             usersService.getUsersByUsernameForPage(
                                     searchUsername,
-                                    (Integer.parseInt(page) - 1) * (int) limitUsers,
+                                    (pageInt - 1) * (int) limitUsers,
                                     (int) limitUsers));
 
                     List<String> pageNumList = usersService.getNumPagesList(users, limitUsers);
@@ -338,11 +343,14 @@ public class AdminController {
         if (getAuthorisedUser().isPresent()) {
             double limitSolarPowerPlants = 7;
 
+            int pageInt = getPage(page, solarPowerPlantService.getNumPagesListForAll(
+                    solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants).size());
+
             if (searchName == null) {
 
                 model.addAttribute("solarPowerPlants",
                         solarPowerPlantService.getAllSolarPowerPlantByUserForPage(
-                                (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlants,
+                                (pageInt - 1) * (int) limitSolarPowerPlants,
                                 (int) limitSolarPowerPlants));
 
                 List<String> pageNumList = solarPowerPlantService.getNumPagesListForAll(
@@ -363,7 +371,7 @@ public class AdminController {
                     model.addAttribute("solarPowerPlants",
                             solarPowerPlantService.getSolarPowerPlantsByNameForPage(
                                     searchName,
-                                    (Integer.parseInt(page) - 1) * (int) limitSolarPowerPlants,
+                                    (pageInt - 1) * (int) limitSolarPowerPlants,
                                     (int) limitSolarPowerPlants));
 
                     List<String> pageNumList = solarPowerPlantService.getNumPagesListForAll(solarPowerPlants, limitSolarPowerPlants);
@@ -521,6 +529,20 @@ public class AdminController {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }
+    }
+
+    private int getPage(String page, int maxPage) {
+        int pageInt;
+        try {
+            pageInt = Integer.parseInt(page);
+        } catch (NumberFormatException ex) {
+            //System.err.println("Invalid string in argumment");
+            pageInt = 1;
+        }
+
+        if (pageInt > maxPage) pageInt = 1;
+
+        return pageInt;
     }
 
 }

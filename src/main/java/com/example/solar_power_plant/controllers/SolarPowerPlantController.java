@@ -603,4 +603,18 @@ public class SolarPowerPlantController {
             //System.out.println("admin access");
         }
     }
+
+    private int getPage(String page, int maxPage) {
+        int pageInt;
+        try {
+            pageInt = Integer.parseInt(page);
+        } catch (NumberFormatException ex) {
+            //System.err.println("Invalid string in argumment");
+            pageInt = 1;
+        }
+
+        if (pageInt > maxPage) pageInt = 1;
+
+        return pageInt;
+    }
 }

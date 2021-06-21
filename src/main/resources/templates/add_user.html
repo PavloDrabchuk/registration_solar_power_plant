@@ -3,7 +3,9 @@
       xmlns:form="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Реєстрація користувача</title>
 
     <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
           th:href="@{/styles/bootstrap/bootstrap.css}"/>
@@ -105,10 +107,10 @@
                 </a>
             </div>
 
-            <div class="alert alert-danger" role="alert" id="username_error"></div>
+<!--            <div class="alert alert-danger" role="alert" id="username_error"></div>-->
 
-            <div class="alert alert-danger" role="alert" id="email_error"></div>
-            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name
+<!--            <div class="alert alert-danger" role="alert" id="email_error"></div>-->
+            <!--<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name
                 Error
             </div>
 
@@ -118,11 +120,11 @@
 
             <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('passwordConfirm')}"
                  th:errors="*{passwordConfirm}">Name Error
-            </div>
+            </div>-->
 
             <!--            ===============================-->
 
-            <h1 class="h3 mb-3 fw-normal text-center">Please sign in</h1>
+            <h1 class="h3 mb-3 fw-normal text-center">Реєстрація</h1>
 
             <label for="username">Ім'я користувача</label>
             <input type="text" id="username" name="username" th:field="*{username}" class="form-control"
@@ -150,7 +152,7 @@
             <!--===================================-->
 
             <div class="text-center">
-                <button class="w-50 btn btn-lg btn-primary" type="submit" value="add" onclick="return checkFields()">
+                <button class="btn btn-lg btn-primary" type="submit" value="add" onclick="return checkFields()">
                     Зареєструватись
                 </button>
                 <input class="btn btn-lg btn-danger" type="reset" value="Reset"/>
