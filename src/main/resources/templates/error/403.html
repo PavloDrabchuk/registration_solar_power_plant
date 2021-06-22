@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
@@ -13,11 +14,43 @@
     Forbidden
 </p>
 
-<!--/*@thymesVar id="error" type="java.lang.String"*/-->
+&lt;!&ndash;/*@thymesVar id="error" type="java.lang.String"*/&ndash;&gt;
 <p th:text="${error}">Error Info</p>
 
-<!--/*@thymesVar id="status" type="java.lang.String"*/-->
+&lt;!&ndash;/*@thymesVar id="status" type="java.lang.String"*/&ndash;&gt;
 <p th:text="${status}">Status</p>
+
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <link href="/styles/error.css" rel="stylesheet" th:href="@{/styles/error.css}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+
+    <title>Помилка 403</title>
+</head>
+<body>
+
+<div class="mainbox">
+    <div class="err">4</div>
+    <i class="far fa-question-circle fa-spin"></i>
+    <div class="err2">3</div>
+    <div class="msg">Можливо ця сторінка для Вас не призначена? Для неї обмежено доступ?
+        <p>Поверніться на <a href="/">головну сторінку</a> і спробуйте щось інше.</p>
+        <br/>
+        <p th:text="${error}">Error Info</p>
+    </div>
+</div>
 
 </body>
 </html>
