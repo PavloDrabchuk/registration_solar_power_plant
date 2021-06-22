@@ -191,6 +191,7 @@ public class SolarPowerPlantController {
 
             model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
 
+            System.out.println(" using time: "+solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
 
             model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
         } else {
@@ -352,9 +353,7 @@ public class SolarPowerPlantController {
             System.out.println("... finishDate: " + finishDate);
         } else if (dataPeriod.equals("Отримати дані за весь час")) {
             Optional<DynamicData> firstDynamicData = dynamicDataService.getFirstDynamicDataBySolarPowerPlant(solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
-            if (firstDynamicData.isPresent()) {
-                startDate = firstDynamicData.get().getCollectionDateTime().toString().substring(0, 16);
-            }
+            startDate = firstDynamicData.map(dynamicData -> dynamicData.getCollectionDateTime().toString().substring(0, 16)).orElseGet(() -> LocalDateTime.now().toString().substring(0, 16));
 
             finishDate = LocalDateTime.now().toString().substring(0, 16);
             System.out.println("... startDate: " + startDate);

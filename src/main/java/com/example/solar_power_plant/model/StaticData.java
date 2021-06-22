@@ -27,7 +27,7 @@ public class StaticData {
     private Integer power;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message = "Виберіть дату встановлення")
     private Date installationDate;
 
     @OneToOne(cascade = {CascadeType.ALL})

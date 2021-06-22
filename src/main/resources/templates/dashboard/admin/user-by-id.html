@@ -292,9 +292,18 @@
                                             <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                                                 <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
                                                         aria-label="Default select example" name="role">
-                                                    <option value="ADMIN" th:selected="${user.getUserRole().name()=='ADMIN'}">Адміністратор</option>
-                                                    <option value="USER" th:selected="${user.getUserRole().name()=='USER'}">Користувач</option>
-                                                    <option value="EDITOR" th:selected="${user.getUserRole().name()=='EDITOR'}">Редактор</option>
+                                                    <option value="ADMIN"
+                                                            th:selected="${user.getUserRole().name()=='ADMIN'}">
+                                                        Адміністратор
+                                                    </option>
+                                                    <option value="USER"
+                                                            th:selected="${user.getUserRole().name()=='USER'}">
+                                                        Користувач
+                                                    </option>
+                                                    <option value="EDITOR"
+                                                            th:selected="${user.getUserRole().name()=='EDITOR'}">
+                                                        Редактор
+                                                    </option>
                                                 </select>
                                             </div>
                                             <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
@@ -315,7 +324,7 @@
                                 <div class="card-body">
 
                                     <form th:action="${'/admin/users/'+user.getId()+'/locking'}" method="post"
-                                    class="d-flex flex-column align-items-center text-center">
+                                          class="d-flex flex-column align-items-center text-center">
                                         <div class="row">
 
                                             <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
@@ -346,11 +355,23 @@
                                         </svg>
                                         &ensp;Сонячні станції користувача
                                     </h4>
-                                    <div class="table-responsive">
+                                    <div class="table-responsive"
+                                         th:if="${solarPowerPlants!=null and !solarPowerPlants.isEmpty()}">
 
                                         <!-- Solar power plant block -->
                                         <div th:replace="~{dashboard/admin/fragments/solar-power-plant
         ::solar-power-plants(${solarPowerPlants})}"></div>
+
+                                    </div>
+
+                                    <div class="table-responsive"
+                                         th:if="${solarPowerPlants==null or solarPowerPlants.isEmpty()}">
+
+                                        <!-- Solar power plant block -->
+                                        <div class="alert alert-success m-2" role="alert">
+                                            У користувача немає жодної зареєстрованої сонячної станції.
+                                        </div>
+
 
                                     </div>
 

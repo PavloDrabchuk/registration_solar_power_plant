@@ -124,15 +124,24 @@ public class SolarPowerPlantService {
         month = date.getMonthValue();
         day = date.getDayOfMonth();
 
+        System.out.println("year: " + year + " month: " + month + " day: " + day);
+
         day -= calendar.get(Calendar.DAY_OF_MONTH);
         if (day < 0) month--;
         month -= (calendar.get(Calendar.MONTH) + 1);
         if (month < 0) year--;
         year -= calendar.get(Calendar.YEAR);
 
+        System.out.println("--- year: " + year + " month: " + month + " day: " + day);
+
+
         if (year != 0) result += Math.abs(year) + " р. ";
         if (month != 0) result += Math.abs(month) + " міс. ";
         if (day != 0) result += Math.abs(day) + " д.";
+
+        if (result.equals("")) result += "1 д.";
+
+        System.out.println("result: " + result);
 
         return result;
     }

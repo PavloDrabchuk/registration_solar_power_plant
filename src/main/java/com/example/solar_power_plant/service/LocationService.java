@@ -62,8 +62,8 @@ public class LocationService {
         Matcher matcher = pattern.matcher(geocodingData);
         if (matcher.find()) {
             System.out.println(" >> lat: " + matcher.group(1) + " - lon: " + matcher.group(2));
-            location.setLongitude(Double.parseDouble(matcher.group(1)));
-            location.setLatitude(Double.parseDouble(matcher.group(2)));
+            location.setLongitude(Double.parseDouble(matcher.group(2)));
+            location.setLatitude(Double.parseDouble(matcher.group(1)));
         } else {
             System.out.println("Not found: " + pattern.toString());
         }

@@ -67,8 +67,7 @@ map.on('click', function (evt) {
             placement: 'top',
             html: true,
             content: '<div class="popup">' +
-                '<h3 class="popup-title">'+feature.get('desc')+'</h3>' +
-                '<p class="popup-content">Короткі дані</p></div>',
+                '<h3 class="popup-title">'+feature.get('desc')+'</h3>',
         });
         $(element).popover('show');
     } else {
