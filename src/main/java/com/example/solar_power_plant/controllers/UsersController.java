@@ -108,7 +108,7 @@ public class UsersController {
 
             return "home";
         } else {
-            return "redirect:/confirm_registration";
+            return "redirect:/confirm-registration";
         }
     }
 
@@ -170,7 +170,7 @@ public class UsersController {
         }
     }
 
-    @GetMapping(path = "/confirm_registration")
+    @GetMapping(path = "/confirm-registration")
     public String confirmUserRegistration(Model model) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -195,7 +195,7 @@ public class UsersController {
         Optional<User> user = usersService.getUserByUsername(username);
 
         if (user.isPresent() && !user.get().getLocked()) {
-            return "redirect:/confirm_registration";
+            return "redirect:/confirm-registration";
         }
 
         //user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
@@ -351,7 +351,7 @@ public class UsersController {
         }
     }
 
-    @GetMapping(path = "/recover_password")
+    @GetMapping(path = "/recover-password")
     public String recoverPasswordRequest(Model model) {
 
         getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
@@ -366,7 +366,7 @@ public class UsersController {
 
     @GetMapping(path = "recoverPassword")
     public String redirectToRecoverPasswordPage() {
-        return "redirect:/recover_password";
+        return "redirect:/recover-password";
     }
 
     @PostMapping(path = "/recoverPassword")

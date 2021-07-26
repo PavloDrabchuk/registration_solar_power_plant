@@ -49,7 +49,7 @@ public class SolarPowerPlantController {
         this.messageService=messageService;
     }
 
-    @PostMapping(path = "/addSolarPowerPlant")
+    @PostMapping(path = "/solar-power-plant/add")
     public String addSolarPowerPlant(
             @Valid
             @ModelAttribute("solarPowerPlant")
@@ -99,7 +99,7 @@ public class SolarPowerPlantController {
         return "redirect:/home";
     }
 
-    @PostMapping(path = "/solarPowerPlant/delete/{id}")
+    @PostMapping(path = "/solar-power-plant/delete/{id}")
     public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model, RedirectAttributes redirectAttributes) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
@@ -115,13 +115,13 @@ public class SolarPowerPlantController {
         }
     }
 
-    @GetMapping(path = "/solarPowerPlant/delete/{id}")
+    @GetMapping(path = "/solar-power-plant/delete/{id}")
     public String redirectToSolarPowerPlantPage(@PathVariable("id") Long id, Model model) {
 
         return "redirect:/home";
     }
 
-    @GetMapping("/newSolarPowerPlant")
+    @GetMapping("/solar-power-plant/new")
     public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
 

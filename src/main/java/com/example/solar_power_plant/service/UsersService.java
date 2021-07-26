@@ -122,10 +122,10 @@ public class UsersService {
         confirmationMessage.setTo(email);
 
 
-        if (typeConfirmationCode.name().equals("confirmRegistration")) {
+        if (typeConfirmationCode.name().equals("ConfirmRegistration")) {
             confirmationMessage.setSubject("Confirmation mail");
             confirmationMessage.setText("<html><body><h1>header</h1> Please: http://localhost:8080/confirm/" + confirmationCode + "</body></html>");
-        } else if (typeConfirmationCode.name().equals("recoverPassword")) {
+        } else if (typeConfirmationCode.name().equals("RecoverPassword")) {
             confirmationMessage.setSubject("Recover password mail");
             confirmationMessage.setText("Please: http://localhost:8080/recover/" + confirmationCode);
         }
