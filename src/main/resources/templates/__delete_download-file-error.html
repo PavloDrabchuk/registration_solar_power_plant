@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+</head>
+<body>
+
+<h3>Сталась помилка. Дані неможливо завантажити. Спробуйте пізніше.</h3>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/main.css" th:href="@{/styles/mail.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+
+
+    <title>Title</title>
+</head>
+<body>
+
+<!--<h3 th:utext="'Для завершення реєстрації перейдіть за посиланням, яке є у листі, який надіслано на електронну пошту: '+ ${email}+'!'"></h3>
+
+<form th:action="@{/sendConfirmationCodeAgain}" method="post">
+    <input type="submit" value="Надіслати ще раз"/>
+</form>
+
+<h3 th:if="${sendingCodeMessage}">
+    test
+    <div th:utext="${sendingCodeMessage}">
+    </div>
+</h3>
+
+<a href="/profile">Профіль</a>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Вийти"/>
+</form>-->
+
+<!-- Navigation panel -->
+
+<div th:replace="~{dashboard/user/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{dashboard/user/sidebar}"></div>
+
+        <!-- Main -->
+
+        <main role="main" class="col-xl-10 col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+            <div class="main-body">
+                <div class="row gutters-sm">
+                    <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
+
+
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">Дякуємо за реєстрацію!</h4>
+                            <p th:utext="'Для завершення реєстрації перейдіть за посиланням, яке є у листі, який надіслано на електронну пошту: '+ ${email}+'.'"></p>
+                            <hr>
+                            <form th:if="${sendingCodeMessage == null}" th:action="@{/sendConfirmationCodeAgain}" method="post" class="text-center">
+                                <!--                        <p class="mb-0">Не прийшов код? </p>-->
+                                <input type="submit" value="Надіслати лист ще раз" class="btn btn-success"/>
+                            </form>
+                            <p th:if="${sendingCodeMessage}" th:utext="${sendingCodeMessage}"></p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>403 - Forbidden</title>
+</head>
+<body>
+
+<h2>403 - forbidden</h2>
+
+<p>
+    Forbidden
+</p>
+
+&lt;!&ndash;/*@thymesVar id="error" type="java.lang.String"*/&ndash;&gt;
+<p th:text="${error}">Error Info</p>
+
+&lt;!&ndash;/*@thymesVar id="status" type="java.lang.String"*/&ndash;&gt;
+<p th:text="${status}">Status</p>
+
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <link href="/styles/error.css" rel="stylesheet" th:href="@{/styles/error.css}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+
+    <title>Помилка 500</title>
+</head>
+<body>
+
+<div class="mainbox">
+    <div class="err">5</div>
+    <i class="far fa-question-circle fa-spin"></i>
+    <div class="err2">0</div>
+
+    <div class="msg">Можливо ви щось не так зробили? А може і ми помилились у чомусь?
+        <p>Поверніться на <a href="/">головну сторінку</a> і спробуйте щось інше.</p>
+        <br/>
+        <h2 th:text="${error}">Error Info</h2>
+    </div>
+</div>
+
+</body>
+</html>

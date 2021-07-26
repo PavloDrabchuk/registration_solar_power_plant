@@ -1,69 +1,237 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--<link href="css/bootstrap.css" rel="stylesheet" >
+   <link href="css/main.css" rel="stylesheet">
+   <link href="css/banner.css" rel="stylesheet">-->
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css" th:href="@{/styles/bootstrap/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/main.css" th:href="@{/styles/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/banner.css" th:href="@{/styles/banner.css}"/>
+
+    <script src="scripts/bootstrap/bootstrap.js"></script>
+    <script src="scripts/main.js"></script>
+
+    <title>Головна сторінка</title>
 </head>
 <body>
+<!--<h2>Вітаємо!</h2>
+<h3>Натисніть <a th:href="@{/login}">сюди</a>, щоб ввійти.</h3>
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Вийти"/>
-</form>
+<h3><a th:href="@{/registration}">Зареєструватись</a></h3>-->
 
-<h3>All users</h3>
+<!-- Header -->
 
-<h4 th:text="${name}"></h4>
+<header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom shadow-sm fixed-top"
+        id="header">
+    <p class="h5 my-0 me-md-auto fw-normal">Система реєстрації та обліку сонячних електростанцій</p>
+    <nav class="my-2 my-md-0 me-md-3">
+<!--        <a class="p-2 text-dark" href="#">Features</a>-->
+<!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+<!--        <a class="p-2 text-dark" href="#">Support</a>-->
+<!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
+    </nav>
+    <a class="btn text-decoration-none link-dark mx-1" th:href="@{/login}">Ввійти</a>
+    <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>
+</header>
 
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Surname</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:utext="${user.getId()}"></td>
-        <td th:utext="${user.getName()}"></td>
-        <td th:utext="${user.getSurname()}"></td>
-    </tr>
-</table>
+<!-- Banner -->
 
-<h5><a href="/new">New User</a></h5>
-<hr/>
+<div class="banner banner-inner">
 
-<h3>All SolarPlants</h3>
+    <div class="banner-item active">
+        <!--<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+             aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#777"></rect>
+        </svg>-->
 
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>City</th>
-    </tr>
-    <tr th:each="solarPowerPlant : ${solarPowerPlants}">
-        <td th:utext="${solarPowerPlant.getId()}"></td>
-        <td th:utext="${solarPowerPlant.getName()}"></td>
-        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
-    </tr>
-</table>
+        <img style="transform: scale(-1, 1);" src="images/banner2.webp"  alt="banner">
 
-<h5><a href="/newSolarPowerPlant">New Solar power plant</a></h5>
 
-<!--<h5><a href="/sign-in">sign-in</a></h5>-->
+        <div class="container">
+            <div class="banner-caption text-end">
+                <h1>Зробіть ще один крок для збереження екології.</h1>
+                <p>Створіть особистий кабінет та додайте свою першу сонячну станцію.</p>
+                <p><a class="btn btn-lg btn-success" th:href="@{/login}">Почати</a></p>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h3>Users SolarPlants</h3>
+<!-- *************************** -->
 
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>City</th>
-    </tr>
-    <tr th:each="solarPowerPlant : ${solarPowerPlantsByUser}">
-        <td th:utext="${solarPowerPlant.getId()}"></td>
-        <td th:utext="${solarPowerPlant.getName()}"></td>
-        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
-    </tr>
-</table>
+<div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+        <div class="col-lg-4">
+            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#777"></rect>
+                <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+            </svg>
+
+            <h2>Про систему</h2>
+            <p>Система створена для реєстрації сонячних станцій та збирання даних про вироблену потужність.</p>
+            <p><a class="btn btn-secondary" onclick="jump('first')">Дізнатись більше</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#777"></rect>
+                <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+            </svg>
+
+            <h2>Реєстрація сонячної станції</h2>
+            <p>Зареєструвати власну сонячну станцію просто. Для цього необхідно створити кабінет та додати першу станцію.</p>
+            <p><a class="btn btn-secondary" onclick="jump('second')">Дізнатись більше</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#777"></rect>
+                <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
+            </svg>
+
+            <h2>Збір даних</h2>
+            <p>Збір на зберігання даних про вироблену потужність сонячної станції виконується автоматично.</p>
+            <p><a class="btn btn-secondary" onclick="jump('third')">Дізнатись більше</a></p>
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider" id="first">
+
+    <div class="row featurette">
+
+        <div class="col-md-7">
+            <h2 class="featurette-heading">Про систему<!--<span
+                    class="text-muted">It’ll blow your mind.</span>--></h2>
+            <p class="lead">Система створена, щоб зберігати дані про вироблену потужність сонячних станцій для подальшого прогнозування.
+                 <a href="/about">Детальніше...</a></p>
+        </div>
+        <div class="col-md-5">
+            <!--<svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+                 height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#eee"></rect>
+                <text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text>
+            </svg>-->
+            <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" fill="#419051"
+                 class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto bi bi-info-circle" viewBox="0 0 16 16">
+                <rect width="100%" height="100%" fill="#ECFEEC"></rect>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                <title>Про систему</title>
+            </svg>
+
+        </div>
+    </div>
+
+    <hr class="featurette-divider" id="second">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading">Реєстрація сонячної станції<!--<span class="text-muted">See for yourself.</span>--></h2>
+            <p class="lead">Зареєструвати власну сонячну станцію дуже просто, для цього необхідно вказати всі дані та виконувати інструкції.
+                 <a href="/registration-info">Детальніше...</a></p>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" fill="#419051"
+                 class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto bi bi-info-circle" viewBox="0 0 16 16">
+                <rect width="100%" height="100%" fill="#ECFEEC"></rect>
+                <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
+                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                <!--                </svg>--><title>Реєстрація сонячної станції</title>
+            </svg>
+
+        </div>
+    </div>
+
+    <hr class="featurette-divider" id="third">
+
+    <div class="row featurette">
+        <div class="col-md-7">
+            <h2 class="featurette-heading">Збір даних<!--<span class="text-muted">Checkmate.</span>--></h2>
+            <p class="lead">Збір даних проводиться в автоматичному режимі кожних 30 хвилин протягом дня.
+                Інформацію про накопичену енергію можна переглянути в особистому кабінеті.
+                 <a  href="/data-collection">Детальніше...</a></p>
+        </div>
+        <div class="col-md-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" fill="#419051"
+                 class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto bi bi-info-circle" viewBox="0 0 16 16">
+                <rect width="100%" height="100%" fill="#ECFEEC"></rect>
+<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">-->
+                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/><!--                </svg>--><title>Збір даних</title>
+            </svg>
+
+        </div>
+    </div>
+
+    <!-- /END THE FEATURETTES -->
+
+</div>
+
+
+<!-- Footer -->
+
+<footer class="container border-top pt-md-5 my-md-5 pt-4">
+    <!--<footer class="pt-4 my-md-5 pt-md-5 border-top">-->
+    <div class="row">
+        <div class="col-12 col-md">
+            <img class="mb-2" src="images/logo-social-sq.png" alt="" width="24" height="19">
+            <small class="d-block mb-3 text-muted">© 2021</small>
+        </div>
+        <!--<div class="col-6 col-md">
+            <h5>Особливості</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Реєстраці</a></li>
+                <li><a class="link-secondary" href="#">Random feature</a></li>
+                <li><a class="link-secondary" href="#">Team feature</a></li>
+                <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                <li><a class="link-secondary" href="#">Another one</a></li>
+                <li><a class="link-secondary" href="#">Last time</a></li>
+            </ul>
+        </div>-->
+        <div class="col-6 col-md">
+            <h5>Допомога</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/about">Про систему</a></li>
+                <li><a class="link-secondary" href="/user-registration-info">Реєстрація користувача</a></li>
+                <li><a class="link-secondary" href="/registration-info">Реєстрація сонячної станції</a></li>
+                <li><a class="link-secondary" href="/data-collection">Збір даних</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Відкриті набори даних</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/data-sets">Переглянути</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Інша інформація</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/developer">Розробник</a></li>
+<!--                <li><a class="link-secondary" href="#">Locations</a></li>-->
+<!--                <li><a class="link-secondary" href="#">Privacy</a></li>-->
+                <li><a class="link-secondary" href="/rules">Правила</a></li>
+                <li><a class="link-secondary" href="/support">Технічна підтримка</a></li>
+
+            </ul>
+        </div>
+    </div>
+</footer>
+
 
 
 </body>

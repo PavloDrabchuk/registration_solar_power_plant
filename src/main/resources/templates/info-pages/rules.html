@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <title>Правила користування системою</title>
+</head>
+<body>
+
+<!-- Header -->
+
+<header class="d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 bg-body border-bottom shadow-sm fixed-top"
+        id="header">
+    <p class="h5 my-0 me-md-auto fw-normal">Система реєстрації та обліку сонячних електростанцій</p>
+    <nav class="my-1 my-md-0 me-md-3">
+        <!--        <a class="p-2 text-dark" href="#">Features</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Support</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
+    </nav>
+    <!--    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Ввійти</a>-->
+    <!--    <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>-->
+    <a class="btn btn-outline-success" th:href="@{/}">Перейти на головну</a>
+</header>
+
+<!-- Main -->
+
+
+<h1 class="mt-5 pt-5  text-center">Правила користування системою</h1>
+<h2 class=" text-center text-secondary">Недотримання правил, може призвести до блокування профілю</h2>
+
+<article class="pb-mb-6">
+    <div class="mx-auto px-3 pt-4 pt-lg-6 pb-6 col-md-10 col-lg-8 col-xl-6">
+
+        <ol class="h5 lead">
+            <li>Користуватичь системою варто відповідно до законодавства України.</li>
+            <li>
+                Під час використання механізму обміну повідомленнями, забороняється використовувати
+                нецензурну лексику.
+            </li>
+            <li>Забороняється використання матеріалів, які розміщено на ресурсі без згоди адміністрації.</li>
+            <li>Забороняється використовувати обмін повідомленнями для погроз чи для вирішення особистих образ.</li>
+            <li>Заборонено виконувати дії, які можуть призвести до збою роботи системи чи втраті даних.</li>
+        </ol>
+
+    </div>
+</article>
+
+<!-- Footer -->
+
+<footer class="container border-top pt-md-5 my-md-5 pt-4">
+    <!--<footer class="pt-4 my-md-5 pt-md-5 border-top">-->
+    <div class="row">
+        <div class="col-12 col-md">
+            <img class="mb-2" src="images/logo-social-sq.png" alt="" width="24" height="19">
+            <small class="d-block mb-3 text-muted">© 2021</small>
+        </div>
+        <!--<div class="col-6 col-md">
+            <h5>Особливості</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="#">Реєстраці</a></li>
+                <li><a class="link-secondary" href="#">Random feature</a></li>
+                <li><a class="link-secondary" href="#">Team feature</a></li>
+                <li><a class="link-secondary" href="#">Stuff for developers</a></li>
+                <li><a class="link-secondary" href="#">Another one</a></li>
+                <li><a class="link-secondary" href="#">Last time</a></li>
+            </ul>
+        </div>-->
+        <div class="col-6 col-md">
+            <h5>Допомога</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/about">Про систему</a></li>
+                <li><a class="link-secondary" href="/user-registration-info">Реєстрація користувача</a></li>
+                <li><a class="link-secondary" href="/registration-info">Реєстрація сонячної станції</a></li>
+                <li><a class="link-secondary" href="/data-collection">Збір даних</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Відкриті набори даних</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/data-sets">Переглянути</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Про систему</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary" href="/developer">Розробник</a></li>
+                <!--                <li><a class="link-secondary" href="#">Locations</a></li>-->
+                <!--                <li><a class="link-secondary" href="#">Privacy</a></li>-->
+                <li><a class="link-secondary" href="/rules">Правила</a></li>
+                <li><a class="link-secondary" href="/support">Технічна підтримка</a></li>
+
+            </ul>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

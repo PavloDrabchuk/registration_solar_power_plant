@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/messages.css"
+          th:href="@{/styles/messages.css}"/>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+
+    <title>Надіслані повідомлення</title>
+</head>
+<body>
+
+
+<!--<h2 style="color: red;" th:if="${messageNotFound}" th:text="${messageNotFound}"></h2>-->
+
+
+<!--<h2 style="color: green;" th:text="${messageSent}"></h2>
+
+<ul th:each="m : ${messages}">
+    <li>
+        <a th:href="'/messages/'+${m.getId()}"
+           th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
+    </li>
+</ul>-->
+
+<!--<h2 th:if="${#lists.isEmpty(sentMessages)}">Надісланих повідомлень немає</h2>-->
+
+<!--<h3>Надіслані</h3>
+<ul th:each="m:${sentMessages}">
+    <li>
+        <a th:href="'/messages/'+${m.getId()}"
+           th:text="${m.getTitle()}+' -> id: '+${m.getId()}+' type: '+${m.getMessageType().name()}">Read message</a>
+    </li>
+</ul>
+
+<a th:href="@{/messages}">Вхідні</a>
+
+<div th:if="${#lists.size(numPages)}> 1"
+     class="text-center pagination-menu my-3">
+    <form action="/messages/sent" method="get">
+        <nav>
+            &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+            <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
+            <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
+            <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
+                   id="page4">&ndash;&gt;
+            <input th:each="page : ${numPages}" th:value="${page}"
+                   th:name="page" th:id="${'page'+page}"
+
+                   th:class="${page==currentPage}
+                           ? 'btn btn-success mx-1'
+                           : 'btn btn-outline-success mx-1'"
+                   type="submit">
+        </nav>
+    </form>
+</div>-->
+
+<!-- Navigation panel -->
+
+<div th:replace="~{dashboard/user/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{dashboard/user/sidebar}"></div>
+
+        <!-- Main -->
+
+        <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="px-1 py-2 my-2">
+
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mx-lg-4">
+                    <h1 class="display-5 fw-bold mx-lg-4">Надіслані повідомлення</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a type="button" class="btn btn-success px-4 gap-3"
+                           th:href="@{/messages/new}">Написати повідомлення</a>
+                    </div>
+                </div>
+
+                <!-- Alerts -->
+
+
+                <div th:if="${#lists.isEmpty(sentMessages)}" class="alert alert-success mx-2" role="alert">
+                    Надісланих повідомлень немає.
+                </div>
+
+                <!--/*@thymesVar id="messageNotFound" type="java.lang.String"*/-->
+                <div class="alert alert-danger mx-2" role="alert"
+                     th:if="${messageNotFound}" th:text="${messageNotFound}">
+                    messageNotFound
+                </div>
+
+
+
+                <div class="mx-lg-4 py-2 my-2">
+                    <a type="button" class="btn btn-sent-messages text-light px-4 gap-3"
+                       th:href="@{/messages}">Переглянути вхідні повідомлення</a>
+                </div>
+                <!--    <h1 class="display-5 fw-bold mx-lg-4">Повідомлення</h1>-->
+                <!--    <button type="button" class="btn btn-success px-4 gap-3">Написати повідомлення</button>-->
+
+                <div class="list-group mx-lg-4" th:each="m : ${sentMessages}">
+                    <a th:href="'/messages/'+${m.getId()}"
+                       class="list-group-item list-group-item-action message-item-read"
+                       aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1" th:text="${m.getTitle()}">Тема повідомлення №1</h5>
+                            <small th:text="${m.getStringDateTime()}">25.05.2021 21:13</small>
+                        </div>
+                        <p class="mb-1"
+                           th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                           th:text="${m.getFormattedUsernameAndNameSurname()}">Name Surname</p>
+
+                        <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                             th:text="${m.getFormattedUsernameAndNameSurname()}">
+                            Name Surname
+                        </div>-->
+                        <p class="mb-1"
+                           th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                           th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">Name Surname</p>
+                        <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                             th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">
+                            Name Surname
+                        </div>-->
+                        <p th:if="${m.getMessageType().name()=='INFORMATION'}"
+                           class="badge bg-info text-wrap user-select-none mb-1">
+                            Інформаційне повідомлення
+                        </p>
+                        <br th:if="${m.getMessageType().name()=='INFORMATION'}"/>
+
+                        <p th:if="${m.getMessageType().name()=='UPDATE'}"
+                           class="badge bg-warning text-wrap user-select-none mb-1">
+                            Оновлення в системі
+                        </p>
+                        <br th:if="${m.getMessageType().name()=='UPDATE'}"/>
+
+                        <p th:if="${m.getMessageType().name()=='ERROR'}"
+                           class="badge bg-danger text-wrap user-select-none mb-1">
+                            Повідомлення про проблему
+                        </p>
+                        <br th:if="${m.getMessageType().name()=='ERROR'}"/>
+
+
+                        <small th:max="50" th:text="${m.getShortText()}">До 40 символів вміст повідомлення ...</small>
+                    </a>
+
+                    <!--<a href="#" class="list-group-item list-group-item-action message-item-read">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Тема повідомлення №2</h5>
+                            <small class="text-muted">25.05.2021 21:13</small>
+                        </div>
+                        <p class="mb-1">Name Surname or [Info or Update]</p>
+                        <small class="text-muted">До 40 символів вміст повідомлення ...</small>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action message-item-read">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Тема повідомлення №3</h5>
+                            <small class="text-muted">25.05.2021 21:13</small>
+                        </div>
+                        <p class="mb-1">Name Surname or [Info or Update]</p>
+                        <small class="text-muted">До 40 символів вміст повідомлення ...</small>
+                    </a>-->
+                </div>
+
+                <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
+                     class="text-center pagination-menu my-3">
+                    <form action="/messages/sent" method="get">
+                        <nav>
+                            <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                            <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
+                            <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
+                            <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
+                                   id="page4">-->
+                            <input th:each="page : ${numPages}" th:value="${page}"
+                                   th:name="page" th:id="${'page'+page}"
+
+                                   th:class="${page==currentPage}
+                                   ? 'btn btn-success mx-1'
+                                   : 'btn btn-outline-success mx-1'"
+                                   type="submit">
+                        </nav>
+                    </form>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</div>
+
+</body>
+</html>

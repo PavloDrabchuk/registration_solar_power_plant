@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+
+<body>
+
+<!--<label for="selectUser" th:if="${editorAccess==null}">-->
+<!--<label for="selectUser">
+    <select name="username" id="selectUser">
+        <option th:each="user : ${users}" th:name="${user.getUsername()}"
+                th:value="${user.getUsername()}" th:utext="${user.getUsername()}"></option>
+
+        &lt;!&ndash;        <option name="user1" value="user1">User1</option>&ndash;&gt;
+        &lt;!&ndash;        <option name="user2" value="user2">User2</option>&ndash;&gt;
+        &lt;!&ndash;            <option name="user" value="user">For user (?)</option>&ndash;&gt;
+    </select>
+</label>-->
+
+<div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto">
+    <label for="userSelect" class="form-label">Оберіть користувача</label>
+    <select id="userSelect" class="form-select" name="username">
+        <!--<option>qwerty</option>
+        <option>asdfgh</option>
+        <option>zxcvbn</option>
+        <option>yuiojh</option>-->
+        <option th:each="user : ${users}" th:name="${user.getUsername()}"
+                th:value="${user.getUsername()}" th:utext="${user.getUsername()}"></option>
+    </select>
+</div>
+
+</body>
+</html>

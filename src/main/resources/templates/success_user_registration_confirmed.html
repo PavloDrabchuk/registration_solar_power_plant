@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/signin.css" th:href="@{/styles/signin.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}"/>
+
+    <title>Підтвердження успішної реєстрації</title>
+</head>
+<body>
+
+<!--<h3 th:if="${okMessage}">
+    <div th:text="${okMessage}">
+</div></h3>
+<h3 th:if="${errorMessage}"><div th:text="${errorMessage}"></div> </h3>
+
+<h3><a th:href="@{/}">Перейти на головну</a></h3>-->
+
+<div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3"
+     th:if="${okMessage}">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading" th:text="${okMessage}"></h4>
+        <p>Тепер Ви маєте змогу користуватись системою для реєстрації сонячних станцій.</p>
+        <hr>
+        <p class="mb-0 text-center">Натисніть <a th:href="@{/login}" class="alert-link">сюди</a>, щоб
+            ввійти.</p>
+        <hr>
+        <p class="mb-0 text-center"><a th:href="@{/}" class="alert-link">Повернутись на головну</a></p>
+    </div>
+</div>
+
+<div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3"
+     th:if="${errorMessage}">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading" th:text="${errorMessage}"></h4>
+        <p>Спробуйте отримати новий код підтвердження в своєму аккаунті або зверніться до адміністратора.</p>
+
+        <hr>
+        <p class="mb-0 text-center">Натисніть <a th:href="@{/login}" class="alert-link">сюди</a>, щоб
+            ввійти.</p>
+        <hr>
+        <p class="mb-0 text-center"><a th:href="@{/}" class="alert-link">Повернутись на головну</a></p>
+    </div>
+</div>
+
+</body>
+</html>

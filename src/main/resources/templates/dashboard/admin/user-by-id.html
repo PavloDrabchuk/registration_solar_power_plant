@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/crud.css" th:href="@{/styles/crud.css}">
+
+    <link rel="stylesheet" type="text/css" media="all" href="styles/bootstrap/bootstrap-icons.css"
+          th:href="@{/styles/bootstrap/bootstrap-icons.css}">
+
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
+
+
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+
+    <title>Користувач</title>
+</head>
+<body>
+
+<!-- Navigation panel -->
+
+<div th:replace="~{dashboard/user/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{dashboard/user/sidebar}"></div>
+
+        <!-- Main -->
+
+        <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+            <!--            <div th:if="${userChangeError}" th:utext="${userChangeError}"></div>-->
+
+            <!--            <div th:if="${updateUserMessage}" th:utext="${updateUserMessage}"></div>-->
+
+            <!--            <div th:if="${errorSetRoleMessage}" th:utext="${errorSetRoleMessage}"></div>-->
+
+            <!-- Alerts -->
+
+            <div class="alert alert-danger m-2" role="alert"
+                 th:if="${userChangeError}" th:utext="${userChangeError}">
+                userChangeError
+            </div>
+            <!--/*@thymesVar id="updateUserMessage" type="java.lang.String"*/-->
+            <div class="alert alert-success m-2" role="alert"
+                 th:if="${updateUserMessage}" th:utext="${updateUserMessage}">
+                updateUserMessage
+            </div>
+            <div class="alert alert-danger m-2" role="alert"
+                 th:if="${errorSetRoleMessage}" th:utext="${errorSetRoleMessage}">
+                errorSetRoleMessage
+            </div>
+            <div class="alert alert-success m-2" role="alert"
+                 th:if="${lockingUserMessage}" th:utext="${lockingUserMessage}">
+                lockingUserMessage
+            </div>
+            <div class="alert alert-danger m-2" role="alert"
+                 th:if="${errorLockingUserMessage}" th:utext="${errorLockingUserMessage}">
+                errorLockingUserMessage
+            </div>
+
+
+            <!--<p th:if="${user}" th:utext="${'Name: '+user.getName()}"></p>
+            <p th:if="${user}" th:utext="${'Username: '+user.getUsername()}"></p>
+            <p th:if="${user}" th:utext="${'UserRole: '+user.getUserRoles()}"></p>
+
+            <form th:action="${'/admin/users/'+user.getId()+'/set-role'}" method="post">
+                <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                    <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
+                            aria-label="Default select example" name="role">
+                        <option value="ADMIN">Адміністратор</option>
+                        <option value="USER">Користувач</option>
+                        <option value="EDITOR">Редактор</option>
+                    </select>
+                </div>
+                &lt;!&ndash;                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">&ndash;&gt;
+                <input type="submit" class="btn btn-success col-xl-3 col-lg-4 col-md-4 col-sm-4 col-4"
+                       value="Змінити роль користувача">
+            </form>-->
+
+            <!--&lt;!&ndash; Solar power plant block &ndash;&gt;
+            <div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants(${solarPowerPlants})}"></div>-->
+
+            <!-- Pagination -->
+            <!--<div th:replace="~{dashboard/admin/fragments/solar-power-plant
+                    ::solar-power-plants-paginatio(${search}, ${numPages}, ${currentPage})}"></div>-->
+
+            <!-- Table -->
+
+            <div class="row gutters-sm">
+                <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="/images/default-profile-image.png" alt="image"
+                                     class="rounded-circle" width="100">
+                                <div class="mt-3">
+                                    <h4 th:text="${user.getUsername()}">Username</h4>
+
+                                    <a class="btn btn-outline-success"
+                                       th:href="${'/admin/users/'+user.getId()+'/update'}">Редагувати інформацію</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">П.І.Б.</h6>
+                                </div>
+                                <div th:if="${!#strings.isEmpty(user.getSurname()) and !#strings.isEmpty(user.getName())}"
+                                     th:text="${user.getSurname()+' '+user.getName()}"
+                                     class="col-sm-9 text-secondary">
+                                    Surname Name
+                                </div>
+
+                                <!--                                <div th:if="${#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"-->
+                                <div th:if="${#strings.isEmpty(user.getSurname()) or #strings.isEmpty(user.getName())}"
+                                     class="col-sm-9 text-secondary">
+                                    Дані відсутні.
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Ім'я користувача</h6>
+                                </div>
+                                <div th:text="${user.getUsername()}"
+                                     class="col-sm-9 text-secondary">
+                                    Username
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div th:text="${user.getEmail()}"
+                                     class="col-sm-9 text-secondary">
+                                    example@example.com
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Мобільний телефон</h6>
+                                </div>
+                                <div th:if="${!#strings.isEmpty(user.getMobilePhoneNumber())}"
+                                     th:text="${user.getMobilePhoneNumber()}"
+                                     class="col-sm-9 text-secondary">
+                                    +380 088 123-45-67
+                                </div>
+                                <!--                                <div th:if="${userInformation.getMobilePhoneNumber() == '' or userInformation.getMobilePhoneNumber() == null}"-->
+                                <div th:if="${#strings.isEmpty(user.getMobilePhoneNumber())}"
+                                     class="col-sm-9 text-secondary">
+                                    Дані відсутні.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row gutters-sm">
+                        <div class="col-xl-12 col-sm-12 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="d-flex align-items-center mb-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#6BB7FA"
+                                             class="bi bi-shield-lock-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5z"/>
+                                        </svg>
+                                        &ensp;Системна інформація
+                                    </h4>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Зареєстровано станцій</h6>
+                                        </div>
+                                        <div th:if="${countOfRegisteredSolarStations > 0}"
+                                             th:text="${countOfRegisteredSolarStations}"
+                                             class="col-sm-9 text-secondary">
+                                            [88;Ще не зареєстровано жодної станції.]
+                                        </div>
+                                        <div th:if="${countOfRegisteredSolarStations <= 0}"
+                                             class="col-sm-9 text-secondary">
+                                            Ще не зареєстровано жодної станції.
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Дата реєстрації</h6>
+                                        </div>
+                                        <div th:text="${user.getStringRegistrationDateTime()}"
+                                             class="col-sm-9 text-secondary">
+                                            14.03.2021
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Роль користувача</h6>
+                                        </div>
+                                        <div th:text="${user.getUserRole()}"
+                                             class="col-sm-9 text-secondary">
+                                            Користувач (User)
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Статус аккаунту</h6>
+                                        </div>
+                                        <div class="col-sm-9" th:switch="${accountStatus}">
+                                            <!-- <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>-->
+                                            <!-- <div class="d-inline-block fs-5  badge badge-success">Активний</div>-->
+                                            <div th:case="'Заблокований'">
+                                                <!--<h5>
+                                                    <strong th:text="${accountStatus}"
+                                                            class="d-inline-block  badge badge-success">Активований</strong>
+                                                </h5>-->
+                                                <h5>
+                                                    <div class="badge bg-danger text-wrap user-select-none"
+                                                         th:text="${accountStatus}">
+                                                        Активований
+                                                    </div>
+                                                </h5>
+                                            </div>
+                                            <div th:case="'Активований'">
+                                                <!--<h5>
+                                                    <strong th:text="${accountStatus}"
+                                                            class="d-inline-block  badge badge-success">Активований</strong>
+                                                </h5>-->
+                                                <h5>
+                                                    <div class="badge bg-success text-wrap user-select-none"
+                                                         th:text="${accountStatus}">
+                                                        Активований
+                                                    </div>
+                                                </h5>
+                                            </div>
+                                            <div th:case="'Не активований'">
+                                                <!--<h5>
+                                                    <strong th:text="${accountStatus}"
+                                                            class="d-inline-block  badge badge-danger">Не
+                                                        активований</strong>
+                                                </h5>-->
+                                                <h5>
+                                                    <div class="badge bg-warning text-wrap user-select-none"
+                                                         th:text="${accountStatus}">
+                                                        Не
+                                                        активований
+                                                    </div>
+                                                </h5>
+                                            </div>
+
+                                            <!--<h5>
+                                                <strong th:text="${accountStatus}"
+                                                        class="d-inline-block  badge badge-success">Активний</strong>
+                                            </h5>-->
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gutters-sm">
+                        <div class="col-xl-12 col-sm-12  mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+
+
+                                    <form th:action="${'/admin/users/'+user.getId()+'/set-role'}" method="post">
+                                        <div class="row">
+                                            <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                                                <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
+                                                        aria-label="Default select example" name="role">
+                                                    <option value="ADMIN"
+                                                            th:selected="${user.getUserRole().name()=='ADMIN'}">
+                                                        Адміністратор
+                                                    </option>
+                                                    <option value="USER"
+                                                            th:selected="${user.getUserRole().name()=='USER'}">
+                                                        Користувач
+                                                    </option>
+                                                    <option value="EDITOR"
+                                                            th:selected="${user.getUserRole().name()=='EDITOR'}">
+                                                        Редактор
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
+                                            <input type="submit"
+                                                   class="btn btn-success col-xl-4 col-lg-6 col-md-7 col-sm-8 col-8 "
+                                                   value="Змінити роль користувача">
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gutters-sm">
+                        <div class="col-xl-12 col-sm-12  mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+
+                                    <form th:action="${'/admin/users/'+user.getId()+'/locking'}" method="post"
+                                          class="d-flex flex-column align-items-center text-center">
+                                        <div class="row">
+
+                                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
+                                            <input type="submit" th:if="${user.getLocked()}"
+                                                   class="btn btn-success"
+                                                   value="Розблокувати">
+
+                                            <input type="submit" th:if="${!user.getLocked()}"
+                                                   class="btn btn-danger"
+                                                   value="Заблокувати">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solar power plants -->
+
+                    <div class="row gutters-sm">
+                        <div class="col-xl-12 col-sm-12  mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="d-flex align-items-center mb-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#9D2F2F"
+                                             class="bi bi-wrench" viewBox="0 0 16 16">
+                                            <path d="M.102 2.223A3.004 3.004 0 0 0 3.78 5.897l6.341 6.252A3.003 3.003 0 0 0 13 16a3 3 0 1 0-.851-5.878L5.897 3.781A3.004 3.004 0 0 0 2.223.1l2.141 2.142L4 4l-1.757.364L.102 2.223zm13.37 9.019l.528.026.287.445.445.287.026.529L15 13l-.242.471-.026.529-.445.287-.287.445-.529.026L13 15l-.471-.242-.529-.026-.287-.445-.445-.287-.026-.529L11 13l.242-.471.026-.529.445-.287.287-.445.529-.026L13 11l.471.242z"/>
+                                        </svg>
+                                        &ensp;Сонячні станції користувача
+                                    </h4>
+                                    <div class="table-responsive"
+                                         th:if="${solarPowerPlants!=null and !solarPowerPlants.isEmpty()}">
+
+                                        <!-- Solar power plant block -->
+                                        <div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants(${solarPowerPlants})}"></div>
+
+                                    </div>
+
+                                    <div class="table-responsive"
+                                         th:if="${solarPowerPlants==null or solarPowerPlants.isEmpty()}">
+
+                                        <!-- Solar power plant block -->
+                                        <div class="alert alert-success m-2" role="alert">
+                                            У користувача немає жодної зареєстрованої сонячної станції.
+                                        </div>
+
+
+                                    </div>
+
+                                    <!--<div class="text-center pagination-menu">
+                                        <form action="#" method="get">
+                                            <nav>
+                                                <input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                                                <input class="btn btn-outline-success" type="submit" value="2" name="page"
+                                                       id="page2">
+                                                <input class="btn btn-outline-success" type="submit" value="3" name="page"
+                                                       id="page3">
+                                                <input class="btn btn-outline-success" type="submit" value="311" name="page"
+                                                       id="page4">
+                                            </nav>
+                                        </form>
+                                    </div>-->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

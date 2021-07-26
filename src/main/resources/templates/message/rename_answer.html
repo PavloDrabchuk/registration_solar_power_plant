@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Відповідь на повідомлення</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/messages}" th:object="${message}">
+    <hr>
+    <!--<div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>-->
+
+
+    <!--        <input hidden>-->
+
+
+
+    <div class="mb-3 col-xl-8 col-lg-9 col-md-12 ">
+        <label for="textarea" class="form-label">Текст повідомлення</label>
+        <textarea class="form-control bi-textarea-resize" id="textarea" cols="20" rows="7"
+                  maxlength="1000" th:field="*{text}"></textarea>
+    </div>
+
+    <!--<div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>-->
+    <div class="d-grid gap-2 d-sm-flex">
+        <button type="submit" class="btn btn-success gap-3">Надіслати</button>
+        <button type="submit" class="btn btn-outline-success gap-3">Повернутись</button>
+    </div>
+</form>
+
+</body>
+</html>

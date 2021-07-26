@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/crud.css" th:href="@{/styles/crud.css}">
+
+    <link rel="stylesheet" type="text/css" media="all" href="styles/bootstrap/bootstrap-icons.css"
+          th:href="@{/styles/bootstrap/bootstrap-icons.css}">
+
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
+
+
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+
+    <title>Сонячні електростанції</title>
+</head>
+<body>
+
+<!-- Navigation panel -->
+
+<div th:replace="~{dashboard/user/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{dashboard/user/sidebar}"></div>
+
+        <!-- Main -->
+
+        <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Зареєстровані сонячні станції</h1>
+                <!--<div class="btn-toolbar mb-2 mb-md-0">
+                    <button type="button" class="btn btn-success">Додати користувача</button>
+                </div>-->
+            </div>
+
+            <!-- Alerts -->
+
+            <div class="alert alert-success mx-2" role="alert"
+                 th:if="${updateSolarPowerPlantMessage}" th:utext="${updateSolarPowerPlantMessage}">
+                updateSolarPowerPlantMessage
+            </div>
+            <div class="alert alert-success mx-2" role="alert"
+                 th:if="${deleteSolarPowerPlantMessage}" th:utext="${deleteSolarPowerPlantMessage}">
+                deleteSolarPowerPlantMessage
+            </div>
+            <div class="alert alert-warning mx-2" role="alert"
+                 th:if="${solarPowerPlantNotFoundMessage}" th:utext="${solarPowerPlantNotFoundMessage}">
+                solarPowerPlantNotFoundMessage
+            </div>
+
+            <!-- Search -->
+
+            <div class="container">
+                <br/>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <form action="/admin/solar-power-plants/" method="get"
+                              class="card card-sm" style="background-color: #c7d4e5;">
+                            <div class="card-body row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <i class="fas fa-search text-body"></i>
+                                </div>
+                                <div class="col">
+                                    <input class="form-control form-control-borderless"
+                                           type="search"
+                                           placeholder="Введіть назву сонячної станції повністю або частково"
+                                           name="search">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-success" type="submit">Шукати</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+<!--            <div th:if="${solarPowerPlantNotFoundMessage}">Сонячних станнцій не знайдено</div>-->
+
+            <!-- Solar power plant block (table) -->
+            <div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants(${solarPowerPlants})}"></div>
+
+            <!-- Pagination -->
+            <div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants-pagination(${search}, ${numPages}, ${currentPage})}"></div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

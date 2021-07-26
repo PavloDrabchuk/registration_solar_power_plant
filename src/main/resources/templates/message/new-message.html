@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
+          th:href="@{/styles/bootstrap/bootstrap.css}"/>
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
+
+
+    <link rel="stylesheet" type="text/css" media="all" href="/styles/messages.css"
+          th:href="@{/styles/messages.css}"/>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+
+    <title>Написати повідомлення</title>
+
+    <script>
+        function loadUserList() {
+            var s = document.getElementById("types");
+            var selectedOption = s.options[s.selectedIndex].value;
+            console.log("user list: " + selectedOption);
+            if (selectedOption === "FOR_USER") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        document.getElementById("userSelect").innerHTML =
+                            this.responseText;
+                    }
+                };
+
+                xhttp.open("GET", "getUsersList", true);
+                xhttp.send();
+            } else {
+                var element = document.getElementById("userSelect");
+                while (element.firstChild) {
+                    element.removeChild(element.firstChild);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+<!--<h2>new message</h2>
+
+<form method="post" th:action="@{/messages}" th:object="${message}">
+    <label for="title">Title:
+        <input id="title" type="text" th:field="*{title}">
+    </label>
+    <label for="text">Text:
+        <input id="text" type="text" th:field="*{text}">
+    </label>
+
+    <label for="typesForUser" th:if="${editorAccess==null}">
+        <select name="type" id="typesForUser">
+            <option name="FOR_EDITOR" value="FOR_EDITOR">Питання</option>
+            <option name="FOR_ADMIN" value="FOR_ADMIN">Технічна помилка</option>
+&lt;!&ndash;            <option name="user" value="user">For user (?)</option>&ndash;&gt;
+        </select>
+    </label>
+
+    <label for="types" th:if="${editorAccess}">
+        <select name="type" id="types" onclick="loadUserList()">
+            <option name="INFORMATION" value="INFORMATION">Info</option>
+            <option name="UPDATE" value="UPDATE">Update</option>
+            <option name="FOR_USER" value="FOR_USER" >For user (?)</option>
+        </select>
+    </label>
+
+    <div id="userSelect" th:if="${editorAccess}">
+
+    </div>
+
+    <input type="submit" value="Sent message">
+</form>-->
+
+<!-- Navigation panel -->
+
+<div th:replace="~{dashboard/user/nav-panel}"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div th:replace="~{dashboard/user/sidebar}"></div>
+
+        <!-- Main -->
+
+        <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+            <div class="px-4 py-2 my-2">
+
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom ">
+                    <h1 class="display-5 fw-bold mx-auto">Створення повідомлення</h1>
+                    <!--        <div class="btn-toolbar mb-2 mb-md-0">-->
+                    <!--            <button type="button" class="btn btn-success px-4 gap-3">Написати повідомлення</button>-->
+                    <!--        </div>-->
+                </div>
+
+                <!--    <h1 class="display-5 fw-bold mx-lg-4">Повідомлення</h1>-->
+                <!--    <button type="button" class="btn btn-success px-4 gap-3">Написати повідомлення</button>-->
+
+                <form method="post" th:action="@{/messages}" th:object="${message}">
+                    <!--<div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>-->
+                    <div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto"
+                         th:if="${editorAccess==null}">
+                        <label for="typesForUser" class="form-label">Тип повідомлення</label>
+                        <select id="typesForUser" class="form-select" name="type">
+                            <option name="FOR_EDITOR" value="FOR_EDITOR">Питання</option>
+                            <option name="FOR_ADMIN" value="FOR_ADMIN">Технічна помилка</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto"
+                         th:if="${editorAccess}">
+                        <label for="types" class="form-label">Тип повідомлення</label>
+                        <select id="types" class="form-select" name="type"
+                                onclick="loadUserList()">
+                            <option name="INFORMATION" value="INFORMATION">Інформаційне повідомлення</option>
+                            <option name="UPDATE" value="UPDATE">Повідомлення про оновлення</option>
+                            <option name="FOR_USER" value="FOR_USER">Повідомлення для користувача</option>
+                        </select>
+                    </div>
+
+                    <!--<div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto" hidden>
+                        <label for="userSelect" class="form-label">Оберіть користувача</label>
+                        <select id="userSelect" class="form-select">
+                            <option>qwerty</option>
+                            <option>asdfgh</option>
+                            <option>zxcvbn</option>
+                            <option>yuiojh</option>
+                        </select>
+                    </div>-->
+
+                    <div id="userSelect" th:if="${editorAccess}"></div>
+
+                    <div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto">
+                        <label for="title" class="form-label">Заголовок</label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}">
+                    </div>
+
+                    <div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto">
+                        <label for="textarea" class="form-label">Текст повідомлення</label>
+                        <textarea class="form-control bi-textarea-resize" id="textarea"
+                                  cols="20" rows="7" maxlength="1000" th:field="*{text}"></textarea>
+                    </div>
+
+                    <!--<div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>-->
+                    <div class="mb-3 col-xl-6 col-lg-7 col-md-10 mx-auto">
+                        <button type="submit" class="btn btn-success">Надіслати</button>
+                        <a type="button" class="btn btn-outline-success"
+                           href="/messages">Перейти до списку повідомлень</a>
+                    </div>
+                </form>
+
+                <!--<div class="list-group mx-lg-4">
+                    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Тема повідомлення №1</h5>
+                            <small>25.05.2021 21:13</small>
+                        </div>
+                        <p class="mb-1">Name Surname or [Info or Update]</p>
+                        <small>До 40 символів вміст повідомлення ...</small>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action message-item-read">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Тема повідомлення №2</h5>
+                            <small class="text-muted">25.05.2021 21:13</small>
+                        </div>
+                        <p class="mb-1">Name Surname or [Info or Update]</p>
+                        <small class="text-muted">До 40 символів вміст повідомлення ...</small>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action message-item-read">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Тема повідомлення №3</h5>
+                            <small class="text-muted">25.05.2021 21:13</small>
+                        </div>
+                        <p class="mb-1">Name Surname or [Info or Update]</p>
+                        <small class="text-muted">До 40 символів вміст повідомлення ...</small>
+                    </a>
+                </div>-->
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+
+</body>
+</html>

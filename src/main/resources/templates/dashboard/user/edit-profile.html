@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!--<link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.css"
+          th:href="@{/styles/bootstrap.css}"/>
+    <link rel="stylesheet" href="css/profile.css">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+
+<main th:fragment="main-content (userInformation, accountStatus)"
+      role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <!--<form action="updateProfileInfo" th:action="@{/profile/update}" th:object="${userInformation}" method="post">
+
+        <table border="1" cellspacing="0">
+            <tr>
+                <th>Профіль</th>
+                <th align="right" colspan="2"></th>
+            </tr>
+            <tr>
+                <td>Прізвище</td>
+                <td>
+                    <input placeholder="Введіть прізвище"
+                           th:value="${userInformation.getSurname()}" th:field="*{surname}">
+                </td>
+            </tr>
+            <tr>
+                <td>Ім'я</td>
+                <td>
+                    <input placeholder="Введіть ім'я"
+                           th:value="${userInformation.getName()}" th:field="*{name}">
+                </td>
+            </tr>
+            <tr>
+                <td>По батькові</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="background-color: #7b98bc"></td>
+                <td style="background-color: #7b98bc"></td>
+            </tr>
+
+            <tr>
+                <td>Ім'я користувача</td>
+                <td th:text="${userInformation.getUsername()}"></td>
+            </tr>
+
+            <tr>
+                <td>E-mail</td>
+                <td th:text="${userInformation.getEmail()}"></td>
+            </tr>
+
+            <tr>
+                <td>Моб. телефон</td>
+                <td><input placeholder="Введіть моб. телефон" th:value="${userInformation.getMobilePhoneNumber()}"
+                           th:field="*{mobilePhoneNumber}"></td>
+            </tr>
+
+            <tr>
+                <td style="background-color: #7b98bc"></td>
+                <td style="background-color: #7b98bc"></td>
+            </tr>
+
+            <tr>
+                <td>Статус аккаунту</td>
+                <td th:text="${accountStatus}"></td>
+            </tr>
+
+        </table>
+
+        <input type="submit" value="Зберегти"/>
+
+    </form>-->
+
+
+    <div class="container">
+        <div class="main-body">
+
+            <div class="row gutters-sm">
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="/images/default-profile-image.png" alt="image"
+                                     class="rounded-circle" width="100">
+                                <div class="mt-3">
+                                    <h4 th:text="${userInformation.getUsername()}">Username</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 mb-3">
+                    <form action="updateProfileInfo" th:action="@{/profile/update}"
+                          th:object="${userInformation}" method="post">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="input-group">
+                                    <span class="col-4 text-wrap input-group-text "
+                                          id="addon-wrapping-surname">Прізвище</span>
+                                        <input type="text" class="form-control"
+                                               th:value="${userInformation.getSurname()}" th:field="*{surname}"
+                                               placeholder="Наприклад: Сидоренко, Шевченко." aria-label="Surname"
+                                               aria-describedby="addon-wrapping">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="input-group">
+                                        <span class="col-4 text-wrap input-group-text" id="addon-wrapping-name">Ім'я</span>
+                                        <input type="text" class="form-control"
+                                               th:value="${userInformation.getName()}" th:field="*{name}"
+                                               placeholder="Наприклад: Іван, Марія." aria-label="Name"
+                                               aria-describedby="addon-wrapping">
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="input-group">
+                                        <span class="col-4 text-wrap  input-group-text" id="addon-wrapping-mobile-phone">Мобільний телефон</span>
+                                        <input type="text" class="form-control"
+                                               th:value="${userInformation.getMobilePhoneNumber()}"
+                                               th:field="*{mobilePhoneNumber}"
+                                               placeholder="Наприклад: +380 88 123-45-67." aria-label="Name"
+                                               aria-describedby="addon-wrapping">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Ім'я користувача</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary"
+                                         th:text="${userInformation.getUsername()}">
+                                        Username
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">E-mail</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary"
+                                         th:text="${userInformation.getEmail()}">
+                                        example@example.com
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-success" value="Зберегти інформацію">
+                            <input type="reset" class="btn btn-danger" value="Скинути введені дані">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+
+</html>

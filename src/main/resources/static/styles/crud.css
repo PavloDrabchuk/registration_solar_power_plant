@@ -1,0 +1,30 @@
+.table-data-feature {
+    display: flex;
+    justify-content: flex-end
+}
+
+.table-data-feature .item {
+    display: block;
+    height: 35px;
+    width: 35px;
+    position: relative;
+    border-radius: 100%;
+    /*background: #e5e5e5;*/
+    margin-right: 5px
+}
+
+.table-data-feature .item:last-child {
+    margin-right: 0
+}
+
+.table-data-feature .item svg {
+    /*font-size: 20px;*/
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+
+
