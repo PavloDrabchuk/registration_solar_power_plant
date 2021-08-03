@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.*;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.Console;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -35,6 +37,8 @@ public class SolarPowerPlantController {
     private final DynamicDataService dynamicDataService;
     private final MessageService messageService;
 
+    private final Optional<User> authorizedUser;
+
 
     @Autowired
     public SolarPowerPlantController(UsersService usersService,
@@ -46,8 +50,21 @@ public class SolarPowerPlantController {
         this.solarPowerPlantService = solarPowerPlantService;
         this.locationService = locationService;
         this.dynamicDataService = dynamicDataService;
-        this.messageService=messageService;
+        this.messageService = messageService;
+        System.out.println("userServise: "+this.usersService);
+
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
+    //private final Optional<User> authorizedUser = AuthorizationAccess.getAuthorisedUser(getUsersService());
+
+
+    UsersService getUsersService(){
+        return this.usersService;
+    }
+
+
+    //AuthorizationAccess.add
+
 
     @PostMapping(path = "/solar-power-plant/add")
     public String addSolarPowerPlant(
@@ -68,7 +85,8 @@ public class SolarPowerPlantController {
             model.addAttribute("regions", Region.values());
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-            addAdminAccessToModel(model);
+//            addAdminAccessToModel(model);
+            AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
             return "add_solar_power_plant";
             //return "redirect:/newSolarPowerPlant";
@@ -76,16 +94,18 @@ public class SolarPowerPlantController {
 
         System.out.println("addSolarPowerPlant");
 
-        Authentication auth = SecurityContextHolder
+        /*Authentication auth = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
         String username = auth.getName();//get logged in username
 
-        Optional<User> user = usersService.getUserByUsername(username);
-        if (user.isPresent()) {
-            System.out.println("username: " + username + " \n userId: " + user.get().getId());
+        Optional<User> user = usersService.getUserByUsername(username);*/
 
-            solarPowerPlant.setUser(user.get());
+
+        if (authorizedUser.isPresent()) {
+            System.out.println("username: " + authorizedUser.get().getUsername() + " \n userId: " + authorizedUser.get().getId());
+
+            solarPowerPlant.setUser(authorizedUser.get());
         }
         System.out.println("Region: " + solarPowerPlant.getLocation().getRegion().getName());
 
@@ -125,7 +145,7 @@ public class SolarPowerPlantController {
     public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));
 
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
@@ -140,7 +160,7 @@ public class SolarPowerPlantController {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }*/
-        addAdminAccessToModel(model);
+        AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         return "add_solar_power_plant";
     }
@@ -149,7 +169,7 @@ public class SolarPowerPlantController {
     public String getSolarPowerPlantsById(@PathVariable("id") String stringId, Model model) {
         System.out.println("getSolarPowerPlantsById: " + stringId);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
@@ -158,7 +178,7 @@ public class SolarPowerPlantController {
 
         // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
 
-        if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent() && solarPowerPlant.get().getUser() == getAuthorisedUser().get()) {
+        if (solarPowerPlant.isPresent() && authorizedUser.isPresent() && solarPowerPlant.get().getUser() == authorizedUser.get()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
 
             for (DataByPeriodAndSolarPowerPlant ff : dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
@@ -191,14 +211,14 @@ public class SolarPowerPlantController {
 
             model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
 
-            System.out.println(" using time: "+solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
+            System.out.println(" using time: " + solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
 
             model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
 
-        addAdminAccessToModel(model);
+        AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         return "solar_power_plant_info_by_id";
     }
@@ -207,9 +227,9 @@ public class SolarPowerPlantController {
     public String getSolarPowerPlantByIdForUpdate(@PathVariable("id") String id, Model model) {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
-        addAdminAccessToModel(model);
+        AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
@@ -334,7 +354,7 @@ public class SolarPowerPlantController {
                           Model model) {
         System.out.println("dataPeriod: " + dataPeriod);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));
 
         if (dataPeriod.equals("Отримати дані")) {
@@ -413,7 +433,7 @@ public class SolarPowerPlantController {
         model.addAttribute("dataForGraphsByHour", averagePowers);
 
 
-        addAdminAccessToModel(model);
+        AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         return "data";
     }
@@ -481,7 +501,7 @@ public class SolarPowerPlantController {
                 break;
             }
             default: {
-                redirectAttributes.addFlashAttribute("exportDataError","Сталась помилка. Дані неможливо завантажити. Спробуйте пізніше.");
+                redirectAttributes.addFlashAttribute("exportDataError", "Сталась помилка. Дані неможливо завантажити. Спробуйте пізніше.");
                 return "redirect:/home";
             }
 
@@ -527,7 +547,7 @@ public class SolarPowerPlantController {
                                 @PathVariable String id,
                                 Model model) {
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));
 
         /*String fileName = "f.csv";
@@ -588,7 +608,7 @@ public class SolarPowerPlantController {
         return name.replace(' ', '_');
     }*/
 
-    Optional<User> getAuthorisedUser() {
+    /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
@@ -601,7 +621,7 @@ public class SolarPowerPlantController {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }
-    }
+    }*/
 
     private int getPage(String page, int maxPage) {
         int pageInt;
