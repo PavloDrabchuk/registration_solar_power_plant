@@ -56,7 +56,7 @@ public class DatabaseSeeder {
         User user = new User();
         user.setEmail("ravluk2000@gmail.com");
         user.setUsername("qwerty");
-        user.setUserRole(UserRoles.ADMIN);
+        user.setUserRole(UserRoles.ROLE_ADMIN);
         user.setActivated(true);
         user.setLocked(false);
         user.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -66,7 +66,7 @@ public class DatabaseSeeder {
         User user1 = new User();
         user1.setEmail("example1@gmail.com");
         user1.setUsername("qwerty123");
-        user1.setUserRole(UserRoles.USER);
+        user1.setUserRole(UserRoles.ROLE_USER);
         user1.setActivated(false);
         user1.setLocked(false);
         user1.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -76,7 +76,7 @@ public class DatabaseSeeder {
         User user2 = new User();
         user2.setEmail("example2@gmail.com");
         user2.setUsername("qwerty1231");
-        user2.setUserRole(UserRoles.USER);
+        user2.setUserRole(UserRoles.ROLE_USER);
         user2.setActivated(true);
         user2.setLocked(false);
         user2.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -86,7 +86,7 @@ public class DatabaseSeeder {
         User user3 = new User();
         user3.setEmail("example3@gmail.com");
         user3.setUsername("qwerty1232");
-        user3.setUserRole(UserRoles.USER);
+        user3.setUserRole(UserRoles.ROLE_USER);
         user3.setActivated(true);
         user3.setLocked(false);
         user3.setPassword(bCryptPasswordEncoder.encode("qwerty3"));
@@ -96,7 +96,7 @@ public class DatabaseSeeder {
         User user4 = new User();
         user4.setEmail("example4@gmail.com");
         user4.setUsername("qwerty1233");
-        user4.setUserRole(UserRoles.USER);
+        user4.setUserRole(UserRoles.ROLE_USER);
         user4.setActivated(true);
         user4.setLocked(false);
         user4.setPassword(bCryptPasswordEncoder.encode("qwerty4"));
@@ -106,7 +106,7 @@ public class DatabaseSeeder {
         User user5 = new User();
         user5.setEmail("example5@gmail.com");
         user5.setUsername("qwerty1234");
-        user5.setUserRole(UserRoles.USER);
+        user5.setUserRole(UserRoles.ROLE_USER);
         user5.setActivated(true);
         user5.setLocked(false);
         user5.setPassword(bCryptPasswordEncoder.encode("qwerty5"));
@@ -116,7 +116,7 @@ public class DatabaseSeeder {
         User user6 = new User();
         user6.setEmail("editor@gmail.com");
         user6.setUsername("editor");
-        user6.setUserRole(UserRoles.EDITOR);
+        user6.setUserRole(UserRoles.ROLE_EDITOR);
         user6.setActivated(true);
         user6.setLocked(false);
         user6.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -126,7 +126,7 @@ public class DatabaseSeeder {
         User user7 = new User();
         user7.setEmail("example6@gmail.com");
         user7.setUsername("qwerty1236");
-        user7.setUserRole(UserRoles.USER);
+        user7.setUserRole(UserRoles.ROLE_USER);
         user7.setActivated(true);
         user7.setLocked(false);
         user7.setPassword(bCryptPasswordEncoder.encode("qwerty7"));
@@ -136,7 +136,7 @@ public class DatabaseSeeder {
         User user8 = new User();
         user8.setEmail("example7@gmail.com");
         user8.setUsername("qwerty1237");
-        user8.setUserRole(UserRoles.USER);
+        user8.setUserRole(UserRoles.ROLE_USER);
         user8.setActivated(true);
         user8.setLocked(false);
         user8.setPassword(bCryptPasswordEncoder.encode("qwerty8"));

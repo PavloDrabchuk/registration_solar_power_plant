@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +19,15 @@ public class AuthorizationAccess {
     }*/
 
     public static Optional<User> getAuthorisedUser(UsersService usersService) {
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("auth:"+auth);
         String username = auth.getName(); //get logged in username
         System.out.println(".... username: "+auth.getName());
-*/
-        System.out.println("-- userService: "+usersService);
+
+        //System.out.println("-- userService: "+usersService);
         System.out.println(" --- userService: "+usersService.getClass());
 
-        String username="qwerty";
+        //String username="qwerty";
 
         //Optional<User> user=usersService.getUserByUsername(username);
         List<User> users=usersService.getAllUsers();
@@ -41,13 +40,14 @@ public class AuthorizationAccess {
         }
         else System.out.println("no no no :)");*/
 
+        System.out.println(" yyy: "+usersService.getUserByUsername(username));
         return usersService.getUserByUsername(username);
     }
 
     public static  void addAdminAccessToModel(Model model, UsersService usersService) {
         Optional<User> user = getAuthorisedUser(usersService);
 
-        if (user.isPresent() && user.get().getUserRole() == UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }

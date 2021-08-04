@@ -46,10 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/about","/registration-info","/data-collection","/user-registration-info","/developer","/rules","/support","/data_sets/**","/data-sets").permitAll()
                 .antMatchers("/admin/**")
-                .hasAuthority("ADMIN")
+                .hasAuthority("ROLE_ADMIN")
                 .antMatchers("/sign-up/**", "/home/**",
                         "/add_solar_power_plant/**", "/messages")
-                .hasAnyAuthority("USER", "ADMIN", "EDITOR")
+                .hasAnyAuthority("ROLE_USER", "ROLE_ADMIN", "ROLE_EDITOR")
                 .anyRequest()
                 .authenticated()
                 .and()

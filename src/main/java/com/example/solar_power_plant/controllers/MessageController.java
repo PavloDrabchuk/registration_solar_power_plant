@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.UsersService;
@@ -21,6 +22,8 @@ public class MessageController {
 
     private final MessageService messageService;
     private final UsersService usersService;
+
+    private Optional<User> authorizedUser = Optional.empty();
 
     @Autowired
     public MessageController(MessageService messageService,
@@ -93,7 +96,7 @@ public class MessageController {
                     MessageType.FOR_EDITOR));*/
         }
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }
@@ -150,7 +153,7 @@ public class MessageController {
                     MessageType.FOR_EDITOR));*/
         }
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }
@@ -169,7 +172,7 @@ public class MessageController {
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }
@@ -195,13 +198,13 @@ public class MessageController {
 
         model.addAttribute("message", new Message());
 
-        if (getAuthorisedUser().isPresent() && getAuthorisedUser().get().getUserRole() == UserRoles.EDITOR) {
+        if (getAuthorisedUser().isPresent() && getAuthorisedUser().get().getUserRole() == UserRoles.ROLE_EDITOR) {
             model.addAttribute("editorAccess", "editor");
         }
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }
@@ -219,7 +222,7 @@ public class MessageController {
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }
@@ -247,7 +250,7 @@ public class MessageController {
 
         Message message1;
 
-        if (user.isPresent() && user.get().getUserRole() == UserRoles.EDITOR) {
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_EDITOR) {
 
 //            String title = message.getTitle(),
 //                    text = message.getText();
@@ -299,7 +302,7 @@ public class MessageController {
         } else {
             switch (type) {
                 case "FOR_EDITOR": {
-                    for (User editor : usersService.getAllUsersByUserRole(UserRoles.EDITOR)) {
+                    for (User editor : usersService.getAllUsersByUserRole(UserRoles.ROLE_EDITOR)) {
                         message1 = new Message();
 
                         message1.setTitle(title);
@@ -317,7 +320,7 @@ public class MessageController {
                     break;
                 }
                 case "FOR_ADMIN": {
-                    for (User admin : usersService.getAllUsersByUserRole(UserRoles.ADMIN)) {
+                    for (User admin : usersService.getAllUsersByUserRole(UserRoles.ROLE_ADMIN)) {
                         message1 = new Message();
 
                         message1.setTitle(title);
@@ -337,7 +340,7 @@ public class MessageController {
                 default: {
                     System.out.println("error message");
 
-                    Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
+                    Optional<User> editor = usersService.getUserByUserRole(UserRoles.ROLE_EDITOR);
 
                     Message errorMessage = new Message();
 
@@ -473,5 +476,17 @@ public class MessageController {
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
+    }
+
+    @ModelAttribute("countUnreadMessages")
+    public long getCountUnreadMessages(){
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        System.out.println(" Count unread message: "+authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L));
+
+        return authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L);
+
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
     }
 }

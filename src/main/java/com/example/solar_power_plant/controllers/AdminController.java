@@ -56,9 +56,9 @@ public class AdminController {
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole().toString().equals(UserRoles.ADMIN.name())) {
+        if (user.isPresent() && user.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name())) {
             model.addAttribute("users", usersService.getAllUsers());
-            System.out.println("--- ADMIN ---\n role: " + user.get().getUserRole().toString().equals(UserRoles.ADMIN.name()));
+            System.out.println("--- ADMIN ---\n role: " + user.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name()));
 
             addAdminAccessToModel(model);
 
@@ -189,15 +189,15 @@ public class AdminController {
             //user.get().setUserRoles(UserRoles.model);
             switch (role) {
                 case "USER": {
-                    user.get().setUserRole(UserRoles.USER);
+                    user.get().setUserRole(UserRoles.ROLE_USER);
                     break;
                 }
                 case "ADMIN": {
-                    user.get().setUserRole(UserRoles.ADMIN);
+                    user.get().setUserRole(UserRoles.ROLE_ADMIN);
                     break;
                 }
                 case "EDITOR": {
-                    user.get().setUserRole(UserRoles.EDITOR);
+                    user.get().setUserRole(UserRoles.ROLE_EDITOR);
                     break;
                 }
                 default: {
@@ -525,7 +525,7 @@ public class AdminController {
     private void addAdminAccessToModel(Model model) {
         Optional<User> user = getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole() == UserRoles.ADMIN) {
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }

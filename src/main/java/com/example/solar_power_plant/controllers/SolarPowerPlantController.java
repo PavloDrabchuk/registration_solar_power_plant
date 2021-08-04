@@ -37,8 +37,7 @@ public class SolarPowerPlantController {
     private final DynamicDataService dynamicDataService;
     private final MessageService messageService;
 
-    private final Optional<User> authorizedUser;
-
+    private Optional<User> authorizedUser = Optional.empty();
 
     @Autowired
     public SolarPowerPlantController(UsersService usersService,
@@ -48,19 +47,22 @@ public class SolarPowerPlantController {
                                      MessageService messageService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
+
+        System.out.println("SolarPowerPlantController");
+
         this.locationService = locationService;
         this.dynamicDataService = dynamicDataService;
         this.messageService = messageService;
-        System.out.println("userServise: "+this.usersService);
+        System.out.println("userServise: " + this.usersService);
 
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
     //private final Optional<User> authorizedUser = AuthorizationAccess.getAuthorisedUser(getUsersService());
 
 
-    UsersService getUsersService(){
+    /*UsersService getUsersService() {
         return this.usersService;
-    }
+    }*/
 
 
     //AuthorizationAccess.add
@@ -101,6 +103,7 @@ public class SolarPowerPlantController {
 
         Optional<User> user = usersService.getUserByUsername(username);*/
 
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         if (authorizedUser.isPresent()) {
             System.out.println("username: " + authorizedUser.get().getUsername() + " \n userId: " + authorizedUser.get().getId());
@@ -145,8 +148,10 @@ public class SolarPowerPlantController {
     public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
 
-        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         SolarPowerPlant solarPowerPlant = new SolarPowerPlant();
         model.addAttribute("solarPowerPlant", solarPowerPlant);
@@ -169,8 +174,10 @@ public class SolarPowerPlantController {
     public String getSolarPowerPlantsById(@PathVariable("id") String stringId, Model model) {
         System.out.println("getSolarPowerPlantsById: " + stringId);
 
-        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
 
@@ -227,10 +234,12 @@ public class SolarPowerPlantController {
     public String getSolarPowerPlantByIdForUpdate(@PathVariable("id") String id, Model model) {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
         AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
-        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
@@ -354,8 +363,10 @@ public class SolarPowerPlantController {
                           Model model) {
         System.out.println("dataPeriod: " + dataPeriod);
 
-        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         if (dataPeriod.equals("Отримати дані")) {
 
@@ -547,8 +558,10 @@ public class SolarPowerPlantController {
                                 @PathVariable String id,
                                 Model model) {
 
-        authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         /*String fileName = "f.csv";
         System.out.println("t-t-t-t-t-t-t");
