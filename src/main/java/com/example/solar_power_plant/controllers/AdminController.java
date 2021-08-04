@@ -47,8 +47,8 @@ public class AdminController {
     public String getAllUsers(Model model) {
         System.out.println("getAllUsers");
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
@@ -79,8 +79,8 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         if (getAuthorisedUser().isPresent()) {
             double limitUsers = 7;
@@ -133,8 +133,8 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
 
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
@@ -237,8 +237,8 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         System.out.println("integer id: " + Long.valueOf(id));
@@ -279,8 +279,8 @@ public class AdminController {
     public String getAddUserView(Model model) {
         addAdminAccessToModel(model);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         User user = new User();
         model.addAttribute("user", user);
@@ -337,8 +337,8 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         if (getAuthorisedUser().isPresent()) {
             double limitSolarPowerPlants = 7;
@@ -397,8 +397,8 @@ public class AdminController {
 
         addAdminAccessToModel(model);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
 
@@ -438,8 +438,8 @@ public class AdminController {
         addAdminAccessToModel(model);
 
         //Optional<User> authorisedUser=getAuthorisedUser();
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {

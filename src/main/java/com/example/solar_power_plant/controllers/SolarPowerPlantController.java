@@ -649,4 +649,16 @@ public class SolarPowerPlantController {
 
         return pageInt;
     }
+
+    /*@ModelAttribute("countUnreadMessages")
+    public long getCountUnreadMessages(){
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        System.out.println(" Count unread message: "+authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L));
+
+        return authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L);
+
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
+    }*/
 }

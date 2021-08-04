@@ -34,8 +34,8 @@ public class MessageController {
 
     @GetMapping(path = "/messages")
     public String getAllMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<User> user = getAuthorisedUser();
 
@@ -106,8 +106,8 @@ public class MessageController {
 
     @GetMapping(path = "/messages/sent")
     public String getAllSentMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<User> user = getAuthorisedUser();
         if (user.isPresent()) {
@@ -165,8 +165,8 @@ public class MessageController {
     public String getMessageById(@PathVariable("id") UUID id,
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<Message> message = messageService.getMessageById(id);
 
@@ -193,8 +193,8 @@ public class MessageController {
 
     @GetMapping(path = "/messages/new")
     public String getNewMessageForm(Model model) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         model.addAttribute("message", new Message());
 
@@ -214,8 +214,8 @@ public class MessageController {
 
     @GetMapping(path = "/messages/getUsersList")
     public String getUserList(Model model) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         model.addAttribute("users", usersService.getAllUsers());
         System.out.println("user list");
@@ -446,8 +446,8 @@ public class MessageController {
 
     @GetMapping(path = "/message-alert1")
     public String getMessageAlert(Model model){
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         System.out.println(".... message-alert1");
         return "dashboard/user/message-alert1";
@@ -478,7 +478,7 @@ public class MessageController {
         return pageInt;
     }
 
-    @ModelAttribute("countUnreadMessages")
+    /*@ModelAttribute("countUnreadMessages")
     public long getCountUnreadMessages(){
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
@@ -486,7 +486,7 @@ public class MessageController {
 
         return authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L);
 
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
-    }
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
+    }*/
 }

@@ -101,7 +101,8 @@ public class DynamicDataService {
             //List<String> weatherDescriptions = readWeatherDescriptionsFromCSV("demo-data/weather_description_old.csv");
             List<String> weatherDescriptions = new ArrayList<>();
             BufferedReader bufferedReader = new BufferedReader(
-                    new FileReader("demo-data/weather_description.txt"));
+                    //new FileReader("demo-data/weather_description.txt"));
+                    new FileReader("demo-data/weather_description_short.txt"));
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null) {
                 weatherDescriptions.add(currentLine);
