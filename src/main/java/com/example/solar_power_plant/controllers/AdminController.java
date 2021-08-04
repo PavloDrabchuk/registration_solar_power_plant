@@ -60,7 +60,7 @@ public class AdminController {
             model.addAttribute("users", usersService.getAllUsers());
             System.out.println("--- ADMIN ---\n role: " + user.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name()));
 
-            addAdminAccessToModel(model);
+            //addAdminAccessToModel(model);
 
 
 
@@ -77,7 +77,7 @@ public class AdminController {
                                Model model) {
         model.addAttribute("usersMessage", "Users :)");
 
-        addAdminAccessToModel(model);
+        //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -131,7 +131,7 @@ public class AdminController {
     @GetMapping(path = "/admin/users/{id}")
     public String getUserById(@PathVariable String id, Model model) {
 
-        addAdminAccessToModel(model);
+        //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -188,15 +188,15 @@ public class AdminController {
             System.out.println("---((((((((((((((((: role: " + role);
             //user.get().setUserRoles(UserRoles.model);
             switch (role) {
-                case "USER": {
+                case "ROLE_USER": {
                     user.get().setUserRole(UserRoles.ROLE_USER);
                     break;
                 }
-                case "ADMIN": {
+                case "ROLE_ADMIN": {
                     user.get().setUserRole(UserRoles.ROLE_ADMIN);
                     break;
                 }
-                case "EDITOR": {
+                case "ROLE_EDITOR": {
                     user.get().setUserRole(UserRoles.ROLE_EDITOR);
                     break;
                 }
@@ -235,7 +235,7 @@ public class AdminController {
     @GetMapping(path = "/admin/users/{id}/update")
     public String getUserByIdForUpdate(@PathVariable String id, Model model) {
 
-        addAdminAccessToModel(model);
+        //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -277,7 +277,8 @@ public class AdminController {
 
     @GetMapping(path = "/admin/add-user")
     public String getAddUserView(Model model) {
-        addAdminAccessToModel(model);
+
+        //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -335,7 +336,7 @@ public class AdminController {
                                           Model model) {
         model.addAttribute("solarPowerPlantsMessage", "Solar power plants :)");
 
-        addAdminAccessToModel(model);
+        //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -395,7 +396,7 @@ public class AdminController {
     @GetMapping(path = "/admin/solar-power-plants/{id}")
     public String getSolarPowerPlantById(@PathVariable String id, Model model) {
 
-        addAdminAccessToModel(model);
+        //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -435,7 +436,8 @@ public class AdminController {
     public String getSolarPowerPlantByIdForUpdate(@PathVariable String id, Model model) {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
-        addAdminAccessToModel(model);
+
+        //addAdminAccessToModel(model);
 
         //Optional<User> authorisedUser=getAuthorisedUser();
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
@@ -522,14 +524,14 @@ public class AdminController {
         return usersService.getUserByUsername(username);
     }
 
-    private void addAdminAccessToModel(Model model) {
+    /*private void addAdminAccessToModel(Model model) {
         Optional<User> user = getAuthorisedUser();
 
         if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             //System.out.println("admin access");
         }
-    }
+    }*/
 
     private int getPage(String page, int maxPage) {
         int pageInt;

@@ -112,10 +112,10 @@ public class UsersController {
 
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
-            if (userRole.equals("ADMIN")) {
+            /*if (userRole.equals("ROLE_ADMIN")) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
-            }
+            }*/
 
             return "home";
         } else {
@@ -312,10 +312,10 @@ public class UsersController {
                 Boolean accountStatus = authorizedUser.get().getActivated();
                 model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
             }
-            if (authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
+            /*if (authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
-            }
+            }*/
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
 
@@ -345,10 +345,11 @@ public class UsersController {
             Boolean accountStatus = authorizedUser.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
-            if (authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
+            /*if (authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
-            }
+            }*/
+
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
         }
@@ -487,10 +488,10 @@ public class UsersController {
         return pageInt;
     }
 
-    @ModelAttribute("version")
+   /* @ModelAttribute("version")
     public String getVersion() {
         return "versionService.getVersion()";
-    }
+    }*/
 
 
 }

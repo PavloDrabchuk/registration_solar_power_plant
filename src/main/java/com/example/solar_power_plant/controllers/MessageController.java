@@ -96,10 +96,10 @@ public class MessageController {
                     MessageType.FOR_EDITOR));*/
         }
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/messages";
     }
@@ -153,10 +153,10 @@ public class MessageController {
                     MessageType.FOR_EDITOR));*/
         }
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/sent-messages";
     }
@@ -172,10 +172,10 @@ public class MessageController {
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         if (message.isPresent()) {
             model.addAttribute("message", message.get());
@@ -204,10 +204,10 @@ public class MessageController {
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/new-message";
     }
@@ -222,10 +222,10 @@ public class MessageController {
 
         Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/user-list";
     }

@@ -1,9 +1,13 @@
 package com.example.solar_power_plant;
 
 import com.example.solar_power_plant.model.User;
+import com.example.solar_power_plant.model.UserRoles;
 import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -34,5 +38,22 @@ public class GlobalControllerAdvice {
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
+    }
+
+    @ModelAttribute("adminAccess")
+    public String addAdminAccess() {
+        /*Optional<User> user = getAuthorisedUser();
+
+        if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            //System.out.println("admin access");
+        }*/
+
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (authorizedUser.isPresent() && authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
+            return "admin";
+        } else return null;
+
     }
 }

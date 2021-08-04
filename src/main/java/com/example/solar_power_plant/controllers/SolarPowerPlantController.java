@@ -88,7 +88,7 @@ public class SolarPowerPlantController {
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 //            addAdminAccessToModel(model);
-            AuthorizationAccess.addAdminAccessToModel(model, usersService);
+            //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
             return "add_solar_power_plant";
             //return "redirect:/newSolarPowerPlant";
@@ -165,7 +165,7 @@ public class SolarPowerPlantController {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
         }*/
-        AuthorizationAccess.addAdminAccessToModel(model, usersService);
+        //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         return "add_solar_power_plant";
     }
@@ -225,7 +225,7 @@ public class SolarPowerPlantController {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
 
-        AuthorizationAccess.addAdminAccessToModel(model, usersService);
+        //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         return "solar_power_plant_info_by_id";
     }
@@ -236,7 +236,7 @@ public class SolarPowerPlantController {
         //System.out.println("integer id: " + Long.valueOf(id));
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        AuthorizationAccess.addAdminAccessToModel(model, usersService);
+        //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -444,7 +444,7 @@ public class SolarPowerPlantController {
         model.addAttribute("dataForGraphsByHour", averagePowers);
 
 
-        AuthorizationAccess.addAdminAccessToModel(model, usersService);
+        //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         return "data";
     }
