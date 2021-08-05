@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class UsersController {
+public class UserController {
 
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
@@ -35,13 +35,13 @@ public class UsersController {
 
 
     @Autowired
-    public UsersController(UsersService usersService,
-                           SolarPowerPlantService solarPowerPlantService,
+    public UserController(UsersService usersService,
+                          SolarPowerPlantService solarPowerPlantService,
 
-                           ConfirmationCodeService confirmationCodeService,
+                          ConfirmationCodeService confirmationCodeService,
 
-                           LocationService locationService,
-                           MessageService messageService) {
+                          LocationService locationService,
+                          MessageService messageService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
 
@@ -83,6 +83,8 @@ public class UsersController {
         /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);*/
+
+
 
         if (authorizedUser.isPresent() && authorizedUser.get().getLocked()) {
             return "redirect:/locked-account";

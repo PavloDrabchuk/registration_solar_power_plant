@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
 import com.example.solar_power_plant.service.MessageService;
@@ -28,6 +29,8 @@ public class AdminController {
     private final DynamicDataService dynamicDataService;
     private final MessageService messageService;
 
+    private Optional<User> authorizedUser = Optional.empty();
+
     @Autowired
     public AdminController(UsersService usersService,
                            SolarPowerPlantService solarPowerPlantService,
@@ -44,8 +47,9 @@ public class AdminController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(path = "/admin")
-    public String getAllUsers(Model model) {
-        System.out.println("getAllUsers");
+    public String getAdminPage() {
+        return "admin_page";
+        //System.out.println("getAllUsers");
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -54,41 +58,46 @@ public class AdminController {
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);*/
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
+        /*authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if (user.isPresent() && user.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name())) {
-            model.addAttribute("users", usersService.getAllUsers());
-            System.out.println("--- ADMIN ---\n role: " + user.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name()));
+        if (authorizedUser.isPresent() && authorizedUser.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name())) {
+
+
+            //model.addAttribute("users", usersService.getAllUsers());
+            //System.out.println("--- ADMIN ---\n role: " + authorizedUser.get().getUserRole().toString().equals(UserRoles.ROLE_ADMIN.name()));
 
             //addAdminAccessToModel(model);
-
 
 
             return "admin_page";
         } else {
             System.out.println("--- HOME ---");
-            return "home";
-        }
+            return "redirect:/home";
+        }*/
     }
 
     @GetMapping(path = "/admin/users")
     public String getUsersPage(@RequestParam(value = "page", defaultValue = "1") String page,
                                @RequestParam(value = "search", required = false) String searchUsername,
                                Model model) {
-        model.addAttribute("usersMessage", "Users :)");
+        //model.addAttribute("usersMessage", "Users :)");
 
         //addAdminAccessToModel(model);
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
-        if (getAuthorisedUser().isPresent()) {
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        //if (authorizedUser.isPresent()) {
             double limitUsers = 7;
 
             int pageInt = getPage(page, usersService
                     .getNumPagesList(usersService.getAllUsers(),
                             limitUsers).size());
 
+            List<String> pageNumList = null;
 
             if (searchUsername == null) {
 
@@ -97,12 +106,12 @@ public class AdminController {
                                 (pageInt - 1) * (int) limitUsers,
                                 (int) limitUsers));
 
-                List<String> pageNumList = usersService
+                 pageNumList = usersService
                         .getNumPagesList(usersService.getAllUsers(),
                                 limitUsers);
 
-                model.addAttribute("numPages", pageNumList);
-                model.addAttribute("currentPage", page);
+//                model.addAttribute("numPages", pageNumList);
+//                model.addAttribute("currentPage", page);
 
             } else {
                 List<User> users = usersService.getUsersByUsername(searchUsername);
@@ -114,16 +123,18 @@ public class AdminController {
                                     (pageInt - 1) * (int) limitUsers,
                                     (int) limitUsers));
 
-                    List<String> pageNumList = usersService.getNumPagesList(users, limitUsers);
+                     pageNumList = usersService.getNumPagesList(users, limitUsers);
 
-                    model.addAttribute("numPages", pageNumList);
-                    model.addAttribute("currentPage", page);
+//                    model.addAttribute("numPages", pageNumList);
+//                    model.addAttribute("currentPage", page);
                     model.addAttribute("search", searchUsername);
                 } else {
                     model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
                 }
             }
-        }
+            model.addAttribute("numPages", pageNumList);
+            model.addAttribute("currentPage", page);
+        //}
 
         return "dashboard/admin/users";
     }
@@ -138,6 +149,7 @@ public class AdminController {
 
 
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
+
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
             model.addAttribute("solarPowerPlants", solarPowerPlantService.getSolarPowerPlantsByUser(user.get()));
@@ -151,6 +163,7 @@ public class AdminController {
             }
             //model.addAttribute("countUnreadMessages", messageService.getCountUnreadMessagesByUser(user.get()));
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
+
         return "dashboard/admin/user-by-id";
     }
 
@@ -180,14 +193,21 @@ public class AdminController {
 
     @PostMapping(path = "/admin/users/{id}/set-role")
     public String updateUserRoles(@PathVariable String id,
-                                  @RequestParam(value = "role", defaultValue = "USER") String role,
+                                  @RequestParam(value = "role", defaultValue = "ROLE_USER") String role,
                                   Model model,
-                                  RedirectAttributes redirectAttributes) {
+                                  RedirectAttributes redirectAttributes) throws IllegalArgumentException {
+
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
+
         if (user.isPresent()) {
             System.out.println("---((((((((((((((((: role: " + role);
             //user.get().setUserRoles(UserRoles.model);
-            switch (role) {
+
+            // TODO: 05.08.2021 IllegalArgumentException 
+            user.get().setUserRole(UserRoles.valueOf(role));
+            System.out.println(" -- Role: "+UserRoles.valueOf(role).name());
+
+            /*switch (role) {
                 case "ROLE_USER": {
                     user.get().setUserRole(UserRoles.ROLE_USER);
                     break;
@@ -204,7 +224,7 @@ public class AdminController {
                     model.addAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше.");
                     break;
                 }
-            }
+            }*/
             usersService.saveUser(user.get());
             redirectAttributes.addFlashAttribute("updateUserMessage", "Роль користувача змінено.");
         } else {
@@ -247,7 +267,6 @@ public class AdminController {
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
-
 
 
         return "dashboard/admin/update-user-by-id";
@@ -316,7 +335,9 @@ public class AdminController {
         //usersService.deleteUserById(Long.valueOf(id));
 
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
-        if (user.isPresent() && getAuthorisedUser().isPresent() && user.get() != getAuthorisedUser().get()) {
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (user.isPresent() && authorizedUser.isPresent() && user.get() != authorizedUser.get()) {
             usersService.deleteUser(user.get());
 
             //Тут можна надіслати ласта користувачу про видалення його аккаунта
@@ -341,7 +362,9 @@ public class AdminController {
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
-        if (getAuthorisedUser().isPresent()) {
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (authorizedUser.isPresent()) {
             double limitSolarPowerPlants = 7;
 
             int pageInt = getPage(page, solarPowerPlantService.getNumPagesListForAll(
@@ -504,10 +527,13 @@ public class AdminController {
 
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
 
-        if (solarPowerPlant.isPresent() && getAuthorisedUser().isPresent()) {
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (solarPowerPlant.isPresent() && authorizedUser.isPresent()) {
             solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
             //Тут можна надіслати ласта користувачу про видалення його аккаунта
+            // TODO: 05.08.2021 Make sending a letter to the user about removing your account.
 
             redirectAttributes.addFlashAttribute("deleteSolarPowerPlantMessage", "Сонячну станцію видалено з системи.");
         } else {
@@ -518,11 +544,11 @@ public class AdminController {
         return "redirect:/admin/solar-power-plants";
     }
 
-    Optional<User> getAuthorisedUser() {
+    /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
-    }
+    }*/
 
     /*private void addAdminAccessToModel(Model model) {
         Optional<User> user = getAuthorisedUser();

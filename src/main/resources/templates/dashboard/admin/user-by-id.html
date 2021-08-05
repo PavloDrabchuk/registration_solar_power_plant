@@ -292,16 +292,16 @@
                                             <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                                                 <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
                                                         aria-label="Default select example" name="role">
-                                                    <option value="ADMIN"
-                                                            th:selected="${user.getUserRole().name()=='ADMIN'}">
+                                                    <option value="ROLE_ADMIN"
+                                                            th:selected="${user.getUserRole().name()=='ROLE_ADMIN'}">
                                                         Адміністратор
                                                     </option>
-                                                    <option value="USER"
-                                                            th:selected="${user.getUserRole().name()=='USER'}">
+                                                    <option value="ROLE_USER"
+                                                            th:selected="${user.getUserRole().name()=='ROLE_USER'}">
                                                         Користувач
                                                     </option>
-                                                    <option value="EDITOR"
-                                                            th:selected="${user.getUserRole().name()=='EDITOR'}">
+                                                    <option value="ROLE_EDITOR"
+                                                            th:selected="${user.getUserRole().name()=='ROLE_EDITOR'}">
                                                         Редактор
                                                     </option>
                                                 </select>
