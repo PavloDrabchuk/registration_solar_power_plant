@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -91,56 +95,56 @@ public class AdminController {
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         //if (authorizedUser.isPresent()) {
-            double limitUsers = 7;
+        double limitUsers = 7;
 
-            int pageInt = getPage(page, usersService
+        int pageInt = getPage(page, usersService
+                .getNumPagesList(usersService.getAllUsers(),
+                        limitUsers).size());
+
+        List<String> pageNumList = null;
+
+        if (searchUsername == null) {
+
+            model.addAttribute("users",
+                    usersService.getUsersForPage(
+                            (pageInt - 1) * (int) limitUsers,
+                            (int) limitUsers));
+
+            pageNumList = usersService
                     .getNumPagesList(usersService.getAllUsers(),
-                            limitUsers).size());
-
-            List<String> pageNumList = null;
-
-            if (searchUsername == null) {
-
-                model.addAttribute("users",
-                        usersService.getUsersForPage(
-                                (pageInt - 1) * (int) limitUsers,
-                                (int) limitUsers));
-
-                 pageNumList = usersService
-                        .getNumPagesList(usersService.getAllUsers(),
-                                limitUsers);
+                            limitUsers);
 
 //                model.addAttribute("numPages", pageNumList);
 //                model.addAttribute("currentPage", page);
 
-            } else {
-                List<User> users = usersService.getUsersByUsername(searchUsername);
-                if (users.size() > 0) {
+        } else {
+            List<User> users = usersService.getUsersByUsername(searchUsername);
+            if (users.size() > 0) {
 
-                    model.addAttribute("users",
-                            usersService.getUsersByUsernameForPage(
-                                    searchUsername,
-                                    (pageInt - 1) * (int) limitUsers,
-                                    (int) limitUsers));
+                model.addAttribute("users",
+                        usersService.getUsersByUsernameForPage(
+                                searchUsername,
+                                (pageInt - 1) * (int) limitUsers,
+                                (int) limitUsers));
 
-                     pageNumList = usersService.getNumPagesList(users, limitUsers);
+                pageNumList = usersService.getNumPagesList(users, limitUsers);
 
 //                    model.addAttribute("numPages", pageNumList);
 //                    model.addAttribute("currentPage", page);
-                    model.addAttribute("search", searchUsername);
-                } else {
-                    model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
-                }
+                model.addAttribute("search", searchUsername);
+            } else {
+                model.addAttribute("usersNotFoundMessage", "За Вашим запитом користувачів не знайдено.");
             }
-            model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", page);
+        }
+        model.addAttribute("numPages", pageNumList);
+        model.addAttribute("currentPage", page);
         //}
 
         return "dashboard/admin/users";
     }
 
     @GetMapping(path = "/admin/users/{id}")
-    public String getUserById(@PathVariable String id, Model model) {
+    public String getUserById(@PathVariable String id, Model model,RedirectAttributes redirectAttributes) {
 
         //addAdminAccessToModel(model);
 
@@ -162,8 +166,10 @@ public class AdminController {
                 model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
             }
             //model.addAttribute("countUnreadMessages", messageService.getCountUnreadMessagesByUser(user.get()));
-        } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
-
+        } else {
+            redirectAttributes.addFlashAttribute("userChangeError", "Помилка, спробуйте пізніше.");
+            return "redirect:/admin/users";
+        }
         return "dashboard/admin/user-by-id";
     }
 
@@ -202,10 +208,19 @@ public class AdminController {
         if (user.isPresent()) {
             System.out.println("---((((((((((((((((: role: " + role);
             //user.get().setUserRoles(UserRoles.model);
+            //user.get().setUserRole(UserRoles.valueOf(role));
 
-            // TODO: 05.08.2021 IllegalArgumentException 
-            user.get().setUserRole(UserRoles.valueOf(role));
-            System.out.println(" -- Role: "+UserRoles.valueOf(role).name());
+            try {
+                user.get().setUserRole(UserRoles.valueOf(role));
+
+                System.out.println(" -- Role: " + UserRoles.valueOf(role).name());
+
+                usersService.saveUser(user.get());
+                redirectAttributes.addFlashAttribute("updateUserMessage", "Роль користувача змінено.");
+            } catch (IllegalArgumentException ex) {
+                redirectAttributes.addFlashAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше.");
+
+            }
 
             /*switch (role) {
                 case "ROLE_USER": {
@@ -225,19 +240,18 @@ public class AdminController {
                     break;
                 }
             }*/
-            usersService.saveUser(user.get());
-            redirectAttributes.addFlashAttribute("updateUserMessage", "Роль користувача змінено.");
-        } else {
-            System.out.println("((((((((((((((((");
+//            usersService.saveUser(user.get());
+//            redirectAttributes.addFlashAttribute("updateUserMessage", "Роль користувача змінено.");
+        } /*else {
+            //System.out.println("((((((((((((((((");
             redirectAttributes.addFlashAttribute("errorSetRoleMessage", "Помилка запиту, спробуйте пізніше.");
-        }
+        }*/
 
         return "redirect:/admin/users/" + id;
     }
 
     @PostMapping(path = "/admin/users/{id}/locking")
     public String updateUserLocking(@PathVariable String id,
-                                    Model model,
                                     RedirectAttributes redirectAttributes) {
         Optional<User> user = usersService.getUserById(Long.valueOf(id));
         if (user.isPresent()) {
@@ -267,7 +281,6 @@ public class AdminController {
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
         } else model.addAttribute("userChangeError", "Помилка, спробуйте пізніше.");
-
 
         return "dashboard/admin/update-user-by-id";
     }

@@ -108,6 +108,10 @@
                  th:if="${errorLockingUserMessage}" th:utext="${errorLockingUserMessage}">
                 errorLockingUserMessage
             </div>
+            <div class="alert alert-danger m-2" role="alert"
+                 th:if="${userChangeError}" th:utext="${userChangeError}">
+                userChangeError
+            </div>
             <!--<div class="alert alert-warning alert-dismissible fade show mx-2" role="alert">
                 usersNotFoundMessage
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрити"></button>
