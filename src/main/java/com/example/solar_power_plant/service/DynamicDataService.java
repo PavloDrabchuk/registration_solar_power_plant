@@ -17,6 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -684,6 +685,33 @@ public class DynamicDataService {
 
     public Optional<DynamicData> getFirstDynamicDataBySolarPowerPlant(SolarPowerPlant solarPowerPlant){
         return dynamicDataRepository.findFirstBySolarPowerPlant(solarPowerPlant);
+    }
+
+    public void addTotalAndAveragePowerToModel(Model model, SolarPowerPlant solarPowerPlant){
+        Double totalPower = getTotalPowerBySolarPowerPlant(solarPowerPlant);
+        //if (totalPower != null) model.addAttribute("totalPower", String.format("%,.2f", totalPower));
+        //else model.addAttribute("totalPower", "Недостатньо даних.");
+
+        model.addAttribute("totalPower", totalPower != null ? String.format("%,.2f", totalPower) : "Недостатньо даних.");
+
+        Double totalPowerForLarThirtyDays = getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant);
+
+        model.addAttribute("totalPowerForLarThirtyDays", totalPowerForLarThirtyDays != null ? String.format("%,.2f", totalPowerForLarThirtyDays) : "Недостатньо даних.");
+
+
+        //model.addAttribute("totalPowerForLarThirtyDays",
+        //        String.format("%,.2f", dynamicDataService.getTotalPowerForLastThirtyDaysBySolarPowerPlant(solarPowerPlant.get())));
+        //model.addAttribute("averagePowerForDay", "Недостатньо даних.");
+
+        Double averagePowerForDay = getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant);
+        //model.addAttribute("averagePowerForDay",
+        //      String.format("%,.2f", dynamicDataService.getAveragePowerPerDayBySolarPowerPlant(solarPowerPlant.get())));
+
+        model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
+
+        System.out.println(" using time: " + solarPowerPlantService.getUsingTime(solarPowerPlant));
+
+        model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant));
     }
 }
 

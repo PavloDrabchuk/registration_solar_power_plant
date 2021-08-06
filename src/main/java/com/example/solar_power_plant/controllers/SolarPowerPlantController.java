@@ -197,7 +197,7 @@ public class SolarPowerPlantController {
 
             model.addAttribute("dynamicData", dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get()));
 
-            Double totalPower = dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get());
+            /*Double totalPower = dynamicDataService.getTotalPowerBySolarPowerPlant(solarPowerPlant.get());
             //if (totalPower != null) model.addAttribute("totalPower", String.format("%,.2f", totalPower));
             //else model.addAttribute("totalPower", "Недостатньо даних.");
 
@@ -220,7 +220,10 @@ public class SolarPowerPlantController {
 
             System.out.println(" using time: " + solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
 
-            model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));
+            model.addAttribute("usingTime", solarPowerPlantService.getUsingTime(solarPowerPlant.get()));*/
+
+            dynamicDataService.addTotalAndAveragePowerToModel(model, solarPowerPlant.get());
+
         } else {
             model.addAttribute("notFoundSolarPowerPlant", "Сонячну станцію не знайдено");
         }
@@ -234,19 +237,21 @@ public class SolarPowerPlantController {
     public String getSolarPowerPlantByIdForUpdate(@PathVariable("id") String id, Model model) {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
-        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        /*Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
             model.addAttribute("regions", Region.values());
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");*/
+        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model);
 
         return "dashboard/user/solar-power-plant/update-solar-power-plant-by-id";
     }

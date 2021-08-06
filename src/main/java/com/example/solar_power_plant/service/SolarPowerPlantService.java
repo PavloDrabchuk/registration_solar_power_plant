@@ -1,12 +1,16 @@
 package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.dao.SolarPowerPlantRepository;
+import com.example.solar_power_plant.model.Region;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -144,6 +148,16 @@ public class SolarPowerPlantService {
         System.out.println("result: " + result);
 
         return result;
+    }
+
+    public void addSolarPowerPlantInfoToModel(String id, Model model) {
+        Optional<SolarPowerPlant> solarPowerPlant = getSolarPowerPlantByStringId(id);
+
+        if (solarPowerPlant.isPresent()) {
+            model.addAttribute("solarPowerPlant", solarPowerPlant.get());
+            model.addAttribute("regions", Region.values());
+            model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
     }
 
 }
