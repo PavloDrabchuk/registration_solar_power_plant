@@ -27,8 +27,8 @@ public class UserController {
     private final MessageService messageService;
     //private final UserValidator userValidator;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //@Autowired
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //private final Optional<User> authorizedUser;
     private Optional<User> authorizedUser = Optional.empty();
@@ -41,14 +41,17 @@ public class UserController {
                           ConfirmationCodeService confirmationCodeService,
 
                           LocationService locationService,
-                          MessageService messageService) {
+                          MessageService messageService,
+                          BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
 
         this.confirmationCodeService = confirmationCodeService;
         //this.userValidator = userValidator;
         this.locationService = locationService;
-        this.messageService=messageService;
+        this.messageService = messageService;
+
+        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
 
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
@@ -64,7 +67,7 @@ public class UserController {
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
-        return (authorizedUser.isPresent()) ? "redirect:/home":"index";
+        return (authorizedUser.isPresent()) ? "redirect:/home" : "index";
 
         //return ("username".equals("anonymousUser")) ? "index" : "redirect:/home";
     }
@@ -83,7 +86,6 @@ public class UserController {
         /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);*/
-
 
 
         if (authorizedUser.isPresent() && authorizedUser.get().getLocked()) {
@@ -131,7 +133,7 @@ public class UserController {
         return usersService.getUserById(id).orElse(null);
     }*/
 
-    @GetMapping(path = "/registration/success")
+    /*@GetMapping(path = "/registration/success")
     public String redirectToNew() {
         return "redirect:/registration";
     }
@@ -183,14 +185,14 @@ public class UserController {
 
             return "success_user_registration";
         }
-    }
+    }*/
 
-    @GetMapping(path = "/confirm_registration")
+    /*@GetMapping(path = "/confirm_registration")
     public String confirmUserRegistration(Model model) {
 
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        *//*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);*/
+        Optional<User> user = usersService.getUserByUsername(username);*//*
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
@@ -207,9 +209,9 @@ public class UserController {
     @GetMapping(path = "/locked-account")
     public String gerLockedAccountView(Model model) {
 
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        *//*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);*/
+        Optional<User> user = usersService.getUserByUsername(username);*//*
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
@@ -229,10 +231,10 @@ public class UserController {
         User user = new User();
         model.addAttribute("user", user);
         return "add_user";
-    }
+    }*/
 
 
-    @GetMapping(path = "/confirm/{confirmationCode}")
+    /*@GetMapping(path = "/confirm/{confirmationCode}")
     public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
                                   //@PathVariable("username") String username,
                                   Model model) {
@@ -241,8 +243,8 @@ public class UserController {
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -267,9 +269,9 @@ public class UserController {
 
         String sendingCodeMessage;
 
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        *//*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);*/
+        Optional<User> user = usersService.getUserByUsername(username);*//*
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
@@ -288,7 +290,7 @@ public class UserController {
 
 
         return "confirm_registration";
-    }
+    }*/
 
     @GetMapping(path = "/profile")
     public String goToProfilePage(Model model) {
@@ -321,8 +323,6 @@ public class UserController {
                 System.out.println("admin access");
             }*/
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
-
-
 
         }
         return "profile";
@@ -382,13 +382,13 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/recover_password")
+    /*@GetMapping(path = "/recover-password")
     public String recoverPasswordRequest(Model model) {
 
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         PasswordRecoverInformation recoverInformation = new PasswordRecoverInformation();
 
@@ -405,8 +405,8 @@ public class UserController {
     @PostMapping(path = "/recoverPassword")
     public String sendResetPasswordMail(@Valid @ModelAttribute("recoverInformation") PasswordRecoverInformation recoverInformation, Model model) {
 
-
         Optional<User> user = usersService.getUserByUsername(recoverInformation.getUsername());
+
         if (user.isPresent() && user.get().getEmail().equals(recoverInformation.getEmail())) {
 
             confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.RecoverPassword);
@@ -423,10 +423,10 @@ public class UserController {
                                   Model model) {
         System.out.println("CCode: " + confirmationCode);
 
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -451,16 +451,21 @@ public class UserController {
                                  @RequestParam("passwordAgain") String passwordAgain,
                                  Model model) {
         Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
-        User user = confirmationCodeResult.get().getUser();
+
+        *//*if (confirmationCodeResult.isPresent()) {
+            User user = confirmationCodeResult.get().getUser();
+        }*//*
 
         System.out.println("Confirmation code: " + confirmationCode);
         System.out.println("password: " + password);
         System.out.println("passwordAgain: " + passwordAgain);
 
-        if (password.equals(passwordAgain)) {
+        if (password.equals(passwordAgain) && confirmationCodeResult.isPresent()) {
+            User user = confirmationCodeResult.get().getUser();
             user.setPassword(bCryptPasswordEncoder.encode(password));
             usersService.saveUser(user);
-            System.out.println("password are equals");
+
+            //System.out.println("password are equals");
             model.addAttribute("updatePasswordOK", "Пароль успішно змінено.");
         } else {
             model.addAttribute("updatePasswordERROR", "Паролі не співпадають.");
@@ -470,7 +475,7 @@ public class UserController {
 
 
         return "recover_password";
-    }
+    }*/
 
     /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

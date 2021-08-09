@@ -43,6 +43,11 @@
     </div>
 
     <div class="alert alert-danger m-2" role="alert"
+         th:if="${deletedSolarPowerPlantError}" th:utext="${deletedSolarPowerPlantError}">
+        deletedSolarPowerPlantError
+    </div>
+
+    <div class="alert alert-danger m-2" role="alert"
          th:if="${exportDataError}" th:utext="${exportDataError}">
         exportDataError
     </div>

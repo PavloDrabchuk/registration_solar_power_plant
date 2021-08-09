@@ -114,8 +114,8 @@ public class SolarPowerPlantController {
 
         locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
         solarPowerPlant.getLocation().setCountry("Україна");
-        solarPowerPlant.setRegistrationDateTime(
-                LocalDateTime.now(ZoneId.of("UTC")));
+        solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+
 //        solarPowerPlant.getStaticData().setStringInstallationDate();
         System.out.println("Installation date: " + solarPowerPlant.getStaticData().getInstallationDate());
         solarPowerPlantService.addSolarPowerPlant(solarPowerPlant, 0);
@@ -123,7 +123,7 @@ public class SolarPowerPlantController {
     }
 
     @PostMapping(path = "/solar-power-plant/delete/{id}")
-    public String deleteSolarPowerPlant(@PathVariable("id") String stringId, Model model, RedirectAttributes redirectAttributes) {
+    public String deleteSolarPowerPlant(@PathVariable("id") String stringId, RedirectAttributes redirectAttributes) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
             System.out.println("Is present!: " + solarPowerPlant.get().getId());
@@ -132,10 +132,13 @@ public class SolarPowerPlantController {
             redirectAttributes.addFlashAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");
 
             //return "solar_power_plant_info_by_id";
-            return "redirect:/home";
+//            return "redirect:/home";
         } else {
-            return "redirect:/home";
+            redirectAttributes.addFlashAttribute("deletedSolarPowerPlantError", "Сталась помилка, спробуйте пізніше!");
+
+//            return "redirect:/home";
         }
+        return "redirect:/home";
     }
 
     @GetMapping(path = "/solar-power-plant/delete/{id}")
@@ -148,7 +151,7 @@ public class SolarPowerPlantController {
     public String newSolarPowerPlant(Model model) {
         System.out.println("newSolarPowerPlant");
 
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -188,9 +191,9 @@ public class SolarPowerPlantController {
         if (solarPowerPlant.isPresent() && authorizedUser.isPresent() && solarPowerPlant.get().getUser() == authorizedUser.get()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant);
 
-            for (DataByPeriodAndSolarPowerPlant ff : dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
+            /*for (DataByPeriodAndSolarPowerPlant ff : dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
                 System.out.println(" - - - month: " + ff.getPeriod() + ",  value: " + ff.getTotal());
-            }
+            }*/
             /*for(Double ff:dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get()).values()) {
                 System.out.println(" - - - value: " + ff);
             }*/
@@ -273,6 +276,8 @@ public class SolarPowerPlantController {
                                             @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
+
+        // TODO: 09.08.2021 Optimise this method
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
@@ -364,11 +369,12 @@ public class SolarPowerPlantController {
     public String getData(@PathVariable String id,
                           @RequestParam(value = "startDate", defaultValue = "") String startDate,
                           @RequestParam(value = "finishDate", defaultValue = "") String finishDate,
-                          @RequestParam(value = "dataPeriod", defaultValue = "World") String dataPeriod,
+                          @RequestParam(value = "dataPeriod", defaultValue = "Отримати дані") String dataPeriod,
                           Model model) {
         System.out.println("dataPeriod: " + dataPeriod);
 
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+        // TODO: 09.08.2021 Optimise this method 
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -465,9 +471,9 @@ public class SolarPowerPlantController {
                              RedirectAttributes redirectAttributes) throws IOException, TransformerException, ParserConfigurationException, JSONException {
 
 
-        model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
+        //model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
 
-        model.addAttribute("fileFormat", fileFormat);
+        //model.addAttribute("fileFormat", fileFormat);
 
         //Path newFilePath = Paths.get("upload-dir/1.txt");
         //Files.createFile(newFilePath);
