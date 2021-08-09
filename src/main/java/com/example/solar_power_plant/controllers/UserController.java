@@ -97,7 +97,7 @@ public class UserController {
 
             System.out.println("status:" + authorizedUser.get().getActivated());
 
-            String userRole = authorizedUser.get().getUserRole().toString();
+            //String userRole = authorizedUser.get().getUserRole().toString();
 
             model.addAttribute("solarPowerPlantsByUser",
                     solarPowerPlantService.getSolarPowerPlantByUserForPage(
@@ -164,11 +164,13 @@ public class UserController {
 
             System.out.println("addUser");
 
-            user.setUserRole(UserRoles.ROLE_USER);
-            user.setActivated(false);
-            user.setLocked(false);
+            //user.setUserRole(UserRoles.ROLE_USER);
+            //user.setActivated(false);
+            //user.setLocked(false);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            user.setDateTimeOfCreation(LocalDateTime.now());
+
+            //user.setDateTimeOfCreation(LocalDateTime.now());
+
             System.out.println("activated: " + user.getActivated());
             usersService.saveUser(user);
             System.out.println("time: " + LocalDateTime.now());

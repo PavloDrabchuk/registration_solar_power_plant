@@ -48,12 +48,12 @@ public class SolarPowerPlantController {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
 
-        System.out.println("SolarPowerPlantController");
+        //System.out.println("SolarPowerPlantController");
 
         this.locationService = locationService;
         this.dynamicDataService = dynamicDataService;
         this.messageService = messageService;
-        System.out.println("userServise: " + this.usersService);
+        //System.out.println("userServise: " + this.usersService);
 
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }

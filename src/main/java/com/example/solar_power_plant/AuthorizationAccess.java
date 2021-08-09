@@ -20,27 +20,28 @@ public class AuthorizationAccess {
 
     public static Optional<User> getAuthorisedUser(UsersService usersService) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("auth:"+auth);
+
+        //System.out.println("auth:"+auth);
         String username = auth.getName(); //get logged in username
-        System.out.println(".... username: "+auth.getName());
+        //System.out.println(".... username: "+auth.getName());
 
         //System.out.println("-- userService: "+usersService);
-        System.out.println(" --- userService: "+usersService.getClass());
+        //System.out.println(" --- userService: "+usersService.getClass());
 
         //String username="qwerty";
 
         //Optional<User> user=usersService.getUserByUsername(username);
         List<User> users=usersService.getAllUsers();
 
-        for(User u:users){
+        /*for(User u:users){
             System.out.println("uu: "+u.getUsername());
-        }
+        }*/
         /*if(user.isPresent()){
             System.out.println("us: "+user.get().getUsername());
         }
         else System.out.println("no no no :)");*/
 
-        System.out.println(" yyy: "+usersService.getUserByUsername(username));
+        //System.out.println(" yyy: "+usersService.getUserByUsername(username));
         return usersService.getUserByUsername(username);
     }
 

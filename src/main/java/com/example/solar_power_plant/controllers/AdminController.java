@@ -329,9 +329,10 @@ public class AdminController {
 
         //user.setUserRole(UserRoles.valueOf(user.getUserRole().));
         user.setActivated(true);
-        user.setLocked(false);
+        //user.setLocked(false);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setDateTimeOfCreation(LocalDateTime.now());
+
+        //user.setDateTimeOfCreation(LocalDateTime.now());
         //System.out.println("activated: " + user.getActivated());
         usersService.saveUser(user);
 
@@ -516,6 +517,12 @@ public class AdminController {
         System.out.println("  - spp info: " + installationDate + " s_id: " + solarPowerPlant.getStaticData().getPower());
 
         Optional<SolarPowerPlant> updatedSolarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
+
+        //updatedSolarPowerPlant= Optional.of(solarPowerPlant);
+        //solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
+
+        //System.out.println(",, S: "+updatedSolarPowerPlant.get().get);
+
         if (updatedSolarPowerPlant.isPresent()) {
             updatedSolarPowerPlant.get().setName(solarPowerPlant.getName());
 

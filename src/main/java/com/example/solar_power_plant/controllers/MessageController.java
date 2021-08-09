@@ -37,14 +37,15 @@ public class MessageController {
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
-        Optional<User> user = getAuthorisedUser();
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if(user.isPresent() && (user.get().getLocked() || !user.get().getActivated())){
+        if(authorizedUser.isPresent() && (authorizedUser.get().getLocked() || !authorizedUser.get().getActivated())){
             return "redirect:/home";
         }
 
 
-        if (user.isPresent()) {
+        if (authorizedUser.isPresent()) {
             double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
 
@@ -67,7 +68,7 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
 
-            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages, 1);
+            List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 1);
             int pageInt = getPage(page, pageNumList.size());
             /*try {
                  pageInt = Integer.parseInt(page);
@@ -78,7 +79,7 @@ public class MessageController {
 
             model.addAttribute("messages",
                     messageService.getMessagesByRecipientForPage(
-                            user.get().getId(),
+                            authorizedUser.get().getId(),
                             (pageInt - 1) * (int) limitMessages,
                             (int) limitMessages));
 
@@ -109,8 +110,10 @@ public class MessageController {
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
-        Optional<User> user = getAuthorisedUser();
-        if (user.isPresent()) {
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (authorizedUser.isPresent()) {
             double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
 
@@ -133,13 +136,13 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
-            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages, 2);
+            List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 2);
 
             int pageInt = getPage(page, pageNumList.size());
 
             model.addAttribute("sentMessages",
                     messageService.getMessagesBySenderForPage(
-                            user.get().getId(),
+                            authorizedUser.get().getId(),
                             (pageInt - 1) * (int) limitMessages,
                             (int) limitMessages));
 
@@ -170,7 +173,7 @@ public class MessageController {
 
         Optional<Message> message = messageService.getMessageById(id);
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
 
         /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
@@ -197,12 +200,13 @@ public class MessageController {
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
         model.addAttribute("message", new Message());
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if (getAuthorisedUser().isPresent() && getAuthorisedUser().get().getUserRole() == UserRoles.ROLE_EDITOR) {
+        if (authorizedUser.isPresent() && authorizedUser.get().getUserRole() == UserRoles.ROLE_EDITOR) {
             model.addAttribute("editorAccess", "editor");
         }
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
 
         /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
@@ -220,7 +224,9 @@ public class MessageController {
         model.addAttribute("users", usersService.getAllUsers());
         System.out.println("user list");
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
 
         /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
@@ -235,7 +241,10 @@ public class MessageController {
                              RedirectAttributes redirectAttributes,
                              @RequestParam(name = "type", required = false) String type,
                              @RequestParam(name = "username", required = false) String username) {
-        Optional<User> user = getAuthorisedUser();
+
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
         //Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
         /*String title = message.getTitle(),
@@ -250,7 +259,7 @@ public class MessageController {
 
         Message message1;
 
-        if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_EDITOR) {
+        if (authorizedUser.isPresent() && authorizedUser.get().getUserRole() == UserRoles.ROLE_EDITOR) {
 
 //            String title = message.getTitle(),
 //                    text = message.getText();
@@ -264,7 +273,7 @@ public class MessageController {
                 message1.setTitle(title);
                 message1.setText(text);
 
-                user.ifPresent(message1::setSender);
+                authorizedUser.ifPresent(message1::setSender);
 
                 Optional<User> recipient = usersService.getUserByUsername(username);
                 if (recipient.isPresent()) {
@@ -287,7 +296,7 @@ public class MessageController {
                     message1.setTitle(title);
                     message1.setText(text);
 
-                    user.ifPresent(message1::setSender);
+                    authorizedUser.ifPresent(message1::setSender);
                     message1.setRecipient(user1);
                     message1.setRead(false);
 
@@ -308,7 +317,7 @@ public class MessageController {
                         message1.setTitle(title);
                         message1.setText(text);
 
-                        user.ifPresent(message1::setSender);
+                        authorizedUser.ifPresent(message1::setSender);
                         message1.setRecipient(editor);
                         message1.setRead(false);
 
@@ -326,7 +335,7 @@ public class MessageController {
                         message1.setTitle(title);
                         message1.setText(text);
 
-                        user.ifPresent(message1::setSender);
+                        authorizedUser.ifPresent(message1::setSender);
                         message1.setRecipient(admin);
                         message1.setRead(false);
 
@@ -352,7 +361,7 @@ public class MessageController {
                             "Вибачте за незручності.");
 
                     editor.ifPresent(errorMessage::setSender);
-                    user.ifPresent(errorMessage::setRecipient);
+                    authorizedUser.ifPresent(errorMessage::setRecipient);
                     errorMessage.setRead(false);
 
                     errorMessage.setMessageType(MessageType.ERROR);
@@ -384,16 +393,18 @@ public class MessageController {
     public String answerMessage(RedirectAttributes redirectAttributes,
                                 @RequestParam(name = "id") String id,
                                 @RequestParam(name = "text") String text) {
-        Optional<User> user = getAuthorisedUser();
+
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         Optional<Message> message = messageService.getMessageById(UUID.fromString(id));
-        if (user.isPresent() && message.isPresent()) {
+        if (authorizedUser.isPresent() && message.isPresent()) {
             Message answer = new Message();
 
             answer.setTitle(message.get().getTitle());
             answer.setText(text.trim());
 
-            answer.setSender(user.get());
+            answer.setSender(authorizedUser.get());
             answer.setRecipient(message.get().getSender());
 
             answer.setRead(false);
@@ -458,11 +469,11 @@ public class MessageController {
         return "gt";
     }
 
-    Optional<User> getAuthorisedUser() {
+    /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
-    }
+    }*/
 
     private int getPage(String page, int maxPage) {
         int pageInt;
