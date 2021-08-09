@@ -506,7 +506,7 @@ public class SolarPowerPlantController {
         }
         System.out.println("****-*-*-*---------------");*/
 
-        switch (fileFormat) {
+        switch (fileFormat.toLowerCase()) {
             case "csv": {
                 filename += ".csv";
                 dynamicDataService.createDataCSV(filename, data);
@@ -564,12 +564,9 @@ public class SolarPowerPlantController {
     }
 
     @GetMapping(path = "/view/{id}/data/export")
-    public String getExportData(HttpServletRequest request,
-                                HttpServletResponse response,
-                                @PathVariable String id,
-                                Model model) {
+    public String getExportData(@PathVariable String id) {
 
-        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
@@ -592,7 +589,8 @@ public class SolarPowerPlantController {
             }
         }*/
         System.out.println("ty=ty=ty=ty=ty");
-        return "redirect:/home";
+        //return "redirect:/home";
+        return "redirect:/view/" + id;
     }
 
     /*public String convertToCSV(String[] data) {
@@ -647,7 +645,7 @@ public class SolarPowerPlantController {
         }
     }*/
 
-    private int getPage(String page, int maxPage) {
+    /*private int getPage(String page, int maxPage) {
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
@@ -659,7 +657,7 @@ public class SolarPowerPlantController {
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
-    }
+    }*/
 
     /*@ModelAttribute("countUnreadMessages")
     public long getCountUnreadMessages(){

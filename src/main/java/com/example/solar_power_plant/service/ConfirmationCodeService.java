@@ -6,6 +6,7 @@ import com.example.solar_power_plant.model.TypesConfirmationCode;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,11 @@ import java.util.UUID;
 
 @Service
 public class ConfirmationCodeService {
+
+    // TODO: 09.08.2021 Add this value to application.properties.
+    //private final int CODE_DEACTIVATION_CODE = 5 * 1000; // 5 секунд
+    private final int CODE_DEACTIVATION_CODE = 1000 * 60 * 30; // 30 хвилин
+
     private final ConfirmationCodeRepository confirmationCodeRepository;
     private final UsersService usersService;
 
@@ -56,16 +62,23 @@ public class ConfirmationCodeService {
     }
 
     @Async
+    @Scheduled(fixedRate = CODE_DEACTIVATION_CODE /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
     public void deactivateOverdueCodes(){
 
-        List<ConfirmationCode> confirmationCodeList=confirmationCodeRepository.findByDateTimeOfCreationBefore(LocalDateTime.now().plusHours(1));
-        System.out.println("local date time + 1 hour: "+LocalDateTime.now().plusMinutes(20));
-        /*for(int i=0;i<100;i++) {
+        List<ConfirmationCode> confirmationCodeList=confirmationCodeRepository.findAllByDateTimeOfCreationBeforeAndValidIs(LocalDateTime.now().minusHours(1),true);
+        System.out.println("local date time - 1 hour: "+LocalDateTime.now().minusHours(1));
+
+        /*for(int i=0;i<10;i++) {
             System.out.println("deactivate");
         }*/
+
         for(ConfirmationCode confirmationCode:confirmationCodeList){
             System.out.println("code: "+confirmationCode.getConfirmationCode());
+            confirmationCode.setValid(false);
+            confirmationCodeRepository.save(confirmationCode);
         }
+        //confirmationCodeRepository.deactivateConfirmationCodes(false,LocalDateTime.now().minusHours(1));
+        //confirmationCodeRepository.deactivateConfirmationCodes(false,LocalDateTime.now());
     }
 
 
