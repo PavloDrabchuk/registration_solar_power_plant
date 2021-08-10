@@ -22,7 +22,7 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public void save(Message message){
+    public void save(Message message) {
         messageRepository.save(message);
     }
 
@@ -30,19 +30,19 @@ public class MessageService {
         return (List<Message>) messageRepository.findAll();
     }
 
-    public Optional<Message> getMessageById(UUID id){
+    public Optional<Message> getMessageById(UUID id) {
         return messageRepository.findById(id);
     }
 
-    public List<Message> getAllMessageByRecipient(User recipient){
+    public List<Message> getAllMessageByRecipient(User recipient) {
         return messageRepository.findAllByRecipientOrderByDateTimeDesc(recipient);
     }
 
-    public List<Message> getAllMessageBySender(User sender){
+    public List<Message> getAllMessageBySender(User sender) {
         return messageRepository.findAllBySenderOrderByDateTimeDesc(sender);
     }
 
-    public List<Message> getAllMessageByMessageType(MessageType messageType){
+    public List<Message> getAllMessageByMessageType(MessageType messageType) {
         return messageRepository.findAllByMessageTypeOrderByDateTimeDesc(messageType);
     }
 
@@ -55,21 +55,22 @@ public class MessageService {
     }
 
     /**
-     *
      * @param user
      * @param limit
-     * @param type // 1 - recipient, 2 - sender
+     * @param type  // 1 - recipient, 2 - sender
      * @return
      */
     public List<String> getNumPagesList(User user, double limit, int type) {
         //double limitTracksId = 2;
 
         //List<String> listTrackId = tracksRepository.getListTrackId();
-        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
+        /*List<String> listTrackId = tracksRepository.getListTrackIdForPage(
+                (Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);*/
+
         List<String> pageNumList = new ArrayList<>();
 
         List<Message> messages;
-        messages = (type==1)
+        messages = (type == 1)
                 ? getAllMessageByRecipient(user)
                 : getAllMessageBySender(user);
 
@@ -80,7 +81,7 @@ public class MessageService {
         return pageNumList;
     }
 
-    public void deleteMessage(Message message){
+    public void deleteMessage(Message message) {
         messageRepository.delete(message);
     }
 
@@ -92,7 +93,7 @@ public class MessageService {
         return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset, limit);
     }*/
 
-    public long getCountUnreadMessagesByUser(User user){
-        return messageRepository.countByIsReadAndRecipient(false,user);
+    public long getCountUnreadMessagesByUser(User user) {
+        return messageRepository.countByIsReadAndRecipient(false, user);
     }
 }

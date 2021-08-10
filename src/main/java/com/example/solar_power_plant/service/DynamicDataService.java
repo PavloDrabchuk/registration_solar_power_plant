@@ -53,11 +53,13 @@ import java.util.stream.Stream;
 @PropertySource("classpath:system.properties")
 public class DynamicDataService {
 
-    private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
+    @Value("${DATA_COLLECTION_TIME}")
+    private int DATA_COLLECTION_TIME; // 5 секунд
+    //private final int DATA_COLLECTION_TIME = 5 * 1000; // 5 секунд
     //private final int DATA_COLLECTION_TIME = 1000 * 60 * 30; // 30 хвилин
 
     @Value("${OPEN_WEATHER_MAP_API_KEY}")
-    String API_KEY;
+    private String API_KEY;
 
 
     private final DynamicDataRepository dynamicDataRepository;
@@ -89,7 +91,7 @@ public class DynamicDataService {
     }
 
     @Async
-    @Scheduled(fixedRate = DATA_COLLECTION_TIME /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
+    @Scheduled(fixedRateString = "${DATA_COLLECTION_TIME}" /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
     public void collectDynamicData() throws IOException {
         System.out.println("\n\n save dynamic data: ");
         //dynamicDataRepository.save(dynamicData);
@@ -448,6 +450,8 @@ public class DynamicDataService {
         /*year = date.getYear();
         month = date.getMonthValue();
         day = date.getDayOfMonth();*/
+
+        // TODO: 10.08.2021 Duplicate. 
 
         day -= calendar.get(Calendar.DAY_OF_MONTH);
         if (day < 0) month--;
