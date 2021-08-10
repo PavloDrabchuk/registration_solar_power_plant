@@ -115,7 +115,7 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.countAllByUser(user);
     }
 
-    public String getUsingTime(SolarPowerPlant solarPowerPlant) {
+    public String getUsageTime(SolarPowerPlant solarPowerPlant) {
 
         LocalDate date = LocalDate.now();
         int year, month, day;
