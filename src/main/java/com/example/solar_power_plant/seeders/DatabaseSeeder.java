@@ -1,5 +1,9 @@
 package com.example.solar_power_plant.seeders;
 
+import com.example.solar_power_plant.enums.MessageType;
+import com.example.solar_power_plant.enums.Region;
+import com.example.solar_power_plant.enums.UserRoles;
+import com.example.solar_power_plant.enums.Weather;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
 import com.example.solar_power_plant.service.MessageService;

@@ -1,13 +1,15 @@
 package com.example.solar_power_plant.service;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.dao.SolarPowerPlantRepository;
-import com.example.solar_power_plant.model.Region;
+import com.example.solar_power_plant.enums.Region;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,6 +24,12 @@ public class SolarPowerPlantService {
         this.solarPowerPlantRepository = solarPowerPlantRepository;
     }
 
+
+    /**
+     *
+     * @param solarPowerPlant
+     * @param action // 0 - create, 1 - update
+     */
     public void addSolarPowerPlant(SolarPowerPlant solarPowerPlant, int action) {
         /*
         actions:
@@ -115,9 +123,9 @@ public class SolarPowerPlantService {
         return solarPowerPlantRepository.countAllByUser(user);
     }
 
-    public String getUsageTime(SolarPowerPlant solarPowerPlant) {
+    public String getStringOfUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
 
-        LocalDate date = LocalDate.now();
+        /*LocalDate date = LocalDate.now();
         int year, month, day;
         String result = "";
 
@@ -136,12 +144,14 @@ public class SolarPowerPlantService {
         if (month < 0) year--;
         year -= calendar.get(Calendar.YEAR);
 
-        System.out.println("--- year: " + year + " month: " + month + " day: " + day);
+        System.out.println("--- year: " + year + " month: " + month + " day: " + day);*/
 
+        ArrayList<Integer> usageTime= AuthorizationAccess.getUsageTime(solarPowerPlant);
+        String result = "";
 
-        if (year != 0) result += Math.abs(year) + " р. ";
-        if (month != 0) result += Math.abs(month) + " міс. ";
-        if (day != 0) result += Math.abs(day) + " д.";
+        if (usageTime.get(0) != 0) result += Math.abs(usageTime.get(0)) + " р. ";
+        if (usageTime.get(1) != 0) result += Math.abs(usageTime.get(1)) + " міс. ";
+        if (usageTime.get(2) != 0) result += Math.abs(usageTime.get(2)) + " д.";
 
         if (result.equals("")) result += "1 д.";
 

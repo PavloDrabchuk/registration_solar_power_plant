@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.model;
 
+import com.example.solar_power_plant.enums.MessageType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;

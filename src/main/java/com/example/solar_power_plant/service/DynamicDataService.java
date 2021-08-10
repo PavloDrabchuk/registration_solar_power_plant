@@ -1,7 +1,9 @@
 package com.example.solar_power_plant.service;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.dao.DynamicDataRepository;
+import com.example.solar_power_plant.enums.Weather;
 import com.example.solar_power_plant.model.*;
 import com.example.weather.OpenWeather;
 import com.google.gson.Gson;
@@ -41,7 +43,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -162,7 +163,7 @@ public class DynamicDataService {
                             coefficient,
                             solarPowerPlant.getStaticData().getPower(),
                             solarPowerPlant.getStaticData().getQuantity(),
-                            getUsageTime(solarPowerPlant));
+                            getYearOfUsageTime(solarPowerPlant));
 
                     dynamicDataRepository.save(new DynamicData(
                             solarPowerPlant,
@@ -235,7 +236,7 @@ public class DynamicDataService {
                     coefficient,
                     solarPowerPlant.getStaticData().getPower(),
                     solarPowerPlant.getStaticData().getQuantity(),
-                    getUsageTime(solarPowerPlant));
+                    getYearOfUsageTime(solarPowerPlant));
 
             generatedData.add(new DynamicData(
                     solarPowerPlant,
@@ -347,7 +348,7 @@ public class DynamicDataService {
 
         Gson gson = new Gson();
         //        String fileContent=Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"));
-        String fileContent = getFileContent("http://api.openweathermap.org/data/2.5/weather?lat="
+        String fileContent = AuthorizationAccess.getFileContent("http://api.openweathermap.org/data/2.5/weather?lat="
                 + lat + "&lon=" + lon + "&appid=" + API_KEY);
 
         //Product product = gson.fromJson(fileContent, Product.class);
@@ -437,8 +438,8 @@ public class DynamicDataService {
 
 
 
-    private int getUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
-        Calendar calendar = new GregorianCalendar();
+    private int getYearOfUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
+        /*Calendar calendar = new GregorianCalendar();
         calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
 
         LocalDate date = LocalDate.now();
@@ -447,11 +448,11 @@ public class DynamicDataService {
                 month = date.getMonthValue(),
                 day = date.getDayOfMonth();
 
-        /*year = date.getYear();
+        *//*year = date.getYear();
         month = date.getMonthValue();
-        day = date.getDayOfMonth();*/
+        day = date.getDayOfMonth();*//*
 
-        // TODO: 10.08.2021 Duplicate. 
+
 
         day -= calendar.get(Calendar.DAY_OF_MONTH);
         if (day < 0) month--;
@@ -459,7 +460,8 @@ public class DynamicDataService {
         if (month < 0) year--;
         year -= calendar.get(Calendar.YEAR);
 
-        return year;
+        return year;*/
+        return AuthorizationAccess.getUsageTime(solarPowerPlant).get(0);
     }
 
     public String downloadData(HttpServletRequest request,
@@ -645,8 +647,8 @@ public class DynamicDataService {
     }
 
 
-    public String getFileContent(String filePath) throws IOException {
-        // TODO: 10.08.2021 Duplicate
+    /*public String getFileContent(String filePath) throws IOException {
+
 
         ApplicationContext appContext =
                 new ClassPathXmlApplicationContext(new String[]{});
@@ -670,7 +672,7 @@ public class DynamicDataService {
             }
         }
         return sb.toString();
-    }
+    }*/
 
     /*private static List<String> readWeatherDescriptionsFromCSV(String fileName) {
         List<String> books = new ArrayList<>();
@@ -732,9 +734,9 @@ public class DynamicDataService {
 
         model.addAttribute("averagePowerForDay", averagePowerForDay != null ? String.format("%,.2f", averagePowerForDay) : "Недостатньо даних.");
 
-        System.out.println(" using time: " + solarPowerPlantService.getUsageTime(solarPowerPlant));
+        System.out.println(" using time: " + solarPowerPlantService.getStringOfUsageTime(solarPowerPlant));
 
-        model.addAttribute("usingTime", solarPowerPlantService.getUsageTime(solarPowerPlant));
+        model.addAttribute("usingTime", solarPowerPlantService.getStringOfUsageTime(solarPowerPlant));
     }
 }
 

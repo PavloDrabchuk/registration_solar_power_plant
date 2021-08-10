@@ -2,7 +2,7 @@ package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.dao.MessageRepository;
 import com.example.solar_power_plant.model.Message;
-import com.example.solar_power_plant.model.MessageType;
+import com.example.solar_power_plant.enums.MessageType;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

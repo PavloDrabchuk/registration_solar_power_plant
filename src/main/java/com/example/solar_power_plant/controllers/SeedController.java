@@ -1,7 +1,7 @@
 package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.model.Product;
-import com.example.solar_power_plant.model.Weather;
+import com.example.solar_power_plant.enums.Weather;
 import com.example.solar_power_plant.service.UsersService;
 import com.example.weather.OpenWeather;
 import com.google.gson.Gson;
@@ -12,7 +12,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

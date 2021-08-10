@@ -1,4 +1,4 @@
-package com.example.solar_power_plant.model;
+package com.example.solar_power_plant.enums;
 
 
 public enum UserRoles {

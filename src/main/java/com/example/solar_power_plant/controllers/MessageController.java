@@ -1,12 +1,12 @@
 package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.AuthorizationAccess;
+import com.example.solar_power_plant.enums.MessageType;
+import com.example.solar_power_plant.enums.UserRoles;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

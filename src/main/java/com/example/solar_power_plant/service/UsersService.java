@@ -1,7 +1,7 @@
 package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.dao.UsersRepository;
-import com.example.solar_power_plant.model.TypesConfirmationCode;
+import com.example.solar_power_plant.enums.TypesConfirmationCode;
 import com.example.solar_power_plant.model.User;
 
 
@@ -10,10 +10,9 @@ import com.example.solar_power_plant.model.User;
 //import org.json.simple.JSONObject;
 //import org.json.simple.parser.JSONParser;
 //import org.json.simple.parser.ParseException;
-import com.example.solar_power_plant.model.UserRoles;
+import com.example.solar_power_plant.enums.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,8 +26,8 @@ public class UsersService {
 
     private final EmailSenderService emailSenderService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    /*@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
     @Autowired
     public UsersService(UsersRepository usersRepository,
@@ -38,7 +37,6 @@ public class UsersService {
     }
 
     public Optional<User> getUserById(Long id) {
-
         return usersRepository.findUserById(id);
     }
 
@@ -95,7 +93,7 @@ public class UsersService {
 
     public List<String> getNumPagesList(List<User> users, double limit) {
         //double limitTracksId = 2;
-
+// TODO: 10.08.2021 Duplicate. 
         //List<String> listTrackId = tracksRepository.getListTrackId();
         //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
         List<String> pageNumList = new ArrayList<>();
@@ -121,6 +119,7 @@ public class UsersService {
         SimpleMailMessage confirmationMessage = new SimpleMailMessage();
         confirmationMessage.setTo(email);
 
+        // TODO: 10.08.2021 Text mail.
 
         if (typeConfirmationCode.name().equals("ConfirmRegistration")) {
             confirmationMessage.setSubject("Confirmation mail");

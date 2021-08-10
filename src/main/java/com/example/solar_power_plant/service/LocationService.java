@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.service;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.model.Location;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -21,8 +22,8 @@ public class LocationService {
     @Value("${MAP_QUEST_API_KEY}")
     private String MAP_QUEST_API_KEY;
 
-    public String getFileContent(String filePath) throws IOException {
-        // TODO: 10.08.2021 Duplicate. 
+    /*public String getFileContent(String filePath) throws IOException {
+
         ApplicationContext appContext =
                 new ClassPathXmlApplicationContext(new String[]{});
 
@@ -45,7 +46,7 @@ public class LocationService {
             }
         }
         return sb.toString();
-    }
+    }*/
 
     public Location createLonLatCoordinates(Location location) throws IOException {
         //final String KEY = "g1CgD1eTytaXG7ubOigQK4bB9QyVSr92";
@@ -61,7 +62,7 @@ public class LocationService {
         String filePath = filePathFirstPart + filePathSecondPart;
 
         //System.out.println(" --> filePath: " + filePath);
-        String geocodingData = getFileContent(filePath);
+        String geocodingData = AuthorizationAccess.getFileContent(filePath);
         //System.out.println("geocodingData: " + geocodingData);
 
         Pattern pattern = Pattern

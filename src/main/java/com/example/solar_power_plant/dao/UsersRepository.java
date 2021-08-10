@@ -1,7 +1,7 @@
 package com.example.solar_power_plant.dao;
 
 import com.example.solar_power_plant.model.User;
-import com.example.solar_power_plant.model.UserRoles;
+import com.example.solar_power_plant.enums.UserRoles;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

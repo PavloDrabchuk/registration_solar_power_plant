@@ -1,5 +1,7 @@
 package com.example.solar_power_plant.model;
 
+import com.example.solar_power_plant.enums.Region;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

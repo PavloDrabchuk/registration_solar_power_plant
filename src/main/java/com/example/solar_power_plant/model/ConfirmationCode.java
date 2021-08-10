@@ -1,5 +1,7 @@
 package com.example.solar_power_plant.model;
 
+import com.example.solar_power_plant.enums.TypesConfirmationCode;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

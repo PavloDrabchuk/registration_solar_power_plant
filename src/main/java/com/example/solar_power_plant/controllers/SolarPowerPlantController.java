@@ -2,6 +2,7 @@ package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
+import com.example.solar_power_plant.enums.Region;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.Console;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;

@@ -3,7 +3,7 @@ package com.example.solar_power_plant.controllers;
 import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.model.ConfirmationCode;
 import com.example.solar_power_plant.model.PasswordRecoverInformation;
-import com.example.solar_power_plant.model.TypesConfirmationCode;
+import com.example.solar_power_plant.enums.TypesConfirmationCode;
 import com.example.solar_power_plant.model.User;
 import com.example.solar_power_plant.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
