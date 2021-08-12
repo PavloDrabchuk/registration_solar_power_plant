@@ -109,7 +109,10 @@ public class UserController {
 
             model.addAttribute("name", authorizedUser.get().getUsername());
 
-            List<String> pageNumList = solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant);
+            //List<String> pageNumList = solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant);
+
+            //int pageNumList = (int) Math.ceil(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()).size() / limitSolarPowerPlant);
+            int pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()),limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", Integer.parseInt(page));

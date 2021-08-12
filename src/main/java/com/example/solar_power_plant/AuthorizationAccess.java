@@ -118,4 +118,16 @@ public class AuthorizationAccess {
         return sb.toString();
     }
 
+    public static int getNumPagesList(List arrayList, double limit) {
+        //double limitTracksId = 2;
+
+        //List<String> listTrackId = tracksRepository.getListTrackId();
+        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
+        /*List<String> pageNumList = new ArrayList<>();
+        for (int i = 1; i <= ((int) Math.ceil(getSolarPowerPlantsByUser(user).size() / limit)); i++) {
+            pageNumList.add(Integer.toString(i));
+        }*/
+        return (int) Math.ceil(arrayList.size() / limit);
+    }
+
 }
