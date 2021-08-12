@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.controllers;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.model.Product;
 import com.example.solar_power_plant.enums.Weather;
 import com.example.solar_power_plant.service.UsersService;
@@ -57,14 +58,14 @@ return "jj";
 
         Gson gson = new Gson();
 //        String d=Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"));
-        String d = getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY);
+        String d = AuthorizationAccess.getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY);
         Product product = gson.fromJson(d, Product.class);
         OpenWeather openWeather = gson.fromJson(d, OpenWeather.class);
 //        String d=getFileContent("/upload-dir/product.json");
         //File myFile = new File("product.json");
 //"D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"
         //System.out.println(".-.-.-.-.-.-: data: "+new FileReader("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json"));
-        System.out.println(".-.-.-.-.-.-: data: " + getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY));
+        System.out.println(".-.-.-.-.-.-: data: " + AuthorizationAccess.getFileContent("http://api.openweathermap.org/data/2.5/weather?lat=48.924569&lon=24.723712&appid=" + API_KEY));
 //        System.out.println(".-.-.-.-.-.-: data: "+ Files.readString(Path.of("D:\\My\\Наука\\ПНУ\\Бакалаврська робота\\Test1\\upload-dir\\product.json")));
 
         System.out.println("\n product: " + openWeather.getName() + " desc: " + openWeather.getWeather().get(0).getMain());
@@ -160,7 +161,7 @@ return "jj";
         return "Ok";
     }*/
 
-    public String getFileContent(String filePath) throws IOException {
+    /*public String getFileContent(String filePath) throws IOException {
         ApplicationContext appContext =
                 new ClassPathXmlApplicationContext(new String[]{});
 
@@ -183,5 +184,5 @@ return "jj";
             }
         }
         return sb.toString();
-    }
+    }*/
 }

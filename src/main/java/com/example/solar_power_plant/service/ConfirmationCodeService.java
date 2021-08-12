@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:project.properties")
 public class ConfirmationCodeService {
 
     //private final int CODE_DEACTIVATION_CODE = 5 * 1000; // 5 секунд

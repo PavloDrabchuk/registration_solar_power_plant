@@ -22,6 +22,10 @@ import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -113,6 +117,15 @@ public class SolarPowerPlantController {
         System.out.println("Region: " + solarPowerPlant.getLocation().getRegion().getName());
 
         locationService.createLonLatCoordinates(solarPowerPlant.getLocation());
+
+        if (solarPowerPlant.getLocation().getLatitude() == -1) {
+            Path filePath = Paths.get("system-information-files/error-location.txt");
+
+            String message = solarPowerPlant.getLocation().getStringLocation() + "\n";
+
+            Files.writeString(filePath, message, StandardOpenOption.APPEND);
+        }
+
         solarPowerPlant.getLocation().setCountry("Україна");
         solarPowerPlant.setRegistrationDateTime(LocalDateTime.now(ZoneId.of("UTC")));
 

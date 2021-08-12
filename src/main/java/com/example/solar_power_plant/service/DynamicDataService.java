@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@PropertySource("classpath:system.properties")
+@PropertySource("classpath:project.properties")
 public class DynamicDataService {
 
     @Value("${DATA_COLLECTION_TIME}")

@@ -258,7 +258,8 @@
                     <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
                     <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
                            id="page4">-->
-                    <input th:each="page : ${numPages}" th:value="${page}"
+<!--                    <input th:each="page : ${numPages}" th:value="${page}"-->
+                    <input th:each="page : ${#numbers.sequence(1,10)}" th:value="${page}"
                            th:name="page" th:id="${'page'+page}"
 
                            th:class="${page==currentPage}

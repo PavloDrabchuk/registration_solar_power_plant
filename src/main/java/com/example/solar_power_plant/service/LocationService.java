@@ -75,7 +75,8 @@ public class LocationService {
             location.setLongitude(Double.parseDouble(matcher.group(2)));
             location.setLatitude(Double.parseDouble(matcher.group(1)));
         } else {
-            // TODO: 10.08.2021 Make not found message. 
+            location.setLongitude(-1D);
+            location.setLatitude(-1D);
             System.out.println("Not found: " + pattern.toString());
         }
         //return (matcher.find()) ? matcher.group(idGroup) : "-1";
