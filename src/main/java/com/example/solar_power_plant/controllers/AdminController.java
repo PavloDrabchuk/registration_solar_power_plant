@@ -105,6 +105,8 @@ public class AdminController {
                             (pageInt - 1) * (int) limitUsers,
                             (int) limitUsers));
 
+            // TODO: 14.08.2021 Duplicate pageNumList. 
+            
             pageNumList = usersService
                     .getNumPagesList(usersService.getAllUsers(),
                             limitUsers);
@@ -123,6 +125,7 @@ public class AdminController {
                                 (int) limitUsers));
 
                 pageNumList = usersService.getNumPagesList(users, limitUsers);
+                
 
 //                    model.addAttribute("numPages", pageNumList);
 //                    model.addAttribute("currentPage", page);
@@ -504,14 +507,17 @@ public class AdminController {
                                             @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
 
         // TODO: 06.08.2021 Optimise this method
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username */
 
         System.out.println("spp info: " + solarPowerPlant.getId() + " s_id: " + solarPowerPlant.getStringId());
         System.out.println("  - spp info: " + solarPowerPlant.getName() + " s_id: " + solarPowerPlant.getLocation().getRegion());
         System.out.println("  - spp info: " + installationDate + " s_id: " + solarPowerPlant.getStaticData().getPower());
 
-        Optional<SolarPowerPlant> updatedSolarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
+        solarPowerPlantService.updateSolarPowerPlant(solarPowerPlant, installationDate);
+
+
+        /*Optional<SolarPowerPlant> updatedSolarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
 
         //updatedSolarPowerPlant= Optional.of(solarPowerPlant);
         //solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
@@ -539,7 +545,7 @@ public class AdminController {
             updatedSolarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
 
             solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
-        }
+        }*/
 
 
         //тут можна надіслати сповіщення для користувача

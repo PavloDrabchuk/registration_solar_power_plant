@@ -5,8 +5,10 @@ import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.enums.Region;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -267,7 +269,9 @@ public class SolarPowerPlantController {
             model.addAttribute("regions", Region.values());
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");*/
+
         solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model);
+
 
         return "dashboard/user/solar-power-plant/update-solar-power-plant-by-id";
     }
@@ -284,22 +288,37 @@ public class SolarPowerPlantController {
                                             @RequestParam(value = "number") String number,
                                             @RequestParam(value = "longitude") Double longitude,
                                             @RequestParam(value = "latitude") Double latitude,*/
+//                                            @DateTimeFormat(pattern = "yyyy-MM-dd")
                                             @RequestParam(value = "installationDate") String installationDate,
                                             RedirectAttributes redirectAttributes,
-                                            @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
+                                            @Valid
+                                            @ModelAttribute("solarPowerPlant")
+                                                    SolarPowerPlant solarPowerPlant) throws ParseException {
         //System.out.println("user:== " + usersService.getUserById(Long.valueOf(id)));
         //System.out.println("integer id: " + Long.valueOf(id));
 
-        // TODO: 09.08.2021 Optimise this method
+        //solarPowerPlant.getStaticData().setInstallationDate(installationDate);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
+        //solarPowerPlantService.addSolarPowerPlant(solarPowerPlant,1);
+        // TODO: 09.08.2021 Optimise this method.
+        // TODO: 15.08.2021 Fix installationDate.
+
+//        System.out.println(" --> Installation date: "+solarPowerPlant.getStaticData().getInstallationDate().toString());
+        System.out.println(" --> Installation date: " + installationDate);
+
+        System.out.println("Location string: " + solarPowerPlant.getLocation().getStringLocation());
+        System.out.println("Location: " + solarPowerPlant.getLocation());
+
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();//get logged in username*/
 
         System.out.println("spp info: " + solarPowerPlant.getId() + " s_id: " + solarPowerPlant.getStringId());
         System.out.println("  - spp info: " + solarPowerPlant.getName() + " s_id: " + solarPowerPlant.getLocation().getRegion());
         System.out.println("  - spp info: " + installationDate + " s_id: " + solarPowerPlant.getStaticData().getPower());
 
-        Optional<SolarPowerPlant> updatedSolarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
+        solarPowerPlantService.updateSolarPowerPlant(solarPowerPlant, installationDate);
+
+        /*Optional<SolarPowerPlant> updatedSolarPowerPlant = solarPowerPlantService.getSolarPowerPlantById(solarPowerPlant.getId());
         if (updatedSolarPowerPlant.isPresent()) {
             updatedSolarPowerPlant.get().setName(solarPowerPlant.getName());
 
@@ -313,16 +332,22 @@ public class SolarPowerPlantController {
             updatedSolarPowerPlant.get().getLocation().setLatitude(solarPowerPlant.getLocation().getLatitude());
             updatedSolarPowerPlant.get().getLocation().setLongitude(solarPowerPlant.getLocation().getLongitude());
 
+
+            // BeanUtils.copyProperties(updatedSolarPowerPlant,solarPowerPlant);
+            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
+
             //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
 
             //updatedSolarPowerPlant.get().setStaticData(solarPowerPlant.getStaticData());
 
             updatedSolarPowerPlant.get().getStaticData().setPower(solarPowerPlant.getStaticData().getPower());
             updatedSolarPowerPlant.get().getStaticData().setQuantity(solarPowerPlant.getStaticData().getQuantity());
+
             updatedSolarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
 
             solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
-        }
+        }*/
+
         //------------------------------
 
         /*Optional<User> user = usersService.getUserByUsername(username);

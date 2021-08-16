@@ -248,10 +248,14 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Розташування</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary"
+                            <!--<div class="col-sm-9 text-secondary"
                                  th:utext="${solarPowerPlant.get().getLocation().getRegion().getName()} + ' область, ' +
             ${solarPowerPlant.get().getLocation().getCity()} + ', вул. ' +
             ${solarPowerPlant.get().getLocation().getStreet()} + ', '+ ${solarPowerPlant.get().getLocation().getNumber()} ">
+                                Івано-Франківська область, Калуш, вул. Сагайдачного, 9Б
+                            </div>-->
+                            <div class="col-sm-9 text-secondary"
+                                 th:utext="${solarPowerPlant.get().getLocation().getStringLocation()} ">
                                 Івано-Франківська область, Калуш, вул. Сагайдачного, 9Б
                             </div>
                         </div>

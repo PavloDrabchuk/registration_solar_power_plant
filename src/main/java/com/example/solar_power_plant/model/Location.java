@@ -16,22 +16,22 @@ public class Location {
     private Long id;
 
     @NotNull
-    @Size(min=1,max = 10)
-    private String country;
+    @Size(min = 1, max = 10)
+    private String country = "Україна";
 
     @NotNull
     private Region region;
 
     @NotNull
-    @Size(min=1,max = 60)
+    @Size(min = 1, max = 60)
     private String city;
 
     @NotNull
-    @Size(min=1,max = 60)
+    @Size(min = 1, max = 60)
     private String street;
 
     @NotNull
-    @Size(min=1,max = 50)
+    @Size(min = 1, max = 50)
     private String number;
 
     @NotNull
@@ -119,6 +119,10 @@ public class Location {
     }
 
     public String getStringLocation() {
-        return region.getName() + " область, " + city + ", вул. " + street + ", " + number;
+        //(region.equals(Region.AutonomousRepublicOfCrimea)) ? ", " : " область, ";
+        //return region.getName() + " область, " + city + ", вул. " + street + ", " + number;
+        return region.getName()
+                + (region.equals(Region.AutonomousRepublicOfCrimea) ? ", " : " область, ")
+                + city + ", вул. " + street + ", " + number;
     }
 }

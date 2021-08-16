@@ -66,8 +66,10 @@ public class AuthorizationAccess {
     public static ArrayList<Integer> getUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
         ArrayList<Integer> usageTime = new ArrayList<>();
 
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
+        LocalDate localDate = solarPowerPlant.getStaticData().getInstallationDate();
+
+        //Calendar calendar = new GregorianCalendar();
+        //calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
 
         LocalDate date = LocalDate.now();
 
@@ -79,11 +81,18 @@ public class AuthorizationAccess {
         month = date.getMonthValue();
         day = date.getDayOfMonth();*/
 
-        day -= calendar.get(Calendar.DAY_OF_MONTH);
+//        System.out.println("1) day: " + day + ", month: " + month + ", year: " + year);
+
+        day -= localDate.getDayOfMonth();
         if (day < 0) month--;
-        month -= (calendar.get(Calendar.MONTH) + 1);
+        month -= localDate.getMonthValue();
         if (month < 0) year--;
-        year -= calendar.get(Calendar.YEAR);
+        year -= localDate.getYear();
+
+//        System.out.println("2) day: " + localDate.getDayOfMonth() + ", month: " + localDate.getMonthValue() + ", year: " + localDate.getYear());
+
+//        System.out.println("3) day: " + day + ", month: " + month + ", year: " + year);
+
 
         usageTime.add(0, year);
         usageTime.add(1, month);

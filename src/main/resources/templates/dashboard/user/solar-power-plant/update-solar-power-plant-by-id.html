@@ -24,6 +24,8 @@
 
 
 <div class="container-fluid">
+    <!--/*@thymesVar id="solarPowerPlant" type="com.example.solar_power_plant.model.SolarPowerPlant"*/-->
+
     <div class="row">
 
         <!-- Sidebar -->
@@ -71,6 +73,7 @@
                     </div>-->
                     <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
                         <form th:if="${solarPowerPlant}"
+                              action="updateSolarPowerPlantById"
                               th:action="${'/view/'+solarPowerPlant.getStringId()+'/update'}"
                               th:object="${solarPowerPlant}" method="post">
 
@@ -114,6 +117,7 @@
                                     <div class="row">
                                         <div class="input-group">
                                             <span class="col-4 text-wrap input-group-text" id="addon-wrapping-power">Потужність батареї</span>
+                                            <!--/*@thymesVar id="staticData" type="com.example.solar_power_plant.model.StaticData"*/-->
                                             <input type="number" min="1" class="form-control" name="power"
                                                    placeholder="Наприклад: 480, 550." aria-label="Power"
                                                    aria-describedby="addon-wrapping-power"
@@ -130,8 +134,12 @@
                                                    aria-label="InstallationDate"
                                                    aria-describedby="addon-wrapping-installation-date"
                                                    th:max="${localDate}"
-                                                   th:value="${solarPowerPlant.getStaticData().getStringInstallationDate()}"
+                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"
+
                                             >
+                                            <!--th:field="*{staticData.installationDate}"
+                                            th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"
+                                            >-->
 
                                             <!--                                            <p th:text="${solarPowerPlant.getStaticData().getStringInstallationDate()}"></p>-->
                                             <!--                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"-->
@@ -216,7 +224,8 @@
                                         <div class="input-group">
                                     <span class="col-4 text-wrap input-group-text "
                                           id="addon-wrapping-latitude">Широта</span>
-                                            <input type="number" step=0.00000000000001 min="-90" max="90" class="form-control"
+                                            <input type="number" step=0.00000000000001 min="-90" max="90"
+                                                   class="form-control"
                                                    placeholder="Наприклад: 48.9117518." aria-label="Latitude"
                                                    aria-describedby="addon-wrapping-latitude"
                                                    th:value="${solarPowerPlant.getLocation().getLatitude()}"

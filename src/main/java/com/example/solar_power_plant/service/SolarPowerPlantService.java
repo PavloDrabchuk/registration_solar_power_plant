@@ -8,8 +8,10 @@ import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.NotNull;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,9 +28,8 @@ public class SolarPowerPlantService {
 
 
     /**
-     *
      * @param solarPowerPlant
-     * @param action // 0 - create, 1 - update
+     * @param action          // 0 - create, 1 - update
      */
     public void addSolarPowerPlant(SolarPowerPlant solarPowerPlant, int action) {
         /*
@@ -146,7 +147,7 @@ public class SolarPowerPlantService {
 
         System.out.println("--- year: " + year + " month: " + month + " day: " + day);*/
 
-        ArrayList<Integer> usageTime= AuthorizationAccess.getUsageTime(solarPowerPlant);
+        ArrayList<Integer> usageTime = AuthorizationAccess.getUsageTime(solarPowerPlant);
         String result = "";
 
         if (usageTime.get(0) != 0) result += Math.abs(usageTime.get(0)) + " р. ";
@@ -168,6 +169,40 @@ public class SolarPowerPlantService {
             model.addAttribute("regions", Region.values());
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+    }
+
+    public void updateSolarPowerPlant(SolarPowerPlant newSolarPowerPlant,
+                                      @RequestParam(value = "installationDate") String installationDate) throws ParseException {
+
+        Optional<SolarPowerPlant> updatedSolarPowerPlant = getSolarPowerPlantById(newSolarPowerPlant.getId());
+        if (updatedSolarPowerPlant.isPresent()) {
+            updatedSolarPowerPlant.get().setName(newSolarPowerPlant.getName());
+
+
+            updatedSolarPowerPlant.get().getLocation().setCountry("Україна");
+            updatedSolarPowerPlant.get().getLocation().setRegion(newSolarPowerPlant.getLocation().getRegion());
+            updatedSolarPowerPlant.get().getLocation().setCity(newSolarPowerPlant.getLocation().getCity());
+            updatedSolarPowerPlant.get().getLocation().setStreet(newSolarPowerPlant.getLocation().getStreet());
+            updatedSolarPowerPlant.get().getLocation().setNumber(newSolarPowerPlant.getLocation().getNumber());
+
+            updatedSolarPowerPlant.get().getLocation().setLatitude(newSolarPowerPlant.getLocation().getLatitude());
+            updatedSolarPowerPlant.get().getLocation().setLongitude(newSolarPowerPlant.getLocation().getLongitude());
+
+
+            // BeanUtils.copyProperties(updatedSolarPowerPlant,solarPowerPlant);
+            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
+
+            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
+
+            //updatedSolarPowerPlant.get().setStaticData(solarPowerPlant.getStaticData());
+
+            updatedSolarPowerPlant.get().getStaticData().setPower(newSolarPowerPlant.getStaticData().getPower());
+            updatedSolarPowerPlant.get().getStaticData().setQuantity(newSolarPowerPlant.getStaticData().getQuantity());
+
+            updatedSolarPowerPlant.get().getStaticData().setInstallationDate(installationDate);
+
+            addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
+        }
     }
 
 }
