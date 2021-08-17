@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,8 +107,6 @@ public class AdminController {
                             (pageInt - 1) * (int) limitUsers,
                             (int) limitUsers));
 
-            // TODO: 14.08.2021 Duplicate pageNumList. 
-            
             pageNumList = usersService
                     .getNumPagesList(usersService.getAllUsers(),
                             limitUsers);
@@ -125,7 +125,7 @@ public class AdminController {
                                 (int) limitUsers));
 
                 pageNumList = usersService.getNumPagesList(users, limitUsers);
-                
+
 
 //                    model.addAttribute("numPages", pageNumList);
 //                    model.addAttribute("currentPage", page);
@@ -506,9 +506,11 @@ public class AdminController {
                                             RedirectAttributes redirectAttributes,
                                             @Valid SolarPowerPlant solarPowerPlant) throws ParseException {
 
-        // TODO: 06.08.2021 Optimise this method
+
         /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username */
+
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         System.out.println("spp info: " + solarPowerPlant.getId() + " s_id: " + solarPowerPlant.getStringId());
         System.out.println("  - spp info: " + solarPowerPlant.getName() + " s_id: " + solarPowerPlant.getLocation().getRegion());
@@ -550,6 +552,19 @@ public class AdminController {
 
         //тут можна надіслати сповіщення для користувача
         // TODO: 06.08.2021 Make sending notification for user
+
+        User recipient=solarPowerPlantService.getSolarPowerPlantByStringId(id).orElseThrow().getUser();
+
+        String title, text;
+
+        title = "Сповіщення про оновлення інформації про сонячну електростанцію.";
+        text = "Інформацію про Вашу сонячну електростанцію оновлено адміністратором. <br>Назва електростанції: " + solarPowerPlant.getName()
+                + ". <br>Дані оновлено: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss"))
+                +".";
+
+        Message informationMessage = messageService.prepareMessage(title, text, authorizedUser,
+                recipient, "INFORMATION");
+        messageService.save(informationMessage);
 
         redirectAttributes.addFlashAttribute("updateSolarPowerPlantMessage", "Інформацію про сонячну станцію оновлено.");
         model.addAttribute("solarPowerPlants", solarPowerPlantService.getAllSolarPowerPlants());

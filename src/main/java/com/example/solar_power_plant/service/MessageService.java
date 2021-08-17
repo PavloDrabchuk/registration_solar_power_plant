@@ -7,6 +7,7 @@ import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -95,5 +96,21 @@ public class MessageService {
 
     public long getCountUnreadMessagesByUser(User user) {
         return messageRepository.countByIsReadAndRecipient(false, user);
+    }
+
+    public Message prepareMessage(String title, String text, Optional<User> sender, User recipient, String type) {
+        Message message = new Message();
+
+        message.setTitle(title);
+        message.setText(text);
+
+        sender.ifPresent(message::setSender);
+        message.setRecipient(recipient);
+        message.setRead(false);
+
+        message.setMessageType(MessageType.valueOf(type));
+        message.setDateTime(LocalDateTime.now());
+
+        return message;
     }
 }

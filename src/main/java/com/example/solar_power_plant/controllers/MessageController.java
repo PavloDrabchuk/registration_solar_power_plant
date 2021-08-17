@@ -40,7 +40,7 @@ public class MessageController {
         //Optional<User> user = getAuthorisedUser();
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if(authorizedUser.isPresent() && (authorizedUser.get().getLocked() || !authorizedUser.get().getActivated())){
+        if (authorizedUser.isPresent() && (authorizedUser.get().getLocked() || !authorizedUser.get().getActivated())) {
             return "redirect:/home";
         }
 
@@ -85,7 +85,7 @@ public class MessageController {
 
             //List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
 
-            System.out.println(" - current page: "+pageInt);
+            System.out.println(" - current page: " + pageInt);
 
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", String.valueOf(pageInt));
@@ -146,7 +146,7 @@ public class MessageController {
                             (pageInt - 1) * (int) limitMessages,
                             (int) limitMessages));
 
-            System.out.println("current page: "+pageInt);
+            System.out.println("current page: " + pageInt);
 
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", String.valueOf(pageInt));
@@ -242,6 +242,8 @@ public class MessageController {
                              @RequestParam(name = "type", required = false) String type,
                              @RequestParam(name = "username", required = false) String username) {
 
+        // TODO: 17.08.2021 Optimize this method. 
+
         //Optional<User> user = getAuthorisedUser();
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
@@ -268,7 +270,10 @@ public class MessageController {
             //List<Message> messages=new ArrayList<>();
 
             if (type.equals("FOR_USER")) {
-                message1 = new Message();
+
+                // TODO: 17.08.2021 Make method in MessageService for sending mail.
+
+                /*message1 = new Message();
 
                 message1.setTitle(title);
                 message1.setText(text);
@@ -285,13 +290,16 @@ public class MessageController {
                 System.out.println(" messageType: " + type);
                 //message.setMessageType(MessageType.INFORMATION);
                 message1.setMessageType(MessageType.valueOf(type));
-                message1.setDateTime(LocalDateTime.now());
+                message1.setDateTime(LocalDateTime.now());*/
+                Optional<User> recipient = usersService.getUserByUsername(username);
+
+                message1 = messageService.prepareMessage(title, text, authorizedUser, recipient.orElseThrow(), type);
 
                 messageService.save(message1);
             } else {
 
                 for (User user1 : usersService.getAllUsers()) {
-                    message1 = new Message();
+                    /*message1 = new Message();
 
                     message1.setTitle(title);
                     message1.setText(text);
@@ -303,7 +311,9 @@ public class MessageController {
                     System.out.println(" messageType: " + type);
                     //message.setMessageType(MessageType.INFORMATION);
                     message1.setMessageType(MessageType.valueOf(type));
-                    message1.setDateTime(LocalDateTime.now());
+                    message1.setDateTime(LocalDateTime.now());*/
+
+                    message1 = messageService.prepareMessage(title, text, authorizedUser, user1, type);
 
                     messageService.save(message1);
                 }
@@ -312,7 +322,7 @@ public class MessageController {
             switch (type) {
                 case "FOR_EDITOR": {
                     for (User editor : usersService.getAllUsersByUserRole(UserRoles.ROLE_EDITOR)) {
-                        message1 = new Message();
+                        /*message1 = new Message();
 
                         message1.setTitle(title);
                         message1.setText(text);
@@ -322,7 +332,9 @@ public class MessageController {
                         message1.setRead(false);
 
                         message1.setMessageType(MessageType.valueOf(type));
-                        message1.setDateTime(LocalDateTime.now());
+                        message1.setDateTime(LocalDateTime.now());*/
+
+                        message1 = messageService.prepareMessage(title, text, authorizedUser, editor, type);
 
                         messageService.save(message1);
                     }
@@ -330,7 +342,7 @@ public class MessageController {
                 }
                 case "FOR_ADMIN": {
                     for (User admin : usersService.getAllUsersByUserRole(UserRoles.ROLE_ADMIN)) {
-                        message1 = new Message();
+                        /*message1 = new Message();
 
                         message1.setTitle(title);
                         message1.setText(text);
@@ -340,7 +352,9 @@ public class MessageController {
                         message1.setRead(false);
 
                         message1.setMessageType(MessageType.valueOf(type));
-                        message1.setDateTime(LocalDateTime.now());
+                        message1.setDateTime(LocalDateTime.now());*/
+
+                        message1 = messageService.prepareMessage(title, text, authorizedUser, admin, type);
 
                         messageService.save(message1);
                     }
@@ -351,7 +365,7 @@ public class MessageController {
 
                     Optional<User> editor = usersService.getUserByUserRole(UserRoles.ROLE_EDITOR);
 
-                    Message errorMessage = new Message();
+                    /*Message errorMessage = new Message();
 
                     errorMessage.setTitle("Помилка надсилання повідомлення.");
                     errorMessage.setText("Під час надсилання вашого повідомлення сталась помилка. " +
@@ -365,7 +379,17 @@ public class MessageController {
                     errorMessage.setRead(false);
 
                     errorMessage.setMessageType(MessageType.ERROR);
-                    errorMessage.setDateTime(LocalDateTime.now());
+                    errorMessage.setDateTime(LocalDateTime.now());*/
+
+                    title = "Помилка надсилання повідомлення.";
+                    text = "Під час надсилання вашого повідомлення сталась помилка. " +
+                            "Спробуйте повторити Ваші дії трохи пізніше. Якщо проблему не буде вирішено, " +
+                            "то відправте повідомлення до технічної підтримки на адресу електронної пошти: " +
+                            "solar.power.plant.system@gmail.com. <br><br>" +
+                            "Вибачте за незручності.";
+
+                    Message errorMessage = messageService.prepareMessage(title, text, editor, authorizedUser.get(), "ERROR");
+
 
                     messageService.save(errorMessage);
 
@@ -419,7 +443,7 @@ public class MessageController {
                 answer.setMessageType(MessageType.FOR_USER);
             }*/
 
-            answer.setMessageType(MessageType.valueOf("FOR_"+messageSender.getUserRole().name()));
+            answer.setMessageType(MessageType.valueOf("FOR_" + messageSender.getUserRole().name()));
 
             answer.setDateTime(LocalDateTime.now());
 
@@ -456,7 +480,7 @@ public class MessageController {
     }*/
 
     @GetMapping(path = "/message-alert1")
-    public String getMessageAlert(Model model){
+    public String getMessageAlert(Model model) {
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
                 messageService.getCountUnreadMessagesByUser(user)));*/
 
@@ -465,7 +489,7 @@ public class MessageController {
     }
 
     @GetMapping(path = "/getTest")
-    public String getTestG(){
+    public String getTestG() {
         return "gt";
     }
 

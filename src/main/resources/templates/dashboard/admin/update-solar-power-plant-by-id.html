@@ -25,6 +25,7 @@
 
 <div class="container-fluid">
     <div class="row">
+        <!--/*@thymesVar id="solarPowerPlant" type="com.example.solar_power_plant.model.SolarPowerPlant"*/-->
 
         <!-- Sidebar -->
         <div th:replace="~{dashboard/user/sidebar}"></div>
@@ -130,7 +131,7 @@
                                                    aria-label="InstallationDate"
                                                    aria-describedby="addon-wrapping-installation-date"
                                                    th:max="${localDate}"
-                                                   th:value="${solarPowerPlant.getStaticData().getStringInstallationDate()}"
+                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"
                                             >
 
                                             <!--                                            <p th:text="${solarPowerPlant.getStaticData().getStringInstallationDate()}"></p>-->
