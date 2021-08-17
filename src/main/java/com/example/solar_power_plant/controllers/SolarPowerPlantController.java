@@ -42,6 +42,7 @@ public class SolarPowerPlantController {
     private final LocationService locationService;
     private final DynamicDataService dynamicDataService;
     private final MessageService messageService;
+    private final EmailSenderService emailSenderService;
 
     private Optional<User> authorizedUser = Optional.empty();
 
@@ -50,7 +51,8 @@ public class SolarPowerPlantController {
                                      SolarPowerPlantService solarPowerPlantService,
                                      LocationService locationService,
                                      DynamicDataService dynamicDataService,
-                                     MessageService messageService) {
+                                     MessageService messageService,
+                                     EmailSenderService emailSenderService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
 
@@ -59,6 +61,7 @@ public class SolarPowerPlantController {
         this.locationService = locationService;
         this.dynamicDataService = dynamicDataService;
         this.messageService = messageService;
+        this.emailSenderService=emailSenderService;
         //System.out.println("userServise: " + this.usersService);
 
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
@@ -142,6 +145,8 @@ public class SolarPowerPlantController {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
             System.out.println("Is present!: " + solarPowerPlant.get().getId());
+
+            solarPowerPlantService.sendRemovingSolarPowerPlantEmail(solarPowerPlant.get().getUser().getEmail());
             solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
             redirectAttributes.addFlashAttribute("deletedSolarPowerPlantOK", "Успішно видалено!");

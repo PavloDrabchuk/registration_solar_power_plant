@@ -12,6 +12,7 @@ import com.example.solar_power_plant.model.User;
 //import org.json.simple.parser.ParseException;
 import com.example.solar_power_plant.enums.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,11 @@ public class UsersService {
     private final UsersRepository usersRepository;
 
     private final EmailSenderService emailSenderService;
+
+
+
+    @Value("${ADMIN_EMAIL}")
+    private String ADMIN_EMAIL;
 
     /*@Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;*/
@@ -139,6 +145,22 @@ public class UsersService {
 
         saveUser(user);
     }
+
+
+
+
+    public void sendRemovingUserEmail(String email) {
+        System.out.println("2) ==..=.=.=.=..=.=.=.=.=.=.=.");
+
+        String subject = "Видалення аккаунту";
+        String text = "Доброго дня. Ваш аккаунт видалено з системи. У разі виникнення питань звертайтесь до адміністратора:"
+                + ADMIN_EMAIL + ".";
+
+        emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
+    }
+
+
+
 
 
 }

@@ -6,6 +6,7 @@ import com.example.solar_power_plant.enums.Region;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +21,16 @@ import java.util.*;
 @Service
 public class SolarPowerPlantService {
     private final SolarPowerPlantRepository solarPowerPlantRepository;
+    private final EmailSenderService emailSenderService;
+
+    @Value("${ADMIN_EMAIL}")
+    private String ADMIN_EMAIL;
 
     @Autowired
-    public SolarPowerPlantService(SolarPowerPlantRepository solarPowerPlantRepository) {
+    public SolarPowerPlantService(SolarPowerPlantRepository solarPowerPlantRepository,
+                                  EmailSenderService emailSenderService) {
         this.solarPowerPlantRepository = solarPowerPlantRepository;
+        this.emailSenderService=emailSenderService;
     }
 
 
@@ -203,6 +210,15 @@ public class SolarPowerPlantService {
 
             addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
         }
+    }
+
+    public void sendRemovingSolarPowerPlantEmail(String email) {
+        System.out.println("1) ==..=.=.=.=..=.=.=.=.=.=.=.");
+        String subject = "Видалення сонячної електростанції";
+        String text = "Доброго дня. Вашу сонячну електростанцію видалено з системи. У разі виникнення питань звертайтесь до адміністратора:"
+                + ADMIN_EMAIL + ".";
+
+        emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
     }
 
 }

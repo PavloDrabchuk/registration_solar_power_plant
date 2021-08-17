@@ -118,7 +118,7 @@ public class DatabaseSeeder {
         usersService.saveUser(user5);
 
         User user6 = new User();
-        user6.setEmail("editor@gmail.com");
+        user6.setEmail("ravluk2000@gmail.com");
         user6.setUsername("editor");
         user6.setUserRole(UserRoles.ROLE_EDITOR);
         user6.setActivated(true);

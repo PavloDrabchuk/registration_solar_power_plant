@@ -3,13 +3,9 @@ package com.example.solar_power_plant.controllers;
 import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.enums.UserRoles;
 import com.example.solar_power_plant.model.*;
-import com.example.solar_power_plant.service.DynamicDataService;
-import com.example.solar_power_plant.service.MessageService;
-import com.example.solar_power_plant.service.SolarPowerPlantService;
-import com.example.solar_power_plant.service.UsersService;
+import com.example.solar_power_plant.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@PropertySource("classpath:project.properties")
 public class AdminController {
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
     private final DynamicDataService dynamicDataService;
     private final MessageService messageService;
+    private final EmailSenderService emailSenderService;
 
     private Optional<User> authorizedUser = Optional.empty();
 
@@ -37,12 +35,14 @@ public class AdminController {
                            SolarPowerPlantService solarPowerPlantService,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            DynamicDataService dynamicDataService,
-                           MessageService messageService) {
+                           MessageService messageService,
+                           EmailSenderService emailSenderService) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dynamicDataService = dynamicDataService;
         this.messageService = messageService;
+        this.emailSenderService=emailSenderService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -349,9 +349,9 @@ public class AdminController {
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         if (user.isPresent() && authorizedUser.isPresent() && user.get() != authorizedUser.get()) {
-            usersService.deleteUser(user.get());
 
-            //Тут можна надіслати ласта користувачу про видалення його аккаунта
+            usersService.sendRemovingUserEmail(user.get().getEmail());
+            usersService.deleteUser(user.get());
 
             redirectAttributes.addFlashAttribute("deleteUserMessage", "Користувача видалено з системи.");
         } else {
@@ -549,10 +549,6 @@ public class AdminController {
             solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
         }*/
 
-
-        //тут можна надіслати сповіщення для користувача
-        // TODO: 06.08.2021 Make sending notification for user
-
         User recipient=solarPowerPlantService.getSolarPowerPlantByStringId(id).orElseThrow().getUser();
 
         String title, text;
@@ -581,10 +577,9 @@ public class AdminController {
 
         //if (solarPowerPlant.isPresent() && authorizedUser.isPresent()) {
         if (solarPowerPlant.isPresent()) {
-            solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
-            //Тут можна надіслати ласта користувачу про видалення його аккаунта
-            // TODO: 05.08.2021 Make sending a letter to the user about removing your account.
+            solarPowerPlantService.sendRemovingSolarPowerPlantEmail(solarPowerPlant.get().getUser().getEmail());
+            solarPowerPlantService.deleteSolarPowerPlant(solarPowerPlant.get());
 
             redirectAttributes.addFlashAttribute("deleteSolarPowerPlantMessage", "Сонячну станцію видалено з системи.");
         } else {
