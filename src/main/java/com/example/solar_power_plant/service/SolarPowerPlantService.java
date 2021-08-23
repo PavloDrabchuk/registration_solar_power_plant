@@ -30,7 +30,7 @@ public class SolarPowerPlantService {
     public SolarPowerPlantService(SolarPowerPlantRepository solarPowerPlantRepository,
                                   EmailSenderService emailSenderService) {
         this.solarPowerPlantRepository = solarPowerPlantRepository;
-        this.emailSenderService=emailSenderService;
+        this.emailSenderService = emailSenderService;
     }
 
 
@@ -218,7 +218,8 @@ public class SolarPowerPlantService {
         String text = "Доброго дня. Вашу сонячну електростанцію видалено з системи. У разі виникнення питань звертайтесь до адміністратора:"
                 + ADMIN_EMAIL + ".";
 
-        emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
+        //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
+        emailSenderService.sendEmail(emailSenderService.createMail(email, subject, text));
     }
 
 }

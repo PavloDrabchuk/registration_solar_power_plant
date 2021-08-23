@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 public class EmailSenderService {
 
 
-
     private final JavaMailSender javaMailSender;
 
     public EmailSenderService(JavaMailSender javaMailSender) {
@@ -29,7 +28,7 @@ public class EmailSenderService {
         System.out.println("send... send ... send");
     }
 
-    public void sendEmailWithSubjectAndText(String email, String subject, String text) {
+    public SimpleMailMessage createMail(String email, String subject, String text) {
         SimpleMailMessage confirmationMessage = new SimpleMailMessage();
         confirmationMessage.setTo(email);
 
@@ -37,9 +36,9 @@ public class EmailSenderService {
 
         confirmationMessage.setSubject(subject);
         confirmationMessage.setText(text);
-        System.out.println("3) ==..=.=.=.=..=.=.=.=.=.=.=.");
+        System.out.println(" 3*) ==..=.=.=.=..=.=.=.=.=.=.=.");
 
-        sendEmail(confirmationMessage);
+        return confirmationMessage;
     }
 
     /*public void sendRemovingAccountEmail(String email) {

@@ -28,7 +28,6 @@ public class UsersService {
     private final EmailSenderService emailSenderService;
 
 
-
     @Value("${ADMIN_EMAIL}")
     private String ADMIN_EMAIL;
 
@@ -81,11 +80,11 @@ public class UsersService {
         return usersRepository.findByEmail(email);
     }
 
-    public Optional<User> getUserByUserRole(UserRoles userRoles){
+    public Optional<User> getUserByUserRole(UserRoles userRoles) {
         return usersRepository.findUserByUserRole(userRoles);
     }
 
-    public List<User> getAllUsersByUserRole(UserRoles userRoles){
+    public List<User> getAllUsersByUserRole(UserRoles userRoles) {
         return usersRepository.findAllByUserRole(userRoles);
     }
 
@@ -147,8 +146,6 @@ public class UsersService {
     }
 
 
-
-
     public void sendRemovingUserEmail(String email) {
         System.out.println("2) ==..=.=.=.=..=.=.=.=.=.=.=.");
 
@@ -156,11 +153,9 @@ public class UsersService {
         String text = "Доброго дня. Ваш аккаунт видалено з системи. У разі виникнення питань звертайтесь до адміністратора:"
                 + ADMIN_EMAIL + ".";
 
-        emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
+        //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
+        emailSenderService.sendEmail(emailSenderService.createMail(email, subject, text));
     }
-
-
-
 
 
 }
