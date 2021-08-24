@@ -35,7 +35,8 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <!-- Назва -->
                 <h3 th:utext="${solarPowerPlant.getName()}">Name</h3>
-                <h5 th:utext="${info}"></h5>
+                <h5 th:if="${not #lists.isEmpty(data)}"
+                        th:utext="${info}"></h5>
 
 
                 <!-- Блок з інформацією про зібрані дані -->

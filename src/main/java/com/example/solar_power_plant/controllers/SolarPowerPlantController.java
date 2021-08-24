@@ -61,7 +61,7 @@ public class SolarPowerPlantController {
         this.locationService = locationService;
         this.dynamicDataService = dynamicDataService;
         this.messageService = messageService;
-        this.emailSenderService=emailSenderService;
+        this.emailSenderService = emailSenderService;
         //System.out.println("userServise: " + this.usersService);
 
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
@@ -413,7 +413,8 @@ public class SolarPowerPlantController {
                           @RequestParam(value = "startDate", defaultValue = "") String startDate,
                           @RequestParam(value = "finishDate", defaultValue = "") String finishDate,
                           @RequestParam(value = "dataPeriod", defaultValue = "Отримати дані") String dataPeriod,
-                          Model model) {
+                          Model model,
+                          RedirectAttributes redirectAttributes) {
         System.out.println("dataPeriod: " + dataPeriod);
 
         // TODO: 09.08.2021 Optimise this method 
@@ -421,6 +422,16 @@ public class SolarPowerPlantController {
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
                 messageService.getCountUnreadMessagesByUser(user)));*/
+
+
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isEmpty()) {
+            redirectAttributes.addFlashAttribute("getDataError", "Сталась помилка при отриманні даних. Спробуйте пізніше або зверніться до адміністратора.");
+            return "redirect:/home";
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        List<DynamicData> data = new ArrayList<>();
 
         if (dataPeriod.equals("Отримати дані")) {
 
@@ -436,6 +447,17 @@ public class SolarPowerPlantController {
                 System.out.println(".....date now()-24h: " + LocalDateTime.now().minusHours(24).toString().substring(0, 16));
             }
             System.out.println("... finishDate: " + finishDate);
+
+            /*model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
+                    LocalDateTime.parse(startDate.replace("T", " "), formatter),
+                    LocalDateTime.parse(finishDate.replace("T", " "), formatter),
+                    solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));*/
+
+            data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
+                    LocalDateTime.parse(startDate.replace("T", " "), formatter),
+                    LocalDateTime.parse(finishDate.replace("T", " "), formatter),
+                    solarPowerPlant.get());
+
         } else if (dataPeriod.equals("Отримати дані за весь час")) {
             Optional<DynamicData> firstDynamicData = dynamicDataService.getFirstDynamicDataBySolarPowerPlant(solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
             startDate = firstDynamicData.map(dynamicData -> dynamicData.getCollectionDateTime().toString().substring(0, 16)).orElseGet(() -> LocalDateTime.now().toString().substring(0, 16));
@@ -444,23 +466,31 @@ public class SolarPowerPlantController {
             System.out.println("... startDate: " + startDate);
             System.out.println("... finishDate: " + finishDate);
 
+            /*model.addAttribute("data", dynamicDataService.getDynamicDataBySolarPowerPlant(
+                    solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));*/
+
+            data = dynamicDataService.getDynamicDataBySolarPowerPlant(solarPowerPlant.get());
         }
 
-        DateTimeFormatter formatterForView = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        model.addAttribute("data", data);
+
+        //DateTimeFormatter formatterForView = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         model.addAttribute("info", "Дані з " +
-                LocalDateTime.parse(startDate.replace("T", " "), formatterForView)
+                LocalDateTime.parse(startDate.replace("T", " "), formatter)
                         .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + " по " +
-                LocalDateTime.parse(finishDate.replace("T", " "), formatterForView)
+                LocalDateTime.parse(finishDate.replace("T", " "), formatter)
                         .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
         //System.out.println("info: "+ startDate + " - " + finishDate + "\nid: " + id);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 //String g=LocalDateTime.now().toString();
         model.addAttribute("startDate", startDate);
         model.addAttribute("finishDate", finishDate);
         model.addAttribute("id", id);
 
-        if (dataPeriod.equals("Отримати дані")) {
+        /*if (dataPeriod.equals("Отримати дані")) {
             model.addAttribute("data", dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
                     LocalDateTime.parse(startDate.replace("T", " "), formatter),
                     LocalDateTime.parse(finishDate.replace("T", " "), formatter),
@@ -468,11 +498,11 @@ public class SolarPowerPlantController {
         } else if (dataPeriod.equals("Отримати дані за весь час")) {
             model.addAttribute("data", dynamicDataService.getDynamicDataBySolarPowerPlant(
                     solarPowerPlantService.getSolarPowerPlantByStringId(id).get()));
-        }
-        model.addAttribute("solarPowerPlant", solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+        }*/
+        model.addAttribute("solarPowerPlant", solarPowerPlant.get());
 
         List<DataByPeriodAndSolarPowerPlant> dataByMonthAndSolarPowerPlantList = dynamicDataService.getDataByMonthAndSolarPowerPlant(
-                solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+                solarPowerPlant.get());
 
         //List<Double> totalPowers = new ArrayList<>(120);
         List<Double> totalPowers = Arrays.asList(new Double[12]);
@@ -485,7 +515,7 @@ public class SolarPowerPlantController {
         model.addAttribute("dataForGraphsByMonth", totalPowers);
 
         List<DataByPeriodAndSolarPowerPlant> dataByHourAndSolarPowerPlantList = dynamicDataService.getDataByHourAndSolarPowerPlant(
-                solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+                solarPowerPlant.get());
 
         List<Double> averagePowers = Arrays.asList(new Double[24]);
         System.out.println("size: " + totalPowers.size());

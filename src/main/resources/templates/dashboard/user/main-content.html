@@ -52,6 +52,11 @@
         exportDataError
     </div>
 
+    <div class="alert alert-danger m-2" role="alert"
+         th:if="${getDataError}" th:utext="${getDataError}">
+        getDataError
+    </div>
+
     <!--<div class="row mb-2">
         <div class="col-md-6">
             <div class="card flex-md-row mb-4 box-shadow h-md-250">
