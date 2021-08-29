@@ -154,7 +154,7 @@ public class UsersService {
                 + ADMIN_EMAIL + ".";
 
         //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
-        emailSenderService.sendEmail(emailSenderService.createMail(email, subject, text));
+        emailSenderService.sendEmail(emailSenderService.createSimpleMail(email, subject, text));
     }
 
 

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -219,7 +218,7 @@ public class SolarPowerPlantService {
                 + ADMIN_EMAIL + ".";
 
         //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
-        emailSenderService.sendEmail(emailSenderService.createMail(email, subject, text));
+        emailSenderService.sendEmail(emailSenderService.createSimpleMail(email, subject, text));
     }
 
 }

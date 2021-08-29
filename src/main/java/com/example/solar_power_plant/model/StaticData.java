@@ -42,6 +42,12 @@ public class StaticData {
         this.installationDate = installationDate;
     }
 
+    public StaticData(Integer quantity, Integer power, LocalDate installationDate) {
+        this.quantity = quantity;
+        this.power = power;
+        this.installationDate = installationDate;
+    }
+
     public StaticData() {
 
     }

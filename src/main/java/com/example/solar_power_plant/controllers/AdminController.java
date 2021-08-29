@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -48,7 +49,7 @@ public class AdminController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping(path = "/admin")
-    public String getAdminPage() {
+    public String getAdminPage() throws MessagingException {
         return "admin_page";
         //System.out.println("getAllUsers");
 
