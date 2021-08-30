@@ -95,7 +95,7 @@ public class UserController {
         if (authorizedUser.isPresent() && authorizedUser.get().getActivated()) {
             double limitSolarPowerPlant = 4;
 
-            int pageInt = getPage(page, solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant).size());
+            int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant).size());
 
             System.out.println("status:" + authorizedUser.get().getActivated());
 
@@ -363,7 +363,7 @@ public class UserController {
         return "edit-profile";
     }
 
-    @PostMapping(path = "/profile/update")
+    @PutMapping(path = "/profile/update")
     public String updateProfileInfo(@Valid @ModelAttribute("userInformation") User updatedUserInfo, BindingResult bindingResult) {
 
         System.out.println("updateProfileInfo");
@@ -486,19 +486,19 @@ public class UserController {
         return usersService.getUserByUsername(username);
     }*/
 
-    private int getPage(String page, int maxPage) {
+    /*private int getPage(String page, int maxPage) {
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
         } catch (NumberFormatException ex) {
-            //System.err.println("Invalid string in argumment");
+            //System.err.println("Invalid string in argument");
             pageInt = 1;
         }
 
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
-    }
+    }*/
 
    /* @ModelAttribute("version")
     public String getVersion() {

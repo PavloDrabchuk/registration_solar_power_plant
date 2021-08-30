@@ -318,7 +318,7 @@ public class DynamicDataService {
     }
 
     /*private double weatherCoefficient(int month, int weatherNumber) {
-        *//*int weatherNumber;
+     *//*int weatherNumber;
         do {
             weatherNumber = new Random().nextInt(Weather.values().length);
             System.out.println("weatherNumber: "+weatherNumber+"  name: "+Weather.values()[weatherNumber].name());
@@ -435,8 +435,6 @@ public class DynamicDataService {
         }
         return String.join("", words);
     }
-
-
 
 
     private int getYearOfUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
@@ -558,22 +556,22 @@ public class DynamicDataService {
 
         for (DynamicData dynamicData : data) {
             // data element
-             dataElement = document.createElement("data");
+            dataElement = document.createElement("data");
 
             root.appendChild(dataElement);
 
             // dateTime element
-             dateTime = document.createElement("dateTime");
+            dateTime = document.createElement("dateTime");
             dateTime.appendChild(document.createTextNode(dynamicData.getCollectionDateTime().toString()));
             dataElement.appendChild(dateTime);
 
             // weather element
-             weather = document.createElement("weather");
+            weather = document.createElement("weather");
             weather.appendChild(document.createTextNode(dynamicData.getWeather().name()));
             dataElement.appendChild(weather);
 
             // producedPower element
-             producedPower = document.createElement("producedPower");
+            producedPower = document.createElement("producedPower");
             producedPower.appendChild(document.createTextNode(dynamicData.getProducedPower().toString()));
             dataElement.appendChild(producedPower);
 
@@ -702,11 +700,40 @@ public class DynamicDataService {
                 LocalDateTime.now());
     }
 
+    public List<Double> getTotalPowers(SolarPowerPlant solarPowerPlant) {
+        List<Double> totalPowers = Arrays.asList(new Double[12]);
+
+        List<DataByPeriodAndSolarPowerPlant> dataByMonthAndSolarPowerPlantList =
+                getDataByMonthAndSolarPowerPlant(solarPowerPlant);
+
+        for (DataByPeriodAndSolarPowerPlant totalPower : dataByMonthAndSolarPowerPlantList) {
+            totalPowers.set(totalPower.getPeriod() - 1, totalPower.getTotal());
+        }
+
+        return totalPowers;
+    }
+
     public List<DataByPeriodAndSolarPowerPlant> getDataByHourAndSolarPowerPlant(SolarPowerPlant solarPowerPlant) {
 
         return dynamicDataRepository.getDataByHourAndSolarPowerPlant(solarPowerPlant.getId(),
                 LocalDateTime.now().minusDays(30),
                 LocalDateTime.now());
+    }
+
+    public List<Double> getAveragePowers(SolarPowerPlant solarPowerPlant) {
+        List<Double> averagePowers = Arrays.asList(new Double[24]);
+
+        List<DataByPeriodAndSolarPowerPlant> dataByHourAndSolarPowerPlantList = getDataByHourAndSolarPowerPlant(
+                solarPowerPlant);
+
+        //System.out.println("size: " + totalPowers.size());
+
+        for (DataByPeriodAndSolarPowerPlant totalPower : dataByHourAndSolarPowerPlantList) {
+            averagePowers.set(totalPower.getPeriod(), totalPower.getTotal());
+            //System.out.println("th: " + totalPower.getPeriod() + "  t: " + totalPower.getTotal());
+        }
+
+        return averagePowers;
     }
 
     public Optional<DynamicData> getFirstDynamicDataBySolarPowerPlant(SolarPowerPlant solarPowerPlant) {

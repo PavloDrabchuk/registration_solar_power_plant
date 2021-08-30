@@ -150,7 +150,7 @@ public class UsersService {
         System.out.println("2) ==..=.=.=.=..=.=.=.=.=.=.=.");
 
         String subject = "Видалення аккаунту";
-        String text = "Доброго дня. Ваш аккаунт видалено з системи. У разі виникнення питань звертайтесь до адміністратора:"
+        String text = "Доброго дня. Ваш аккаунт видалено з системи. У разі виникнення питань звертайтесь до адміністратора: "
                 + ADMIN_EMAIL + ".";
 
         //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);

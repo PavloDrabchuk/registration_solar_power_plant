@@ -69,7 +69,7 @@ public class MessageController {
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
 
             List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 1);
-            int pageInt = getPage(page, pageNumList.size());
+            int pageInt = AuthorizationAccess.getPage(page, pageNumList.size());
             /*try {
                  pageInt = Integer.parseInt(page);
             }catch(NumberFormatException ex) {
@@ -138,7 +138,7 @@ public class MessageController {
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
             List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 2);
 
-            int pageInt = getPage(page, pageNumList.size());
+            int pageInt = AuthorizationAccess.getPage(page, pageNumList.size());
 
             model.addAttribute("sentMessages",
                     messageService.getMessagesBySenderForPage(
@@ -242,7 +242,7 @@ public class MessageController {
                              @RequestParam(name = "type", required = false) String type,
                              @RequestParam(name = "username", required = false) String username) {
 
-        // TODO: 17.08.2021 Optimize this method. 
+
 
         //Optional<User> user = getAuthorisedUser();
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
@@ -252,9 +252,9 @@ public class MessageController {
         /*String title = message.getTitle(),
                 text = message.getText();*/
 
-        System.out.println("Message title: " + message.getTitle() + ", \n" +
+        /*System.out.println("Message title: " + message.getTitle() + ", \n" +
                 "text: " + message.getText() + " \n" +
-                "type: " + type + "\n");
+                "type: " + type + "\n");*/
 
         String title = message.getTitle(),
                 text = message.getText().trim();
@@ -270,8 +270,6 @@ public class MessageController {
             //List<Message> messages=new ArrayList<>();
 
             if (type.equals("FOR_USER")) {
-
-                // TODO: 17.08.2021 Make method in MessageService for sending mail.
 
                 /*message1 = new Message();
 
@@ -479,19 +477,19 @@ public class MessageController {
         return "redirect:/messages";
     }*/
 
-    @GetMapping(path = "/message-alert1")
+    /*@GetMapping(path = "/message-alert1")
     public String getMessageAlert(Model model) {
-        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
-                messageService.getCountUnreadMessagesByUser(user)));*/
+        *//*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         System.out.println(".... message-alert1");
         return "dashboard/user/message-alert1";
-    }
+    }*/
 
-    @GetMapping(path = "/getTest")
+    /*@GetMapping(path = "/getTest")
     public String getTestG() {
         return "gt";
-    }
+    }*/
 
     /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -499,7 +497,9 @@ public class MessageController {
         return usersService.getUserByUsername(username);
     }*/
 
-    private int getPage(String page, int maxPage) {
+    /*private int getPage(String page, int maxPage) {
+        
+        
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
@@ -511,7 +511,7 @@ public class MessageController {
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
-    }
+    }*/
 
     /*@ModelAttribute("countUnreadMessages")
     public long getCountUnreadMessages(){

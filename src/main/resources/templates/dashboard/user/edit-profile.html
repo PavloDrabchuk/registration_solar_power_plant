@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 mb-3">
                     <form action="updateProfileInfo" th:action="@{/profile/update}"
-                          th:object="${userInformation}" method="post">
+                          th:object="${userInformation}" th:method="put">
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="row">

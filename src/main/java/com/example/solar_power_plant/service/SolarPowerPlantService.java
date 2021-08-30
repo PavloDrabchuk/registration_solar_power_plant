@@ -215,7 +215,7 @@ public class SolarPowerPlantService {
     public void sendRemovingSolarPowerPlantEmail(String email) {
         System.out.println("1) ==..=.=.=.=..=.=.=.=.=.=.=.");
         String subject = "Видалення сонячної електростанції";
-        String text = "Доброго дня. Вашу сонячну електростанцію видалено з системи. У разі виникнення питань звертайтесь до адміністратора:"
+        String text = "Доброго дня. Вашу сонячну електростанцію видалено з системи. У разі виникнення питань звертайтесь до адміністратора: "
                 + ADMIN_EMAIL + ".";
 
         //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);

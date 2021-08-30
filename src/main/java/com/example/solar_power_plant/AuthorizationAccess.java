@@ -151,5 +151,19 @@ public class AuthorizationAccess {
         return (int) Math.ceil(arrayList.size() / limit);
     }
 
+    public static int getPage(String page, int maxPage) {
+        int pageInt;
+        try {
+            pageInt = Integer.parseInt(page);
+        } catch (NumberFormatException ex) {
+            //System.err.println("Invalid string in argumment");
+            pageInt = 1;
+        }
+
+        if (pageInt > maxPage) pageInt = 1;
+
+        return pageInt;
+    }
+
 
 }

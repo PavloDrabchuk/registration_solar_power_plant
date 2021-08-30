@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
-                        <form th:if="${user}" th:action="${'/admin/users/'+user.getId()+'/update'}" method="post">
+                        <form th:if="${user}" th:action="${'/admin/users/'+user.getId()+'/update'}" th:method="put">
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="row">

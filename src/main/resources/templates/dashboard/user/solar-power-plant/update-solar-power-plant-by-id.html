@@ -75,7 +75,7 @@
                         <form th:if="${solarPowerPlant}"
                               action="updateSolarPowerPlantById"
                               th:action="${'/view/'+solarPowerPlant.getStringId()+'/update'}"
-                              th:object="${solarPowerPlant}" method="post">
+                              th:object="${solarPowerPlant}" th:method="put">
 
                             <!-- Name and other -->
                             <h3>Редагування інформації про сонячну станцію</h3>

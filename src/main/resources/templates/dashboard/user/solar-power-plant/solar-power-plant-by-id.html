@@ -32,10 +32,11 @@
             deletedSolarPowerPlantOK
         </div>
 
-        <div class="row">
+        <div class="row"
+             th:if="not ${notFoundSolarPowerPlant}">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <!-- Назва -->
-                <h3 th:utext="${solarPowerPlant.get().getName()}"></h3>
+                <h3 th:utext="${solarPowerPlant.getName()}"></h3>
 
                 <!-- Alert -->
                 <div class="alert alert-success mx-2" role="alert"
@@ -138,7 +139,7 @@
 
                                 </div>
                             </div>-->
-                            <form th:action="@{'/view/' +${solarPowerPlant.get().getStringId()}+'/data'}" method="post">
+                            <form th:action="@{'/view/' +${solarPowerPlant.getStringId()}+'/data'}" method="post">
                                 <div class="row">
                                     <h4>Вироблена електроенергія</h4>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 my-lg-1 my-md-1 my-sm-1 my-1">
@@ -192,12 +193,12 @@
 
                             <div class="">
                                 <!--                            <input type="submit" class="btn btn-success" value="Повернутись">-->
-                                <form th:action="@{'/view/' +${solarPowerPlant.get().getStringId()}+'/update'}">
+                                <form th:action="@{'/view/' +${solarPowerPlant.getStringId()}+'/update'}">
                                     <input type="submit" class="btn btn-success
                             my-xl-1 my-lg-1 my-md-1 my-sm-1 my-1" value="Оновити інформацію">
                                 </form>
-                                <form th:action="@{'/solar-power-plant/delete/' +${solarPowerPlant.get().getStringId()}}"
-                                      method="post">
+                                <form th:action="@{'/solar-power-plant/delete/' +${solarPowerPlant.getStringId()}}"
+                                      th:method="delete">
                                     <input type="submit" class="btn btn-danger pull-right"
                                            value="Видалити сонячну станцію">
                                 </form>
@@ -229,7 +230,7 @@
                                 <h6 class="mb-0">Кількість панелей</h6>
                             </div>
                             <div class="col-sm-9 text-secondary"
-                                 th:utext="${solarPowerPlant.get().getStaticData().getQuantity()+' штук'}">
+                                 th:utext="${solarPowerPlant.getStaticData().getQuantity()+' штук'}">
                                 88 штук
                             </div>
                         </div>
@@ -239,7 +240,7 @@
                                 <h6 class="mb-0">Потужність батареї</h6>
                             </div>
                             <div class="col-sm-9 text-secondary"
-                                 th:utext="${solarPowerPlant.get().getStaticData().getPower()+' Вт'}">
+                                 th:utext="${solarPowerPlant.getStaticData().getPower()+' Вт'}">
                                 450 Вт
                             </div>
                         </div>
@@ -249,13 +250,13 @@
                                 <h6 class="mb-0">Розташування</h6>
                             </div>
                             <!--<div class="col-sm-9 text-secondary"
-                                 th:utext="${solarPowerPlant.get().getLocation().getRegion().getName()} + ' область, ' +
-            ${solarPowerPlant.get().getLocation().getCity()} + ', вул. ' +
-            ${solarPowerPlant.get().getLocation().getStreet()} + ', '+ ${solarPowerPlant.get().getLocation().getNumber()} ">
+                                 th:utext="${solarPowerPlant.getLocation().getRegion().getName()} + ' область, ' +
+            ${solarPowerPlant.getLocation().getCity()} + ', вул. ' +
+            ${solarPowerPlant.getLocation().getStreet()} + ', '+ ${solarPowerPlant.getLocation().getNumber()} ">
                                 Івано-Франківська область, Калуш, вул. Сагайдачного, 9Б
                             </div>-->
                             <div class="col-sm-9 text-secondary"
-                                 th:utext="${solarPowerPlant.get().getLocation().getStringLocation()} ">
+                                 th:utext="${solarPowerPlant.getLocation().getStringLocation()} ">
                                 Івано-Франківська область, Калуш, вул. Сагайдачного, 9Б
                             </div>
                         </div>
@@ -265,7 +266,7 @@
                                 <h6 class="mb-0">Дата реєстрації</h6>
                             </div>
                             <div class="col-sm-9 text-secondary"
-                                 th:utext="${solarPowerPlant.get().getStringRegistrationDateTime()}">
+                                 th:utext="${solarPowerPlant.getStringRegistrationDateTime()}">
                                 19.03.2021
                             </div>
                         </div>
@@ -327,9 +328,9 @@
                     <script th:inline="javascript">
 
                         /*<![CDATA[*/
-                        let lon = /*[[${solarPowerPlant.get().getLocation().getLongitude}]]*/ '0.0';
-                        let lat = /*[[${solarPowerPlant.get().getLocation().getLatitude}]]*/ '0.0';
-                        let solarPowerPlantName = /*[[${solarPowerPlant.get().getName()}]]*/ 'Не знайдено';
+                        let lon = /*[[${solarPowerPlant.getLocation().getLongitude}]]*/ '0.0';
+                        let lat = /*[[${solarPowerPlant.getLocation().getLatitude}]]*/ '0.0';
+                        let solarPowerPlantName = /*[[${solarPowerPlant.getName()}]]*/ 'Не знайдено';
                         /*]]>*/
                     </script>
 
@@ -399,18 +400,18 @@
                 <th>Адреса</th>
             </tr>
             <tr>
-                <td th:text="${solarPowerPlant.get().getId()}"></td>
-                <td th:utext="${solarPowerPlant.get().getName()}"></td>
-                <td th:utext="${solarPowerPlant.get().getLocation().getRegion().getName()} + ' область, ' +
-            ${solarPowerPlant.get().getLocation().getCity()} + ', вул. ' +
-            ${solarPowerPlant.get().getLocation().getStreet()} + ', '+ ${solarPowerPlant.get().getLocation().getNumber()} "></td>
+                <td th:text="${solarPowerPlant.getId()}"></td>
+                <td th:utext="${solarPowerPlant.getName()}"></td>
+                <td th:utext="${solarPowerPlant.getLocation().getRegion().getName()} + ' область, ' +
+            ${solarPowerPlant.getLocation().getCity()} + ', вул. ' +
+            ${solarPowerPlant.getLocation().getStreet()} + ', '+ ${solarPowerPlant.getLocation().getNumber()} "></td>
 
             </tr>
         </table>
 
         <hr/>
         <h3>Dynamic data between data</h3>
-        <form th:action="@{'/view/' +${solarPowerPlant.get().getStringId()}+'/data'}" method="post">
+        <form th:action="@{'/view/' +${solarPowerPlant.getStringId()}+'/data'}" method="post">
             <label> З:
                 <input type="date" name="startDate" value="2021-03-01">
             </label>
@@ -455,15 +456,13 @@
         <script th:inline="javascript">
 
             /*<![CDATA[*/
-            let lat = /*[[${solarPowerPlant.get().getLocation().getLongitude}]]*/ '0.0';
-            let lon = /*[[${solarPowerPlant.get().getLocation().getLatitude}]]*/ '0.0';
-            let solarPowerPlantName = /*[[${solarPowerPlant.get().getName()}]]*/ 'Не знайдено';
+
             /*]]>*/
         </script>
 
         <script type="text/javascript" src="/scripts/map.js"></script>
 
-        <form th:action="@{'/solarPowerPlant/delete/' +${solarPowerPlant.get().getStringId()}}" method="post">
+        <form th:action="@{'/solarPowerPlant/delete/' +${solarPowerPlant.getStringId()}}" method="post">
             <input type="submit" value="Видалити">
         </form>
     </div>

@@ -140,7 +140,7 @@ public class SolarPowerPlantController {
         return "redirect:/home";
     }
 
-    @PostMapping(path = "/solar-power-plant/delete/{id}")
+    @DeleteMapping(path = "/solar-power-plant/delete/{id}")
     public String deleteSolarPowerPlant(@PathVariable("id") String stringId, RedirectAttributes redirectAttributes) {
         Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(stringId);
         if (solarPowerPlant.isPresent()) {
@@ -209,7 +209,7 @@ public class SolarPowerPlantController {
         // System.out.println("solarPowerPlant: "+solarPowerPlant1.get().getStringId());
 
         if (solarPowerPlant.isPresent() && authorizedUser.isPresent() && solarPowerPlant.get().getUser() == authorizedUser.get()) {
-            model.addAttribute("solarPowerPlant", solarPowerPlant);
+            model.addAttribute("solarPowerPlant", solarPowerPlant.get());
 
             /*for (DataByPeriodAndSolarPowerPlant ff : dynamicDataService.getDataByMonthAndSolarPowerPlant(solarPowerPlant.get())) {
                 System.out.println(" - - - month: " + ff.getPeriod() + ",  value: " + ff.getTotal());
@@ -281,7 +281,7 @@ public class SolarPowerPlantController {
         return "dashboard/user/solar-power-plant/update-solar-power-plant-by-id";
     }
 
-    @PostMapping(path = "/view/{id}/update")
+    @PutMapping(path = "/view/{id}/update")
     public String updateSolarPowerPlantById(@PathVariable String id,
                                             Model model,
                                             /*@RequestParam(value = "name") String name,
@@ -305,8 +305,7 @@ public class SolarPowerPlantController {
         //solarPowerPlant.getStaticData().setInstallationDate(installationDate);
 
         //solarPowerPlantService.addSolarPowerPlant(solarPowerPlant,1);
-        // TODO: 09.08.2021 Optimise this method.
-        // TODO: 15.08.2021 Fix installationDate.
+
 
 //        System.out.println(" --> Installation date: "+solarPowerPlant.getStaticData().getInstallationDate().toString());
         System.out.println(" --> Installation date: " + installationDate);
@@ -410,14 +409,14 @@ public class SolarPowerPlantController {
 
     @PostMapping(path = "/view/{id}/data")
     public String getData(@PathVariable String id,
-                          @RequestParam(value = "startDate", defaultValue = "") String startDate,
-                          @RequestParam(value = "finishDate", defaultValue = "") String finishDate,
+                          @RequestParam(value = "startDate", defaultValue = "2000-01-01 00:00") String startDate,
+                          @RequestParam(value = "finishDate", defaultValue = "2172-12-31 23:59") String finishDate,
                           @RequestParam(value = "dataPeriod", defaultValue = "Отримати дані") String dataPeriod,
                           Model model,
                           RedirectAttributes redirectAttributes) {
         System.out.println("dataPeriod: " + dataPeriod);
 
-        // TODO: 09.08.2021 Optimise this method 
+
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
@@ -431,6 +430,7 @@ public class SolarPowerPlantController {
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatterInfoMessage = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         List<DynamicData> data = new ArrayList<>();
 
         if (dataPeriod.equals("Отримати дані")) {
@@ -478,9 +478,9 @@ public class SolarPowerPlantController {
 
         model.addAttribute("info", "Дані з " +
                 LocalDateTime.parse(startDate.replace("T", " "), formatter)
-                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")) + " по " +
+                        .format(formatterInfoMessage) + " по " +
                 LocalDateTime.parse(finishDate.replace("T", " "), formatter)
-                        .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
+                        .format(formatterInfoMessage));
         //System.out.println("info: "+ startDate + " - " + finishDate + "\nid: " + id);
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -501,7 +501,7 @@ public class SolarPowerPlantController {
         }*/
         model.addAttribute("solarPowerPlant", solarPowerPlant.get());
 
-        List<DataByPeriodAndSolarPowerPlant> dataByMonthAndSolarPowerPlantList = dynamicDataService.getDataByMonthAndSolarPowerPlant(
+        /*List<DataByPeriodAndSolarPowerPlant> dataByMonthAndSolarPowerPlantList = dynamicDataService.getDataByMonthAndSolarPowerPlant(
                 solarPowerPlant.get());
 
         //List<Double> totalPowers = new ArrayList<>(120);
@@ -510,22 +510,22 @@ public class SolarPowerPlantController {
 
         for (DataByPeriodAndSolarPowerPlant totalPower : dataByMonthAndSolarPowerPlantList) {
             totalPowers.set(totalPower.getPeriod() - 1, totalPower.getTotal());
-        }
+        }*/
 
-        model.addAttribute("dataForGraphsByMonth", totalPowers);
+        model.addAttribute("dataForGraphsByMonth", dynamicDataService.getTotalPowers(solarPowerPlant.get()));
 
-        List<DataByPeriodAndSolarPowerPlant> dataByHourAndSolarPowerPlantList = dynamicDataService.getDataByHourAndSolarPowerPlant(
+        /*List<DataByPeriodAndSolarPowerPlant> dataByHourAndSolarPowerPlantList = dynamicDataService.getDataByHourAndSolarPowerPlant(
                 solarPowerPlant.get());
 
         List<Double> averagePowers = Arrays.asList(new Double[24]);
-        System.out.println("size: " + totalPowers.size());
+        //System.out.println("size: " + totalPowers.size());
 
         for (DataByPeriodAndSolarPowerPlant totalPower : dataByHourAndSolarPowerPlantList) {
             averagePowers.set(totalPower.getPeriod(), totalPower.getTotal());
             System.out.println("th: " + totalPower.getPeriod() + "  t: " + totalPower.getTotal());
-        }
+        }*/
 
-        model.addAttribute("dataForGraphsByHour", averagePowers);
+        model.addAttribute("dataForGraphsByHour", dynamicDataService.getAveragePowers(solarPowerPlant.get()));
 
 
         //AuthorizationAccess.addAdminAccessToModel(model, usersService);
@@ -535,14 +535,13 @@ public class SolarPowerPlantController {
 
     @PostMapping(path = "/view/{id}/data/export")
     public String exportData(@PathVariable String id,
-                             @RequestParam(value = "startDate", defaultValue = "World") String startDate,
-                             @RequestParam(value = "finishDate", defaultValue = "World") String finishDate,
-                             @RequestParam(value = "file-format", defaultValue = "World") String fileFormat,
+                             @RequestParam(value = "startDate", defaultValue = "2000-01-01 00:00") String startDate,
+                             @RequestParam(value = "finishDate", defaultValue = "2172-12-31 23:59") String finishDate,
+                             @RequestParam(value = "file-format", defaultValue = "csv") String fileFormat,
                              Model model,
                              HttpServletRequest request,
                              HttpServletResponse response,
                              RedirectAttributes redirectAttributes) throws IOException, TransformerException, ParserConfigurationException, JSONException {
-
 
         //model.addAttribute("resultMessage", "Зараз почнеться завантаження, якщо ні - натисніть на << посилання >>");
 
@@ -564,14 +563,20 @@ public class SolarPowerPlantController {
                 {"Jane", "Doe, Jr.", "19", "She said \"I'm being quoted\""});
         givenDataArray_whenConvertToCSV_thenOutputCreated("upload-dir/f.csv", dataLines);*/
 
-        String filename = createFilename(solarPowerPlantService.getSolarPowerPlantByStringId(id).get().getName());
+        Optional<SolarPowerPlant> solarPowerPlant = solarPowerPlantService.getSolarPowerPlantByStringId(id);
+        if (solarPowerPlant.isEmpty()) {
+            redirectAttributes.addFlashAttribute("getDataError", "Сталась помилка при отриманні даних. Спробуйте пізніше або зверніться до адміністратора.");
+            return "redirect:/home";
+        }
+
+        String filename = createFilename(solarPowerPlant.get().getName());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         List<DynamicData> data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
                 LocalDateTime.parse(startDate.replace("T", " "), formatter),
                 LocalDateTime.parse(finishDate.replace("T", " "), formatter),
-                solarPowerPlantService.getSolarPowerPlantByStringId(id).get());
+                solarPowerPlant.get());
 
        /* System.out.println("****-*-*-*---------------");
         for(DynamicData d:data){

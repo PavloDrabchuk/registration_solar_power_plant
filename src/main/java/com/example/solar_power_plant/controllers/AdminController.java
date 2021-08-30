@@ -95,7 +95,7 @@ public class AdminController {
         //if (authorizedUser.isPresent()) {
         double limitUsers = 7;
 
-        int pageInt = getPage(page, usersService
+        int pageInt = AuthorizationAccess.getPage(page, usersService
                 .getNumPagesList(usersService.getAllUsers(),
                         limitUsers).size());
 
@@ -284,7 +284,7 @@ public class AdminController {
         return "dashboard/admin/update-user-by-id";
     }
 
-    @PostMapping(path = "/admin/users/{id}/update")
+    @PutMapping(path = "/admin/users/{id}/update")
     public String updateUserById(@PathVariable String id,
                                  Model model,
                                  @RequestParam(value = "username") String username,
@@ -358,8 +358,8 @@ public class AdminController {
         } else {
             redirectAttributes.addFlashAttribute("deleteUserMessage", "Сталась помилка, спробуйте пізніше.");
         }
-        // TODO: 06.08.2021 Maybe create ModelAttribute "users"
-        model.addAttribute("users", usersService.getAllUsers());
+
+        //model.addAttribute("users", usersService.getAllUsers());
 
         return "redirect:/admin/users";
     }
@@ -380,7 +380,7 @@ public class AdminController {
 //        if (authorizedUser.isPresent()) {
         double limitSolarPowerPlants = 7;
 
-        int pageInt = getPage(page, solarPowerPlantService.getNumPagesListForAll(
+        int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesListForAll(
                 solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants).size());
 
         List<String> pageNumList = null;
@@ -500,7 +500,7 @@ public class AdminController {
         return "dashboard/admin/update-solar-power-plant-by-id";
     }
 
-    @PostMapping(path = "/admin/solar-power-plants/{id}/update")
+    @PutMapping(path = "/admin/solar-power-plants/{id}/update")
     public String updateSolarPowerPlantById(@PathVariable String id,
                                             Model model,
                                             @RequestParam(value = "installationDate") String installationDate,
@@ -606,7 +606,7 @@ public class AdminController {
         }
     }*/
 
-    private int getPage(String page, int maxPage) {
+    /*private int getPage(String page, int maxPage) {
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
@@ -618,6 +618,6 @@ public class AdminController {
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
-    }
+    }*/
 
 }
