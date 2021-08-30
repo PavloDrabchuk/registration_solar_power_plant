@@ -4,8 +4,8 @@ import com.example.solar_power_plant.dao.UsersRepository;
 import com.example.solar_power_plant.enums.UserRoles;
 import com.example.solar_power_plant.model.User;
 import com.example.solar_power_plant.security.WebConfig;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Optional;
 
-@RunWith(SpringRunner.class)
+
 @DataJpaTest
 @AutoConfigurationPackage
 public class UserRepositoryTest {

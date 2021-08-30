@@ -6,7 +6,8 @@ import com.example.solar_power_plant.model.Location;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.StaticData;
 import com.example.solar_power_plant.model.User;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.*;

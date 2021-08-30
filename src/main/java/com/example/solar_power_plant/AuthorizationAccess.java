@@ -8,10 +8,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
+
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
