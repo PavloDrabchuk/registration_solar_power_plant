@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.*;
 
 public class AuthorizationAccess {
@@ -63,19 +65,19 @@ public class AuthorizationAccess {
         }
     }
 
-    public static ArrayList<Integer> getUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
+    public static ArrayList<Integer> getUsageTime(LocalDate startDate, LocalDate endDate) {
         ArrayList<Integer> usageTime = new ArrayList<>();
 
-        LocalDate localDate = solarPowerPlant.getStaticData().getInstallationDate();
+        //LocalDate localDate = solarPowerPlant.getStaticData().getInstallationDate();
 
         //Calendar calendar = new GregorianCalendar();
         //calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
 
-        LocalDate date = LocalDate.now();
+        //LocalDate date = LocalDate.now();
 
-        int year = date.getYear(),
-                month = date.getMonthValue(),
-                day = date.getDayOfMonth();
+        int year = endDate.getYear(),
+                month = endDate.getMonthValue(),
+                day = endDate.getDayOfMonth();
 
         /*year = date.getYear();
         month = date.getMonthValue();
@@ -83,18 +85,28 @@ public class AuthorizationAccess {
 
 //        System.out.println("1) day: " + day + ", month: " + month + ", year: " + year);
 
-        day -= localDate.getDayOfMonth();
-        if (day < 0) month--;
-        month -= localDate.getMonthValue();
-        if (month < 0) year--;
-        year -= localDate.getYear();
+
+        //int daysInMonth = YearMonth.of(year, month).lengthOfMonth();
+        //System.out.println("days: " + daysInMonth);
+
+        day -= startDate.getDayOfMonth();
+        if (day < 0) {
+            day += YearMonth.of(year, month).lengthOfMonth();
+            month--;
+        }
+        month -= startDate.getMonthValue();
+        if (month < 0) {
+            month += 12;
+            year--;
+        }
+        year -= startDate.getYear();
 
 //        System.out.println("2) day: " + localDate.getDayOfMonth() + ", month: " + localDate.getMonthValue() + ", year: " + localDate.getYear());
 
 //        System.out.println("3) day: " + day + ", month: " + month + ", year: " + year);
 
 
-        usageTime.add(0, year);
+        usageTime.add(0, Math.max(year, 0));
         usageTime.add(1, month);
         usageTime.add(2, day);
 
@@ -138,7 +150,6 @@ public class AuthorizationAccess {
         }*/
         return (int) Math.ceil(arrayList.size() / limit);
     }
-
 
 
 }

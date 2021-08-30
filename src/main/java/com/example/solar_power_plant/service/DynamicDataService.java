@@ -43,6 +43,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -461,7 +462,7 @@ public class DynamicDataService {
         year -= calendar.get(Calendar.YEAR);
 
         return year;*/
-        return AuthorizationAccess.getUsageTime(solarPowerPlant).get(0);
+        return AuthorizationAccess.getUsageTime(solarPowerPlant.getStaticData().getInstallationDate(), LocalDate.now()).get(0);
     }
 
     public String downloadData(HttpServletRequest request,

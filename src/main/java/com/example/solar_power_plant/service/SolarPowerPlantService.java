@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -153,7 +154,7 @@ public class SolarPowerPlantService {
 
         System.out.println("--- year: " + year + " month: " + month + " day: " + day);*/
 
-        ArrayList<Integer> usageTime = AuthorizationAccess.getUsageTime(solarPowerPlant);
+        ArrayList<Integer> usageTime = AuthorizationAccess.getUsageTime(solarPowerPlant.getStaticData().getInstallationDate(), LocalDate.now());
         String result = "";
 
         if (usageTime.get(0) != 0) result += Math.abs(usageTime.get(0)) + " р. ";

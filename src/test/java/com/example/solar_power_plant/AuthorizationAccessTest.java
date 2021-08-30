@@ -15,13 +15,14 @@ import static org.assertj.core.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootTest
 public class AuthorizationAccessTest {
 
     @Test
     public void testReturningUsageTime() {
-        Location location = new Location(
+        /*Location location = new Location(
                 "country", Region.IvanoFrankivsk,
                 "city", "street", "number", 48.2, 32.5);
 
@@ -42,15 +43,32 @@ public class AuthorizationAccessTest {
         );
 
         StaticData staticData = new StaticData(15, 125,
-                LocalDate.parse("2010-06-12", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                LocalDate.parse("2011-10-19", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-        solarPowerPlant.setStaticData(staticData);
+        solarPowerPlant.setStaticData(staticData);*/
+        LocalDate startDate = LocalDate.parse("2011-10-19", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
 
         //System.out.println("ll: " + AuthorizationAccess.getUsageTime(solarPowerPlant).get(0));
-        ArrayList<Integer> usageTime = AuthorizationAccess.getUsageTime(solarPowerPlant);
-        assertThat(usageTime.get(0)).isEqualTo(11);
-        assertThat(usageTime.get(1)).isEqualTo(2);
-        assertThat(usageTime.get(2)).isEqualTo(17);
+        ArrayList<Integer> usageTime = AuthorizationAccess.getUsageTime(
+                startDate,
+                LocalDate.parse("2021-08-08", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        assertThat(usageTime).isEqualTo(Arrays.asList(9, 9, 20));
+
+
+        usageTime = AuthorizationAccess.getUsageTime(
+                startDate,
+                LocalDate.parse("2019-12-20", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        assertThat(usageTime).isEqualTo(Arrays.asList(8, 2, 1));
+
+
+        usageTime = AuthorizationAccess.getUsageTime(
+                startDate,
+                LocalDate.parse("2010-11-22", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        assertThat(usageTime).isEqualTo(Arrays.asList(0, 1, 3));
 
     }
 }
