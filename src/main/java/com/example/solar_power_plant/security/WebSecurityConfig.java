@@ -61,8 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    // TODO: 30.08.2021 Fix login page.
-
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 

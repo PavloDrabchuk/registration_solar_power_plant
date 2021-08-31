@@ -45,6 +45,13 @@ public class RegistrationController {
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
 
+    @GetMapping(path = "/login")
+    public String redirectFromLoginPage(){
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        return (authorizedUser.isPresent()) ? "redirect:/home" : "login";
+    }
+
     @GetMapping("/registration")
     public String newCustomerForm(Model model) {
         System.out.println("newCustomerForm");
