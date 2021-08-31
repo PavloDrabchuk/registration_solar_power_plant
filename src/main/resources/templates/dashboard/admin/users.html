@@ -194,15 +194,15 @@
 
             <!-- Pagination -->
 
-            <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
+            <div th:if="${numPages} > 1"
                  class="text-center pagination-menu">
                 <form action="/admin/users" method="get">
                     <nav>
                         <input th:if="${search}" type="hidden" name="search" th:value="${search}">
-                        <input th:each="page : ${numPages}" th:value="${page}"
-                               th:name="page" th:id="${'page'+page}"
+                        <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value="${page}"
+                               th:name="page" th:id="${'page' + page}"
 
-                               th:class="${page==currentPage}
+                               th:class="${page == currentPage}
                            ? 'btn btn-success mx-1'
                            : 'btn btn-outline-success mx-1'"
                                type="submit">

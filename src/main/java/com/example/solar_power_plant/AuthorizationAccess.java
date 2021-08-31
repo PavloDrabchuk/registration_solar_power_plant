@@ -159,11 +159,11 @@ public class AuthorizationAccess {
         try {
             pageInt = Integer.parseInt(page);
         } catch (NumberFormatException ex) {
-            //System.err.println("Invalid string in argumment");
+            //System.err.println("Invalid string in argument");
             pageInt = 1;
         }
 
-        if (pageInt > maxPage) pageInt = 1;
+        if (pageInt > maxPage || pageInt <= 0) pageInt = 1;
 
         return pageInt;
     }

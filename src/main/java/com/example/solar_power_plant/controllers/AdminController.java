@@ -43,7 +43,7 @@ public class AdminController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dynamicDataService = dynamicDataService;
         this.messageService = messageService;
-        this.emailSenderService=emailSenderService;
+        this.emailSenderService = emailSenderService;
     }
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -99,7 +99,7 @@ public class AdminController {
                 .getNumPagesList(usersService.getAllUsers(),
                         limitUsers).size());
 
-        List<String> pageNumList = null;
+        int pageNumList = 0;
 
         if (searchUsername == null) {
 
@@ -108,9 +108,11 @@ public class AdminController {
                             (pageInt - 1) * (int) limitUsers,
                             (int) limitUsers));
 
-            pageNumList = usersService
+            /*pageNumList = usersService
                     .getNumPagesList(usersService.getAllUsers(),
-                            limitUsers);
+                            limitUsers);*/
+
+            pageNumList = AuthorizationAccess.getNumPagesList(usersService.getAllUsers(), limitUsers);
 
 //                model.addAttribute("numPages", pageNumList);
 //                model.addAttribute("currentPage", page);
@@ -125,7 +127,9 @@ public class AdminController {
                                 (pageInt - 1) * (int) limitUsers,
                                 (int) limitUsers));
 
-                pageNumList = usersService.getNumPagesList(users, limitUsers);
+                //pageNumList = usersService.getNumPagesList(users, limitUsers);
+
+                pageNumList = AuthorizationAccess.getNumPagesList(users, limitUsers);
 
 
 //                    model.addAttribute("numPages", pageNumList);
@@ -136,7 +140,7 @@ public class AdminController {
             }
         }
         model.addAttribute("numPages", pageNumList);
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", pageInt);
         //}
 
         return "dashboard/admin/users";
@@ -550,14 +554,14 @@ public class AdminController {
             solarPowerPlantService.addSolarPowerPlant(updatedSolarPowerPlant.get(), 1);
         }*/
 
-        User recipient=solarPowerPlantService.getSolarPowerPlantByStringId(id).orElseThrow().getUser();
+        User recipient = solarPowerPlantService.getSolarPowerPlantByStringId(id).orElseThrow().getUser();
 
         String title, text;
 
         title = "Сповіщення про оновлення інформації про сонячну електростанцію.";
         text = "Інформацію про Вашу сонячну електростанцію оновлено адміністратором. <br>Назва електростанції: " + solarPowerPlant.getName()
                 + ". <br>Дані оновлено: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss"))
-                +".";
+                + ".";
 
         Message informationMessage = messageService.prepareMessage(title, text, authorizedUser,
                 recipient, "INFORMATION");

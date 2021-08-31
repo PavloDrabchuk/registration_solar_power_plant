@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // TODO: 31.08.2021 Optimise this.
         http.authorizeRequests()
                 .antMatchers("/", "/index", "/add_user/**", "/new", "/addUser", "/registration/**", "/confirm-registration", "/success_user_registration", "/confirm/**", "/recover/**", "/recover-password", "/recoverPassword", "/updatePassword")
                 .permitAll()

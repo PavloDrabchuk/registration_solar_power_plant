@@ -115,7 +115,7 @@ public class UserController {
             int pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()),limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", Integer.parseInt(page));
+            model.addAttribute("currentPage", pageInt);
 
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
