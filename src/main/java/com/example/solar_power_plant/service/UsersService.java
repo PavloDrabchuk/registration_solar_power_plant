@@ -98,7 +98,7 @@ public class UsersService {
 
     public List<String> getNumPagesList(List<User> users, double limit) {
         //double limitTracksId = 2;
-// TODO: 10.08.2021 Duplicate. 
+
         //List<String> listTrackId = tracksRepository.getListTrackId();
         //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
         List<String> pageNumList = new ArrayList<>();

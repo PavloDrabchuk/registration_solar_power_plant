@@ -51,7 +51,7 @@ public class UserController {
         this.locationService = locationService;
         this.messageService = messageService;
 
-        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
         //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
@@ -95,7 +95,11 @@ public class UserController {
         if (authorizedUser.isPresent() && authorizedUser.get().getActivated()) {
             double limitSolarPowerPlant = 4;
 
-            int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant).size());
+            //int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant).size());
+            int pageInt = AuthorizationAccess
+                    .getPage(page, AuthorizationAccess
+                            .getNumPagesList(solarPowerPlantService
+                                    .getSolarPowerPlantsByUser(authorizedUser.get()), limitSolarPowerPlant));
 
             System.out.println("status:" + authorizedUser.get().getActivated());
 
@@ -112,7 +116,7 @@ public class UserController {
             //List<String> pageNumList = solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant);
 
             //int pageNumList = (int) Math.ceil(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()).size() / limitSolarPowerPlant);
-            int pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()),limitSolarPowerPlant);
+            int pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()), limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
             model.addAttribute("currentPage", pageInt);

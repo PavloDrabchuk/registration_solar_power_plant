@@ -95,9 +95,11 @@ public class AdminController {
         //if (authorizedUser.isPresent()) {
         double limitUsers = 7;
 
-        int pageInt = AuthorizationAccess.getPage(page, usersService
-                .getNumPagesList(usersService.getAllUsers(),
-                        limitUsers).size());
+        /*int pageInt = AuthorizationAccess.getPage(page, usersService
+                .getNumPagesList(usersService.getAllUsers(), limitUsers).size());*/
+
+        int pageInt = AuthorizationAccess.getPage(page, AuthorizationAccess
+                .getNumPagesList(usersService.getAllUsers(), limitUsers));
 
         int pageNumList = 0;
 
@@ -384,8 +386,11 @@ public class AdminController {
 //        if (authorizedUser.isPresent()) {
         double limitSolarPowerPlants = 7;
 
-        int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesListForAll(
-                solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants).size());
+        /*int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesListForAll(
+                solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants).size());*/
+
+        int pageInt = AuthorizationAccess.getPage(page, AuthorizationAccess
+                .getNumPagesList(solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants));
 
         int pageNumList = 0;
 
