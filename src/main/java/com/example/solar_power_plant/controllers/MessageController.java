@@ -68,8 +68,11 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
 
-            List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 1);
-            int pageInt = AuthorizationAccess.getPage(page, pageNumList.size());
+            //List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 1);
+
+            int pageNumList = AuthorizationAccess.getNumPagesList(messageService.getAllMessageByRecipient(authorizedUser.get()), limitMessages);
+
+            int pageInt = AuthorizationAccess.getPage(page, pageNumList);
             /*try {
                  pageInt = Integer.parseInt(page);
             }catch(NumberFormatException ex) {
@@ -88,7 +91,7 @@ public class MessageController {
             System.out.println(" - current page: " + pageInt);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", String.valueOf(pageInt));
+            model.addAttribute("currentPage", pageInt);
 
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
 
@@ -136,9 +139,12 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
-            List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 2);
 
-            int pageInt = AuthorizationAccess.getPage(page, pageNumList.size());
+            //List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 2);
+
+            int pageNumList = AuthorizationAccess.getNumPagesList(messageService.getAllMessageBySender(authorizedUser.get()), limitMessages);
+
+            int pageInt = AuthorizationAccess.getPage(page, pageNumList);
 
             model.addAttribute("sentMessages",
                     messageService.getMessagesBySenderForPage(
@@ -149,7 +155,7 @@ public class MessageController {
             System.out.println("current page: " + pageInt);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", String.valueOf(pageInt));
+            model.addAttribute("currentPage", pageInt);
 
             /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
@@ -241,7 +247,6 @@ public class MessageController {
                              RedirectAttributes redirectAttributes,
                              @RequestParam(name = "type", required = false) String type,
                              @RequestParam(name = "username", required = false) String username) {
-
 
 
         //Optional<User> user = getAuthorisedUser();

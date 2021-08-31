@@ -387,7 +387,7 @@ public class AdminController {
         int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesListForAll(
                 solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants).size());
 
-        List<String> pageNumList = null;
+        int pageNumList = 0;
 
         if (searchName == null) {
 
@@ -396,8 +396,10 @@ public class AdminController {
                             (pageInt - 1) * (int) limitSolarPowerPlants,
                             (int) limitSolarPowerPlants));
 
-            pageNumList = solarPowerPlantService.getNumPagesListForAll(
-                    solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants);
+            /*pageNumList = solarPowerPlantService.getNumPagesListForAll(
+                    solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants);*/
+
+            pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlantService.getAllSolarPowerPlants(), limitSolarPowerPlants);
 
 //                model.addAttribute("numPages", pageNumList);
 //                model.addAttribute("currentPage", page);
@@ -405,9 +407,9 @@ public class AdminController {
         } else {
             List<SolarPowerPlant> solarPowerPlants = solarPowerPlantService.getSolarPowerPlantsByName(searchName);
 
-            for (SolarPowerPlant s : solarPowerPlants) {
+            /*for (SolarPowerPlant s : solarPowerPlants) {
                 System.out.println("   s: " + s.getName());
-            }
+            }*/
 
             if (solarPowerPlants.size() > 0) {
 
@@ -417,11 +419,13 @@ public class AdminController {
                                 (pageInt - 1) * (int) limitSolarPowerPlants,
                                 (int) limitSolarPowerPlants));
 
-                pageNumList = solarPowerPlantService.getNumPagesListForAll(solarPowerPlants, limitSolarPowerPlants);
+                //pageNumList = solarPowerPlantService.getNumPagesListForAll(solarPowerPlants, limitSolarPowerPlants);
 
-                for (String p : pageNumList) {
+                pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlants, limitSolarPowerPlants);
+
+                /*for (String p : pageNumList) {
                     System.out.println("    p: " + p);
-                }
+                }*/
 
 //                    model.addAttribute("numPages", pageNumList);
 //                    model.addAttribute("currentPage", page);
@@ -432,7 +436,7 @@ public class AdminController {
 
         }
         model.addAttribute("numPages", pageNumList);
-        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPage", pageInt);
 //        }
 
         return "dashboard/admin/solar-power-plants";

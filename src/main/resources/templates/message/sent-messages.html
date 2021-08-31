@@ -178,7 +178,7 @@
                     </a>-->
                 </div>
 
-                <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
+                <div th:if="${numPages} > 1"
                      class="text-center pagination-menu my-3">
                     <form action="/messages/sent" method="get">
                         <nav>
@@ -187,13 +187,13 @@
                             <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
                             <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
                                    id="page4">-->
-                            <input th:each="page : ${numPages}" th:value="${page}"
-                                   th:name="page" th:id="${'page'+page}"
+                            <input th:each = "page : ${#numbers.sequence(1, numPages)}" th:value = "${page}"
+                                   th:name = "page" th:id = "${'page' + page}"
 
-                                   th:class="${page==currentPage}
+                                   th:class = "${page == currentPage}
                                    ? 'btn btn-success mx-1'
                                    : 'btn btn-outline-success mx-1'"
-                                   type="submit">
+                                   type = "submit">
                         </nav>
                     </form>
                 </div>
