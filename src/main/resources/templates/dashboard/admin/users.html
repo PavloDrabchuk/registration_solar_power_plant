@@ -194,7 +194,7 @@
 
             <!-- Pagination -->
 
-            <div th:if="${numPages} > 1"
+            <!--<div th:if="${numPages} > 1"
                  class="text-center pagination-menu">
                 <form action="/admin/users" method="get">
                     <nav>
@@ -208,7 +208,10 @@
                                type="submit">
                     </nav>
                 </form>
-            </div>
+            </div>-->
+
+            <div th:replace="~{dashboard/admin/fragments/solar-power-plant
+        ::solar-power-plants-pagination(${search}, ${numPages}, ${currentPage}, '/admin/users')}"></div>
 
         </main>
 

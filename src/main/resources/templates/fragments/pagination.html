@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Пагінація</title>
+    <title>pagination</title>
 </head>
 <body>
 
-<div th:fragment="solar-power-plants-pagination (search, numPages, currentPage, url)">
+<div th:fragment="pagination (search, numPages, currentPage, url)">
 
     <div th:if="${numPages} > 1"
          class="text-center pagination-menu">

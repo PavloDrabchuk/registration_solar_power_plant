@@ -116,10 +116,11 @@
     </div>-->
 </div>
 
-<div th:fragment="solar-power-plants-pagination (search, numPages, currentPage)">
+<div th:fragment="solar-power-plants-pagination (search, numPages, currentPage, url)">
 
     <div th:if="${numPages} > 1" class="text-center pagination-menu">
-        <form action="/admin/solar-power-plants" method="get">
+<!--        <form action="/admin/solar-power-plants" method="get">-->
+        <form th:action="${url}" method="get">
             <nav>
                 <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
                 <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
