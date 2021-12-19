@@ -8,10 +8,12 @@ public enum Weather {
     OvercastClouds(0.2D,"overcast clouds"),
     ShowerRain(0.1D,"shower rain"),
     LightRain(0.2D,"light rain"),
+    ModerateRain(0.22D,"moderate rain"),
     HeavyIntensityRain(0.1D,"heavy intensity rain"),
     Thunderstorm(0.01D,"thunderstorm"),
     Mist(0.05D,"mist"),
     Snow(0.15D,"snow"),
+    LightSnow(0.18D,"light snow"),
     Other(0.01D,"other");
 
     private final double coefficient;
