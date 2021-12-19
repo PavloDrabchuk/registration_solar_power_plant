@@ -14,35 +14,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
 public class RegistrationController {
+
     private final UsersService usersService;
-
     private final ConfirmationCodeService confirmationCodeService;
-    //private final UserValidator userValidator;
-
-    //@Autowired
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    //private final Optional<User> authorizedUser;
     private Optional<User> authorizedUser = Optional.empty();
-
 
     @Autowired
     public RegistrationController(UsersService usersService,
                                   ConfirmationCodeService confirmationCodeService,
                                   BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersService = usersService;
-
         this.confirmationCodeService = confirmationCodeService;
-        //this.userValidator = userValidator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-
-        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
 
     @GetMapping(path = "/login")
@@ -54,9 +44,9 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String newCustomerForm(Model model) {
-        System.out.println("newCustomerForm");
         User user = new User();
         model.addAttribute("user", user);
+
         return "add-user";
     }
 
@@ -75,7 +65,6 @@ public class RegistrationController {
             return "add-user";
         } else {
 
-
             if (usersService.getUserByUsername(user.getUsername()).isPresent()) {
                 countErrors++;
                 model.addAttribute("duplicateUser", "Користувач з таким іменем уже існує.");
@@ -90,24 +79,11 @@ public class RegistrationController {
                 return "add-user";
             }
 
-
-            System.out.println("addUser");
-
-            //user.setUserRole(UserRoles.ROLE_USER);
-            //user.setActivated(false);
-            //user.setLocked(false);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-            //user.setDateTimeOfCreation(LocalDateTime.now());
-
-            System.out.println("activated: " + user.getActivated());
             usersService.saveUser(user);
-            System.out.println("time: " + LocalDateTime.now());
-
 
             confirmationCodeService.sendConfirmationCode(user, TypesConfirmationCode.ConfirmRegistration);
 
-            System.out.println("--- --- ---");
             model.addAttribute("email", user.getEmail());
 
             return "success-user-registration";
@@ -117,10 +93,6 @@ public class RegistrationController {
     @GetMapping(path = "/confirm_registration")
     public String confirmUserRegistration(Model model) {
 
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);*/
-
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         if (authorizedUser.isPresent() && authorizedUser.get().getLocked()) {
@@ -129,16 +101,11 @@ public class RegistrationController {
 
         authorizedUser.ifPresent(value -> model.addAttribute("email", value.getEmail()));
 
-        System.out.println("confirmUserRegistration");
         return "confirm-registration";
     }
 
     @GetMapping(path = "/locked-account")
-    public String gerLockedAccountView(Model model) {
-
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);*/
+    public String getLockedAccountView() {
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
@@ -146,24 +113,15 @@ public class RegistrationController {
             return "redirect:/confirm_registration";
         }
 
-        //user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
-
-        System.out.println("locked-account");
         return "locked-account";
     }
 
 
     @GetMapping(path = "/confirm/{confirmationCode}")
     public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
-                                  //@PathVariable("username") String username,
                                   Model model) {
-        System.out.println("CCode: " + confirmationCode);
-        //System.out.println("U: " + username);
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
-
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -171,10 +129,11 @@ public class RegistrationController {
         if (confirmationResult.isPresent() && confirmationResult.get().getValid()) {
             confirmationResult.get().setValid(false);
             confirmationCodeService.saveConfirmationCode(confirmationResult.get());
-            //User user = usersService.getUserByUsername(username);
+
             User user = confirmationResult.get().getUser();
             user.setActivated(true);
             usersService.saveUser(user);
+
             model.addAttribute("okMessage", "Реєстрацію аккаунту підтверджено.");
         } else {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
@@ -184,20 +143,14 @@ public class RegistrationController {
 
     @PostMapping(path = "/sendConfirmationCodeAgain")
     public String sendConfirmationCodeAgain(Model model) {
-        System.out.println("sendConfirmationCodeAgain");
 
         String sendingCodeMessage;
-
-        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);*/
 
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         if (authorizedUser.isPresent()) {
 
             confirmationCodeService.deactivateConfirmationCodesByUser(authorizedUser.get());
-
             confirmationCodeService.sendConfirmationCode(authorizedUser.get(), TypesConfirmationCode.ConfirmRegistration);
 
             sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + authorizedUser.get().getEmail() + ".";
@@ -207,22 +160,14 @@ public class RegistrationController {
         }
         model.addAttribute("sendingCodeMessage", sendingCodeMessage);
 
-
         return "confirm-registration";
     }
 
     @GetMapping(path = "/recover-password")
     public String recoverPasswordRequest(Model model) {
-
-        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
-
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
-
         PasswordRecoverInformation recoverInformation = new PasswordRecoverInformation();
-
         model.addAttribute("recoverInformation", recoverInformation);
-        System.out.println("recoverPassword");
+
         return "recover-password";
     }
 
@@ -248,14 +193,7 @@ public class RegistrationController {
 
     @GetMapping(path = "/recover/{confirmationCode}")
     public String recoverPassword(@PathVariable("confirmationCode") String confirmationCode,
-                                  //@PathVariable("username") String username,
                                   Model model) {
-        System.out.println("CCode: " + confirmationCode);
-
-        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
-
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -281,27 +219,15 @@ public class RegistrationController {
                                  Model model) {
         Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
-        /*if (confirmationCodeResult.isPresent()) {
-            User user = confirmationCodeResult.get().getUser();
-        }*/
-
-        System.out.println("Confirmation code: " + confirmationCode);
-        System.out.println("password: " + password);
-        System.out.println("passwordAgain: " + passwordAgain);
-
         if (password.equals(passwordAgain) && confirmationCodeResult.isPresent()) {
             User user = confirmationCodeResult.get().getUser();
             user.setPassword(bCryptPasswordEncoder.encode(password));
             usersService.saveUser(user);
 
-            //System.out.println("password are equals");
             model.addAttribute("updatePasswordOK", "Пароль успішно змінено.");
         } else {
             model.addAttribute("updatePasswordERROR", "Паролі не співпадають.");
         }
-
-        System.out.println("************************");
-
 
         return "recover-password";
     }
