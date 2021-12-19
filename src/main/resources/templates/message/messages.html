@@ -94,13 +94,16 @@
         <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="px-1 py-2 my-2">
 
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mx-lg-4">
+                <div th:replace="~{message/message-fragments
+        ::header-main-page-messages-fragment('Вхідні повідомлення')}"></div>
+
+                <!--<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mx-lg-4">
                     <h1 class="display-5 fw-bold mx-lg-4">Вхідні повідомлення</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <a type="button" class="btn btn-success px-4 gap-3"
                            th:href="@{/messages/new}">Написати повідомлення</a>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Alerts -->
 
@@ -131,14 +134,19 @@
                     deleteMessage
                 </div>
 
-                <div class="mx-lg-4 py-2 my-2">
+                <div th:replace="~{message/message-fragments
+        ::read-messages-button-fragment('/messages/sent','Переглянути надіслані повідомлення')}"></div>
+                <!--<div class="mx-lg-4 py-2 my-2">
                     <a type="button" class="btn btn-sent-messages text-light px-4 gap-3"
                        th:href="@{/messages/sent}">Переглянути надіслані повідомлення</a>
-                </div>
+                </div>-->
                 <!--    <h1 class="display-5 fw-bold mx-lg-4">Повідомлення</h1>-->
                 <!--    <button type="button" class="btn btn-success px-4 gap-3">Написати повідомлення</button>-->
 
-                <div class="list-group mx-lg-4" th:each="m : ${messages}">
+                <div th:replace="~{message/message-fragments
+        ::messages-fragment(${messages}, '/messages/')}"></div>
+
+                <!--<div class="list-group mx-lg-4" th:each="m : ${messages}">
                     <a th:href="'/messages/'+${m.getId()}"
                        th:class="${m.getRead()}
                            ? 'list-group-item list-group-item-action message-item-read'
@@ -152,17 +160,17 @@
                            th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
                            th:text="${m.getFormattedUsernameAndNameSurname()}">Name Surname</p>
 
-                        <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
+                        &lt;!&ndash;<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
                              th:text="${m.getFormattedUsernameAndNameSurname()}">
                             Name Surname
-                        </div>-->
+                        </div>&ndash;&gt;
                         <p class="mb-1"
                            th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
                            th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">Name Surname</p>
-                        <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
+                        &lt;!&ndash;<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
                              th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">
                             Name Surname
-                        </div>-->
+                        </div>&ndash;&gt;
                         <p th:if="${m.getMessageType().name()=='INFORMATION'}"
                            class="badge bg-info text-wrap user-select-none mb-1">
                             Інформаційне повідомлення
@@ -185,7 +193,7 @@
                         <small th:max="50" th:text="${m.getShortText()}">До 40 символів вміст повідомлення ...</small>
                     </a>
 
-                    <!--<a href="#" class="list-group-item list-group-item-action message-item-read">
+                    &lt;!&ndash;<a href="#" class="list-group-item list-group-item-action message-item-read">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">Тема повідомлення №2</h5>
                             <small class="text-muted">25.05.2021 21:13</small>
@@ -201,28 +209,31 @@
                         </div>
                         <p class="mb-1">Name Surname or [Info or Update]</p>
                         <small class="text-muted">До 40 символів вміст повідомлення ...</small>
-                    </a>-->
-                </div>
+                    </a>&ndash;&gt;
+                </div>-->
 
-                <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
+                <div th:replace="~{fragments/pagination
+        ::pagination(null, ${numPages}, ${currentPage}, '/messages')}"></div>
+
+                <!--<div th:if="${numPages} > 1"
                      class="text-center pagination-menu my-3">
                     <form action="/messages" method="get">
                         <nav>
-                            <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                            &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
                             <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
                             <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
                             <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                                   id="page4">-->
-                            <input th:each="page : ${numPages}" th:value="${page}"
-                                   th:name="page" th:id="${'page'+page}"
+                                   id="page4">&ndash;&gt;
+                            <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value = "${page}"
+                                   th:name="page" th:id = "${'page' + page}"
 
-                                   th:class="${page==currentPage}
+                                   th:class="${page == currentPage}
                                    ? 'btn btn-success mx-1'
                                    : 'btn btn-outline-success mx-1'"
-                                   type="submit">
+                                   type = "submit">
                         </nav>
                     </form>
-                </div>
+                </div>-->
 
             </div>
         </main>

@@ -1,8 +1,7 @@
 package com.example.solar_power_plant.dao;
 
 import com.example.solar_power_plant.model.Message;
-import com.example.solar_power_plant.model.MessageType;
-import com.example.solar_power_plant.model.SolarPowerPlant;
+import com.example.solar_power_plant.enums.MessageType;
 import com.example.solar_power_plant.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

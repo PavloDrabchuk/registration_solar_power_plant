@@ -17,8 +17,12 @@ import java.util.Set;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-    @Autowired
-    private UsersRepository usersRepository;
+
+    private final UsersRepository usersRepository;
+
+    public MyUserDetailsService(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -30,8 +34,6 @@ public class MyUserDetailsService implements UserDetailsService {
         /*for (UserRole role : user.getUserRole()){
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
         }*/
-
-
 
         grantedAuthorities.add(new SimpleGrantedAuthority(user.get().getUserRole().toString()));
         System.out.println("access: "+user.get().getUserRole().toString());

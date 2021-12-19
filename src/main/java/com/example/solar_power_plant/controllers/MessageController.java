@@ -1,11 +1,12 @@
 package com.example.solar_power_plant.controllers;
 
+import com.example.solar_power_plant.AuthorizationAccess;
+import com.example.solar_power_plant.enums.MessageType;
+import com.example.solar_power_plant.enums.UserRoles;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.MessageService;
 import com.example.solar_power_plant.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,8 @@ public class MessageController {
     private final MessageService messageService;
     private final UsersService usersService;
 
+    private Optional<User> authorizedUser = Optional.empty();
+
     @Autowired
     public MessageController(MessageService messageService,
                              UsersService usersService) {
@@ -31,17 +34,18 @@ public class MessageController {
 
     @GetMapping(path = "/messages")
     public String getAllMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
-        Optional<User> user = getAuthorisedUser();
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if(user.isPresent() && (user.get().getLocked() || !user.get().getActivated())){
+        if (authorizedUser.isPresent() && (authorizedUser.get().getLocked() || !authorizedUser.get().getActivated())) {
             return "redirect:/home";
         }
 
 
-        if (user.isPresent()) {
+        if (authorizedUser.isPresent()) {
             double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
 
@@ -64,8 +68,11 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
 
-            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages, 1);
-            int pageInt = getPage(page, pageNumList.size());
+            //List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 1);
+
+            int pageNumList = AuthorizationAccess.getNumPagesList(messageService.getAllMessageByRecipient(authorizedUser.get()), limitMessages);
+
+            int pageInt = AuthorizationAccess.getPage(page, pageNumList);
             /*try {
                  pageInt = Integer.parseInt(page);
             }catch(NumberFormatException ex) {
@@ -75,16 +82,16 @@ public class MessageController {
 
             model.addAttribute("messages",
                     messageService.getMessagesByRecipientForPage(
-                            user.get().getId(),
+                            authorizedUser.get().getId(),
                             (pageInt - 1) * (int) limitMessages,
                             (int) limitMessages));
 
             //List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages,1);
 
-            System.out.println(" - current page: "+pageInt);
+            System.out.println(" - current page: " + pageInt);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", String.valueOf(pageInt));
+            model.addAttribute("currentPage", pageInt);
 
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
 
@@ -93,21 +100,23 @@ public class MessageController {
                     MessageType.FOR_EDITOR));*/
         }
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/messages";
     }
 
     @GetMapping(path = "/messages/sent")
     public String getAllSentMessages(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
-        Optional<User> user = getAuthorisedUser();
-        if (user.isPresent()) {
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (authorizedUser.isPresent()) {
             double limitMessages = 4;
             //List<Message> messages = messageService.getAllMessageByUser(user.get());
 
@@ -130,30 +139,33 @@ public class MessageController {
 
             //model.addAttribute("messages", messageService.getAllMessageByRecipient(user.get()));
             //model.addAttribute("sentMessages", messageService.getAllMessageBySender(user.get()));
-            List<String> pageNumList = messageService.getNumPagesList(user.get(), limitMessages, 2);
 
-            int pageInt = getPage(page, pageNumList.size());
+            //List<String> pageNumList = messageService.getNumPagesList(authorizedUser.get(), limitMessages, 2);
+
+            int pageNumList = AuthorizationAccess.getNumPagesList(messageService.getAllMessageBySender(authorizedUser.get()), limitMessages);
+
+            int pageInt = AuthorizationAccess.getPage(page, pageNumList);
 
             model.addAttribute("sentMessages",
                     messageService.getMessagesBySenderForPage(
-                            user.get().getId(),
+                            authorizedUser.get().getId(),
                             (pageInt - 1) * (int) limitMessages,
                             (int) limitMessages));
 
-            System.out.println("current page: "+pageInt);
+            System.out.println("current page: " + pageInt);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", String.valueOf(pageInt));
+            model.addAttribute("currentPage", pageInt);
 
             /*model.addAttribute("sentMessages",messageService.getAllMessageByUserAndMessageType(
                     user.get(),
                     MessageType.FOR_EDITOR));*/
         }
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/sent-messages";
     }
@@ -162,17 +174,17 @@ public class MessageController {
     public String getMessageById(@PathVariable("id") UUID id,
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         Optional<Message> message = messageService.getMessageById(id);
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         if (message.isPresent()) {
             model.addAttribute("message", message.get());
@@ -188,41 +200,72 @@ public class MessageController {
         return "message/message-by-id";
     }
 
+    @GetMapping(path = "/messages/sent/{id}")
+    public String getSentMessageById(@PathVariable("id") UUID id,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
+
+        Optional<Message> message = messageService.getMessageById(id);
+
+        //Optional<User> user=getAuthorisedUser();
+
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }*/
+
+        if (message.isPresent()) {
+            model.addAttribute("message", message.get());
+
+        } else {
+            System.out.println(" ........ no message ........");
+            redirectAttributes.addFlashAttribute("messageNotFound", "Повідомлення не знайдено");
+            return "redirect:/messages";
+        }
+
+        return "message/message-by-id";
+    }
+
     @GetMapping(path = "/messages/new")
     public String getNewMessageForm(Model model) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         model.addAttribute("message", new Message());
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if (getAuthorisedUser().isPresent() && getAuthorisedUser().get().getUserRole() == UserRoles.EDITOR) {
+        if (authorizedUser.isPresent() && authorizedUser.get().getUserRole() == UserRoles.ROLE_EDITOR) {
             model.addAttribute("editorAccess", "editor");
         }
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/new-message";
     }
 
     @GetMapping(path = "/messages/getUsersList")
     public String getUserList(Model model) {
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
         model.addAttribute("users", usersService.getAllUsers());
         System.out.println("user list");
 
-        Optional<User> user=getAuthorisedUser();
+        //Optional<User> user=getAuthorisedUser();
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if (user.isPresent() && user.get().getUserRole()==UserRoles.ADMIN) {
+
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
             model.addAttribute("adminAccess", "admin");
             System.out.println("admin access");
-        }
+        }*/
 
         return "message/user-list";
     }
@@ -232,22 +275,26 @@ public class MessageController {
                              RedirectAttributes redirectAttributes,
                              @RequestParam(name = "type", required = false) String type,
                              @RequestParam(name = "username", required = false) String username) {
-        Optional<User> user = getAuthorisedUser();
+
+
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
         //Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
 
         /*String title = message.getTitle(),
                 text = message.getText();*/
 
-        System.out.println("Message title: " + message.getTitle() + ", \n" +
+        /*System.out.println("Message title: " + message.getTitle() + ", \n" +
                 "text: " + message.getText() + " \n" +
-                "type: " + type + "\n");
+                "type: " + type + "\n");*/
 
         String title = message.getTitle(),
                 text = message.getText().trim();
 
         Message message1;
 
-        if (user.isPresent() && user.get().getUserRole() == UserRoles.EDITOR) {
+        if (authorizedUser.isPresent() && authorizedUser.get().getUserRole() == UserRoles.ROLE_EDITOR) {
 
 //            String title = message.getTitle(),
 //                    text = message.getText();
@@ -255,13 +302,14 @@ public class MessageController {
 //            Message message1;
             //List<Message> messages=new ArrayList<>();
 
-            if (type.equals("FOR_USER")) {
-                message1 = new Message();
+            if (type.equals("FOR_ROLE_USER")) {
+
+                /*message1 = new Message();
 
                 message1.setTitle(title);
                 message1.setText(text);
 
-                user.ifPresent(message1::setSender);
+                authorizedUser.ifPresent(message1::setSender);
 
                 Optional<User> recipient = usersService.getUserByUsername(username);
                 if (recipient.isPresent()) {
@@ -273,62 +321,71 @@ public class MessageController {
                 System.out.println(" messageType: " + type);
                 //message.setMessageType(MessageType.INFORMATION);
                 message1.setMessageType(MessageType.valueOf(type));
-                message1.setDateTime(LocalDateTime.now());
+                message1.setDateTime(LocalDateTime.now());*/
+                Optional<User> recipient = usersService.getUserByUsername(username);
+
+                message1 = messageService.prepareMessage(title, text, authorizedUser, recipient.orElseThrow(), type);
 
                 messageService.save(message1);
             } else {
 
                 for (User user1 : usersService.getAllUsers()) {
-                    message1 = new Message();
+                    /*message1 = new Message();
 
                     message1.setTitle(title);
                     message1.setText(text);
 
-                    user.ifPresent(message1::setSender);
+                    authorizedUser.ifPresent(message1::setSender);
                     message1.setRecipient(user1);
                     message1.setRead(false);
 
                     System.out.println(" messageType: " + type);
                     //message.setMessageType(MessageType.INFORMATION);
                     message1.setMessageType(MessageType.valueOf(type));
-                    message1.setDateTime(LocalDateTime.now());
+                    message1.setDateTime(LocalDateTime.now());*/
+
+                    message1 = messageService.prepareMessage(title, text, authorizedUser, user1, type);
 
                     messageService.save(message1);
                 }
             }
         } else {
             switch (type) {
-                case "FOR_EDITOR": {
-                    for (User editor : usersService.getAllUsersByUserRole(UserRoles.EDITOR)) {
-                        message1 = new Message();
+                case "FOR_ROLE_EDITOR": {
+                    for (User editor : usersService.getAllUsersByUserRole(UserRoles.ROLE_EDITOR)) {
+                        /*message1 = new Message();
 
                         message1.setTitle(title);
                         message1.setText(text);
 
-                        user.ifPresent(message1::setSender);
+                        authorizedUser.ifPresent(message1::setSender);
                         message1.setRecipient(editor);
                         message1.setRead(false);
 
                         message1.setMessageType(MessageType.valueOf(type));
-                        message1.setDateTime(LocalDateTime.now());
+                        message1.setDateTime(LocalDateTime.now());*/
+
+                        message1 = messageService.prepareMessage(title, text, authorizedUser, editor, type);
 
                         messageService.save(message1);
                     }
                     break;
                 }
-                case "FOR_ADMIN": {
-                    for (User admin : usersService.getAllUsersByUserRole(UserRoles.ADMIN)) {
-                        message1 = new Message();
+                case "FOR_ROLE_ADMIN": {
+                    for (User admin : usersService.getAllUsersByUserRole(UserRoles.ROLE_ADMIN)) {
+                        /*message1 = new Message();
 
                         message1.setTitle(title);
                         message1.setText(text);
 
-                        user.ifPresent(message1::setSender);
+                        authorizedUser.ifPresent(message1::setSender);
                         message1.setRecipient(admin);
                         message1.setRead(false);
 
                         message1.setMessageType(MessageType.valueOf(type));
-                        message1.setDateTime(LocalDateTime.now());
+                        message1.setDateTime(LocalDateTime.now());*/
+
+                        message1 = messageService.prepareMessage(title, text, authorizedUser, admin, type);
 
                         messageService.save(message1);
                     }
@@ -337,9 +394,9 @@ public class MessageController {
                 default: {
                     System.out.println("error message");
 
-                    Optional<User> editor = usersService.getUserByUserRole(UserRoles.EDITOR);
+                    Optional<User> editor = usersService.getUserByUserRole(UserRoles.ROLE_EDITOR);
 
-                    Message errorMessage = new Message();
+                    /*Message errorMessage = new Message();
 
                     errorMessage.setTitle("Помилка надсилання повідомлення.");
                     errorMessage.setText("Під час надсилання вашого повідомлення сталась помилка. " +
@@ -349,11 +406,21 @@ public class MessageController {
                             "Вибачте за незручності.");
 
                     editor.ifPresent(errorMessage::setSender);
-                    user.ifPresent(errorMessage::setRecipient);
+                    authorizedUser.ifPresent(errorMessage::setRecipient);
                     errorMessage.setRead(false);
 
                     errorMessage.setMessageType(MessageType.ERROR);
-                    errorMessage.setDateTime(LocalDateTime.now());
+                    errorMessage.setDateTime(LocalDateTime.now());*/
+
+                    title = "Помилка надсилання повідомлення.";
+                    text = "Під час надсилання вашого повідомлення сталась помилка. " +
+                            "Спробуйте повторити Ваші дії трохи пізніше. Якщо проблему не буде вирішено, " +
+                            "то відправте повідомлення до технічної підтримки на адресу електронної пошти: " +
+                            "solar.power.plant.system@gmail.com. <br><br>" +
+                            "Вибачте за незручності.";
+
+                    Message errorMessage = messageService.prepareMessage(title, text, editor, authorizedUser.get(), "ERROR");
+
 
                     messageService.save(errorMessage);
 
@@ -381,16 +448,18 @@ public class MessageController {
     public String answerMessage(RedirectAttributes redirectAttributes,
                                 @RequestParam(name = "id") String id,
                                 @RequestParam(name = "text") String text) {
-        Optional<User> user = getAuthorisedUser();
+
+        //Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         Optional<Message> message = messageService.getMessageById(UUID.fromString(id));
-        if (user.isPresent() && message.isPresent()) {
+        if (authorizedUser.isPresent() && message.isPresent()) {
             Message answer = new Message();
 
             answer.setTitle(message.get().getTitle());
             answer.setText(text.trim());
 
-            answer.setSender(user.get());
+            answer.setSender(authorizedUser.get());
             answer.setRecipient(message.get().getSender());
 
             answer.setRead(false);
@@ -405,7 +474,8 @@ public class MessageController {
                 answer.setMessageType(MessageType.FOR_USER);
             }*/
 
-            answer.setMessageType(MessageType.valueOf("FOR_"+messageSender.getUserRole().name()));
+            answer.setMessageType(MessageType.valueOf("FOR_" + messageSender.getUserRole().name()));
+            System.out.println("MessageType: "+MessageType.valueOf("FOR_" + messageSender.getUserRole().name()));
 
             answer.setDateTime(LocalDateTime.now());
 
@@ -441,27 +511,29 @@ public class MessageController {
         return "redirect:/messages";
     }*/
 
-    @GetMapping(path = "/message-alert1")
-    public String getMessageAlert(Model model){
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
-                messageService.getCountUnreadMessagesByUser(user)));
+    /*@GetMapping(path = "/message-alert1")
+    public String getMessageAlert(Model model) {
+        *//*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages1",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         System.out.println(".... message-alert1");
         return "dashboard/user/message-alert1";
-    }
+    }*/
 
-    @GetMapping(path = "/getTest")
-    public String getTestG(){
+    /*@GetMapping(path = "/getTest")
+    public String getTestG() {
         return "gt";
-    }
+    }*/
 
-    Optional<User> getAuthorisedUser() {
+    /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
-    }
+    }*/
 
-    private int getPage(String page, int maxPage) {
+    /*private int getPage(String page, int maxPage) {
+        
+        
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
@@ -473,5 +545,17 @@ public class MessageController {
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
-    }
+    }*/
+
+    /*@ModelAttribute("countUnreadMessages")
+    public long getCountUnreadMessages(){
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        System.out.println(" Count unread message: "+authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L));
+
+        return authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L);
+
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
+    }*/
 }

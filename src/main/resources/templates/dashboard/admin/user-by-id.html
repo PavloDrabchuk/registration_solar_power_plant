@@ -99,7 +99,11 @@
             <!-- Table -->
 
             <div class="row gutters-sm">
-                <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
+
+                <div th:replace="~{dashboard/user/user-fragments
+        ::photo-and-username-fragment(${user}, true)}">
+                </div>
+                <!--<div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
@@ -114,10 +118,13 @@
                             </div>
                         </div>
                     </div>
+                </div>-->
 
-                </div>
                 <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
-                    <div class="card mb-3">
+                    <div th:replace="~{dashboard/user/user-fragments
+        ::user-info-fragment(${user})}">
+                    </div>
+                    <!--<div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
@@ -129,7 +136,7 @@
                                     Surname Name
                                 </div>
 
-                                <!--                                <div th:if="${#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"-->
+                                &lt;!&ndash;                                <div th:if="${#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"&ndash;&gt;
                                 <div th:if="${#strings.isEmpty(user.getSurname()) or #strings.isEmpty(user.getName())}"
                                      class="col-sm-9 text-secondary">
                                     Дані відсутні.
@@ -165,7 +172,7 @@
                                      class="col-sm-9 text-secondary">
                                     +380 088 123-45-67
                                 </div>
-                                <!--                                <div th:if="${userInformation.getMobilePhoneNumber() == '' or userInformation.getMobilePhoneNumber() == null}"-->
+                                &lt;!&ndash;                                <div th:if="${userInformation.getMobilePhoneNumber() == '' or userInformation.getMobilePhoneNumber() == null}"&ndash;&gt;
                                 <div th:if="${#strings.isEmpty(user.getMobilePhoneNumber())}"
                                      class="col-sm-9 text-secondary">
                                     Дані відсутні.
@@ -173,9 +180,13 @@
                             </div>
 
                         </div>
+                    </div>-->
+
+                    <div th:replace="~{dashboard/user/user-fragments
+        ::system-info-fragment(${user}, ${countOfRegisteredSolarStations}, ${accountStatus}, true)}">
                     </div>
 
-                    <div class="row gutters-sm">
+                    <!--<div class="row gutters-sm">
                         <div class="col-xl-12 col-sm-12 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -228,13 +239,13 @@
                                             <h6 class="mb-0">Статус аккаунту</h6>
                                         </div>
                                         <div class="col-sm-9" th:switch="${accountStatus}">
-                                            <!-- <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>-->
-                                            <!-- <div class="d-inline-block fs-5  badge badge-success">Активний</div>-->
+                                            &lt;!&ndash; <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>&ndash;&gt;
+                                            &lt;!&ndash; <div class="d-inline-block fs-5  badge badge-success">Активний</div>&ndash;&gt;
                                             <div th:case="'Заблокований'">
-                                                <!--<h5>
+                                                &lt;!&ndash;<h5>
                                                     <strong th:text="${accountStatus}"
                                                             class="d-inline-block  badge badge-success">Активований</strong>
-                                                </h5>-->
+                                                </h5>&ndash;&gt;
                                                 <h5>
                                                     <div class="badge bg-danger text-wrap user-select-none"
                                                          th:text="${accountStatus}">
@@ -243,10 +254,10 @@
                                                 </h5>
                                             </div>
                                             <div th:case="'Активований'">
-                                                <!--<h5>
+                                                &lt;!&ndash;<h5>
                                                     <strong th:text="${accountStatus}"
                                                             class="d-inline-block  badge badge-success">Активований</strong>
-                                                </h5>-->
+                                                </h5>&ndash;&gt;
                                                 <h5>
                                                     <div class="badge bg-success text-wrap user-select-none"
                                                          th:text="${accountStatus}">
@@ -255,11 +266,11 @@
                                                 </h5>
                                             </div>
                                             <div th:case="'Не активований'">
-                                                <!--<h5>
+                                                &lt;!&ndash;<h5>
                                                     <strong th:text="${accountStatus}"
                                                             class="d-inline-block  badge badge-danger">Не
                                                         активований</strong>
-                                                </h5>-->
+                                                </h5>&ndash;&gt;
                                                 <h5>
                                                     <div class="badge bg-warning text-wrap user-select-none"
                                                          th:text="${accountStatus}">
@@ -269,19 +280,23 @@
                                                 </h5>
                                             </div>
 
-                                            <!--<h5>
+                                            &lt;!&ndash;<h5>
                                                 <strong th:text="${accountStatus}"
                                                         class="d-inline-block  badge badge-success">Активний</strong>
-                                            </h5>-->
+                                            </h5>&ndash;&gt;
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
+                    </div>-->
+
+                    <div th:replace="~{dashboard/admin/admin-user-fragments
+        ::setting-user-roles-fragment(${user})}">
                     </div>
 
-                    <div class="row gutters-sm">
+                    <!--<div class="row gutters-sm">
                         <div class="col-xl-12 col-sm-12  mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -292,21 +307,21 @@
                                             <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
                                                 <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
                                                         aria-label="Default select example" name="role">
-                                                    <option value="ADMIN"
-                                                            th:selected="${user.getUserRole().name()=='ADMIN'}">
+                                                    <option value="ROLE_ADMIN"
+                                                            th:selected="${user.getUserRole().name()=='ROLE_ADMIN'}">
                                                         Адміністратор
                                                     </option>
-                                                    <option value="USER"
-                                                            th:selected="${user.getUserRole().name()=='USER'}">
+                                                    <option value="ROLE_USER"
+                                                            th:selected="${user.getUserRole().name()=='ROLE_USER'}">
                                                         Користувач
                                                     </option>
-                                                    <option value="EDITOR"
-                                                            th:selected="${user.getUserRole().name()=='EDITOR'}">
+                                                    <option value="ROLE_EDITOR"
+                                                            th:selected="${user.getUserRole().name()=='ROLE_EDITOR'}">
                                                         Редактор
                                                     </option>
                                                 </select>
                                             </div>
-                                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
+                                            &lt;!&ndash;                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">&ndash;&gt;
                                             <input type="submit"
                                                    class="btn btn-success col-xl-4 col-lg-6 col-md-7 col-sm-8 col-8 "
                                                    value="Змінити роль користувача">
@@ -316,9 +331,15 @@
                                 </div>
                             </div>
                         </div>
+                    </div>-->
+
+                    <!-- Блок для блокування користувача -->
+
+                    <div th:replace="~{dashboard/admin/admin-user-fragments
+        ::user-locking-fragment(${user})}">
                     </div>
 
-                    <div class="row gutters-sm">
+                    <!--<div class="row gutters-sm">
                         <div class="col-xl-12 col-sm-12  mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -327,7 +348,7 @@
                                           class="d-flex flex-column align-items-center text-center">
                                         <div class="row">
 
-                                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
+                                            &lt;!&ndash;                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">&ndash;&gt;
                                             <input type="submit" th:if="${user.getLocked()}"
                                                    class="btn btn-success"
                                                    value="Розблокувати">
@@ -340,7 +361,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <!-- Solar power plants -->
 

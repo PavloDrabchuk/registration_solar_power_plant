@@ -28,7 +28,7 @@
             </button>-->
             <!--                    <a href="/newSolarPowerPlant" class="btn btn-success">Додати станцію</a>-->
 
-            <button class="btn btn-success" onclick="document.location='/newSolarPowerPlant'">Додати станцію
+            <button class="btn btn-success" onclick="document.location='/solar-power-plant/new'">Додати станцію
             </button>
 
 
@@ -43,8 +43,18 @@
     </div>
 
     <div class="alert alert-danger m-2" role="alert"
+         th:if="${deletedSolarPowerPlantError}" th:utext="${deletedSolarPowerPlantError}">
+        deletedSolarPowerPlantError
+    </div>
+
+    <div class="alert alert-danger m-2" role="alert"
          th:if="${exportDataError}" th:utext="${exportDataError}">
         exportDataError
+    </div>
+
+    <div class="alert alert-danger m-2" role="alert"
+         th:if="${getDataError}" th:utext="${getDataError}">
+        getDataError
     </div>
 
     <!--<div class="row mb-2">
@@ -244,16 +254,19 @@
                 </li>
             </ul>
         </nav>-->
-        <div th:if="${#lists.size(numPages)}> 1"
+
+        <!--        <div th:if="${#lists.size(numPages)}> 1"-->
+        <!--<div th:if="${numPages} > 1"
              class="text-center pagination-menu">
             <form action="/home" method="get">
                 <nav>
-                    <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
+                    &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
                     <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
                     <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
                     <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                           id="page4">-->
-                    <input th:each="page : ${numPages}" th:value="${page}"
+                           id="page4">&ndash;&gt;
+                    &lt;!&ndash;                    <input th:each="page : ${numPages}" th:value="${page}"&ndash;&gt;
+                    <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value="${page}"
                            th:name="page" th:id="${'page'+page}"
 
                            th:class="${page==currentPage}
@@ -262,7 +275,12 @@
                            type="submit">
                 </nav>
             </form>
-        </div>
+        </div>-->
+
+        <!-- Pagination -->
+        <div th:replace="~{fragments/pagination
+        ::pagination(${null}, ${numPages}, ${currentPage}, '/home')}"></div>
+
     </div>
     <!--            -->
     <!--<form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">

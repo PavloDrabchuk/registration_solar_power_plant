@@ -1,5 +1,9 @@
 package com.example.solar_power_plant.seeders;
 
+import com.example.solar_power_plant.enums.MessageType;
+import com.example.solar_power_plant.enums.Region;
+import com.example.solar_power_plant.enums.UserRoles;
+import com.example.solar_power_plant.enums.Weather;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.DynamicDataService;
 import com.example.solar_power_plant.service.MessageService;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -49,14 +54,43 @@ public class DatabaseSeeder {
         seedMessageTable();
         seedSolarPowerPlantTable(1, 2);
         //seedSolarPowerPlantTable(2,1);
+    }
 
+    public static SolarPowerPlant createSolarPowerPlantDataForTesting(){
+        Location location = new Location(
+                "country", Region.IvanoFrankivsk,
+                "city", "street", "number", 48.2, 32.5);
+
+        User user = new User(
+                "qwerty",
+                "name",
+                "surname",
+                "pass",
+                UserRoles.ROLE_USER,
+                "example@example.com",
+                "+380123456789");
+
+        SolarPowerPlant solarPowerPlant = new SolarPowerPlant(
+                "43c2792f-3015-4832-b482-e0c4fbaad086",
+                "Spp",
+                location,
+                user
+        );
+
+        StaticData staticData = new StaticData(15, 125,
+                LocalDate.parse("2011-10-19", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        solarPowerPlant.setStaticData(staticData);
+
+        return solarPowerPlant;
     }
 
     private void seedUsersTable() {
+        // TODO: 16.12.2021 Дані в масив об'єднай і створи функцію. І в циклі збережи дані. 
         User user = new User();
         user.setEmail("ravluk2000@gmail.com");
         user.setUsername("qwerty");
-        user.setUserRole(UserRoles.ADMIN);
+        user.setUserRole(UserRoles.ROLE_ADMIN);
         user.setActivated(true);
         user.setLocked(false);
         user.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -66,7 +100,7 @@ public class DatabaseSeeder {
         User user1 = new User();
         user1.setEmail("example1@gmail.com");
         user1.setUsername("qwerty123");
-        user1.setUserRole(UserRoles.USER);
+        user1.setUserRole(UserRoles.ROLE_USER);
         user1.setActivated(false);
         user1.setLocked(false);
         user1.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -76,7 +110,7 @@ public class DatabaseSeeder {
         User user2 = new User();
         user2.setEmail("example2@gmail.com");
         user2.setUsername("qwerty1231");
-        user2.setUserRole(UserRoles.USER);
+        user2.setUserRole(UserRoles.ROLE_USER);
         user2.setActivated(true);
         user2.setLocked(false);
         user2.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -86,7 +120,7 @@ public class DatabaseSeeder {
         User user3 = new User();
         user3.setEmail("example3@gmail.com");
         user3.setUsername("qwerty1232");
-        user3.setUserRole(UserRoles.USER);
+        user3.setUserRole(UserRoles.ROLE_USER);
         user3.setActivated(true);
         user3.setLocked(false);
         user3.setPassword(bCryptPasswordEncoder.encode("qwerty3"));
@@ -96,7 +130,7 @@ public class DatabaseSeeder {
         User user4 = new User();
         user4.setEmail("example4@gmail.com");
         user4.setUsername("qwerty1233");
-        user4.setUserRole(UserRoles.USER);
+        user4.setUserRole(UserRoles.ROLE_USER);
         user4.setActivated(true);
         user4.setLocked(false);
         user4.setPassword(bCryptPasswordEncoder.encode("qwerty4"));
@@ -106,7 +140,7 @@ public class DatabaseSeeder {
         User user5 = new User();
         user5.setEmail("example5@gmail.com");
         user5.setUsername("qwerty1234");
-        user5.setUserRole(UserRoles.USER);
+        user5.setUserRole(UserRoles.ROLE_USER);
         user5.setActivated(true);
         user5.setLocked(false);
         user5.setPassword(bCryptPasswordEncoder.encode("qwerty5"));
@@ -114,9 +148,9 @@ public class DatabaseSeeder {
         usersService.saveUser(user5);
 
         User user6 = new User();
-        user6.setEmail("editor@gmail.com");
+        user6.setEmail("ravluk2000@gmail.com");
         user6.setUsername("editor");
-        user6.setUserRole(UserRoles.EDITOR);
+        user6.setUserRole(UserRoles.ROLE_EDITOR);
         user6.setActivated(true);
         user6.setLocked(false);
         user6.setPassword(bCryptPasswordEncoder.encode("qwerty"));
@@ -126,7 +160,7 @@ public class DatabaseSeeder {
         User user7 = new User();
         user7.setEmail("example6@gmail.com");
         user7.setUsername("qwerty1236");
-        user7.setUserRole(UserRoles.USER);
+        user7.setUserRole(UserRoles.ROLE_USER);
         user7.setActivated(true);
         user7.setLocked(false);
         user7.setPassword(bCryptPasswordEncoder.encode("qwerty7"));
@@ -136,7 +170,7 @@ public class DatabaseSeeder {
         User user8 = new User();
         user8.setEmail("example7@gmail.com");
         user8.setUsername("qwerty1237");
-        user8.setUserRole(UserRoles.USER);
+        user8.setUserRole(UserRoles.ROLE_USER);
         user8.setActivated(true);
         user8.setLocked(false);
         user8.setPassword(bCryptPasswordEncoder.encode("qwerty8"));
@@ -290,11 +324,11 @@ public class DatabaseSeeder {
         message2.setDateTime(LocalDateTime.now().minusMinutes(12));
         messageService.save(message2);
 
-        Message message3 = new Message("title3", "Text 3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tellus a elit ultrices tempor. Donec vel augue congue, elementum dui quis, porta ligula. Ut eros est, tempus eget turpis non, lacinia mattis eros. Curabitur facilisis, ipsum eu blandit tempor, ligula sapien finibus ligula, vel lobortis velit libero et ligula. Nunc a velit a nulla commodo fringilla. Curabitur dapibus euismod condimentum. Phasellus vel mauris facilisis, tempus purus ut, porttitor tellus. Integer bibendum volutpat metus, sed vulputate lectus. Donec fermentum dignissim eros vulputate auctor. Morbi dictum dui enim, tincidunt gravida neque tincidunt eu. Nulla sodales, tortor in congue mollis, est dolor posuere velit, convallis interdum libero massa vitae dolor. Ut mollis risus vitae metus luctus, nec pharetra nunc pharetra. Aliquam faucibus lacus ut erat scelerisque, eu tempus nisl feugiat.", user3.get(), editor.get(), MessageType.FOR_EDITOR, true);
+        Message message3 = new Message("title3", "Text 3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tellus a elit ultrices tempor. Donec vel augue congue, elementum dui quis, porta ligula. Ut eros est, tempus eget turpis non, lacinia mattis eros. Curabitur facilisis, ipsum eu blandit tempor, ligula sapien finibus ligula, vel lobortis velit libero et ligula. Nunc a velit a nulla commodo fringilla. Curabitur dapibus euismod condimentum. Phasellus vel mauris facilisis, tempus purus ut, porttitor tellus. Integer bibendum volutpat metus, sed vulputate lectus. Donec fermentum dignissim eros vulputate auctor. Morbi dictum dui enim, tincidunt gravida neque tincidunt eu. Nulla sodales, tortor in congue mollis, est dolor posuere velit, convallis interdum libero massa vitae dolor. Ut mollis risus vitae metus luctus, nec pharetra nunc pharetra. Aliquam faucibus lacus ut erat scelerisque, eu tempus nisl feugiat.", user3.get(), editor.get(), MessageType.FOR_ROLE_EDITOR, true);
         message3.setDateTime(LocalDateTime.now().minusHours(10).minusMinutes(17));
         messageService.save(message3);
 
-        Message message4 = new Message("title4", "Text 4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tellus a elit ultrices tempor. Donec vel augue congue, elementum dui quis, porta ligula. Ut eros est, tempus eget turpis non, lacinia mattis eros. Curabitur facilisis, ipsum eu blandit tempor, ligula sapien finibus ligula, vel lobortis velit libero et ligula. Nunc a velit a nulla commodo fringilla. Curabitur dapibus euismod condimentum. Phasellus vel mauris facilisis, tempus purus ut, porttitor tellus. Integer bibendum volutpat metus, sed vulputate lectus. Donec fermentum dignissim eros vulputate auctor. Morbi dictum dui enim, tincidunt gravida neque tincidunt eu. Nulla sodales, tortor in congue mollis, est dolor posuere velit, convallis interdum libero massa vitae dolor. Ut mollis risus vitae metus luctus, nec pharetra nunc pharetra. Aliquam faucibus lacus ut erat scelerisque, eu tempus nisl feugiat.", editor.get(), user3.get(), MessageType.FOR_USER, false);
+        Message message4 = new Message("title4", "Text 4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel tellus a elit ultrices tempor. Donec vel augue congue, elementum dui quis, porta ligula. Ut eros est, tempus eget turpis non, lacinia mattis eros. Curabitur facilisis, ipsum eu blandit tempor, ligula sapien finibus ligula, vel lobortis velit libero et ligula. Nunc a velit a nulla commodo fringilla. Curabitur dapibus euismod condimentum. Phasellus vel mauris facilisis, tempus purus ut, porttitor tellus. Integer bibendum volutpat metus, sed vulputate lectus. Donec fermentum dignissim eros vulputate auctor. Morbi dictum dui enim, tincidunt gravida neque tincidunt eu. Nulla sodales, tortor in congue mollis, est dolor posuere velit, convallis interdum libero massa vitae dolor. Ut mollis risus vitae metus luctus, nec pharetra nunc pharetra. Aliquam faucibus lacus ut erat scelerisque, eu tempus nisl feugiat.", editor.get(), user3.get(), MessageType.FOR_ROLE_USER, false);
         message4.setDateTime(LocalDateTime.now().minusHours(2).minusMinutes(12));
         messageService.save(message4);
 

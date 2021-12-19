@@ -1,7 +1,7 @@
 package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.dao.UsersRepository;
-import com.example.solar_power_plant.model.TypesConfirmationCode;
+import com.example.solar_power_plant.enums.TypesConfirmationCode;
 import com.example.solar_power_plant.model.User;
 
 
@@ -10,10 +10,10 @@ import com.example.solar_power_plant.model.User;
 //import org.json.simple.JSONObject;
 //import org.json.simple.parser.JSONParser;
 //import org.json.simple.parser.ParseException;
-import com.example.solar_power_plant.model.UserRoles;
+import com.example.solar_power_plant.enums.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,8 +27,12 @@ public class UsersService {
 
     private final EmailSenderService emailSenderService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${ADMIN_EMAIL}")
+    private String ADMIN_EMAIL;
+
+    /*@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
     @Autowired
     public UsersService(UsersRepository usersRepository,
@@ -38,7 +42,6 @@ public class UsersService {
     }
 
     public Optional<User> getUserById(Long id) {
-
         return usersRepository.findUserById(id);
     }
 
@@ -77,11 +80,11 @@ public class UsersService {
         return usersRepository.findByEmail(email);
     }
 
-    public Optional<User> getUserByUserRole(UserRoles userRoles){
+    public Optional<User> getUserByUserRole(UserRoles userRoles) {
         return usersRepository.findUserByUserRole(userRoles);
     }
 
-    public List<User> getAllUsersByUserRole(UserRoles userRoles){
+    public List<User> getAllUsersByUserRole(UserRoles userRoles) {
         return usersRepository.findAllByUserRole(userRoles);
     }
 
@@ -121,11 +124,12 @@ public class UsersService {
         SimpleMailMessage confirmationMessage = new SimpleMailMessage();
         confirmationMessage.setTo(email);
 
+        // TODO: 10.08.2021 Text mail.
 
-        if (typeConfirmationCode.name().equals("confirmRegistration")) {
+        if (typeConfirmationCode.name().equals("ConfirmRegistration")) {
             confirmationMessage.setSubject("Confirmation mail");
             confirmationMessage.setText("<html><body><h1>header</h1> Please: http://localhost:8080/confirm/" + confirmationCode + "</body></html>");
-        } else if (typeConfirmationCode.name().equals("recoverPassword")) {
+        } else if (typeConfirmationCode.name().equals("RecoverPassword")) {
             confirmationMessage.setSubject("Recover password mail");
             confirmationMessage.setText("Please: http://localhost:8080/recover/" + confirmationCode);
         }
@@ -139,6 +143,18 @@ public class UsersService {
         user.setMobilePhoneNumber(updatedUserInfo.getMobilePhoneNumber());
 
         saveUser(user);
+    }
+
+
+    public void sendRemovingUserEmail(String email) {
+        System.out.println("2) ==..=.=.=.=..=.=.=.=.=.=.=.");
+
+        String subject = "Видалення аккаунту";
+        String text = "Доброго дня. Ваш аккаунт видалено з системи. У разі виникнення питань звертайтесь до адміністратора: "
+                + ADMIN_EMAIL + ".";
+
+        //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
+        emailSenderService.sendEmail(emailSenderService.createSimpleMail(email, subject, text));
     }
 
 

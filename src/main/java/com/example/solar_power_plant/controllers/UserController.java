@@ -1,10 +1,9 @@
 package com.example.solar_power_plant.controllers;
 
+import com.example.solar_power_plant.AuthorizationAccess;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class UsersController {
+public class UserController {
 
     private final UsersService usersService;
     private final SolarPowerPlantService solarPowerPlantService;
@@ -28,36 +27,49 @@ public class UsersController {
     private final MessageService messageService;
     //private final UserValidator userValidator;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //@Autowired
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //private final Optional<User> authorizedUser;
+    private Optional<User> authorizedUser = Optional.empty();
+
 
     @Autowired
-    public UsersController(UsersService usersService,
-                           SolarPowerPlantService solarPowerPlantService,
+    public UserController(UsersService usersService,
+                          SolarPowerPlantService solarPowerPlantService,
 
-                           ConfirmationCodeService confirmationCodeService,
+                          ConfirmationCodeService confirmationCodeService,
 
-                           LocationService locationService,
-                           MessageService messageService) {
+                          LocationService locationService,
+                          MessageService messageService,
+                          BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersService = usersService;
         this.solarPowerPlantService = solarPowerPlantService;
 
         this.confirmationCodeService = confirmationCodeService;
         //this.userValidator = userValidator;
         this.locationService = locationService;
-        this.messageService=messageService;
+        this.messageService = messageService;
+
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
     }
 
 
     @GetMapping
     public String redirectToAccessPages(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();//get logged in username
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        //String username = auth.getName();//get logged in username
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        return (username.equals("anonymousUser")) ? "index" : "redirect:/home";
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
+
+        return (authorizedUser.isPresent()) ? "redirect:/home" : "index";
+
+        //return ("username".equals("anonymousUser")) ? "index" : "redirect:/home";
     }
 
 
@@ -66,45 +78,55 @@ public class UsersController {
 
         System.out.println("getSolarPowerPlantsByUsername, page: " + page);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
+
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);*/
 
-        if (user.isPresent() && user.get().getLocked()) {
+
+        if (authorizedUser.isPresent() && authorizedUser.get().getLocked()) {
             return "redirect:/locked-account";
         }
 
-        if (user.isPresent() && user.get().getActivated()) {
+        if (authorizedUser.isPresent() && authorizedUser.get().getActivated()) {
             double limitSolarPowerPlant = 4;
 
-            int pageInt = getPage(page, solarPowerPlantService.getNumPagesList(user.get(), limitSolarPowerPlant).size());
+            //int pageInt = AuthorizationAccess.getPage(page, solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant).size());
+            int pageInt = AuthorizationAccess
+                    .getPage(page, AuthorizationAccess
+                            .getNumPagesList(solarPowerPlantService
+                                    .getSolarPowerPlantsByUser(authorizedUser.get()), limitSolarPowerPlant));
 
-            System.out.println("status:" + user.get().getActivated());
+            System.out.println("status:" + authorizedUser.get().getActivated());
 
-            String userRole = user.get().getUserRole().toString();
+            //String userRole = authorizedUser.get().getUserRole().toString();
 
             model.addAttribute("solarPowerPlantsByUser",
                     solarPowerPlantService.getSolarPowerPlantByUserForPage(
-                            user.get().getId(),
+                            authorizedUser.get().getId(),
                             (pageInt - 1) * (int) limitSolarPowerPlant,
                             (int) limitSolarPowerPlant));
 
-            model.addAttribute("name", username);
+            model.addAttribute("name", authorizedUser.get().getUsername());
 
-            List<String> pageNumList = solarPowerPlantService.getNumPagesList(user.get(), limitSolarPowerPlant);
+            //List<String> pageNumList = solarPowerPlantService.getNumPagesList(authorizedUser.get(), limitSolarPowerPlant);
+
+            //int pageNumList = (int) Math.ceil(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()).size() / limitSolarPowerPlant);
+            int pageNumList = AuthorizationAccess.getNumPagesList(solarPowerPlantService.getSolarPowerPlantsByUser(authorizedUser.get()), limitSolarPowerPlant);
 
             model.addAttribute("numPages", pageNumList);
-            model.addAttribute("currentPage", page);
+            model.addAttribute("currentPage", pageInt);
 
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
-            if (userRole.equals("ADMIN")) {
+            /*if (userRole.equals("ROLE_ADMIN")) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
-            }
+            }*/
 
             return "home";
         } else {
@@ -118,7 +140,7 @@ public class UsersController {
         return usersService.getUserById(id).orElse(null);
     }*/
 
-    @GetMapping(path = "/registration/success")
+    /*@GetMapping(path = "/registration/success")
     public String redirectToNew() {
         return "redirect:/registration";
     }
@@ -151,11 +173,13 @@ public class UsersController {
 
             System.out.println("addUser");
 
-            user.setUserRole(UserRoles.USER);
-            user.setActivated(false);
-            user.setLocked(false);
+            //user.setUserRole(UserRoles.ROLE_USER);
+            //user.setActivated(false);
+            //user.setLocked(false);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            user.setDateTimeOfCreation(LocalDateTime.now());
+
+            //user.setDateTimeOfCreation(LocalDateTime.now());
+
             System.out.println("activated: " + user.getActivated());
             usersService.saveUser(user);
             System.out.println("time: " + LocalDateTime.now());
@@ -168,20 +192,22 @@ public class UsersController {
 
             return "success_user_registration";
         }
-    }
+    }*/
 
-    @GetMapping(path = "/confirm_registration")
+    /*@GetMapping(path = "/confirm_registration")
     public String confirmUserRegistration(Model model) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        *//*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);*//*
 
-        if (user.isPresent() && user.get().getLocked()) {
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (authorizedUser.isPresent() && authorizedUser.get().getLocked()) {
             return "redirect:/home";
         }
 
-        user.ifPresent(value -> model.addAttribute("email", value.getEmail()));
+        authorizedUser.ifPresent(value -> model.addAttribute("email", value.getEmail()));
 
         System.out.println("confirmUserRegistration");
         return "confirm_registration";
@@ -190,11 +216,13 @@ public class UsersController {
     @GetMapping(path = "/locked-account")
     public String gerLockedAccountView(Model model) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        *//*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);*//*
 
-        if (user.isPresent() && !user.get().getLocked()) {
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        if (authorizedUser.isPresent() && !authorizedUser.get().getLocked()) {
             return "redirect:/confirm_registration";
         }
 
@@ -210,18 +238,20 @@ public class UsersController {
         User user = new User();
         model.addAttribute("user", user);
         return "add_user";
-    }
+    }*/
 
 
-    @GetMapping(path = "/confirm/{confirmationCode}")
+    /*@GetMapping(path = "/confirm/{confirmationCode}")
     public String activateAccount(@PathVariable("confirmationCode") String confirmationCode,
                                   //@PathVariable("username") String username,
                                   Model model) {
         System.out.println("CCode: " + confirmationCode);
         //System.out.println("U: " + username);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -246,18 +276,20 @@ public class UsersController {
 
         String sendingCodeMessage;
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        *//*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);*//*
 
-        if (user.isPresent()) {
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-            confirmationCodeService.deactivateConfirmationCodesByUser(user.get());
+        if (authorizedUser.isPresent()) {
 
-            confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.ConfirmRegistration);
+            confirmationCodeService.deactivateConfirmationCodesByUser(authorizedUser.get());
 
-            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + user.get().getEmail() + ".";
-            model.addAttribute("email", user.get().getEmail());
+            confirmationCodeService.sendConfirmationCode(authorizedUser.get(), TypesConfirmationCode.ConfirmRegistration);
+
+            sendingCodeMessage = "Посилання успішно відправлено ще раз на вказаний e-mail: " + authorizedUser.get().getEmail() + ".";
+            model.addAttribute("email", authorizedUser.get().getEmail());
         } else {
             sendingCodeMessage = "Посилання не надіслано, спробуйте пізніше ще раз.";
         }
@@ -265,39 +297,39 @@ public class UsersController {
 
 
         return "confirm_registration";
-    }
+    }*/
 
     @GetMapping(path = "/profile")
     public String goToProfilePage(Model model) {
         System.out.println("goToProfilePage");
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
+
+        /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
-        Optional<User> user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);*/
 
-        if (user.isPresent()) {
-            model.addAttribute("userInformation", user.get());
-            System.out.println("time: " + user.get().getDateTimeOfCreation());
+        if (authorizedUser.isPresent()) {
+            model.addAttribute("userInformation", authorizedUser.get());
+            System.out.println("time: " + authorizedUser.get().getDateTimeOfCreation());
 
-            user.get().getStringInfo();
-            model.addAttribute("countOfRegisteredSolarStations", solarPowerPlantService.getCountSolarPowerPlantByUser(user.get()));
+            authorizedUser.get().getStringInfo();
+            model.addAttribute("countOfRegisteredSolarStations", solarPowerPlantService.getCountSolarPowerPlantByUser(authorizedUser.get()));
 
-            if (user.get().getLocked()) {
+            if (authorizedUser.get().getLocked()) {
                 model.addAttribute("accountStatus", "Заблокований");
             } else {
-                Boolean accountStatus = user.get().getActivated();
+                Boolean accountStatus = authorizedUser.get().getActivated();
                 model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активований");
             }
-            if (user.get().getUserRole() == UserRoles.ADMIN) {
+            /*if (authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
-            }
+            }*/
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
-
-
 
         }
         return "profile";
@@ -310,28 +342,32 @@ public class UsersController {
         /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         Optional<User> user = usersService.getUserByUsername(username);*/
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
 
-        Optional<User> user = getAuthorisedUser();
+        authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
-        if (user.isPresent()) {
-            model.addAttribute("userInformation", user.get());
+        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
 
-            Boolean accountStatus = user.get().getActivated();
+        //Optional<User> user = getAuthorisedUser();
+
+        if (authorizedUser.isPresent()) {
+            model.addAttribute("userInformation", authorizedUser.get());
+
+            Boolean accountStatus = authorizedUser.get().getActivated();
             model.addAttribute("accountStatus", accountStatus ? "Активований" : "Не активовний");
 
-            if (user.get().getUserRole() == UserRoles.ADMIN) {
+            /*if (authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
                 model.addAttribute("adminAccess", "admin");
                 System.out.println("admin access");
-            }
+            }*/
+
             //model.addAttribute("countUnreadMessages",messageService.getCountUnreadMessagesByUser(user.get()));
 
         }
         return "edit-profile";
     }
 
-    @PostMapping(path = "/profile/update")
+    @PutMapping(path = "/profile/update")
     public String updateProfileInfo(@Valid @ModelAttribute("userInformation") User updatedUserInfo, BindingResult bindingResult) {
 
         System.out.println("updateProfileInfo");
@@ -341,21 +377,25 @@ public class UsersController {
             return "edit-profile";
         } else {
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();//get logged in username
-            Optional<User> user = usersService.getUserByUsername(username);
+            Optional<User> user = usersService.getUserByUsername(username);*/
 
-            user.ifPresent(value -> usersService.updateUserInformation(value, updatedUserInfo));
+            authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+            authorizedUser.ifPresent(value -> usersService.updateUserInformation(value, updatedUserInfo));
 
             return "redirect:/profile";
         }
     }
 
-    @GetMapping(path = "/recover_password")
+    /*@GetMapping(path = "/recover-password")
     public String recoverPasswordRequest(Model model) {
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         PasswordRecoverInformation recoverInformation = new PasswordRecoverInformation();
 
@@ -372,8 +412,8 @@ public class UsersController {
     @PostMapping(path = "/recoverPassword")
     public String sendResetPasswordMail(@Valid @ModelAttribute("recoverInformation") PasswordRecoverInformation recoverInformation, Model model) {
 
-
         Optional<User> user = usersService.getUserByUsername(recoverInformation.getUsername());
+
         if (user.isPresent() && user.get().getEmail().equals(recoverInformation.getEmail())) {
 
             confirmationCodeService.sendConfirmationCode(user.get(), TypesConfirmationCode.RecoverPassword);
@@ -390,8 +430,10 @@ public class UsersController {
                                   Model model) {
         System.out.println("CCode: " + confirmationCode);
 
-        getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));
+        //authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
+
+        *//*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*//*
 
         Optional<ConfirmationCode> confirmationResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
 
@@ -416,16 +458,21 @@ public class UsersController {
                                  @RequestParam("passwordAgain") String passwordAgain,
                                  Model model) {
         Optional<ConfirmationCode> confirmationCodeResult = confirmationCodeService.findConfirmationCodeByConfirmationCode(confirmationCode);
-        User user = confirmationCodeResult.get().getUser();
+
+        *//*if (confirmationCodeResult.isPresent()) {
+            User user = confirmationCodeResult.get().getUser();
+        }*//*
 
         System.out.println("Confirmation code: " + confirmationCode);
         System.out.println("password: " + password);
         System.out.println("passwordAgain: " + passwordAgain);
 
-        if (password.equals(passwordAgain)) {
+        if (password.equals(passwordAgain) && confirmationCodeResult.isPresent()) {
+            User user = confirmationCodeResult.get().getUser();
             user.setPassword(bCryptPasswordEncoder.encode(password));
             usersService.saveUser(user);
-            System.out.println("password are equals");
+
+            //System.out.println("password are equals");
             model.addAttribute("updatePasswordOK", "Пароль успішно змінено.");
         } else {
             model.addAttribute("updatePasswordERROR", "Паролі не співпадають.");
@@ -435,25 +482,32 @@ public class UsersController {
 
 
         return "recover_password";
-    }
+    }*/
 
-    Optional<User> getAuthorisedUser() {
+    /*Optional<User> getAuthorisedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();//get logged in username
         return usersService.getUserByUsername(username);
-    }
+    }*/
 
-    private int getPage(String page, int maxPage) {
+    /*private int getPage(String page, int maxPage) {
         int pageInt;
         try {
             pageInt = Integer.parseInt(page);
         } catch (NumberFormatException ex) {
-            //System.err.println("Invalid string in argumment");
+            //System.err.println("Invalid string in argument");
             pageInt = 1;
         }
 
         if (pageInt > maxPage) pageInt = 1;
 
         return pageInt;
-    }
+    }*/
+
+   /* @ModelAttribute("version")
+    public String getVersion() {
+        return "versionService.getVersion()";
+    }*/
+
+
 }

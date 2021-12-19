@@ -1,5 +1,6 @@
 package com.example.solar_power_plant.model;
 
+import com.example.solar_power_plant.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -32,10 +33,10 @@ public class User {
     @Transient
     private String passwordConfirm;
 
-    private Boolean activated;
-    private Boolean locked;
+    private Boolean activated = false;
+    private Boolean locked = false;
 
-    private LocalDateTime dateTimeOfCreation;
+    private LocalDateTime dateTimeOfCreation=LocalDateTime.now();
 
     //@ManyToMany
     //private Set<UserRole> roles;
@@ -48,8 +49,9 @@ public class User {
     //@OnDelete(action = OnDeleteAction.CASCADE)
 
     //    @Cascade(value = {  CascadeType.ALL })
+
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private UserRoles userRole;
+    private UserRoles userRole=UserRoles.ROLE_USER;
 
     public User(
             @JsonProperty("username") String username,

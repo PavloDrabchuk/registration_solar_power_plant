@@ -25,6 +25,7 @@
 
 <div class="container-fluid">
     <div class="row">
+        <!--/*@thymesVar id="solarPowerPlant" type="com.example.solar_power_plant.model.SolarPowerPlant"*/-->
 
         <!-- Sidebar -->
         <div th:replace="~{dashboard/user/sidebar}"></div>
@@ -68,11 +69,22 @@
                                 </div>
                             </div>
                         </div>
+                        th:class="${page == currentPage}
+                           ? 'btn btn-success mx-1'
+                           : 'btn btn-outline-success mx-1'"
+
+                           th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}"
+                           th:action="${'/view/'+solarPowerPlant.getStringId()+'/update'}"
+
                     </div>-->
                     <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
                         <form th:if="${solarPowerPlant}"
-                              th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}"
-                              th:object="${solarPowerPlant}" method="post">
+
+                              th:action="${isAdmin}
+                                ? '/admin/solar-power-plants/'+${solarPowerPlant.getStringId()}+'/update'
+                                : '/view/'+${solarPowerPlant.getStringId()}+'/update'"
+
+                              th:object="${solarPowerPlant}" th:method="put">
 
                             <!-- Name and other -->
                             <h3>Редагування інформації про сонячну станцію</h3>
@@ -130,7 +142,7 @@
                                                    aria-label="InstallationDate"
                                                    aria-describedby="addon-wrapping-installation-date"
                                                    th:max="${localDate}"
-                                                   th:value="${solarPowerPlant.getStaticData().getStringInstallationDate()}"
+                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"
                                             >
 
                                             <!--                                            <p th:text="${solarPowerPlant.getStaticData().getStringInstallationDate()}"></p>-->

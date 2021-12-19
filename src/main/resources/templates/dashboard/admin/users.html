@@ -108,6 +108,10 @@
                  th:if="${errorLockingUserMessage}" th:utext="${errorLockingUserMessage}">
                 errorLockingUserMessage
             </div>
+            <div class="alert alert-danger m-2" role="alert"
+                 th:if="${userChangeError}" th:utext="${userChangeError}">
+                userChangeError
+            </div>
             <!--<div class="alert alert-warning alert-dismissible fade show mx-2" role="alert">
                 usersNotFoundMessage
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрити"></button>
@@ -164,8 +168,8 @@
                                         th:class="${#httpServletRequest.remoteUser != user.getUsername()} ? 'item border-0 btn btn-danger' : 'item border-0 btn btn-danger disabled'"
                                         data-toggle="tooltip"
                                         data-placement="top"
-                                        title="Видалити"
-                                >
+                                        title="Видалити">
+
                                     <!--            <i class="zmdi zmdi-delete"></i>-->
                                     <!--            <i class="bi bi-trash"></i>-->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -190,21 +194,24 @@
 
             <!-- Pagination -->
 
-            <div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}"
+            <!--<div th:if="${numPages} > 1"
                  class="text-center pagination-menu">
                 <form action="/admin/users" method="get">
                     <nav>
-                        <input th:if="${search}" type="hidden" name="search" th:value="${search}">
-                        <input th:each="page : ${numPages}" th:value="${page}"
-                               th:name="page" th:id="${'page'+page}"
+                        <input th:if="${search}" type="hidden" name="search" th:value = "${search}">
+                        <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value = "${page}"
+                               th:name="page" th:id="${'page' + page}"
 
-                               th:class="${page==currentPage}
+                               th:class="${page == currentPage}
                            ? 'btn btn-success mx-1'
                            : 'btn btn-outline-success mx-1'"
                                type="submit">
                     </nav>
                 </form>
-            </div>
+            </div>-->
+
+            <div th:replace="~{fragments/pagination
+        ::pagination(${search}, ${numPages}, ${currentPage}, '/admin/users')}"></div>
 
         </main>
 
