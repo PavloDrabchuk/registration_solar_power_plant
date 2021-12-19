@@ -210,8 +210,8 @@
                 </form>
             </div>-->
 
-            <div th:replace="~{dashboard/admin/fragments/solar-power-plant
-        ::solar-power-plants-pagination(${search}, ${numPages}, ${currentPage}, '/admin/users')}"></div>
+            <div th:replace="~{fragments/pagination
+        ::pagination(${search}, ${numPages}, ${currentPage}, '/admin/users')}"></div>
 
         </main>
 

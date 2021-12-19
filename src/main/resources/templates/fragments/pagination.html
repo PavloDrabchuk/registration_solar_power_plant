@@ -9,9 +9,9 @@
 <body>
 
 <div th:fragment="pagination (search, numPages, currentPage, url)">
-
+<!-- th:class="${search!=null}?'text-center pagination-menu my-3':'text-center pagination-menu'" -->
     <div th:if="${numPages} > 1"
-         class="text-center pagination-menu">
+         class="text-center pagination-menu my-3">
 <!--        <form action="/admin/solar-power-plants" method="get">-->
         <form th:action="${url}" method="get">
             <nav>

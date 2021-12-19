@@ -94,8 +94,8 @@
         ::solar-power-plants(${solarPowerPlants})}"></div>
 
             <!-- Pagination -->
-            <div th:replace="~{dashboard/admin/fragments/solar-power-plant
-        ::solar-power-plants-pagination(${search}, ${numPages}, ${currentPage}, '/admin/solar-power-plants')}"></div>
+            <div th:replace="~{fragments/pagination
+        ::pagination(${search}, ${numPages}, ${currentPage}, '/admin/solar-power-plants')}"></div>
         </main>
     </div>
 </div>

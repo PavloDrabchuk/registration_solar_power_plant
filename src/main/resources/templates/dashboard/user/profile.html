@@ -67,7 +67,11 @@
         <div class="main-body">
 
             <div class="row gutters-sm">
-                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 mb-3">
+
+                <div th:replace="~{dashboard/user/user-fragments
+        ::photo-and-username-fragment(${userInformation}, false)}">
+                </div>
+                <!--<div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
@@ -83,19 +87,22 @@
                             </div>
                         </div>
                     </div>
+                </div>-->
 
-                </div>
                 <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 mb-3">
-                    <div class="card mb-3">
+                    <div th:replace="~{dashboard/user/user-fragments
+        ::user-info-fragment(${userInformation})}">
+                    </div>
+                    <!--<div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">П.І.Б.</h6>
                                 </div>
-                                <!--<div th:text="${userInformation.getSurname()+' '+userInformation.getName()}"
+                                &lt;!&ndash;<div th:text="${userInformation.getSurname()+' '+userInformation.getName()}"
                                      class="col-sm-9 text-secondary">
                                     Surname Name
-                                </div>-->
+                                </div>&ndash;&gt;
 
                                 <div th:if="${!#strings.isEmpty(userInformation.getSurname()) and !#strings.isEmpty(userInformation.getName())}"
                                      th:text="${userInformation.getSurname()+' '+userInformation.getName()}"
@@ -103,7 +110,7 @@
                                     Surname Name
                                 </div>
 
-                                <!--                                <div th:if="${#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"-->
+                                &lt;!&ndash;                                <div th:if="${#strings.isEmpty(userInformation.getSurname()+userInformation.getName())}"&ndash;&gt;
                                 <div th:if="${#strings.isEmpty(userInformation.getSurname()) or #strings.isEmpty(userInformation.getName())}"
                                      class="col-sm-9 text-secondary">
                                     Дані відсутні.
@@ -135,13 +142,13 @@
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Мобільний телефон</h6>
                                 </div>
-                                <!--                                <div th:if="${userInformation.getMobilePhoneNumber() != '' or userInformation.getMobilePhoneNumber() != null}"-->
+                                &lt;!&ndash;                                <div th:if="${userInformation.getMobilePhoneNumber() != '' or userInformation.getMobilePhoneNumber() != null}"&ndash;&gt;
                                 <div th:if="${!#strings.isEmpty(userInformation.getMobilePhoneNumber())}"
                                      th:text="${userInformation.getMobilePhoneNumber()}"
                                      class="col-sm-9 text-secondary">
                                     +380 088 123-45-67
                                 </div>
-                                <!--                                <div th:if="${userInformation.getMobilePhoneNumber() == '' or userInformation.getMobilePhoneNumber() == null}"-->
+                                &lt;!&ndash;                                <div th:if="${userInformation.getMobilePhoneNumber() == '' or userInformation.getMobilePhoneNumber() == null}"&ndash;&gt;
                                 <div th:if="${#strings.isEmpty(userInformation.getMobilePhoneNumber())}"
                                      class="col-sm-9 text-secondary">
                                     Дані відсутні.
@@ -150,9 +157,13 @@
                             </div>
 
                         </div>
+                    </div>-->
+
+                    <div th:replace="~{dashboard/user/user-fragments
+        ::system-info-fragment(${userInformation}, ${countOfRegisteredSolarStations}, ${accountStatus}, false)}">
                     </div>
 
-                    <div class="row gutters-sm">
+                    <!--<div class="row gutters-sm">
                         <div class="col-sm-12  mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
@@ -195,13 +206,13 @@
                                             <h6 class="mb-0">Статус аккаунту</h6>
                                         </div>
                                         <div class="col-sm-9" th:switch="${accountStatus}">
-                                            <!-- <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>-->
-                                            <!-- <div class="d-inline-block fs-5  badge badge-success">Активний</div>-->
+                                            &lt;!&ndash; <h2 class="badge fs-5 bg-success text-light text-wrap ">Активний</h2>&ndash;&gt;
+                                            &lt;!&ndash; <div class="d-inline-block fs-5  badge badge-success">Активний</div>&ndash;&gt;
                                             <div th:case="'Заблокований'">
-                                                <!--<h5>
+                                                &lt;!&ndash;<h5>
                                                     <strong th:text="${accountStatus}"
                                                             class="d-inline-block  badge badge-success">Активований</strong>
-                                                </h5>-->
+                                                </h5>&ndash;&gt;
                                                 <h5>
                                                     <div class="badge bg-danger text-wrap user-select-none"
                                                          th:text="${accountStatus}">
@@ -210,10 +221,10 @@
                                                 </h5>
                                             </div>
                                             <div th:case="'Активований'">
-                                                <!--<h5>
+                                                &lt;!&ndash;<h5>
                                                     <strong th:text="${accountStatus}"
                                                             class="d-inline-block  badge badge-success">Активований</strong>
-                                                </h5>-->
+                                                </h5>&ndash;&gt;
                                                 <h5>
                                                     <div class="badge bg-success text-wrap user-select-none"
                                                          th:text="${accountStatus}">
@@ -222,11 +233,11 @@
                                                 </h5>
                                             </div>
                                             <div th:case="'Не активований'">
-                                                <!--<h5>
+                                                &lt;!&ndash;<h5>
                                                     <strong th:text="${accountStatus}"
                                                             class="d-inline-block  badge badge-danger">Не
                                                         активований</strong>
-                                                </h5>-->
+                                                </h5>&ndash;&gt;
                                                 <h5>
                                                     <div class="badge bg-warning text-wrap user-select-none"
                                                          th:text="${accountStatus}">
@@ -236,17 +247,17 @@
                                                 </h5>
                                             </div>
 
-                                            <!--<h5>
+                                            &lt;!&ndash;<h5>
                                                 <strong th:text="${accountStatus}"
                                                         class="d-inline-block  badge badge-success">Активний</strong>
-                                            </h5>-->
+                                            </h5>&ndash;&gt;
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

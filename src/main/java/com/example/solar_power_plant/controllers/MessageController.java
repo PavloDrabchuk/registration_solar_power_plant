@@ -200,6 +200,34 @@ public class MessageController {
         return "message/message-by-id";
     }
 
+    @GetMapping(path = "/messages/sent/{id}")
+    public String getSentMessageById(@PathVariable("id") UUID id,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+        /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
+                messageService.getCountUnreadMessagesByUser(user)));*/
+
+        Optional<Message> message = messageService.getMessageById(id);
+
+        //Optional<User> user=getAuthorisedUser();
+
+        /*if (user.isPresent() && user.get().getUserRole()==UserRoles.ROLE_ADMIN) {
+            model.addAttribute("adminAccess", "admin");
+            System.out.println("admin access");
+        }*/
+
+        if (message.isPresent()) {
+            model.addAttribute("message", message.get());
+
+        } else {
+            System.out.println(" ........ no message ........");
+            redirectAttributes.addFlashAttribute("messageNotFound", "Повідомлення не знайдено");
+            return "redirect:/messages";
+        }
+
+        return "message/message-by-id";
+    }
+
     @GetMapping(path = "/messages/new")
     public String getNewMessageForm(Model model) {
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
@@ -274,7 +302,7 @@ public class MessageController {
 //            Message message1;
             //List<Message> messages=new ArrayList<>();
 
-            if (type.equals("FOR_USER")) {
+            if (type.equals("FOR_ROLE_USER")) {
 
                 /*message1 = new Message();
 
@@ -323,7 +351,7 @@ public class MessageController {
             }
         } else {
             switch (type) {
-                case "FOR_EDITOR": {
+                case "FOR_ROLE_EDITOR": {
                     for (User editor : usersService.getAllUsersByUserRole(UserRoles.ROLE_EDITOR)) {
                         /*message1 = new Message();
 
@@ -343,7 +371,7 @@ public class MessageController {
                     }
                     break;
                 }
-                case "FOR_ADMIN": {
+                case "FOR_ROLE_ADMIN": {
                     for (User admin : usersService.getAllUsersByUserRole(UserRoles.ROLE_ADMIN)) {
                         /*message1 = new Message();
 
@@ -447,6 +475,7 @@ public class MessageController {
             }*/
 
             answer.setMessageType(MessageType.valueOf("FOR_" + messageSender.getUserRole().name()));
+            System.out.println("MessageType: "+MessageType.valueOf("FOR_" + messageSender.getUserRole().name()));
 
             answer.setDateTime(LocalDateTime.now());
 

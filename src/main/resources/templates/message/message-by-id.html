@@ -36,9 +36,9 @@
             if (document.getElementById('goBack1')) {
                 document.getElementById('goBack1').hidden ^= true;
             }
-            if (document.getElementById('goBack2')) {
+            /*if (document.getElementById('goBack2')) {
                 document.getElementById('goBack2').hidden ^= true;
-            }
+            }*/
             console.log("b a: " + document.getElementById('buttons').hidden);
 
             //if(answerBlock === true) answerBlock= false;
@@ -99,11 +99,11 @@
                 <div class=" mx-auto">
                     <!--        <p class="">Name Surname</p>-->
                     <h5>
-                        <div th:if="${(message.getMessageType().name()=='FOR_EDITOR' or message.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != message.getSender().getUsername()}"
+                        <div th:if="${(message.getMessageType().name()=='FOR_ROLE_EDITOR' or message.getMessageType().name()=='FOR_ROLE_USER') and #httpServletRequest.remoteUser != message.getSender().getUsername()}"
                              th:text="${message.getFormattedUsernameAndNameSurname()}">
                             Name Surname
                         </div>
-                        <div th:if="${(message.getMessageType().name()=='FOR_EDITOR' or message.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == message.getSender().getUsername()}"
+                        <div th:if="${(message.getMessageType().name()=='FOR_ROLE_EDITOR' or message.getMessageType().name()=='FOR_ROLE_USER') and #httpServletRequest.remoteUser == message.getSender().getUsername()}"
                              th:text="${message.getFormattedUsernameAndNameSurnameOfRecipient()}">
                             Name Surname
                         </div>
@@ -131,10 +131,13 @@
                         <a th:if="${(#httpServletRequest.remoteUser != message.getSender().getUsername()) and message.isAnswering()}"
                            class="btn btn-outline-success px-4 gap-3"
                            onclick="visibleExportDataTip()" id="answer">Відповісти</a>
-                        <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
+                        <!--<a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
                            href="/messages" class="btn btn-success px-4 gap-3" id="goBack1">Повернутись</a>
                         <a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
-                           href="/messages/sent" class="btn btn-success px-4 gap-3" id="goBack2">Повернутись</a>
+                           href="/messages/sent" class="btn btn-success px-4 gap-3" id="goBack2">Повернутись</a>-->
+
+                        <a class="btn btn-success px-4 gap-3" id="goBack1"
+                           onclick="history.back(); return false;">Повернутись</a>
                         <!--<a class="btn btn-danger px-4 gap-3">Видалити</a>
 
                         <form th:action="${'/messages/'+message.getId()+'/delete'}" th:method="delete">
@@ -195,13 +198,15 @@
                     </div>-->
                     <div class="d-grid gap-2 d-sm-flex ">
                         <button type="submit" class="px-4 btn btn-success gap-3">Надіслати</button>
-                        <a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
+                        <!--<a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
                            href="/messages/sent"
                            class="px-4 btn btn-outline-success gap-3">Повернутись</a>
 
                         <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
                            href="/messages"
-                           class="px-4 btn btn-outline-success gap-3">Повернутись</a>
+                           class="px-4 btn btn-outline-success gap-3">Повернутись</a>-->
+                        <a class="px-4 btn btn-outline-success gap-3"
+                           onclick="history.back(); return false;">Повернутись</a>
                     </div>
                 </form>
 

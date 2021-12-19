@@ -1,2 +1,6 @@
 Main: "Rain", description: "moderate rain", dt: 1629820365
 Main: "Rain", description: "moderate rain", dt: 1629820365
+Main: "Snow", description: "light snow", dt: 1639682187
+Main: "Snow", description: "light snow", dt: 1639682187
+Main: "Snow", description: "light snow", dt: 1639683987
+Main: "Snow", description: "light snow", dt: 1639683987

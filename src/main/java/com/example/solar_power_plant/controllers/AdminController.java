@@ -50,7 +50,7 @@ public class AdminController {
 
     @GetMapping(path = "/admin")
     public String getAdminPage() throws MessagingException {
-        return "admin_page";
+        return "admin-page";
         //System.out.println("getAllUsers");
 
         /*getAuthorisedUser().ifPresent(user -> model.addAttribute("countUnreadMessages",
@@ -508,9 +508,9 @@ public class AdminController {
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");*/
 
-        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model);
+        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model, true);
 
-        return "dashboard/admin/update-solar-power-plant-by-id";
+        return "dashboard/solar-power-plant/update-solar-power-plant-by-id";
     }
 
     @PutMapping(path = "/admin/solar-power-plants/{id}/update")

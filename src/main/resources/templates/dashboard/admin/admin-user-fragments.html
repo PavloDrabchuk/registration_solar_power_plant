@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="user-locking-fragment(user)">
+    <div class="row gutters-sm">
+        <div class="col-xl-12 col-sm-12  mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <form th:action="${'/admin/users/'+user.getId()+'/locking'}" method="post"
+                          class="d-flex flex-column align-items-center text-center">
+                        <div class="row">
+
+                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
+                            <input type="submit" th:if="${user.getLocked()}"
+                                   class="btn btn-success"
+                                   value="Розблокувати">
+
+                            <input type="submit" th:if="${!user.getLocked()}"
+                                   class="btn btn-danger"
+                                   value="Заблокувати">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="setting-user-roles-fragment(user)">
+    <div class="row gutters-sm">
+        <div class="col-xl-12 col-sm-12  mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+
+                    <form th:action="${'/admin/users/'+user.getId()+'/set-role'}" method="post">
+                        <div class="row">
+                            <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                                <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
+                                        aria-label="Default select example" name="role">
+                                    <option value="ROLE_ADMIN"
+                                            th:selected="${user.getUserRole().name()=='ROLE_ADMIN'}">
+                                        Адміністратор
+                                    </option>
+                                    <option value="ROLE_USER"
+                                            th:selected="${user.getUserRole().name()=='ROLE_USER'}">
+                                        Користувач
+                                    </option>
+                                    <option value="ROLE_EDITOR"
+                                            th:selected="${user.getUserRole().name()=='ROLE_EDITOR'}">
+                                        Редактор
+                                    </option>
+                                </select>
+                            </div>
+                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
+                            <input type="submit"
+                                   class="btn btn-success col-xl-4 col-lg-6 col-md-7 col-sm-8 col-8 "
+                                   value="Змінити роль користувача">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

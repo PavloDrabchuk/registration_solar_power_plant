@@ -1,16 +1,11 @@
 package com.example.solar_power_plant.controllers;
 
 import com.example.solar_power_plant.AuthorizationAccess;
-import com.example.solar_power_plant.dao.DataByPeriodAndSolarPowerPlant;
 import com.example.solar_power_plant.enums.Region;
 import com.example.solar_power_plant.model.*;
 import com.example.solar_power_plant.service.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONException;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -99,7 +94,7 @@ public class SolarPowerPlantController {
 //            addAdminAccessToModel(model);
             //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
-            return "add_solar_power_plant";
+            return "add-solar-power-plant";
             //return "redirect:/newSolarPowerPlant";
         }
 
@@ -190,7 +185,7 @@ public class SolarPowerPlantController {
         }*/
         //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
-        return "add_solar_power_plant";
+        return "add-solar-power-plant";
     }
 
     @GetMapping(path = "/view/{id}")
@@ -253,7 +248,7 @@ public class SolarPowerPlantController {
 
         //AuthorizationAccess.addAdminAccessToModel(model, usersService);
 
-        return "solar_power_plant_info_by_id";
+        return "solar-power-plant-info-by-id";
     }
 
     @GetMapping(path = "/view/{id}/update")
@@ -275,10 +270,10 @@ public class SolarPowerPlantController {
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");*/
 
-        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model);
+        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model,false);
 
 
-        return "dashboard/user/solar-power-plant/update-solar-power-plant-by-id";
+        return "dashboard/solar-power-plant/update-solar-power-plant-by-id";
     }
 
     @PutMapping(path = "/view/{id}/update")

@@ -57,7 +57,7 @@ public class RegistrationController {
         System.out.println("newCustomerForm");
         User user = new User();
         model.addAttribute("user", user);
-        return "add_user";
+        return "add-user";
     }
 
     @GetMapping(path = "/registration/success")
@@ -72,7 +72,7 @@ public class RegistrationController {
 
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
-            return "add_user";
+            return "add-user";
         } else {
 
 
@@ -87,7 +87,7 @@ public class RegistrationController {
             }
 
             if (countErrors != 0) {
-                return "add_user";
+                return "add-user";
             }
 
 
@@ -110,7 +110,7 @@ public class RegistrationController {
             System.out.println("--- --- ---");
             model.addAttribute("email", user.getEmail());
 
-            return "success_user_registration";
+            return "success-user-registration";
         }
     }
 
@@ -130,7 +130,7 @@ public class RegistrationController {
         authorizedUser.ifPresent(value -> model.addAttribute("email", value.getEmail()));
 
         System.out.println("confirmUserRegistration");
-        return "confirm_registration";
+        return "confirm-registration";
     }
 
     @GetMapping(path = "/locked-account")
@@ -179,7 +179,7 @@ public class RegistrationController {
         } else {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
         }
-        return "success_user_registration_confirmed";
+        return "success-user-registration-confirmed";
     }
 
     @PostMapping(path = "/sendConfirmationCodeAgain")
@@ -208,7 +208,7 @@ public class RegistrationController {
         model.addAttribute("sendingCodeMessage", sendingCodeMessage);
 
 
-        return "confirm_registration";
+        return "confirm-registration";
     }
 
     @GetMapping(path = "/recover-password")
@@ -223,7 +223,7 @@ public class RegistrationController {
 
         model.addAttribute("recoverInformation", recoverInformation);
         System.out.println("recoverPassword");
-        return "recover_password";
+        return "recover-password";
     }
 
     @GetMapping(path = "recoverPassword")
@@ -243,7 +243,7 @@ public class RegistrationController {
         } else {
             model.addAttribute("sendMessageERROR", "Повідомлення не надіслано. Перевірте правильність введених даних.");
         }
-        return "recover_password";
+        return "recover-password";
     }
 
     @GetMapping(path = "/recover/{confirmationCode}")
@@ -270,7 +270,7 @@ public class RegistrationController {
         } else {
             model.addAttribute("errorMessage", "Код підтвердження недійсний.");
         }
-        return "recover_password";
+        return "recover-password";
     }
 
     @PostMapping(path = "/recover/{confirmationCode}")
@@ -303,6 +303,6 @@ public class RegistrationController {
         System.out.println("************************");
 
 
-        return "recover_password";
+        return "recover-password";
     }
 }

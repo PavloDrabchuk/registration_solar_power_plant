@@ -168,13 +168,14 @@ public class SolarPowerPlantService {
         return result;
     }
 
-    public void addSolarPowerPlantInfoToModel(String id, Model model) {
+    public void addSolarPowerPlantInfoToModel(String id, Model model, boolean isAdmin) {
         Optional<SolarPowerPlant> solarPowerPlant = getSolarPowerPlantByStringId(id);
 
         if (solarPowerPlant.isPresent()) {
             model.addAttribute("solarPowerPlant", solarPowerPlant.get());
             model.addAttribute("regions", Region.values());
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            model.addAttribute("isAdmin", isAdmin);
         } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
     }
 

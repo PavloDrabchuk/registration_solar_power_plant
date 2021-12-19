@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<header th:fragment="info-pages-header" class="d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 bg-body border-bottom shadow-sm fixed-top"
+        id="header">
+    <p class="h5 my-0 me-md-auto fw-normal">Система реєстрації та обліку сонячних електростанцій</p>
+    <nav class="my-1 my-md-0 me-md-3">
+        <!--        <a class="p-2 text-dark" href="#">Features</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Enterprise</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Support</a>-->
+        <!--        <a class="p-2 text-dark" href="#">Pricing</a>-->
+    </nav>
+    <!--    <a class="btn text-decoration-none link-dark" th:href="@{/login}">Ввійти</a>-->
+    <!--    <a class="btn btn-outline-primary" th:href="@{/registration}">Зареєструватись</a>-->
+    <a class="btn btn-outline-success" th:href="@{/}">Перейти на головну</a>
+</header>
+
+</body>
+</html>

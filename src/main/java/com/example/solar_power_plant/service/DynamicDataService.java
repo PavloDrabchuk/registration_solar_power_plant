@@ -764,7 +764,7 @@ public class DynamicDataService {
 
         System.out.println(" using time: " + solarPowerPlantService.getStringOfUsageTime(solarPowerPlant));
 
-        model.addAttribute("usingTime", solarPowerPlantService.getStringOfUsageTime(solarPowerPlant));
+        model.addAttribute("usageTime", solarPowerPlantService.getStringOfUsageTime(solarPowerPlant));
     }
 }
 
