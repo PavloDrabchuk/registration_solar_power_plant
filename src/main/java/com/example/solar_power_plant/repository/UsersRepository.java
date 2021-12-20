@@ -1,4 +1,4 @@
-package com.example.solar_power_plant.dao;
+package com.example.solar_power_plant.repository;
 
 import com.example.solar_power_plant.model.User;
 import com.example.solar_power_plant.enums.UserRoles;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface UsersRepository extends CrudRepository<User,Long> {
+public interface UsersRepository extends CrudRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     Optional<User> findByEmail(String email);
@@ -19,11 +19,6 @@ public interface UsersRepository extends CrudRepository<User,Long> {
     Optional<User> findUserByUserRole(UserRoles userRoles);
 
     List<User> findAllByUserRole(UserRoles userRoles);
-
-    void deleteById(Long id);
-
-    //@Override
-    void delete(User user);
 
     @Query(value = "select * from user c order by c.id limit ?1, ?2 ",
             nativeQuery = true)

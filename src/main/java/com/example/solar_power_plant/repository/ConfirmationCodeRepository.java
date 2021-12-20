@@ -1,10 +1,9 @@
-package com.example.solar_power_plant.dao;
+package com.example.solar_power_plant.repository;
 
 import com.example.solar_power_plant.model.ConfirmationCode;
 import com.example.solar_power_plant.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +17,9 @@ public interface ConfirmationCodeRepository extends CrudRepository<ConfirmationC
 
     Iterable<ConfirmationCode> findAllByUser(User user);
 
-    List<ConfirmationCode> findAllByDateTimeOfCreationBeforeAndValidIs(LocalDateTime dateTime,Boolean valid);
+    List<ConfirmationCode> findAllByDateTimeOfCreationBeforeAndValidIs(LocalDateTime dateTime, Boolean valid);
 
-    //@Query(value = "update confirmation_code c set c.valid = ?1 WHERE c.date_time_of_creation < ?2",nativeQuery = true)
+    // TODO: 20.12.2021 Use this function.
     @Query(value = "update ConfirmationCode c set c.valid = :valid WHERE c.dateTimeOfCreation < :time")
     void deactivateConfirmationCodes(Boolean valid, LocalDateTime time);
 

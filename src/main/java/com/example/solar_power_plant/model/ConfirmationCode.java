@@ -21,10 +21,10 @@ public class ConfirmationCode {
     private LocalDateTime dateTimeOfCreation;
 
     public ConfirmationCode(User user, String confirmationCode, TypesConfirmationCode typeConfirmationCode) {
-        this.user=user;
-        this.valid=true;
+        this.user = user;
+        this.valid = true;
         this.confirmationCode = confirmationCode;
-        this.typeConfirmationCode=typeConfirmationCode;
+        this.typeConfirmationCode = typeConfirmationCode;
         this.dateTimeOfCreation = LocalDateTime.now(ZoneId.of("UTC+02:00"));
     }
 

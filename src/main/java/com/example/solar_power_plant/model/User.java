@@ -12,7 +12,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-//@Table(name="user", catalog = "registration_system")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +19,6 @@ public class User {
 
     private String username;
 
-    // @NotNull(message = "Введіть ім'я")
-    // @NotEmpty(message = "Заповніть поле")
     private String name;
     private String surname;
 
@@ -36,22 +33,10 @@ public class User {
     private Boolean activated = false;
     private Boolean locked = false;
 
-    private LocalDateTime dateTimeOfCreation=LocalDateTime.now();
-
-    //@ManyToMany
-    //private Set<UserRole> roles;
-
-
-    //@Builder.Default
-    //private UserRoles userRole = UserRoles.USER;
-
-    //@Cascade(CascadeType.ALL)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-
-    //    @Cascade(value = {  CascadeType.ALL })
+    private LocalDateTime dateTimeOfCreation = LocalDateTime.now();
 
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private UserRoles userRole=UserRoles.ROLE_USER;
+    private UserRoles userRole = UserRoles.ROLE_USER;
 
     public User(
             @JsonProperty("username") String username,
@@ -66,8 +51,6 @@ public class User {
         this.surname = surname;
         this.password = password;
         this.userRole = userRole;
-        //this.activated=false;
-        //this.locked=false;
         this.email = email;
         this.mobilePhoneNumber = mobilePhoneNumber;
         this.dateTimeOfCreation = LocalDateTime.now(ZoneId.of("UTC"));
@@ -124,15 +107,6 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-
-   /* public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }*/
-
     public UserRoles getUserRole() {
         return userRole;
     }
@@ -164,7 +138,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public void getStringInfo() {
         System.out.println("\nUser info: \n" +

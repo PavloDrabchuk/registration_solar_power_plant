@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 
 @Entity
 public class DynamicData {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @Cascade(value = {  CascadeType.ALL })
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SolarPowerPlant solarPowerPlant;
 

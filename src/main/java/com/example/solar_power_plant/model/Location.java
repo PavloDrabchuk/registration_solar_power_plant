@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Location {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -119,8 +120,6 @@ public class Location {
     }
 
     public String getStringLocation() {
-        //(region.equals(Region.AutonomousRepublicOfCrimea)) ? ", " : " область, ";
-        //return region.getName() + " область, " + city + ", вул. " + street + ", " + number;
         return region.getName()
                 + (region.equals(Region.AutonomousRepublicOfCrimea) ? ", " : " область, ")
                 + city + ", вул. " + street + ", " + number;

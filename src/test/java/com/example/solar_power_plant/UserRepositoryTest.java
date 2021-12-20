@@ -1,20 +1,14 @@
 package com.example.solar_power_plant;
 
-import com.example.solar_power_plant.dao.UsersRepository;
+import com.example.solar_power_plant.repository.UsersRepository;
 import com.example.solar_power_plant.enums.UserRoles;
 import com.example.solar_power_plant.model.User;
-import com.example.solar_power_plant.security.WebConfig;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 //import static org.hamcrest.MatcherAssert.assertThat;
 import static org.assertj.core.api.Assertions.*;
 

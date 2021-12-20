@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.service;
 
-import com.example.solar_power_plant.dao.UsersRepository;
+import com.example.solar_power_plant.repository.UsersRepository;
 import com.example.solar_power_plant.enums.TypesConfirmationCode;
 import com.example.solar_power_plant.model.User;
 
