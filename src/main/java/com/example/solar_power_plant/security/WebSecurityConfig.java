@@ -12,9 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-//@AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
     private final UserDetailsService userDetailsService;
 
@@ -26,12 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
-
-    /*@Autowired
-    public WebSecurityConfig (UsersService usersService,BCryptPasswordEncoder bCryptPasswordEncoder){
-        this.usersService=usersService;
-        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -45,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/test-json").permitAll()
                 .antMatchers("/scripts/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers("/about","/registration-info","/data-collection","/user-registration-info","/developer","/rules","/support","/data_sets/**","/data-sets").permitAll()
+                .antMatchers("/about", "/registration-info", "/data-collection", "/user-registration-info", "/developer", "/rules", "/support", "/data_sets/**", "/data-sets").permitAll()
                 .antMatchers("/admin/**")
                 .hasAuthority("ROLE_ADMIN")
                 .antMatchers("/sign-up/**", "/home/**",
@@ -64,23 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-       /* auth.inMemoryAuthentication()
-                .withUser("nameSurname").password(bCryptPasswordEncoder.encode("qwerty123")).roles("USER")
-                .and()
-                .withUser("user2").password(bCryptPasswordEncoder.encode("user2Pass")).roles("USER")
-                .and()
-                .withUser("admin").password(bCryptPasswordEncoder.encode("adminPass")).roles("ADMIN")
-                .and()
-                .withUser("admin1").password(bCryptPasswordEncoder.encode("admin")).authorities("ADMIN");
-*/
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
-    /*@Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
-
-
 }

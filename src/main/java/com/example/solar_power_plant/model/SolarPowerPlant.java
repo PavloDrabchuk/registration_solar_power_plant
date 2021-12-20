@@ -21,7 +21,7 @@ public class SolarPowerPlant {
     private String stringId;
 
     @NotNull
-    @Size(min=2, max=30)
+    @Size(min = 2, max = 30)
     private String name;
 
     @OneToOne(cascade = {CascadeType.ALL})
@@ -30,10 +30,6 @@ public class SolarPowerPlant {
     @OneToOne(cascade = {CascadeType.ALL})
     private StaticData staticData;
 
-    //@OneToMany(cascade = {CascadeType.ALL})
-    //private List<DynamicData> dynamicData;
-
-    //private int quantity;
     private LocalDateTime registrationDateTime;
 
     @ManyToOne
@@ -44,7 +40,6 @@ public class SolarPowerPlant {
         this.stringId = stringId;
         this.name = name;
         this.location = location;
-        //this.quantity = quantity;
         this.user = user;
         this.registrationDateTime = LocalDateTime.now(ZoneId.of("UTC"));
     }
@@ -85,14 +80,6 @@ public class SolarPowerPlant {
         this.location = location;
     }
 
-    /*public int getQuantity() {
-        return quantity;
-    }*/
-
-    /*public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }*/
-
     public StaticData getStaticData() {
         return staticData;
     }
@@ -122,16 +109,5 @@ public class SolarPowerPlant {
                 ? registrationDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
                 : null;
     }
-
-    public List<Double> getDataByMonth(){
-
-        List<Double> data=new ArrayList<>();
-        data.add(0.21);
-        data.add(0.31);
-        data.add(0.41);
-        data.add(0.11);
-        return data;
-    }
-
 }
 

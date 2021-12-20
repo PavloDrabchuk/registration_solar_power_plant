@@ -30,7 +30,7 @@ public enum Region {
     private final String name;
 
     Region(String name) {
-        this.name=name;
+        this.name = name;
     }
 
     public String getName() {

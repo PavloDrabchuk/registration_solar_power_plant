@@ -1,4 +1,4 @@
-package com.example.solar_power_plant.dao;
+package com.example.solar_power_plant.repository;
 
 import com.example.solar_power_plant.model.Message;
 import com.example.solar_power_plant.enums.MessageType;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MessageRepository extends CrudRepository<Message,Long> {
+public interface MessageRepository extends CrudRepository<Message, Long> {
 
     Optional<Message> findById(UUID id);
 
@@ -20,7 +20,7 @@ public interface MessageRepository extends CrudRepository<Message,Long> {
 
     List<Message> findAllByMessageTypeOrderByDateTimeDesc(MessageType messageType);
 
-    List<Message> findAllByRecipientAndMessageType(User user,MessageType messageType);
+    List<Message> findAllByRecipientAndMessageType(User user, MessageType messageType);
 
     @Query(value = "select * from message m where m.recipient_id = ?1 order by  m.date_time desc, m.id limit ?2, ?3 ",
             nativeQuery = true)
@@ -30,7 +30,5 @@ public interface MessageRepository extends CrudRepository<Message,Long> {
             nativeQuery = true)
     List<Message> getListMessagesBySenderForPage(Long id, int offset, int row_count);
 
-
-//    int findC
     long countByIsReadAndRecipient(boolean isRead, User recipient);
 }

@@ -1,4 +1,4 @@
-package com.example.solar_power_plant.dao;
+package com.example.solar_power_plant.repository;
 
 import com.example.solar_power_plant.model.DynamicData;
 import com.example.solar_power_plant.model.SolarPowerPlant;
@@ -31,24 +31,24 @@ public interface DynamicDataRepository extends CrudRepository<DynamicData, Long>
     @Query(value = "select avg(q.s) from (select SUM(d.produced_power) as s from dynamic_data d where d.collection_date_time between ?1 and ?2 and d.solar_power_plant_id = ?3 group by DAY(d.collection_date_time) ) q",
             nativeQuery = true)
     Double getAveragePowerPerDay(LocalDateTime startDate,
-                                          LocalDateTime finishDate,
-                                          Long solarPowerPlantId);
+                                 LocalDateTime finishDate,
+                                 Long solarPowerPlantId);
 
-    @Query(value="select month(d.collection_date_time) as `period`, SUM(d.produced_power) as `total` from dynamic_data d " +
+    @Query(value = "select month(d.collection_date_time) as `period`, SUM(d.produced_power) as `total` from dynamic_data d " +
             "where d.solar_power_plant_id = ?1 and (d.collection_date_time between ?2 and ?3)" +
             "group by month (d.collection_date_time)",
-    nativeQuery = true)
+            nativeQuery = true)
     List<DataByPeriodAndSolarPowerPlant> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId,
                                                                           LocalDateTime startDay,
                                                                           LocalDateTime finishDay);
-    //HashMap<Integer,Double> getDataByMonthAndSolarPowerPlant(Long solarPowerPlantId);
 
-    @Query(value="select hour(d.collection_date_time) as `period`, AVG(d.produced_power) as `total` from dynamic_data d " +
+    @Query(value = "select hour(d.collection_date_time) as `period`, AVG(d.produced_power) as `total` from dynamic_data d " +
             "where d.solar_power_plant_id = ?1 and (d.collection_date_time between ?2 and ?3)" +
             "group by hour (d.collection_date_time)",
             nativeQuery = true)
     List<DataByPeriodAndSolarPowerPlant> getDataByHourAndSolarPowerPlant(Long solarPowerPlantId,
                                                                          LocalDateTime startDay,
                                                                          LocalDateTime finishDay);
-Optional<DynamicData> findFirstBySolarPowerPlant(SolarPowerPlant solarPowerPlant);
+
+    Optional<DynamicData> findFirstBySolarPowerPlant(SolarPowerPlant solarPowerPlant);
 }

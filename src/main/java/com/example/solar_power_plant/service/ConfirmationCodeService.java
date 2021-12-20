@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.service;
 
-import com.example.solar_power_plant.dao.ConfirmationCodeRepository;
+import com.example.solar_power_plant.repository.ConfirmationCodeRepository;
 import com.example.solar_power_plant.model.ConfirmationCode;
 import com.example.solar_power_plant.enums.TypesConfirmationCode;
 import com.example.solar_power_plant.model.User;
@@ -41,23 +41,20 @@ public class ConfirmationCodeService {
     }
 
     public void sendConfirmationCode(User user, TypesConfirmationCode typeConfirmationCode) {
-        //відправляємо посилання активації
+        //відправлення посилання активації
         UUID uuid = UUID.randomUUID();
         String stringConfirmationCode = uuid.toString();
-        System.out.println("confirmationCode: " + stringConfirmationCode);
 
         ConfirmationCode confirmationCode = new ConfirmationCode(user, stringConfirmationCode, typeConfirmationCode);
         saveConfirmationCode(confirmationCode);
 
         usersService.sendMailWithConfirmationCode(user.getEmail(), confirmationCode.getConfirmationCode(), typeConfirmationCode);
-        System.out.println("----- - - -- - - - - - -- - - - - ");
     }
 
     public void deactivateConfirmationCodesByUser(User user) {
         Iterable<ConfirmationCode> confirmationCodesByUser = confirmationCodeRepository.findAllByUser(user);
 
         for (ConfirmationCode confirmationCode : confirmationCodesByUser) {
-            System.out.println("   : " + confirmationCode.getConfirmationCode());
             confirmationCode.setValid(false);
             confirmationCodeRepository.save(confirmationCode);
         }
@@ -67,20 +64,13 @@ public class ConfirmationCodeService {
     @Scheduled(fixedRateString = "${CODE_DEACTIVATION_CODE}" /*1000*60*1000*/ /*5 * 1000*/ /*2 * 60 * 1000*/)
     public void deactivateOverdueCodes() {
 
-        List<ConfirmationCode> confirmationCodeList = confirmationCodeRepository.findAllByDateTimeOfCreationBeforeAndValidIs(LocalDateTime.now().minusHours(1), true);
-        System.out.println("local date time - 1 hour: " + LocalDateTime.now().minusHours(1));
-
-        /*for(int i=0;i<10;i++) {
-            System.out.println("deactivate");
-        }*/
+        List<ConfirmationCode> confirmationCodeList = confirmationCodeRepository
+                .findAllByDateTimeOfCreationBeforeAndValidIs(LocalDateTime.now().minusHours(1), true);
 
         for (ConfirmationCode confirmationCode : confirmationCodeList) {
-            System.out.println("code: " + confirmationCode.getConfirmationCode());
             confirmationCode.setValid(false);
             confirmationCodeRepository.save(confirmationCode);
         }
-        //confirmationCodeRepository.deactivateConfirmationCodes(false,LocalDateTime.now().minusHours(1));
-        //confirmationCodeRepository.deactivateConfirmationCodes(false,LocalDateTime.now());
     }
 
 

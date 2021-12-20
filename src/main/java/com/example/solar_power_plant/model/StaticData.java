@@ -7,11 +7,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Entity
 public class StaticData {
@@ -27,9 +25,7 @@ public class StaticData {
     @Min(1)
     private Integer power;
 
-//    @NotNull(message = "Виберіть дату встановлення")
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")iso = DateTimeFormat.ISO.DATE_TIME
-    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate installationDate;
 
     @OneToOne(cascade = {CascadeType.ALL})
@@ -80,17 +76,8 @@ public class StaticData {
         return installationDate;
     }
 
-    /*public void setInstallationDate(Date installationDate) {
-        this.installationDate = installationDate;
-    }*/
-
     public void setInstallationDate(String installationDate) throws ParseException {
-        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        //this.installationDate = formatter.parse(installationDate);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        //formatter = formatter.withLocale(  );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
         this.installationDate = LocalDate.parse(installationDate, formatter);
     }
 

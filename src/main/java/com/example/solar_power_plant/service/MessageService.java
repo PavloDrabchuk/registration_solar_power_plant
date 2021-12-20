@@ -1,6 +1,6 @@
 package com.example.solar_power_plant.service;
 
-import com.example.solar_power_plant.dao.MessageRepository;
+import com.example.solar_power_plant.repository.MessageRepository;
 import com.example.solar_power_plant.model.Message;
 import com.example.solar_power_plant.enums.MessageType;
 import com.example.solar_power_plant.model.User;

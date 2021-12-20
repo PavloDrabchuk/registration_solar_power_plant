@@ -9,15 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-   @Bean
+    @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
 
         return new BCryptPasswordEncoder();
     }
+
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("index");
-        /*registry.addViewController("/uploadForm").setViewName("uploadForm");*/
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/about").setViewName("info-pages/about");
         registry.addViewController("/registration-info").setViewName("info-pages/registration-info");
@@ -27,10 +27,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/rules").setViewName("info-pages/rules");
         registry.addViewController("/support").setViewName("info-pages/support");
         registry.addViewController("/data-sets").setViewName("info-pages/data-sets");
-//        registry.addViewController("/admin").setViewName("admin_page");
-
-//        registry.addViewController("/data-sets/first.csv").setViewName("/data-sets/first.csv");
-        //registry.addViewController("/admin").setViewName("admin");
     }
 
     @Override

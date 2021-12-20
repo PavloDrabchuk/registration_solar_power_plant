@@ -1,7 +1,7 @@
 package com.example.solar_power_plant.service;
 
 import com.example.solar_power_plant.AuthorizationAccess;
-import com.example.solar_power_plant.dao.SolarPowerPlantRepository;
+import com.example.solar_power_plant.repository.SolarPowerPlantRepository;
 import com.example.solar_power_plant.enums.Region;
 import com.example.solar_power_plant.model.SolarPowerPlant;
 import com.example.solar_power_plant.model.User;

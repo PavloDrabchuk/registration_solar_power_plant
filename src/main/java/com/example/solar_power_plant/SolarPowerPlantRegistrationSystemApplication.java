@@ -1,6 +1,6 @@
 package com.example.solar_power_plant;
 
-import com.example.solar_power_plant.dao.UsersRepository;
+import com.example.solar_power_plant.repository.UsersRepository;
 import com.example.solar_power_plant.service.ConfirmationCodeService;
 import com.example.solar_power_plant.service.DynamicDataService;
 import org.springframework.beans.factory.annotation.Autowired;

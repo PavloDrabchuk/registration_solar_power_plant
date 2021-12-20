@@ -12,12 +12,11 @@ import java.util.UUID;
 
 @Entity
 public class Message {
+
     @Id
     @GeneratedValue(generator = "UUID")
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
 
     private String title;
 
@@ -38,7 +37,6 @@ public class Message {
     private Boolean isRead;
 
     public Message(String title, String text, User sender, User recipient, MessageType messageType, Boolean isRead) {
-        //this.id=UUID.fromString(title);
         this.title = title;
         this.text = text;
         this.dateTime = LocalDateTime.now();
@@ -138,7 +136,7 @@ public class Message {
 
     public String getFormattedUsernameAndNameSurnameOfRecipient() {
         StringBuilder result = new StringBuilder();
-
+        // TODO: 20.12.2021 Duplicate.
         result.append("Кому: ");
         result.append(recipient.getUsername());
 
@@ -157,12 +155,6 @@ public class Message {
     }
 
     public String getShortText() {
-        /*int length = text.length();
-        if (length >= 60) {
-            length = 60;
-        }
-        return text.substring(0, length) + "...";*/
-
         return ((text.length() <= 140)
                 ? text.substring(0, text.length()).trim()
                 : text.substring(0, 140).trim())
