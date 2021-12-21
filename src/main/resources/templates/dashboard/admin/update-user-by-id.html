@@ -14,20 +14,12 @@
     <link rel="stylesheet" type="text/css" media="all" href="styles/bootstrap/bootstrap-icons.css"
           th:href="@{/styles/bootstrap/bootstrap-icons.css}">
 
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
-
-
-    <!--<script src="js/bootstrap.js"></script>
-    <script src="js/bootstrap.bundle.js"></script>-->
-
     <title>Оновлення користувача</title>
 </head>
 <body>
 
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -36,46 +28,16 @@
         <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-
-
-        <!--        <div th:if="${userChangeError}" th:utext="${userChangeError}"></div>-->
-
-        <!--<form th:if="${user}" th:action="${'/admin/users/'+user.getId()+'/update'}" method="post">
-            &lt;!&ndash;    Змінити можна e-mail ... &ndash;&gt;
-            <label>Username
-                <input type="text" name="username">
-            </label>
-            <label>E-mail
-                <input type="email" name="email">
-            </label>
-            <input type="submit" value="Змінити інформацію">
-        </form>-->
-
         <main role="main" class="col-xl-10 col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="main-body">
-                <!--<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Username</h1>
-                    &lt;!&ndash;<div class="btn-toolbar mb-2 mb-md-0">
-                        <button type="button" class="btn btn-success">Додати користувача</button>
-                    </div>&ndash;&gt;
-                </div>-->
 
                 <!-- Alerts -->
-
                 <div class="alert alert-danger m-2" role="alert"
                      th:if="${userChangeError}" th:utext="${userChangeError}">
                     userChangeError
                 </div>
 
-
-                <!--<div class="alert alert-warning alert-dismissible fade show mx-2" role="alert">
-                    usersNotFoundMessage
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрити"></button>
-                </div>-->
-
                 <!-- Table -->
-
-
                 <div class="row gutters-sm" th:if="${user != null}">
                     <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
                         <div class="card">
@@ -125,7 +87,6 @@
                 </div>
             </div>
         </main>
-
 
     </div>
 </div>

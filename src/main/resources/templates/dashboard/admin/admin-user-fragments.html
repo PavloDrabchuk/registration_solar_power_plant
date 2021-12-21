@@ -15,8 +15,6 @@
                     <form th:action="${'/admin/users/'+user.getId()+'/locking'}" method="post"
                           class="d-flex flex-column align-items-center text-center">
                         <div class="row">
-
-                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
                             <input type="submit" th:if="${user.getLocked()}"
                                    class="btn btn-success"
                                    value="Розблокувати">
@@ -57,7 +55,6 @@
                                     </option>
                                 </select>
                             </div>
-                            <!--                                <div class="text-end mt-xl-3 mt-lg-1 mt-md-1 mt-sm-1 mt-1">-->
                             <input type="submit"
                                    class="btn btn-success col-xl-4 col-lg-6 col-md-7 col-sm-8 col-8 "
                                    value="Змінити роль користувача">

@@ -14,9 +14,6 @@
     <link rel="stylesheet" type="text/css" media="all" href="styles/bootstrap/bootstrap-icons.css"
           th:href="@{/styles/bootstrap/bootstrap-icons.css}">
 
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
-
-
     <script src="js/bootstrap.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
 
@@ -25,9 +22,7 @@
 <body>
 
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -36,17 +31,12 @@
         <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-
         <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Зареєстровані сонячні станції</h1>
-                <!--<div class="btn-toolbar mb-2 mb-md-0">
-                    <button type="button" class="btn btn-success">Додати користувача</button>
-                </div>-->
             </div>
 
             <!-- Alerts -->
-
             <div class="alert alert-success mx-2" role="alert"
                  th:if="${updateSolarPowerPlantMessage}" th:utext="${updateSolarPowerPlantMessage}">
                 updateSolarPowerPlantMessage
@@ -61,7 +51,6 @@
             </div>
 
             <!-- Search -->
-
             <div class="container">
                 <br/>
                 <div class="row justify-content-center">
@@ -86,8 +75,6 @@
                     </div>
                 </div>
             </div>
-
-<!--            <div th:if="${solarPowerPlantNotFoundMessage}">Сонячних станнцій не знайдено</div>-->
 
             <!-- Solar power plant block (table) -->
             <div th:replace="~{dashboard/admin/fragments/solar-power-plant

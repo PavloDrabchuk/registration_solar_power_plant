@@ -9,28 +9,6 @@
 <body>
 
 <div th:fragment="solar-power-plants (solarPowerPlants)">
-    <!--<table border="1">
-        <caption>All solar power plants</caption>
-        <tr>
-            <th>Id</th>
-            <th>StringId</th>
-            <th>Name</th>
-            <th>CRUD</th>
-        </tr>
-        <tr th:each="solarPowerPlant : ${solarPowerPlants}">
-            <td th:utext="${solarPowerPlant.getId()}"></td>
-            <td th:utext="${solarPowerPlant.getStringId()}"></td>
-            <td th:utext="${solarPowerPlant.getName()}"></td>
-            <td>
-                <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()}">Read</a>
-                <a th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}">Update</a>
-                &lt;!&ndash;            <a th:href="${'/admin/users/'+user.getId()+'/delete'}">Delete</a>&ndash;&gt;
-                <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/delete'}" th:method="delete">
-                    <input type="submit" value="delete">
-                </form>
-            </td>
-        </tr>
-    </table>-->
 
     <!-- Table -->
 
@@ -61,30 +39,24 @@
 
                     <a class="item btn btn-warning" data-toggle="tooltip" data-placement="top" title="Редагувати"
                        th:href="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}">
-                        <!--        <i class="zmdi zmdi-edit"></i>-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                              class="bi bi-pencil-fill" viewBox="0 0 16 16">
                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                         </svg>
                     </a>
-                    <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/delete'}" th:method="delete">
+                    <form th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/delete'}"
+                          th:method="delete">
 
                         <button type="submit" class="item border-0 btn btn-danger" data-toggle="tooltip"
                                 data-placement="top"
-                                title="Видалити"
-                        >
-                            <!--            <i class="zmdi zmdi-delete"></i>-->
-                            <!--            <i class="bi bi-trash"></i>-->
+                                title="Видалити">
+
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                  class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                 <path fill-rule="evenodd"
                                       d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                             </svg>
-                            <!--<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                            </svg>-->
                         </button>
                     </form>
 
@@ -94,39 +66,13 @@
 
         </tbody>
     </table>
-
-    <!--<div th:if="${numPages!=null and !numPages.isEmpty() and #lists.size(numPages)>1}" class="text-center pagination-menu">
-        <form action="/admin/solar-power-plants" method="get">
-            <nav>
-                &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
-                <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
-                <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
-                <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                       id="page4">&ndash;&gt;
-                <input th:if="${search}" type="hidden" name="search" th:value="${search}">
-                <input th:each="page : ${numPages}" th:value="${page}"
-                       th:name="page" th:id="${'page'+page}"
-
-                       th:class="${page==currentPage}
-                           ? 'btn btn-success mx-1'
-                           : 'btn btn-outline-success mx-1'"
-                       type="submit">
-            </nav>
-        </form>
-    </div>-->
 </div>
 
 <div th:fragment="solar-power-plants-pagination (search, numPages, currentPage, url)">
 
     <div th:if="${numPages} > 1" class="text-center pagination-menu">
-<!--        <form action="/admin/solar-power-plants" method="get">-->
         <form th:action="${url}" method="get">
             <nav>
-                <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
-                <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
-                <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
-                <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                       id="page4">-->
                 <input th:if="${search}" type="hidden" name="search" th:value="${search}">
                 <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value="${page}"
                        th:name="page" th:id="${'page' + page}"
