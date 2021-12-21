@@ -45,11 +45,6 @@ public class SolarPowerPlantService {
         1 - update
          */
 
-        /*solarPowerPlantRepository.save(new SolarPowerPlant(
-                solarPowerPlant.getName(),
-                solarPowerPlant.getLocation(),
-                solarPowerPlant.getNumber(),
-                solarPowerPlant.getUser()));*/
         String stringId;
         Optional<SolarPowerPlant> solarPowerPlant1;
 
@@ -57,9 +52,7 @@ public class SolarPowerPlantService {
             do {
                 stringId = UUID.randomUUID().toString();
                 solarPowerPlant1 = solarPowerPlantRepository.findByStringId(stringId);
-                System.out.println("stringId: " + stringId);
             } while (solarPowerPlant1.isPresent());
-
 
             solarPowerPlant.setStringId(stringId);
         }
@@ -81,30 +74,6 @@ public class SolarPowerPlantService {
 
     public Optional<SolarPowerPlant> getSolarPowerPlantByStringId(String stringId) {
         return solarPowerPlantRepository.findByStringId(stringId);
-    }
-
-    public List<String> getNumPagesList(User user, double limit) {
-        //double limitTracksId = 2;
-
-        //List<String> listTrackId = tracksRepository.getListTrackId();
-        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
-        List<String> pageNumList = new ArrayList<>();
-        for (int i = 1; i <= ((int) Math.ceil(getSolarPowerPlantsByUser(user).size() / limit)); i++) {
-            pageNumList.add(Integer.toString(i));
-        }
-        return pageNumList;
-    }
-
-    public List<String> getNumPagesListForAll(List<SolarPowerPlant> solarPowerPlants, double limit) {
-        //double limitTracksId = 2;
-
-        //List<String> listTrackId = tracksRepository.getListTrackId();
-        //List<String> listTrackId = tracksRepository.getListTrackIdForPage((Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);
-        List<String> pageNumList = new ArrayList<>();
-        for (int i = 1; i <= ((int) Math.ceil(solarPowerPlants.size() / limit)); i++) {
-            pageNumList.add(Integer.toString(i));
-        }
-        return pageNumList;
     }
 
     public List<SolarPowerPlant> getSolarPowerPlantsByName(String name) {
@@ -132,28 +101,6 @@ public class SolarPowerPlantService {
     }
 
     public String getStringOfUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
-
-        /*LocalDate date = LocalDate.now();
-        int year, month, day;
-        String result = "";
-
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(solarPowerPlant.getStaticData().getInstallationDate());
-
-        year = date.getYear();
-        month = date.getMonthValue();
-        day = date.getDayOfMonth();
-
-        System.out.println("year: " + year + " month: " + month + " day: " + day);
-
-        day -= calendar.get(Calendar.DAY_OF_MONTH);
-        if (day < 0) month--;
-        month -= (calendar.get(Calendar.MONTH) + 1);
-        if (month < 0) year--;
-        year -= calendar.get(Calendar.YEAR);
-
-        System.out.println("--- year: " + year + " month: " + month + " day: " + day);*/
-
         ArrayList<Integer> usageTime = AuthorizationAccess.getUsageTime(solarPowerPlant.getStaticData().getInstallationDate(), LocalDate.now());
         String result = "";
 
@@ -162,8 +109,6 @@ public class SolarPowerPlantService {
         if (usageTime.get(2) != 0) result += Math.abs(usageTime.get(2)) + " д.";
 
         if (result.equals("")) result += "1 д.";
-
-        System.out.println("result: " + result);
 
         return result;
     }
@@ -176,7 +121,9 @@ public class SolarPowerPlantService {
             model.addAttribute("regions", Region.values());
             model.addAttribute("localDate", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             model.addAttribute("isAdmin", isAdmin);
-        } else model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+        } else {
+            model.addAttribute("solarPowerPlantChangeError", "Помилка, спробуйте пізніше.");
+        }
     }
 
     public void updateSolarPowerPlant(SolarPowerPlant newSolarPowerPlant,
@@ -186,7 +133,6 @@ public class SolarPowerPlantService {
         if (updatedSolarPowerPlant.isPresent()) {
             updatedSolarPowerPlant.get().setName(newSolarPowerPlant.getName());
 
-
             updatedSolarPowerPlant.get().getLocation().setCountry("Україна");
             updatedSolarPowerPlant.get().getLocation().setRegion(newSolarPowerPlant.getLocation().getRegion());
             updatedSolarPowerPlant.get().getLocation().setCity(newSolarPowerPlant.getLocation().getCity());
@@ -195,14 +141,6 @@ public class SolarPowerPlantService {
 
             updatedSolarPowerPlant.get().getLocation().setLatitude(newSolarPowerPlant.getLocation().getLatitude());
             updatedSolarPowerPlant.get().getLocation().setLongitude(newSolarPowerPlant.getLocation().getLongitude());
-
-
-            // BeanUtils.copyProperties(updatedSolarPowerPlant,solarPowerPlant);
-            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
-
-            //updatedSolarPowerPlant.get().setLocation(solarPowerPlant.getLocation());
-
-            //updatedSolarPowerPlant.get().setStaticData(solarPowerPlant.getStaticData());
 
             updatedSolarPowerPlant.get().getStaticData().setPower(newSolarPowerPlant.getStaticData().getPower());
             updatedSolarPowerPlant.get().getStaticData().setQuantity(newSolarPowerPlant.getStaticData().getQuantity());
@@ -219,8 +157,6 @@ public class SolarPowerPlantService {
         String text = "Доброго дня. Вашу сонячну електростанцію видалено з системи. У разі виникнення питань звертайтесь до адміністратора: "
                 + ADMIN_EMAIL + ".";
 
-        //emailSenderService.sendEmailWithSubjectAndText(email, subject, text);
         emailSenderService.sendEmail(emailSenderService.createSimpleMail(email, subject, text));
     }
-
 }
