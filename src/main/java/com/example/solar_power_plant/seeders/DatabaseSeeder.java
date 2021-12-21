@@ -53,36 +53,6 @@ public class DatabaseSeeder {
         seedDynamicDataTable();
         seedMessageTable();
         seedSolarPowerPlantTable(1, 2);
-        //seedSolarPowerPlantTable(2,1);
-    }
-
-    public static SolarPowerPlant createSolarPowerPlantDataForTesting(){
-        Location location = new Location(
-                "country", Region.IvanoFrankivsk,
-                "city", "street", "number", 48.2, 32.5);
-
-        User user = new User(
-                "qwerty",
-                "name",
-                "surname",
-                "pass",
-                UserRoles.ROLE_USER,
-                "example@example.com",
-                "+380123456789");
-
-        SolarPowerPlant solarPowerPlant = new SolarPowerPlant(
-                "43c2792f-3015-4832-b482-e0c4fbaad086",
-                "Spp",
-                location,
-                user
-        );
-
-        StaticData staticData = new StaticData(15, 125,
-                LocalDate.parse("2011-10-19", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-
-        solarPowerPlant.setStaticData(staticData);
-
-        return solarPowerPlant;
     }
 
     private void seedUsersTable() {

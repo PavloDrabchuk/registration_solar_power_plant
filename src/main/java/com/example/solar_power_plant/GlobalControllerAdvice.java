@@ -28,29 +28,15 @@ public class GlobalControllerAdvice {
     @ModelAttribute("countUnreadMessages")
     public long getCountUnreadMessages() {
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
-
-        System.out.println(" Count unread message: " + authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L));
-
         return authorizedUser.map(messageService::getCountUnreadMessagesByUser).orElse(0L);
-
-        /*authorizedUser.ifPresent(user -> model.addAttribute("countUnreadMessages",
-                messageService.getCountUnreadMessagesByUser(user)));*/
     }
 
     @ModelAttribute("adminAccess")
     public String addAdminAccess() {
-        /*Optional<User> user = getAuthorisedUser();
-
-        if (user.isPresent() && user.get().getUserRole() == UserRoles.ROLE_ADMIN) {
-            model.addAttribute("adminAccess", "admin");
-            //System.out.println("admin access");
-        }*/
-
         authorizedUser = AuthorizationAccess.getAuthorisedUser(this.usersService);
 
         if (authorizedUser.isPresent() && authorizedUser.get().getUserRole() == UserRoles.ROLE_ADMIN) {
             return "admin";
         } else return null;
-
     }
 }

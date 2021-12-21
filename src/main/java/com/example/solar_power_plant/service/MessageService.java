@@ -55,44 +55,9 @@ public class MessageService {
         return messageRepository.getListMessagesBySenderForPage(id, offset, limit);
     }
 
-    /**
-     * @param user
-     * @param limit
-     * @param type  // 1 - recipient, 2 - sender
-     * @return
-     */
-    public List<String> getNumPagesList(User user, double limit, int type) {
-        //double limitTracksId = 2;
-
-        //List<String> listTrackId = tracksRepository.getListTrackId();
-        /*List<String> listTrackId = tracksRepository.getListTrackIdForPage(
-                (Integer.parseInt(page) - 1) * (int) limitTracksId, (int) limitTracksId);*/
-
-        List<String> pageNumList = new ArrayList<>();
-
-        List<Message> messages;
-        messages = (type == 1)
-                ? getAllMessageByRecipient(user)
-                : getAllMessageBySender(user);
-
-
-        for (int i = 1; i <= ((int) Math.ceil(messages.size() / limit)); i++) {
-            pageNumList.add(Integer.toString(i));
-        }
-        return pageNumList;
-    }
-
     public void deleteMessage(Message message) {
         messageRepository.delete(message);
     }
-
-    /*public List<Message> getAllMessageByUserAndMessageType(User user, MessageType messageType){
-        return  messageRepository.findAllByUserAndMessageType(user,messageType);
-    }*/
-
-    /*public List<SolarPowerPlant> getMessagesForPage(Long id, int offset, int limit) {
-        return solarPowerPlantRepository.getListSolarPowerPlantForPage(id, offset, limit);
-    }*/
 
     public long getCountUnreadMessagesByUser(User user) {
         return messageRepository.countByIsReadAndRecipient(false, user);

@@ -30,12 +30,8 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user.isEmpty()) throw new UsernameNotFoundException(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        /*for (UserRole role : user.getUserRole()){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        }*/
 
         grantedAuthorities.add(new SimpleGrantedAuthority(user.get().getUserRole().toString()));
-        System.out.println("access: "+user.get().getUserRole().toString());
 
         return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), grantedAuthorities);
     }

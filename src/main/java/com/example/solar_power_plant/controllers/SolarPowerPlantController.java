@@ -227,7 +227,6 @@ public class SolarPowerPlantController {
                              @RequestParam(value = "startDate", defaultValue = "2000-01-01 00:00") String startDate,
                              @RequestParam(value = "finishDate", defaultValue = "2172-12-31 23:59") String finishDate,
                              @RequestParam(value = "file-format", defaultValue = "csv") String fileFormat,
-                             HttpServletRequest request,
                              HttpServletResponse response,
                              RedirectAttributes redirectAttributes) throws IOException, TransformerException, ParserConfigurationException, JSONException {
 
@@ -269,7 +268,7 @@ public class SolarPowerPlantController {
             }
 
         }
-        return dynamicDataService.downloadData(request, response, filename);
+        return dynamicDataService.downloadData(response, filename);
     }
 
     @GetMapping(path = "/view/{id}/data/export")
