@@ -4,40 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Вхід</title>
-
-    <!--<link rel="stylesheet" href="/static/styles/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="/static/styles/signin.css">-->
-
     <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
           th:href="@{/styles/bootstrap/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/signin.css" th:href="@{/styles/signin.css}"/>
-    <!--    <link rel="stylesheet" type="text/css" media="all" href="/styles/nn.css" th:href="@{/styles/nn.css}" />-->
+
+    <title>Вхід</title>
 </head>
 <body>
-
-<!--<div th:if="${param.error}">
-    Ви ввели неправильний логіп або пароль.
-</div>
-<div th:if="${param.logout}">
-    Ви вийшли з свого аккаунту.
-</div>
-
-<form role="form" th:action="@{/login}" th:method="post">
-    <lable>Username</lable>
-    <input type="text" id="username" name="username">
-
-    <lable>Password</lable>
-    <input type="password" id="password" name="password">
-
-    <input type="submit">
-</form>
-
-<a th:href="@{/recover_password}">Забули пароль?</a>
-
-<h3><a th:href="@{/}">Перейти на головну</a></h3>-->
-
-<!-- ============================== -->
 
 <div class="col-lg-4 col-md-7 col-sm-8 col-9 bg-form-signin">
     <div class="form-signin ">
@@ -58,10 +31,11 @@
             <h1 class="h3 mb-3 fw-normal text-center">Вхід</h1>
 
             <label for="username">Ім'я користувача</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Ім'я користувача" required=""
+            <input type="text" id="username" name="username" class="form-control" placeholder="Ім'я користувача"
+                   required=""
                    autofocus="">
-
             <br/>
+
             <label for="password">Пароль</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Пароль"
                    required="">

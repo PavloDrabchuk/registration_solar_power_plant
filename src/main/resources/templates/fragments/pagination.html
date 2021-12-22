@@ -9,17 +9,10 @@
 <body>
 
 <div th:fragment="pagination (search, numPages, currentPage, url)">
-<!-- th:class="${search!=null}?'text-center pagination-menu my-3':'text-center pagination-menu'" -->
     <div th:if="${numPages} > 1"
          class="text-center pagination-menu my-3">
-<!--        <form action="/admin/solar-power-plants" method="get">-->
         <form th:action="${url}" method="get">
             <nav>
-                <!--<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
-                <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
-                <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
-                <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                       id="page4">-->
                 <input th:if="${search}" type="hidden" name="search" th:value="${search}">
                 <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value="${page}"
                        th:name="page" th:id="${'page' + page}"

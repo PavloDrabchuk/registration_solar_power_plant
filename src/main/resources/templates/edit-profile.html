@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,15 +10,12 @@
     <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}"/>
 
-
     <title>Редагування профілю</title>
 </head>
 <body>
 
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -32,7 +28,6 @@
 
     </div>
 </div>
-
 
 </body>
 </html>

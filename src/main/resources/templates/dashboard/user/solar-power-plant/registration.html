@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <!-- <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap.css"
-           th:href="@{/styles/bootstrap.css}"/>
-     <link rel="stylesheet" href="css/profile.css">-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-
-
 <main th:fragment="main-content (solarPowerPlant,staticData)"
       role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
@@ -19,21 +14,10 @@
         <div class="main-body">
 
             <div class="row gutters-sm">
-                <!--<div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                                     class="rounded-circle" width="100">
-                                <div class="mt-3">
-                                    <h4>John Doe</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+
                 <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 mb-3">
-                    <form action="addSolarPowerPlant" th:action="@{/solar-power-plant/add}" th:object="${solarPowerPlant}"
+                    <form action="addSolarPowerPlant" th:action="@{/solar-power-plant/add}"
+                          th:object="${solarPowerPlant}"
                           method="post">
 
                         <!-- Name and other -->
@@ -55,7 +39,7 @@
                                         Name error
                                     </div>
                                 </div>
-                                <!--                                <br/>-->
+
                                 <div class="row my-2">
                                     <div class="input-group">
                                         <span class="col-4 text-wrap input-group-text" id="addon-wrapping-quantity">Кількість панелей</span>
@@ -70,7 +54,7 @@
                                         Quantity error
                                     </div>
                                 </div>
-                                <!--                                <br/>-->
+
                                 <div class="row my-2">
                                     <div class="input-group">
                                         <span class="col-4 text-wrap input-group-text" id="addon-wrapping-power">Потужність батареї</span>
@@ -85,7 +69,7 @@
                                         Power error
                                     </div>
                                 </div>
-                                <!--                                <br/>-->
+
                                 <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
@@ -107,22 +91,16 @@
                         </div>
 
                         <!-- Location -->
-
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h4>Розташування</h4>
                                 <div class="row my-2">
                                     <div class="input-group">
-                                        <!--                                    <span class="col-4 text-wrap input-group-text" id="addon-wrapping-region">Область</span>-->
                                         <label class="col-4 input-group-text"
                                                for="inputGroupSelectForRegions">Область</label>
                                         <select class="col-8 custom-select" id="inputGroupSelectForRegions"
                                                 name="region"
                                                 th:field="*{location.region}">
-                                            <!--                                            <option selected>Оберіть область</option>-->
-                                            <!--<option value="Київська">Київська</option>
-                                            <option value="Івано-Франківська">Івано-Франківська</option>
-                                            <option value="Львівська">Львівська</option>-->
                                             <option th:each="region : ${regions}" th:name="${region}"
                                                     th:value="${region}" th:utext="${region.getName()}"></option>
                                         </select>
@@ -132,7 +110,7 @@
                                         Location region error
                                     </div>
                                 </div>
-                                <!--                                <br/>-->
+
                                 <div class="row my-2">
                                     <div class="input-group">
                                         <span class="col-4 text-wrap input-group-text" id="addon-wrapping-city">Місто/Населений пункт</span>
@@ -146,7 +124,7 @@
                                         Location city error
                                     </div>
                                 </div>
-                                <!--                                <br/>-->
+
                                 <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
@@ -161,7 +139,7 @@
                                         Location street error
                                     </div>
                                 </div>
-                                <!--                                <br/>-->
+
                                 <div class="row my-2">
                                     <div class="input-group">
                                     <span class="col-4 text-wrap  input-group-text"
@@ -181,7 +159,6 @@
                         </div>
 
                         <!-- End Location -->
-
                         <div class="text-center">
                             <input type="submit" class="btn btn-success" value="Зареєструвати">
                             <input type="reset" class="btn btn-danger" value="Скинути введені дані">
@@ -191,7 +168,6 @@
             </div>
         </div>
     </div>
-
 </main>
 
 </body>

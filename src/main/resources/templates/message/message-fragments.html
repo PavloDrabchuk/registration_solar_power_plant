@@ -12,7 +12,7 @@
 
 <div th:fragment="header-main-page-messages-fragment(title)">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom mx-lg-4">
-        <h1 class="display-5 fw-bold mx-lg-4"  th:text="${title}">title</h1>
+        <h1 class="display-5 fw-bold mx-lg-4" th:text="${title}">title</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <a type="button" class="btn btn-success px-4 gap-3"
                th:href="@{/messages/new}">Написати повідомлення</a>
@@ -29,7 +29,7 @@
 
 <div th:fragment="messages-fragment(messages, url)">
     <div class="list-group mx-lg-4" th:each="m : ${messages}">
-<!--        <a th:href="'/messages/'+${m.getId()}"-->
+
         <a th:href="${url}+${m.getId()}"
            th:class="${m.getRead() or url == '/messages/sent/'}
                            ? 'list-group-item list-group-item-action message-item-read'
@@ -43,17 +43,10 @@
                th:if="${(m.getMessageType().name()=='FOR_ROLE_EDITOR' or m.getMessageType().name()=='FOR_ROLE_USER' or m.getMessageType().name()=='FOR_ROLE_ADMIN') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
                th:text="${m.getFormattedUsernameAndNameSurname()}">Name Surname</p>
 
-            <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser != m.getSender().getUsername()}"
-                 th:text="${m.getFormattedUsernameAndNameSurname()}">
-                Name Surname
-            </div>-->
             <p class="mb-1"
                th:if="${(m.getMessageType().name()=='FOR_ROLE_EDITOR' or m.getMessageType().name()=='FOR_ROLE_USER' or m.getMessageType().name()=='FOR_ROLE_ADMIN') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
                th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">Name Surname</p>
-            <!--<div th:if="${(m.getMessageType().name()=='FOR_EDITOR' or m.getMessageType().name()=='FOR_USER') and #httpServletRequest.remoteUser == m.getSender().getUsername()}"
-                 th:text="${m.getFormattedUsernameAndNameSurnameOfRecipient()}">
-                Name Surname
-            </div>-->
+
             <p th:if="${m.getMessageType().name()=='INFORMATION'}"
                class="badge bg-info text-wrap user-select-none mb-1">
                 Інформаційне повідомлення
@@ -72,27 +65,9 @@
             </p>
             <br th:if="${m.getMessageType().name()=='ERROR'}"/>
 
-
             <small th:max="50" th:text="${m.getShortText()}">До 40 символів вміст повідомлення ...</small>
         </a>
 
-        <!--<a href="#" class="list-group-item list-group-item-action message-item-read">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Тема повідомлення №2</h5>
-                <small class="text-muted">25.05.2021 21:13</small>
-            </div>
-            <p class="mb-1">Name Surname or [Info or Update]</p>
-            <small class="text-muted">До 40 символів вміст повідомлення ...</small>
-        </a>
-
-        <a href="#" class="list-group-item list-group-item-action message-item-read">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Тема повідомлення №3</h5>
-                <small class="text-muted">25.05.2021 21:13</small>
-            </div>
-            <p class="mb-1">Name Surname or [Info or Update]</p>
-            <small class="text-muted">До 40 символів вміст повідомлення ...</small>
-        </a>-->
     </div>
 </div>
 

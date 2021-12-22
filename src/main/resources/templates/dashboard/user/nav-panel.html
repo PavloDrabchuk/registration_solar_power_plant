@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <script>
     function loadMessageAlert() {
-        //var s=document.getElementById("types");
-        // var selectedOption=s.options[s.selectedIndex].value;
-        console.log("load message alert");
-        //if(selectedOption==="FOR_USER"){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -18,19 +14,9 @@
 
         xhttp.open("GET", "getMessageAlert", true);
         xhttp.send();
-
-        //}
-        /*else {
-            var element = document.getElementById("userSelect");
-            while (element.firstChild) {
-                element.removeChild(element.firstChild);
-            }
-        }*/
     }
 
-    function getT(){
-        console.log("get t");
-        //if(selectedOption==="FOR_USER"){
+    function getT() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -45,84 +31,6 @@
 </script>
 
 <body>
-<!--<body onload="loadMessageAlert()">-->
-
-<!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">Company name</a>
-&lt;!&ndash;    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">&ndash;&gt;
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <form th:action="@{/logout}" method="post">
-                <input class="btn btn-secondary" type="submit" value="Sign out">
-            </form>
-        </li>
-        &lt;!&ndash;<li class="nav-item text-nowrap">
-            <a class="nav-link" th:href="@{/logout}">Sign out</a>
-
-            &lt;!&ndash; <form th:action="@{/logout}" method="post">
- &lt;!&ndash;                <input class="nav-link" type="submit" value="Вийти"/>&ndash;&gt;
-                 <a class="nav-link" >Sign out</a>
-             </form>
- &ndash;&gt;
-
-        </li>&ndash;&gt;
-    </ul>
-</nav>-->
-
-<!--<nav th:fragment="nav-panel (onevar,twovar)"-->
-<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top flex-md-nowrap">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            &lt;!&ndash;<li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>&ndash;&gt;
-        </ul>
-
-        <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                Name Surname
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Профіль</a>
-                &lt;!&ndash;                <a class="dropdown-item" href="#">Another action</a>&ndash;&gt;
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-
-            </div>
-        </div>
-        <div class="nav-item active">
-            <a class="nav-link" href="/profile">Профіль<span class="sr-only">(current)</span></a>
-        </div>
-        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
-            &lt;!&ndash;            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">&ndash;&gt;
-            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Вийти</button>
-        </form>
-    </div>
-</nav>-->
 
 <header class="p-2 border-bottom bg-dark sticky-top flex-md-nowrap">
     <div class="px-4">
@@ -133,19 +41,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-<!--        <button onclick="getT()">Click</button>-->
-
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                <!--                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>-->
                 <img src="/images/logo-social-sq.png" height="30px">
             </a>
 
 
             <ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end">
-                <!--<li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
-                <li><a href="#" class="nav-link px-2 link-light">Inventory</a></li>
-                <li><a href="#" class="nav-link px-2 link-light">Customers</a></li>-->
                 <li><a href="/messages" class="nav-link px-2 link-light">Повідомлення
                     <div class="noti-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#ffffff"
@@ -153,27 +55,14 @@
                             <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                             <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                         </svg>
+
                         <!--/*@thymesVar id="countUnreadMessages" type="java.lang.Long"*/-->
-                        <span class="quantity" th:if="${countUnreadMessages > 0}" th:text="${countUnreadMessages}">1</span>
+                        <span class="quantity" th:if="${countUnreadMessages > 0}"
+                              th:text="${countUnreadMessages}">1</span>
                     </div>
                 </a>
                 </li>
-
             </ul>
-
-            <!-- Message-alert -->
-<!--            <div id="unreadMessageCount"></div>-->
-            <!--            <div th:replace="~{dashboard/user/message-alert1}"></div>-->
-            <!--            <div id="message-alert"></div>-->
-            <!--<ul class="nav text-end col-12 col-xl-10 col-lg-9 col-md-9 me-lg-auto mb-2 justify-content-center mb-md-0 justify-content-lg-end"
-                id="message-alert1">
-
-            </ul>
-            <div id="unreadMessageCount"></div>-->
-
-            <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control" placeholder="Search...">
-            </form>-->
 
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
@@ -184,15 +73,12 @@
                     [[${#httpServletRequest.remoteUser}]]
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <!--                    <li><a class="dropdown-item" href="#">New project...</a></li>-->
-                    <!--                    <li><a class="dropdown-item" href="#">Settings</a></li>-->
                     <li><a class="dropdown-item" href="/profile">Профіль</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li>
                         <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="post">
-                            <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
                             <button class="dropdown-item  my-2 my-sm-0" type="submit">Вийти</button>
                         </form>
                     </li>

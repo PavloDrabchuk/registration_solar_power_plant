@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <body>
-
 
 <main th:fragment="main-content (solarPowerPlantsByUser, numPages, currentPage)"
       role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -11,118 +10,37 @@
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Зареєстровані сонячні станції</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <!--<div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                <button class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>-->
-            <!--<button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="feather feather-calendar">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                This week
-            </button>-->
-            <!--                    <a href="/newSolarPowerPlant" class="btn btn-success">Додати станцію</a>-->
 
             <button class="btn btn-success" onclick="document.location='/solar-power-plant/new'">Додати станцію
             </button>
 
-
-            <!-- <form action="/newSolarPowerPlant">
-                                    <input type="submit" class="btn btn-success" value="Додати станцію"/>
-                                </form>-->
         </div>
     </div>
+    <!--/*@thymesVar id="deletedSolarPowerPlantOK" type="java.lang.String"*/-->
     <div class="alert alert-success m-2" role="alert"
          th:if="${deletedSolarPowerPlantOK}" th:utext="${deletedSolarPowerPlantOK}">
         deletedSolarPowerPlantOK
     </div>
 
+    <!--/*@thymesVar id="deletedSolarPowerPlantError" type="java.lang.String"*/-->
     <div class="alert alert-danger m-2" role="alert"
          th:if="${deletedSolarPowerPlantError}" th:utext="${deletedSolarPowerPlantError}">
         deletedSolarPowerPlantError
     </div>
 
+    <!--/*@thymesVar id="exportDataError" type="java.lang.String"*/-->
     <div class="alert alert-danger m-2" role="alert"
          th:if="${exportDataError}" th:utext="${exportDataError}">
         exportDataError
     </div>
 
+    <!--/*@thymesVar id="getDataError" type="java.lang.String"*/-->
     <div class="alert alert-danger m-2" role="alert"
          th:if="${getDataError}" th:utext="${getDataError}">
         getDataError
     </div>
 
-    <!--<div class="row mb-2">
-        <div class="col-md-6">
-            <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <div class="card-body d-flex flex-column align-items-start">
-                    <h5><strong class="d-inline-block  mb-2 badge badge-danger">Велика</strong></h5>
-                    <h3 class="mb-0">
-                        <a class="text-dark" href="#">Solar power plant name #1</a>
-                    </h3>
-                    <div class="mb-1 text-muted">Дата реєстрації: 12.11.2021</div>
-                    <p class="card-text mb-auto">Розташування: м. Івано-Франківськ, вул. Грушевського, буд. 28</p>
-                    <a href="#">Переглянути інформацію</a>
-                </div>
-                &lt;!&ndash;                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" style="width: 200px; height: 250px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1781d9a0641%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1781d9a0641%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">&ndash;&gt;
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <div class="card-body d-flex flex-column align-items-start">
-                    <h5 ><strong title="Від n панелей до z"  class="d-inline-block  mb-2 badge badge-info">Середня</strong></h5>
-                    <h3 class="mb-0">
-                        <a class="text-dark" href="#">Solar power plant name #2</a>
-                    </h3>
-                    <div class="mb-1 text-muted">Дата реєстрації: 12.11.2021</div>
-                    <p class="card-text mb-auto">Розташування: м. Івано-Франківськ, вул. Грушевського, буд. 28</p>
-                    <a href="#">Переглянути інформацію</a>
-                </div>
-                &lt;!&ndash;                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1781d9a0648%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1781d9a0648%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 200px; height: 250px;">&ndash;&gt;
-            </div>
-        </div>
-    </div>-->
-    <!--<div th:each="data, row: ${solarPowerPlantsByUser}" th:with="numList=${#strings.listSplit('3,2,1,0', ',')}" th:if="${row.current} % 4 == 0" class="span3">
-        <span th:each="num : ${numList}" th:with="dataIndex=(${row.index} - ${num})" th:text="${solarPowerPlantsByUser[dataIndex]}">data</span>
-    </div>-->
-
-    <!--<hr>
-    <h2>Test</h2>
-
-    &lt;!&ndash;    <div th:each="s1,st1:${solarPowerPlantsByUser}" th:if="${st1.odd}">&ndash;&gt;
-
-    <div class="rrr" th:each="s1,st1:${solarPowerPlantsByUser}" th:if="${st1.odd}"
-         th:with="numList=${#strings.listSplit('1,0',',')}">
-        &lt;!&ndash;             th:with="ff=${ {solarPowerPlantsByUser[st1.index] , solarPowerPlantsByUser[st1.index+1]} }">&ndash;&gt;
-
-        &lt;!&ndash;            <div th:each="s:${solarPowerPlantsByUser}" class="ppp">&ndash;&gt;
-
-        <div class="ppp" th:each="num : ${numList}"
-             th:with="dataIndex=(${st1.index} - ${num}+1)">
-&lt;!&ndash;             th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">&ndash;&gt;
-            &lt;!&ndash;                <p th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num}"></p>&ndash;&gt;
-            <div class="yyy"
-                 th:if="${(dataIndex) < #lists.size(solarPowerPlantsByUser)}"
-                 th:utext="${'st1: '+st1.index+' data: '+dataIndex+' num: '+num+' size: '+ (dataIndex lt #lists.size(solarPowerPlantsByUser))}">
-            </div>
-        </div>
-
-        &lt;!&ndash;  &lt;!&ndash;/*@thymesVar id="ff" type="java.lang.*"*/&ndash;&gt;
-          <div th:each="s:${ff}" class="ppp">
-              <p th:utext="${s.name}"></p>
-          </div>&ndash;&gt;
-
-    </div>
-
-
-    <hr>-->
     <div th:if="${#lists.isEmpty(solarPowerPlantsByUser)}">
-        <!-- <h1>Ще не зареєстровано жодної сонячної станції.</h1>-->
         <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Ще не зареєстровано жодної сонячної станції.</h4>
@@ -142,29 +60,11 @@
              th:if="${state.odd}"
              th:with="numList=${#strings.listSplit('1,0',',')}"
              class="row mb-2">
-            <!--             th:with="solarPowerPlants111=${ {solarPowerPlant[state.index] , solarPowerPlant[state.index+1]} }" >-->
-            <!--                                                                        th:if="${state.index} % 2 == 0"-->
-            <!--            <div th:if="${state.odd}">-->
-            <!--                <div class="row mb-2">-->
-            <!--                </div>-->
-            <!--            <span th:attr="<div class='row mb-2'>"></span>-->
-
-            <!--        This don't touch     -->
-
-            <!--<div th:each="ggg:${ {solarPowerPlant[0] , solarPowerPlant[1]} }">
-                <p th:utext="${ggg}"></p>
-            </div>-->
-
-            <!--<div th:if="${state.index} % 2 == 0" th:class="${state.odd}? 'row mb-2'" >-->
             <div class="col-md-6" th:each="num : ${numList}"
                  th:with="dataIndex=(${state.index} - ${num}+1)">
                 <div class="card flex-md-row mb-4 box-shadow h-md-250"
                      th:if="${(dataIndex) < #lists.size(solarPowerPlantsByUser)}">
                     <div class="card-body col p-4 d-flex flex-column position-static">
-                        <!--<h5>
-                            <strong title="Від n панелей до z"
-                                    class="d-inline-block  mb-2 badge badge-info">Середня</strong>
-                        </h5>-->
                         <div th:if="${solarPowerPlantsByUser[dataIndex].getStaticData().getQuantity()<=10}">
                             <h5>
                                 <div class="badge bg-success text-wrap user-select-none">
@@ -190,6 +90,7 @@
                             </h5>
                         </div>
                         <h3 class="mb-0">
+
                             <!--/*@thymesVar id="stringId" type="java.lang.String"*/-->
                             <a class="text-dark header-tittle"
                                th:href="${'/view/'+ solarPowerPlantsByUser[dataIndex].stringId}"
@@ -205,94 +106,16 @@
                            th:href="${'/view/'+solarPowerPlantsByUser[dataIndex].getStringId()}">Переглянути
                             інформацію</a>
                     </div>
-                    <!--                        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Thumbnail [200x250]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20250%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1781d9a0648%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A13pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1781d9a0648%22%3E%3Crect%20width%3D%22200%22%20height%3D%22250%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2256.1953125%22%20y%3D%22131%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="width: 200px; height: 250px;">-->
                 </div>
-                <!--                </div>-->
             </div>
-
-            <!--            </div>-->
-            <!--                </div th:if="${state.even}">-->
-            <!--            </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-
-            <!--            </span>-->
         </div>
-        <!--        <table border="1">
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>City</th>
-                        <th>Url</th>
-                    </tr>
-                    <tr th:each="solarPowerPlant : ${solarPowerPlantsByUser}">
-                        <td th:utext="${solarPowerPlant.getId()}"></td>
-                        <td th:utext="${solarPowerPlant.getName()}"></td>
-                        <td th:utext="${solarPowerPlant.getLocation().getCity()}"></td>
-                        <td><a th:href="${'/view/'+solarPowerPlant.getStringId()}" th:text="${solarPowerPlant.getName()}"></a></td>
-                    </tr>
-                </table>
-
-                <form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">
-                    <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
-                </form>
-            </div>-->
-
-
-        <!--<nav aria-label="...">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>-->
-
-        <!--        <div th:if="${#lists.size(numPages)}> 1"-->
-        <!--<div th:if="${numPages} > 1"
-             class="text-center pagination-menu">
-            <form action="/home" method="get">
-                <nav>
-                    &lt;!&ndash;<input class="btn btn-success" type="submit" value="1" name="page" id="page1">
-                    <input class="btn btn-outline-success" type="submit" value="2" name="page" id="page2">
-                    <input class="btn btn-outline-success" type="submit" value="3" name="page" id="page3">
-                    <input class="btn btn-squared-default btn-outline-success" type="submit" value="311" name="page"
-                           id="page4">&ndash;&gt;
-                    &lt;!&ndash;                    <input th:each="page : ${numPages}" th:value="${page}"&ndash;&gt;
-                    <input th:each="page : ${#numbers.sequence(1, numPages)}" th:value="${page}"
-                           th:name="page" th:id="${'page'+page}"
-
-                           th:class="${page==currentPage}
-                           ? 'btn btn-success mx-1'
-                           : 'btn btn-outline-success mx-1'"
-                           type="submit">
-                </nav>
-            </form>
-        </div>-->
 
         <!-- Pagination -->
         <div th:replace="~{fragments/pagination
         ::pagination(${null}, ${numPages}, ${currentPage}, '/home')}"></div>
-
     </div>
-    <!--            -->
-    <!--<form action="/home" method="get" th:if="${#lists.size(numPages)}> 1">
-        <input type="submit" th:each="page : ${numPages}" th:value="${page}" th:name="page" id="page">
-    </form>-->
-
-
-    <!-- Footer -->
-    <!-- <div th:replace="~{dashboard/user/footer}"></div>-->
 
 </main>
 
 </body>
-
 </html>
