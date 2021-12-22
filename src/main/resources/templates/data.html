@@ -10,13 +10,11 @@
     <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}"/>
 
-
     <title>Сонячна станції | Дані</title>
 
     <script>
         function visibleExportDataTip(state) {
             document.getElementById('export-data-tip').hidden = state;
-            //console.log("state: " + document.getElementById('export-data-tip').hidden);
         }
 
         function visibleExportDataWithTimeout() {
@@ -29,9 +27,7 @@
 <body>
 
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -45,48 +41,6 @@
 
     </div>
 </div>
-<!--
-<h1>data</h1>
-<h1 th:utext="${info}"></h1>
-&lt;!&ndash;<p th:text="${data}"></p>&ndash;&gt;
-
-<form th:action="@{'/view/' +${id}+'/data/export'}" method="post">
-
-        <h4>Експорт даних</h4>
-    <input type="hidden" th:value="${startDate}" name="startDate">
-    <input type="hidden" th:value="${finishDate}" name="finishDate">
-
-        <div class=" col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
-            <select class="form-select col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6"
-                    aria-label="Default select example" name="file-format">
-                <option value="csv">CSV</option>
-                <option value="xml">XML</option>
-                <option value="json">JSON</option>
-            </select>
-        </div>
-
-        <input type="submit" class="btn btn-success col-xl-3 col-lg-4 col-md-4 col-sm-4 col-4" value="Експортувати">
-
-
-</form>
-
-
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Date</th>
-        <th>Weather</th>
-        <th>Produced power</th>
-        <th>SPP id</th>
-    </tr>
-    <tr th:each="data1 : ${data}">
-        <td th:utext="${data1.getId()}"></td>
-        <td th:utext="${data1.getCollectionDateTime()}"></td>
-        <td th:utext="${data1.getWeather().name()}"></td>
-        <td th:utext="${data1.getProducedPower()}"></td>
-        <td th:utext="${data1.getSolarPowerPlant().getId()}"></td>
-    </tr>
-</table>-->
 
 </body>
 </html>

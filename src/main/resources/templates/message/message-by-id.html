@@ -21,29 +21,11 @@
 
     <script>
         function visibleExportDataTip() {
-            //document.getElementById('export-data-tip').hidden = state;
-
-            //let answerBlock=document.getElementById('answerBlock').hidden;
-
-            // document.getElementById('answerBlock').hidden=answerBlock^true;
             document.getElementById('answerBlock').hidden ^= true;
-
-            console.log("b b: " + document.getElementById('buttons').hidden);
-            //document.getElementById('buttons').hidden ^= true;
-            //document.getElementById('answer').hidden ^= true;
-            //document.getElementById('answer').disable=false;
 
             if (document.getElementById('goBack1')) {
                 document.getElementById('goBack1').hidden ^= true;
             }
-            /*if (document.getElementById('goBack2')) {
-                document.getElementById('goBack2').hidden ^= true;
-            }*/
-            console.log("b a: " + document.getElementById('buttons').hidden);
-
-            //if(answerBlock === true) answerBlock= false;
-            //else answerBlock=true;
-            //console.log("state: " + document.getElementById('export-data-tip').hidden);
         }
 
         function visibleExportDataWithTimeout() {
@@ -54,32 +36,11 @@
 
     <title>Повідомлення</title>
 </head>
-<!--<body style="background-color: #eff1f5;">-->
+
 <body>
-<!--<h2 th:text="${message.getTitle()}"></h2>
-<h4 th:text="${message.getText()}"></h4>
-
-<button>Відповісти</button>
-
-<form method="post" th:action="@{/messages}" th:object="${message}">
-    <label for="title">Title:
-        <input id="title" type="text" th:field="*{title}">
-    </label>
-    <label for="text">Text:
-        <input id="text" type="text" th:field="*{text}">
-    </label>
-
-&lt;!&ndash;    <input type="hidden" th:field="">&ndash;&gt;
-
-    <input type="submit" value="Sent message">
-</form>
-
-<a href="/messages">Go back</a>-->
 
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -88,16 +49,12 @@
         <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-
         <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
             <div class="px-4 py-5 my-5">
-                <!--    <button type="button" class="btn btn-success px-4 gap-3">Повернутись</button>-->
-
-                <!--    <img class="d-block mx-auto mb-4" src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
                 <h1 class="display-5 fw-bold" th:text="${message.getTitle()}">Title message</h1>
                 <div class=" mx-auto">
-                    <!--        <p class="">Name Surname</p>-->
+
                     <h5>
                         <div th:if="${(message.getMessageType().name()=='FOR_ROLE_EDITOR' or message.getMessageType().name()=='FOR_ROLE_USER') and #httpServletRequest.remoteUser != message.getSender().getUsername()}"
                              th:text="${message.getFormattedUsernameAndNameSurname()}">
@@ -125,66 +82,22 @@
                 </div>
                 <div class=" mx-auto">
                     <p class="lead mb-4" th:utext="${message.getText()}">Message text</p>
-                    <!--        <div id="buttons" hidden="false">-->
 
                     <div class="d-grid gap-2 d-sm-flex " id="buttons" hidden>
                         <a th:if="${(#httpServletRequest.remoteUser != message.getSender().getUsername()) and message.isAnswering()}"
                            class="btn btn-outline-success px-4 gap-3"
                            onclick="visibleExportDataTip()" id="answer">Відповісти</a>
-                        <!--<a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
-                           href="/messages" class="btn btn-success px-4 gap-3" id="goBack1">Повернутись</a>
-                        <a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
-                           href="/messages/sent" class="btn btn-success px-4 gap-3" id="goBack2">Повернутись</a>-->
-
                         <a class="btn btn-success px-4 gap-3" id="goBack1"
                            onclick="history.back(); return false;">Повернутись</a>
-                        <!--<a class="btn btn-danger px-4 gap-3">Видалити</a>
-
-                        <form th:action="${'/messages/'+message.getId()+'/delete'}" th:method="delete">
-
-                            <button type="submit" class="item border-0 btn btn-danger" data-toggle="tooltip"
-                                    data-placement="top"
-                                    title="Видалити"
-                            >Видалити
-                                &lt;!&ndash;            <i class="zmdi zmdi-delete"></i>&ndash;&gt;
-                                &lt;!&ndash;            <i class="bi bi-trash"></i>&ndash;&gt;
-                                &lt;!&ndash;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                     class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                    <path fill-rule="evenodd"
-                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                </svg>&ndash;&gt;
-                                &lt;!&ndash;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                </svg>&ndash;&gt;
-                            </button>
-                        </form>-->
-
-                        <!--            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>-->
                     </div>
-                    <!--        </div>-->
                 </div>
-
 
                 <form method="post" th:action="@{/messages/answer}"
                       th:if="${(#httpServletRequest.remoteUser != message.getSender().getUsername()) and message.isAnswering()}"
                       id="answerBlock" hidden>
                     <hr>
-                    <!--<div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                    </div>-->
 
-
-                    <!--        <input type="hidden" name="title" th:value="${message.getTitle()}" >-->
-                    <!--        <input type="hidden" name="recipient" th:value="${message.getSender()}" >-->
-                    <!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_EDITOR' or message.getMessageType()=='FOR_ADMIN'}" value="FOR_USER" >-->
-                    <!--        <input type="hidden" name="type" th:if="${message.getMessageType()=='FOR_USER'}" value="FOR_USER" >-->
-                    <!--        <input type="hidden" name="sender" th:value="${message.getSender()}" >-->
                     <input type="hidden" name="id" th:value="${message.getId().toString()}">
-
 
                     <div class="mb-3 col-xl-8 col-lg-9 col-md-12 ">
                         <label for="textarea" class="form-label">Текст повідомлення</label>
@@ -192,26 +105,13 @@
                                   maxlength="1000"></textarea>
                     </div>
 
-                    <!--<div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div>-->
                     <div class="d-grid gap-2 d-sm-flex ">
                         <button type="submit" class="px-4 btn btn-success gap-3">Надіслати</button>
-                        <!--<a th:if="${#httpServletRequest.remoteUser == message.getSender().getUsername()}"
-                           href="/messages/sent"
-                           class="px-4 btn btn-outline-success gap-3">Повернутись</a>
-
-                        <a th:if="${#httpServletRequest.remoteUser != message.getSender().getUsername()}"
-                           href="/messages"
-                           class="px-4 btn btn-outline-success gap-3">Повернутись</a>-->
                         <a class="px-4 btn btn-outline-success gap-3"
                            onclick="history.back(); return false;">Повернутись</a>
                     </div>
                 </form>
-
             </div>
-
         </main>
     </div>
 </div>

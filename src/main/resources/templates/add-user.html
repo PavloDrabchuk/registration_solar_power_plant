@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:form="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +54,6 @@
 
     function checkLength(variable, errorNameId, msg) {
         if (variable.length === 0) {
-            //countErrors++;
             document.getElementById(errorNameId).innerText = msg;
             return 1;
         } else {
@@ -63,40 +62,6 @@
         }
     }
 </script>
-
-<!--
-<h2>Add new user</h2>
-
-<h3>Form</h3>
-<form action="add" th:action="@{/registration/success}" th:object="${user}" method="post">
-
-    <p>username: <input type="text" th:field="*{username}" id="username"/>
-    <div th:if="${duplicateUser}" th:text="${duplicateUser}"></div>
-    <div id="username_error"></div>
-    </p>
-
-
-    <p>e-mail: <input type="email" th:field="*{email}" id="email"/>
-    <div th:if="${duplicateEmail}" th:text="${duplicateEmail}"></div>
-    <div id="email_error"></div>
-    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</td>
-    </p>
-
-    <p>password: <input type="password" th:field="*{password}" id="password" onblur="checkMatchingPasswords()"/></p>
-    <div id="password_error"></div>
-
-    <p>password confirm: <input type="password" th:field="*{passwordConfirm}" id="password_confirm"
-                                onblur="checkMatchingPasswords()"/></p>
-
-    <div id="matching_passwords"></div>
-
-
-    <td th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">Name Error</td>
-
-    <p><input type="submit" value="add" onclick="return checkFields()"/> <input type="reset" value="Reset"/></p>
-</form>-->
-
-<!-- ============================ -->
 
 <div class="col-lg-4 col-md-7 col-sm-8 col-9 bg-form-signin">
     <div class="form-signin ">
@@ -107,41 +72,21 @@
                 </a>
             </div>
 
-<!--            <div class="alert alert-danger" role="alert" id="username_error"></div>-->
-
-<!--            <div class="alert alert-danger" role="alert" id="email_error"></div>-->
-            <!--<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name
-                Error
-            </div>
-
-            <div class="alert alert-danger" role="alert" id="password_error"></div>
-
-            <div class="alert alert-danger" role="alert" id="matching_passwords"></div>
-
-            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('passwordConfirm')}"
-                 th:errors="*{passwordConfirm}">Name Error
-            </div>-->
-
-            <!--            ===============================-->
-
             <h1 class="h3 mb-3 fw-normal text-center">Реєстрація</h1>
 
             <label for="username">Ім'я користувача</label>
             <input type="text" id="username" name="username" th:field="*{username}" class="form-control"
                    placeholder="Ім'я користувача" required=""
                    autofocus="">
-<!--            <br/>-->
 
             <label for="email">E-mail</label>
             <input type="email" id="email" name="email" th:field="*{email}" class="form-control" placeholder="E-mail"
                    required="">
-<!--            <br/>-->
 
             <label for="password">Пароль</label>
             <input type="password" id="password" name="password" th:field="*{password}" class="form-control"
                    placeholder="Password"
                    required="">
-<!--            <br/>-->
 
             <label for="password_confirm">Пароль ще раз</label>
             <input type="password" id="password_confirm" name="password_confirm" th:field="*{passwordConfirm}"
@@ -149,16 +94,12 @@
                    required="" onblur="checkMatchingPasswords()">
             <br/>
 
-            <!--===================================-->
-
             <div class="text-center">
                 <button class="btn btn-lg btn-primary" type="submit" value="add" onclick="return checkFields()">
                     Зареєструватись
                 </button>
                 <input class="btn btn-lg btn-danger" type="reset" value="Reset"/>
             </div>
-
-            <!--            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>-->
 
             <hr/>
             <div class="text-center">

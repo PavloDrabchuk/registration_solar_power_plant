@@ -19,7 +19,6 @@
 <body>
 
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
 
 
@@ -31,25 +30,7 @@
         <div th:replace="~{dashboard/user/sidebar}"></div>
 
         <!-- Main -->
-
-        <!--<div th:replace="~{dashboard/user/solar-power-plant/data
-        ::main-content(${id},${startDate}, ${finishDate}, ${data})}"></div>-->
-
         <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-            <!--<div th:if="${solarPowerPlantChangeError}" th:utext="${solarPowerPlantChangeError}"></div>
-
-            <form th:if="${solarPowerPlant}"
-                  th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}" method="post">
-                &lt;!&ndash;    Змінити можна e-mail ... &ndash;&gt;
-                <label>Name
-                    <input type="text" name="name">
-                </label>
-                <label>Quantity
-                    <input type="number" min="1" name="quantity">
-                </label>
-                <input type="submit" value="Змінити інформацію">
-            </form>-->
 
             <div class="main-body">
                 <div class="alert alert-danger m-2" role="alert"
@@ -57,29 +38,8 @@
                     solarPowerPlantChangeError
                 </div>
                 <div class="row gutters-sm">
-                    <!--<div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 mb-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                                         class="rounded-circle" width="100">
-                                    <div class="mt-3">
-                                        <h4>John Doe</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        th:class="${page == currentPage}
-                           ? 'btn btn-success mx-1'
-                           : 'btn btn-outline-success mx-1'"
-
-                           th:action="${'/admin/solar-power-plants/'+solarPowerPlant.getStringId()+'/update'}"
-                           th:action="${'/view/'+solarPowerPlant.getStringId()+'/update'}"
-
-                    </div>-->
                     <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 col-md-10 offset-md-1 col-sm-12 mb-3">
                         <form th:if="${solarPowerPlant}"
-
                               th:action="${isAdmin}
                                 ? '/admin/solar-power-plants/'+${solarPowerPlant.getStringId()}+'/update'
                                 : '/view/'+${solarPowerPlant.getStringId()}+'/update'"
@@ -106,9 +66,6 @@
                                             <input type="hidden" th:value="${solarPowerPlant.getStringId()}"
                                                    name="stringId"
                                                    th:field="*{stringId}">
-                                            <!--                                            <input type="hidden" th:value="${solarPowerPlant.getRegistrationDateTime()}" name="registrationDateTime" th:field="*{registrationDateTime}">-->
-
-
                                         </div>
                                     </div>
                                     <br/>
@@ -142,13 +99,7 @@
                                                    aria-label="InstallationDate"
                                                    aria-describedby="addon-wrapping-installation-date"
                                                    th:max="${localDate}"
-                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"
-                                            >
-
-                                            <!--                                            <p th:text="${solarPowerPlant.getStaticData().getStringInstallationDate()}"></p>-->
-                                            <!--                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}"-->
-
-                                            <!--                                                   th:field="*{staticData.installationDate}">-->
+                                                   th:value="${solarPowerPlant.getStaticData().getInstallationDate()}">
                                         </div>
                                     </div>
 
@@ -156,22 +107,15 @@
                             </div>
 
                             <!-- Location -->
-
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <h4>Розташування</h4>
                                     <div class="row">
                                         <div class="input-group">
-                                            <!--                                    <span class="col-4 text-wrap input-group-text" id="addon-wrapping-region">Область</span>-->
                                             <label class="col-4 input-group-text"
                                                    for="inputGroupSelectForRegions">Область</label>
                                             <select class="col-8 custom-select" id="inputGroupSelectForRegions"
-                                                    name="region" th:field="*{location.region}"
-                                            >
-                                                <!--                                            <option selected>Оберіть область</option>-->
-                                                <!--<option value="Київська">Київська</option>
-                                                <option value="Івано-Франківська">Івано-Франківська</option>
-                                                <option value="Львівська">Львівська</option>-->
+                                                    name="region" th:field="*{location.region}">
                                                 <option th:each="region : ${regions}" th:name="${region}"
                                                         th:value="${region}" th:utext="${region.getName()}"
                                                         th:selected="${region==solarPowerPlant.getLocation().getRegion()}"></option>
@@ -220,7 +164,6 @@
                             <!-- End Location -->
 
                             <!-- Coordinates -->
-
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <h3>Координати</h3>
@@ -248,8 +191,6 @@
                                                    th:field="*{location.longitude}">
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -263,9 +204,7 @@
                     </div>
                 </div>
             </div>
-
         </main>
-
     </div>
 </div>
 

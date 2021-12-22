@@ -3,77 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
-          th:href="@{/styles/bootstrap/bootstrap.css}"/>-->
+
     <link rel="stylesheet" type="text/css" media="all" href="/styles/bootstrap/bootstrap.css"
           th:href="@{/styles/bootstrap/bootstrap.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/home.css" th:href="@{/styles/home.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/dashboard.css" th:href="@{/styles/dashboard.css}"/>
     <link rel="stylesheet" type="text/css" media="all" href="/styles/profile.css" th:href="@{/styles/profile.css}"/>
 
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 
     <title>Реєстрація сонячної станції</title>
 </head>
 <body>
 
-
-
-<!--<script>
-    function checkFields() {
-        let countErrors = 0;
-
-        const name = document.getElementById("name").value;
-
-        if (name.length === 0) {
-            countErrors++;
-            document.getElementById("name_error").innerText="Введіть назву.";
-        } else {
-            document.getElementById("name_error").innerText="";
-        }
-
-        return countErrors === 0;
-    }
-</script>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Вийти"/>
-</form>
-
-<h3>Add new solar power plant</h3>
-
-<h3>Form</h3>
-<form action="addSolarPowerPlant" th:action="@{/addSolarPowerPlant}" th:object="${solarPowerPlant}" method="post">
-    <p>name: <input type="text" th:field="*{name}" id="name"/></p>
-    <div id="name_error"></div>
-    <h4>Static data</h4>
-&lt;!&ndash;    <p>quantity: <input type="number" min="1" value="1" th:field="*{}"/></p>&ndash;&gt;
-    <p>quantity: <input type="number" min="1" value="1" th:field="*{staticData.quantity}"></p>
-    <p>Date of installation <input type="date" th:field="*{staticData.installationDate}"></p>
-    <h4>Location</h4>
-    <p>Область:
-
-    <select th:field="*{location.region}">
-        <option th:each="region : ${regions}" th:name="${region}" th:value="${region}" th:utext="${region.getName()}"></option>
-&lt;!&ndash;        <option>Івано-Франківська</option>&ndash;&gt;
-    </select>
-    <p>Місто/Населений пункт: <input type="text" th:field="*{location.city}"/></p>
-    <p>Вулиця: <input type="text" th:field="*{location.street}"/></p>
-    <p>Номер: <input type="text" th:field="*{location.number}"/></p>
-
-    <p><input type="submit" value="addSolarPlant" onclick="return checkFields()"/> <input type="reset" value="Reset"/></p>
-</form>
-
-
-<hr/>-->
-
 <!-- Navigation panel -->
-
 <div th:replace="~{dashboard/user/nav-panel}"></div>
-
 
 <div class="container-fluid">
     <div class="row">
