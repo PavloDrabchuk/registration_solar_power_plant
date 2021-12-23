@@ -255,7 +255,6 @@ public class DynamicDataService {
         return String.join("", words);
     }
 
-
     private int getYearOfUsageTime(@NotNull SolarPowerPlant solarPowerPlant) {
         return AuthorizationAccess.getUsageTime(solarPowerPlant.getStaticData().getInstallationDate(), LocalDate.now()).get(0);
     }

@@ -144,7 +144,7 @@ public class SolarPowerPlantController {
 
     @GetMapping(path = "/view/{id}/update")
     public String getSolarPowerPlantByIdForUpdate(@PathVariable("id") String id, Model model) {
-        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model,false);
+        solarPowerPlantService.addSolarPowerPlantInfoToModel(id, model, false);
         return "dashboard/solar-power-plant/update-solar-power-plant-by-id";
     }
 
@@ -189,7 +189,7 @@ public class SolarPowerPlantController {
 
             if (finishDate.equals("")) {
                 finishDate = LocalDateTime.now().toString().substring(0, 16);
-              }
+            }
 
             data = dynamicDataService.getDynamicDataBetweenCollectionDateTimeAndBySolarPowerPlant(
                     LocalDateTime.parse(startDate.replace("T", " "), formatter),
@@ -245,7 +245,6 @@ public class SolarPowerPlantController {
                 LocalDateTime.parse(finishDate.replace("T", " "), formatter),
                 solarPowerPlant.get());
 
-        // TODO: 19.12.2021 Зроби функцію, де аргументом функції є розширення файлу (fileFormat.toLowerCase()).
         switch (fileFormat.toLowerCase()) {
             case "csv": {
                 filename += ".csv";
