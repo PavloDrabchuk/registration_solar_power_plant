@@ -109,7 +109,7 @@ public class MessageController {
     public String getSentMessageById(@PathVariable("id") UUID id,
                                      Model model,
                                      RedirectAttributes redirectAttributes) {
-        // TODO: 19.12.2021 У цьому методі та у попередньому об'єднай функціонал.
+        // TODO: 19.12.2021 У цьому методі так у попередньому об'єднай функціонал.
         Optional<Message> message = messageService.getMessageById(id);
 
         if (message.isPresent()) {
