@@ -2,7 +2,7 @@
 OPEN_WEATHER_MAP_API_KEY=YOUR_API_KEY
 
 # Get API -> https://developer.mapquest.com/documentation/geocoding-api/address/get/
-MAP_QUEST_API_KEY=g1CgD1eTytaXG7ubOigQK4bB9QyVSr92
+MAP_QUEST_API_KEY=YOUR_API_KEY
 
 # 5 * 1000 = 5000           // 5 секунд
 # 1000 * 60 * 30 = 1800000  // 30 хвилин
